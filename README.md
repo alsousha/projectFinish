@@ -7,4 +7,4 @@ Funny learn is platform allows teachers and students, to create and manage multi
 White background, fresh colors, clear presentation, easy navigation, the choice of different languages and a large number of examples: the authoring tool and the exchange platform Funny learn invite you to use the enter the world of multimedia learning modules (apps). Such learning building blocks are small, modular teaching content that can be integrated into existing teaching scenarios like LEGO bricks be embedded.
 
 ### Authors: ###
-*Bogdanova Alsu, Agronov Alex*
+*Agronov Alex, Bogdanova Alsu*
