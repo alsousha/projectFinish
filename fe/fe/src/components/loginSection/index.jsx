@@ -1,7 +1,7 @@
 import React from 'react'
 import LoginForm from './LoginForm'
 
-function LoginSection() {
+function LoginSection({setIsLoggedIn, setUserName}) {
   return (
 	<section className='loginSection'>
 		<div className="container">
@@ -12,7 +12,7 @@ function LoginSection() {
 
 				</div>
 				<div className="loginSection__form w35">
-					<LoginForm/>
+					<LoginForm setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>
 				</div>
 
 			</div>

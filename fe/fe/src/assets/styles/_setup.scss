@@ -23,6 +23,14 @@ a{
 	background-size: contain;
   }
 }
+button{
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
 button:focus{outline: none!important;}
 .sticky{
   transition: all .5s;
@@ -103,11 +111,17 @@ body{
 .d-flex{
 	display: flex;
 }
+.f-column{
+	flex-direction: column;
+}
 .jcsb{
 	justify-content: space-between;
 }
 .jcc{
 	justify-content: center;
+}
+.jce{
+	justify-content: end;
 }
 .aic{
 	align-items: center;
@@ -537,7 +551,11 @@ h1, h2,h3,h4{
   margin-bottom: 1rem;
 }
 /*typography*/
-
+.t_bold{
+	h1,h2,h3,h4{
+		font-weight: 600;
+	  }
+}
 .t_77{
   h1,h2,h3,h4{
 	font-size: 7.7rem;
@@ -611,7 +629,6 @@ h1, h2,h3,h4{
 .t_24{
   h1,h2,h3,h4,a{
 	font-size: 2.4rem;
-	font-weight: 400;
   }
 }
 .t_21{
@@ -1394,6 +1411,7 @@ select{
 input[type="tel"]::placeholder,
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
+input[type="password"]::placeholder,
 textarea::placeholder
 {
   font-size: 1.6rem;

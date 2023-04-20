@@ -7,7 +7,8 @@ import Categories from './Categories'
 import Tasks from './Tasks'
 import Students from './Students'
 
-function TeacherPage() {
+function TeacherPage({isLoggedIn, setIsLoggedIn, userData}) {
+	console.log(isLoggedIn);
 	const [classes, setClasses] = useState();
 
 	const linksData = [
@@ -18,20 +19,32 @@ function TeacherPage() {
 	]
 	
 	
+	
   return (
 	<div>
 	  
 	  <div className="mainPage d-flex">
-		<Sidebar items={linksData}/>
-		<div className='mainContent'>
-			<h1>Teacher</h1>
-			<Routes>
-				<Route path='/classes' element={<Classes classes={classes}/>} />
-				<Route path='/categories' element={<Categories />} />
-				<Route path='/tasks' element={<Tasks />} />
-				<Route path='/students' element={<Students />} />
-			</Routes>
-		</div>
+		{!isLoggedIn ? (
+			<div className='container d-flex jcc'><h1>Page not found</h1></div>
+		) : (
+			<>
+			<Sidebar 
+				items={linksData} 
+				userData={userData} 
+				setIsLoggedIn={setIsLoggedIn}
+			/>
+			<div className='mainContent'>
+				<h1>Teacher</h1>
+				<Routes>
+					<Route path='/classes' element={<Classes classes={classes}/>} />
+					<Route path='/categories' element={<Categories />} />
+					<Route path='/tasks' element={<Tasks />} />
+					<Route path='/students' element={<Students />} />
+				</Routes>
+			</div>
+			</>
+		)}
+		
 		
 	  </div>
 	</div>

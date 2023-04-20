@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Header, LoginSection } from './components'; //general file for imports
-import TeacherPage from './containers/TeacherPage';
+import { Header, TeacherPage, MainPage } from './components'; //general file for imports
+
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+  //   const [userData, setUserData] = useState(localStorage.getItem('userData'));
+
+  const setUserName = () => {
+    //tmp const
+  };
+
+  console.log(isLoggedIn, 'isLogged');
   return (
     <div className='App'>
       <Header />
       <main>
-        <Routes>
-          {/* <Route exact path='/' element={<Home />} /> */}
-          <Route path='/login' element={<LoginSection />} />
-          <Route exsct path='/teacher' element={<TeacherPage />} />
-          <Route exsct path='/teacher/*' element={<TeacherPage />} />
-        </Routes>
+        <MainPage setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} isLoggedIn={isLoggedIn} />
       </main>
     </div>
   );

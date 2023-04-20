@@ -1,16 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate} from 'react-router-dom';
 
 
-function LoginForm({onAddUser}) {
+function LoginForm({setIsLoggedIn, setUserName}) {
 	const [visibleForm, setVisibleForm] = useState(false);
-	const [loginInputValue, setLoginInputValue] = useState('');
-	const [passwordInputValue, setPasswordInputValue] = useState('');
+	const [login, setLogin] = useState('');
+	const [password, setPassword] = useState('');
 	const [isLoading, setIsloading] = useState(false);
+
+	const navigate = useNavigate();
+
+	const handlLoginChange = (e) => {
+		setLogin(e.target.value);
+	  };
+	  const handlPasswordChange = (e) => {
+		setPassword(e.target.value);
+	  };
+	  const handleLogIn = (e) => {
+		e.preventDefault();
+		setIsLoggedIn(true); //change app state if user is logged
+		// setUserName(login); //send userName to header
+		localStorage.setItem('isLoggedIn', true);
+		localStorage.setItem('userName', login);
+		// navigate('/teacher');
+		navigate('/student');
+		// navigate('/admin');
+	  };
+
+
   return (
 	<div>
-		<form className='formColumn'>
-			<input type="text" value={loginInputValue} placeholder='Login' onChange={e => setLoginInputValue(e.target.value)}/>
-			<input type="password" value={passwordInputValue} placeholder='Password'onChange={e => setPasswordInputValue(e.target.value)}/>
+		<form className='formColumn' onSubmit={handleLogIn}>
+			<input 
+				type="text" 
+				value={login} 
+				placeholder='Login' 
+				onChange={handlLoginChange}
+				required
+			/>
+			<input 
+				type="password" 
+				value={password} 
+				placeholder='Password'
+				onChange={handlPasswordChange}
+				required
+			/>
 			<button type='submit' className='btn_main'>Login</button>
 		</form>
 		<div className='underline mt2'>Forget password?</div>
