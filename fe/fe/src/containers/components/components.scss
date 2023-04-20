@@ -1,0 +1,17 @@
+@import "../../assets/styles/vars";
+.sidebar{
+	background-color: $main-dark;
+	width: 30rem;
+	height: 100vh;
+	padding-top: 3rem;
+	.sidebarLink{
+		font-size: 2.3rem;
+			padding: 1.5rem;
+			&:hover, &.active{
+				transition: all 0.3s;
+				background-color: $white;
+				color: $main;
+			}
+		
+	} 
+}

@@ -1,0 +1,14 @@
+@import "../../assets/styles/vars";
+header{
+	background-color: $main-light;
+	.logo{
+		img{
+			width: 9rem;
+		}
+	}
+	.slogan{
+		font-family: 'Cabin Sketch', cursive;
+		font-size: 5rem;
+		color: $main-dark;
+	}
+}
