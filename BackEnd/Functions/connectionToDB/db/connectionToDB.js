@@ -1,3 +1,5 @@
+//Function that connect to DB(phpMyAdmin) and attempt to show all teachers
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
@@ -17,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-// Get all students
+// Get all teachers
 app.get("", (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) throw err;
