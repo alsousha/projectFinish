@@ -1,0 +1,435 @@
+
+h1, h2,h3,h4{
+	line-height: 0.9;
+	margin-bottom: 1rem;
+  }
+  /*typography*/
+  .t_bold{
+	  h1,h2,h3,h4{
+		  font-weight: 600;
+		}
+  }
+  .t_77{
+	h1,h2,h3,h4{
+	  font-size: 7.7rem;
+	  font-weight: 400;
+	}
+  }
+  .t_60{
+	h1,h2,h3,h4{
+	  font-size: 6rem;
+	  font-weight: 400;
+	}
+  }
+  .t_55{
+	h1,h2,h3,h4{
+	  font-size: 5.5rem;
+	  font-weight: 400;
+	}
+  }
+  .t_49{
+	h1,h2,h3,h4{
+	  font-size: 4.9rem;
+	  font-weight: 400;
+	}
+  }
+  .t_48{
+	h1,h2,h3,h4{
+	  font-size: 4.8rem;
+	  font-weight: 400;
+	}
+  }
+  .t_45{
+	h1,h2,h3,h4{
+	  font-size: 4.5rem;
+	  font-weight: 400;
+	  margin-bottom: 0 !important;
+	}
+  }
+  .t_40{
+	h1,h2,h3,h4{
+	  font-size: 4rem;
+	  font-weight: 700;
+	}
+  }
+  .t_38{
+	h1,h2,h3,h4{
+	  font-size: 3.8rem;
+	  font-weight: 400;
+  
+	}
+  }
+  .t_36{
+	h1,h2,h3,h4{
+	  font-size: 3.6rem;
+	  font-weight: 700;
+  
+	}
+  }
+  .t_35{
+	h1,h2,h3,h4,a{
+	  font-size: 3.6rem;
+	  font-weight: 400;
+  
+	}
+  }
+  .t_30{
+	h1,h2,h3,h4,a{
+	  font-size: 3rem;
+  
+	}
+  }
+  .t_24{
+	h1,h2,h3,h4,a{
+	  font-size: 2.4rem;
+	}
+  }
+  .t_21{
+	h1,h2,h3,h4{
+	  font-size: 2.1rem;
+	  font-weight: 400;
+	}
+  }
+  .t_20{
+	h1,h2,h3,h4,a{
+	  font-size: 2.0rem;
+	  font-weight: 400;
+	}
+  }
+  .t_18{
+	h1,h2,h3,h4,a{
+	  font-size: 1.8rem;
+	  font-weight: 400;
+	}
+  }
+  .t_17{
+	a, span{
+	  font-size: 1.7rem;
+	}
+  }
+  
+  .p_36{
+	p{
+	  font-size: 3.6rem;
+	  font-weight: 400;
+	}
+  }
+  .p_30{
+	p, span{
+	  font-size: 3rem;
+	  font-weight: 400;
+	}
+  }
+  .p_28{
+	p{
+	  font-size: 2.8rem;
+	  font-weight: 400;
+	}
+  }
+  .p_24{
+	p{
+	  font-size: 2.4rem;
+	  font-weight: 400;
+	}
+  }
+  .p_20{
+	p{
+	  font-size: 2rem;
+	  font-weight: 400;
+	}
+  }
+  .p_18{
+	p{
+	  font-size: 1.8rem;
+	  font-weight: 400;
+	}
+  }
+  .p_17{
+	p{
+	  font-size: 1.7rem;
+	  font-weight: 400;
+	}
+  }
+  .t-p_bold{
+	p{
+	  font-size: 3rem;
+	  strong{
+		font-weight: 700;
+		font-size: 4rem;
+	  }
+	}
+  }
+  .p_line1_2{
+	p{
+	  line-height: 1.2;
+	}
+  
+  }
+  
+  .aligncenter{
+	margin: 0 auto;
+  }
+  .alignleft{
+	margin-left: 0;
+	margin-right: auto;
+  }
+  .alignright{
+	margin-right: 0;
+	margin-left: auto;
+  }
+  .alignsrt{
+	align-items: stretch;
+  }
+  .t_accent{
+  
+	h1,h2,h3,h4{
+	  position: relative;
+	  display: inline-block;
+	  margin-bottom: 2rem;
+	  &:after{
+		position: absolute;
+		content: '';
+		width: 4.5rem;
+		height: 4.5rem;
+	  //   background-image: url("../icons/wheel.png");
+		background-size: contain;
+		background-repeat: no-repeat;
+		left: 0;
+		top: -5px;
+		transform: translateX(-121%);
+	  }
+	  &:before{
+		position: absolute;
+		content: "";
+		width: 4.5rem;
+		height: 4.5rem;
+	  //   background-image: url(../icons/wheel.png);
+		background-size: contain;
+		background-repeat: no-repeat;
+		right: 0;
+		top: -5px;
+		transform: translateX(121%);
+	  }
+	}
+  }
+  .tt_accent{
+	background: #F4C662;
+	background: -webkit-linear-gradient(to bottom, #F4C662 0%, #EB964A 100%);
+	background: -moz-linear-gradient(to bottom, #F4C662 0%, #EB964A 100%);
+	background: linear-gradient(to bottom, #F4C662 0%, #EB964A 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+  }
+  .t_accent1{
+	h1,h2,h3,h4{
+	  font-weight: 400;
+	  strong{
+		font-weight: 700;
+	  }
+	}
+  }
+  .t_white{
+	h1,h2,h3,h4,a{
+	  color: #FFFFFF;
+	}
+  }
+  .t_accent_color{
+	h1,h2,h3,h4{
+	  color: $accent;
+	}
+  }
+  .p_white{
+	p{
+	  color: $white;
+	}
+  }
+  .t_section{
+	h2,h3{
+	  font-size: 4.8rem;
+	  color: $main;
+	  strong{
+		color: $accent;
+		font-weight: 700;
+	  }
+	}
+  }
+  .white{
+	*{
+	  color: $white;
+	}
+  }
+  .black{
+	h1,h2,h3,h4,a,p,span,li{
+	  color: #000000 !important;
+	}
+  }
+  .main-color{
+	color: $main;
+	h1,h2,h3,h4,h5, a,p, span{
+	  color: $main;
+	}
+  }
+  .accent-color{
+	color: $accent;
+	h1,h2,h3,h4,h5, a,p, span{
+	  color: $accent;
+	}
+  }
+  
+.p_bold{
+  font-weight: 700;
+  a, p, li{
+	font-weight: 700;
+  }
+
+}
+.t_bold{
+  font-weight: 700;
+  h1,h2,h3,h4{
+	font-weight: 700;
+
+  }
+}
+.f_accent{
+  h1,h2,h3,h4,a,p{
+	font-family:'almoni-tzar'
+  }
+
+}
+.z99{
+  z-index: 99;
+}
+
+.z9999{
+  z-index: 9999;
+}
+.lh1_5{
+  line-height: 1.5;
+}
+.lh1_2{
+  line-height: 1.2;
+}
+.title_line{
+  h1,h2,h3,h4{
+	position: relative;
+	display: block;
+	padding-left: 2rem;
+	margin-bottom: 2rem;
+	&:after{
+	  position: absolute;
+	  content: '';
+	  height: 3px;
+	  width: 100%;
+	  bottom: -1rem;
+	  left: 0;
+	  right: 0;
+	  background-color: #FFFFFF;
+	}
+  }
+}
+.main-link{
+  color: $main;
+  position: relative;
+  padding-left: 4rem;
+  display: inline-block;
+  font-size: 3rem;
+  &:after{
+	position: absolute;
+	content: '';
+	width: 6rem;
+	height: 2rem;
+	// background-image: url("../icons/arrow-left2.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 2rem;
+	top: 27%;
+	transition: all .5s;
+  }
+  &:hover{
+	//color: inherit;
+
+	&:after{
+	  background-position: 1rem;
+	}
+
+  }
+}
+
+.p_bold{
+	font-weight: 700;
+	a, p, li{
+	  font-weight: 700;
+	}
+  
+  }
+  .t_bold{
+	font-weight: 700;
+	h1,h2,h3,h4{
+	  font-weight: 700;
+  
+	}
+  }
+  .f_accent{
+	h1,h2,h3,h4,a,p{
+	  font-family:'almoni-tzar'
+	}
+  
+  }
+  .z99{
+	z-index: 99;
+  }
+  
+  .z9999{
+	z-index: 9999;
+  }
+  .lh1_5{
+	line-height: 1.5;
+  }
+  .lh1_2{
+	line-height: 1.2;
+  }
+  .title_line{
+	h1,h2,h3,h4{
+	  position: relative;
+	  display: block;
+	  padding-left: 2rem;
+	  margin-bottom: 2rem;
+	  &:after{
+		position: absolute;
+		content: '';
+		height: 3px;
+		width: 100%;
+		bottom: -1rem;
+		left: 0;
+		right: 0;
+		background-color: #FFFFFF;
+	  }
+	}
+  }
+  .main-link{
+	color: $main;
+	position: relative;
+	padding-left: 4rem;
+	display: inline-block;
+	font-size: 3rem;
+	&:after{
+	  position: absolute;
+	  content: '';
+	  width: 6rem;
+	  height: 2rem;
+	  // background-image: url("../icons/arrow-left2.png");
+	  background-repeat: no-repeat;
+	  background-size: contain;
+	  background-position: 2rem;
+	  top: 27%;
+	  transition: all .5s;
+	}
+	&:hover{
+	  //color: inherit;
+  
+	  &:after{
+		background-position: 1rem;
+	  }
+  
+	}
+  }

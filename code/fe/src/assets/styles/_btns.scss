@@ -1,0 +1,234 @@
+/*btns*/
+.btn_main{
+	background-color: $accent;
+	padding: 1rem 2rem;
+	color: $white;
+	font-size: 2.1rem;
+	font-weight: 400;
+	transition: all .5s;
+	display: inline-block;
+	border-radius: 10px;
+	cursor: pointer;
+	  border: none;
+  
+	&:hover{
+	  background-color: transparent;
+	  border: 1px solid $accent;
+	}
+}
+//hh
+.btn_accent{
+background-color: $accent;
+color: $main !important;
+font-size: 3rem;
+font-weight: 400;
+line-height: 1.4;
+border: none;
+border-radius: 1rem;
+position: relative;
+padding-top: 0.5rem;
+padding-bottom: 0.5rem;
+padding-left: 5.5rem;
+&:after{
+	position: absolute;
+	content: '';
+	display: block;
+	width: 3.5rem;
+	height: 3.5rem;
+	// background-image: url("../icons/arrow-left.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	left: 7px;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: all .5s;
+}
+&:hover{
+	//left: 3rem;
+	background-color: transparent;
+	border: 2px solid $accent;
+	input{
+	color: $accent!important;
+	}
+
+}
+
+}
+.btn_transp_main{
+font-size: 3rem;
+color: $main;
+//border: 1px solid $accent;
+position: relative;
+display: block;
+padding-left: 3rem;
+font-weight: 700;
+&:after{
+	content: '';
+	position: absolute;
+	// background-image: url("../icons/arrow-left.png");
+	width: 1.5rem;
+	height: 1.6rem;
+	background-size: contain;
+	background-repeat: no-repeat;
+	transition: all .5s;
+	transform: translateY(10px) translateX(-10px);
+}
+&:hover:after{
+	transform: translateY(10px) translateX(-35px);
+}
+}
+.btn_transp_accent{
+font-size: 3rem;
+color: $accent;
+//border: 1px solid $accent;
+position: relative;
+display: block;
+padding-left: 3rem;
+&:after{
+	content: '';
+	position: absolute;
+	// background-image: url("../icons/arrow-left2.png");
+	width: 1.5rem;
+	height: 1.6rem;
+	background-size: contain;
+	background-repeat: no-repeat;
+	transition: all .5s;
+	transform: translateY(10px) translateX(-10px);
+}
+&:hover:after{
+	transform: translateY(10px) translateX(-35px);
+}
+}
+.btn_arrow{
+color: $accent !important;
+//   background-image: url(../icons/arrow-left.png);
+background-size: 11px 8px;
+background-position: 14px center;
+background-repeat: no-repeat;
+padding-left: 3rem;
+transition: all .5s;
+&:hover{
+	background-position: 3px center;
+	transition: all .5s;
+}
+}
+.btn_arrow_down{
+input[type=submit], a, button{
+	color: #FFFFFF !important;
+	background-color: $main;
+	// background-image: url(../icons/arrow-down-w.png);
+	background-size: 13px 16px;
+	background-position: 2rem center;
+	background-repeat: no-repeat;
+	padding: 0.5rem 3rem;
+	padding-left: 5rem;
+	transition: all 0.5s;
+	font-size: 3rem;
+	border-radius: 2.5rem;
+	&:hover{
+	background-position: 2rem 3rem;
+	transition: all .5s;
+	}
+}
+}
+.btn_transp_border{
+font-size: 2.3rem;
+color: $main;
+border: 1px solid $main;
+padding: 0.5rem 1rem;
+}
+.btn_white{
+background-color: $white;
+padding: 0.5rem 2rem;
+color: $main !important;
+font-weight: 700;
+font-size: 3rem;
+transition: all .5s;
+//display: inline-block;
+line-height: 1.4;
+border: none;
+border-radius: 1rem;
+position: relative;
+padding-left: 5.5rem;
+width: 100%;
+&:after{
+	position: absolute;
+	content: '';
+	display: block;
+	width: 2.5rem;
+	height: 2.5rem;
+	// background-image: url("../icons/arrow-single-left.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	left: 22px;
+	top: 25%;
+	transition: all .5s;
+}
+&:hover:after{
+	left: 10px;
+}
+}
+.btn_accent1{
+background-color: $accent;
+color: $main;
+font-weight: 700;
+font-size: 3rem;
+padding: 1rem 2rem;
+border-radius: 1rem;
+}
+.btnClose{
+	position: absolute;
+	top: 1.5rem;
+	right: 1.5rem;
+	svg{
+		fill: $main-dark;
+		font-size: 3rem;
+	}
+	&:hover{
+		transform: scale(1.1);
+		transition: all 0.5s;
+	}
+	&:active{
+		transform: scale(0.9);
+	}
+	
+}
+
+
+/*menu btn*/
+.main-nav{
+	position: relative;
+  }
+  .mob-nav-btn{
+	height: 5.4rem;
+	width: 5.4rem;
+	display: block;
+	background-color: $accent;
+	border: 1px solid #ffffff;
+	position: relative;
+	span{
+	  display: block;
+	  height: 2px;
+	  width: 70%;
+	  background: #fff;
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  margin: 0 auto;
+	  -webkit-transition: all .5s ease;
+	  transition: all .5s ease;
+	  opacity: 1;
+	}
+  }
+  .mob-nav-btn span:nth-child(1) {
+	-webkit-transform: translate(-50%, -13px);
+	transform: translate(-50%, -13px);
+  }
+  .mob-nav-btn span:nth-child(2) {
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+  }
+  .mob-nav-btn span:nth-child(3) {
+	-webkit-transform: translate(-50%, 11px);;
+	transform: translate(-50%, 11px);;
+  }

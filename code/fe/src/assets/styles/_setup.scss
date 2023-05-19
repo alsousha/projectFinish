@@ -1,0 +1,144 @@
+@import './margin_padding';
+// @import './keyframes';
+@import './flex_wights.scss';
+@import './typograthy';
+@import './btns';
+@import './hover';
+
+
+*{
+	outline: none;
+	box-sizing: border-box;
+}
+html{
+  transition: font-size .5s;
+  font-size: 62.5% !important;
+}
+.rb{border: 1px solid red;}
+.centered{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.underline{
+	text-decoration: underline;
+	font-style: italic;
+}
+.rtl{direction: rtl;}
+:focus{text-decoration: none;}
+a{
+	text-decoration: none;
+	display: block;
+}
+img{
+	max-width: 100%;
+}
+button{
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+	outline: none;
+}
+button:focus{outline: none!important;}
+// .sticky{
+//   transition: all .5s;
+//   &.fixed{
+// 	position: fixed !important;
+// 	left: 0;
+// 	top: 0;
+// 	width: 100%;
+// 	background-color: $white;
+// 	z-index: 99999;
+// 	animation-name: stickyHeader;
+// 	animation-duration: 0.5s;
+// 	.h_logo{
+// 	  margin-right: 3rem;
+// 	}
+//   }
+// }
+
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  
+}
+li{
+	list-style-type: none;
+  }
+body{
+  overflow-x: hidden;
+  font-size: 1.8rem;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  color: $main;
+  line-height: 1.4;
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+}
+.App{
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+main{
+  flex-grow: 1;
+}
+
+/*bg*/
+.bg-no-repeat{
+  background-repeat: no-repeat;
+}
+.bg-cover{
+  background-size: cover;
+}
+.bg-contain{
+  background-size: contain;
+}
+.bg-center{
+  background-position: center;
+}
+.bg-accent{
+  background-color: $accent;
+}
+.bg-main{
+  background-color: $main;
+}
+.bgplb{
+  background-position: left bottom;
+}
+
+
+#go-top{
+  position: absolute;
+  width: 9rem;
+  height: 10rem;
+  z-index: 999;
+  cursor: pointer;
+  right: 3%;
+  top: 2rem;
+  animation: jump-top 1.2s ease-in-out alternate infinite;
+  img{
+
+  }
+  .go-top-text{
+	font-size: 2.4rem;
+	text-align: center;
+	color: #FFFFFF;
+  }
+}
+.fixed-icons{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 50%;
+  left: .5rem;
+  z-index: 9999;
+  gap: 1rem;
+}
+
+/* end custom settings*/

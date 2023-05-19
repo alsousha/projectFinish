@@ -1,0 +1,49 @@
+@import "../assets/styles/vars";
+.sidebar{
+	background-color: $main-dark;
+	width: 30rem;
+	height: 100vh;
+	padding-top: 3rem;
+	.sidebarLink a{
+		font-size: 2.3rem;
+			padding: 1.5rem;
+			&:hover, &.active{
+				transition: all 0.3s;
+				background-color: $white;
+				color: $main;
+			}
+		
+	} 
+	a{
+		line-height: 1;
+	}
+	.userSection{
+		padding-left: 2rem;
+		padding-right: 2rem;
+		color: white;
+		.user__logo img{
+			width: 10rem;
+			height: 10rem;
+			object-fit: cover;
+			border-radius: 50%;
+			object-position: center;
+		}
+		.userSection__btns{
+			.userSection__btn{
+				margin-right: 0.5rem;
+				
+			}
+		}
+		.sidebar__icon{
+			// fill: $white;
+    		width: 2.5rem;
+			height: 2.5rem;
+			path{
+				stroke:$white;
+				fill: none
+			}
+			
+			
+		}
+	}
+}

@@ -1,0 +1,70 @@
+@import "../../assets/styles/vars";
+
+.popup{
+	position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+
+    background-color: $white;
+    width: 60rem;
+    padding: 5rem;
+	height: 45rem;
+    text-align: center;
+    border-radius: 1rem;
+	
+}
+.overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    background-color: rgba(1, 1, 1, 0.5);
+}
+.change_input{
+    background: transparent;
+	border-radius: 5px;
+	// border: none;
+    font-size: 2rem;
+    font-weight: 600;	
+	// cursor: auto;
+	input{
+		width: 90%;
+		padding: 0 5px;
+		color: $main;
+	}
+	.input__btn{
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		// padding: 0 5px;
+		img{
+			width: 2rem;
+    		height: 2rem;
+			opacity: 0.6;
+		}
+	}
+	&:hover .input__btn{
+		transform: scale(1.15);
+		transition: all .5s;
+	}
+	&:not(.active){
+		border: none !important;
+	}
+	
+}
+
+
+.label{
+	line-height: 2;
+	color: $main;
+	margin-right: 1rem;
+	text-align: start;
+	width: 10rem;
+}

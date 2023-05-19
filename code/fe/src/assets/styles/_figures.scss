@@ -1,0 +1,57 @@
+/*section figures (bg)*/
+.figure{
+	position: relative;
+	background-repeat: no-repeat;
+	width: 100%;
+  }
+  .section-figure_1{
+	position: relative;
+	&:after{
+	  content: "";
+	  width: 100%;
+	  height: 15rem;
+	  // background-image: url(../img/figure1.png);
+	  background-position: bottom;
+	  background-size: 100% 100%;
+	  left: 0;
+	  bottom: 0;
+	  position: absolute;
+	  z-index: -1;
+	  background-repeat: no-repeat;
+	}
+  
+  }
+  .section-figure_2{
+	position: relative;
+	&:after{
+	  content: "";
+	  width: 100%;
+	  height: 5rem;
+	  // background-image: url(../img/figure2.png);
+	  background-position: bottom;
+	  background-size: 100% 100%;
+	  left: 0;
+	  top: -4rem;
+	  position: absolute;
+	  z-index: -1;
+	  background-repeat: no-repeat;
+	}
+  }
+  .section-figure_3{
+	&:after{
+	  content: "";
+	  width: 100%;
+	  height: 5rem;
+	  // background-image: url(../img/figure3.png);
+	  background-position: bottom;
+	  background-size: 100% 100%;
+	  left: 0;
+	  top: -4rem;
+	  position: absolute;
+	  z-index: -1;
+	  background-repeat: no-repeat;
+	}
+  }
+  .wow{
+	visibility: hidden;
+  }
