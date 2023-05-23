@@ -47,3 +47,21 @@
 		}
 	}
 }
+.auth{
+	width: 64rem;
+	background-color: $accent;
+	margin: 0 auto;
+	padding: 3rem 5rem;
+	border-radius: 2rem;
+	margin-top: 4rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	form{
+		display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 90%;
+	}
+}

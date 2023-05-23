@@ -53,24 +53,26 @@
 	  transition: color .5s;
 	}
   }
-  .hover-line{
+.hover-line{
 	a{
 	  line-height: 1.2;
 	  display: inline-block!important;
 	  &:after{
-		display: block;
-		content: '';
-		height: 2px;
-		background-color: $accent-dark;
-		width: 0;
-		transition: width 0.4s ease-in-out;
+			display: block;
+			content: '';
+			height: 2px;
+			background-color: $white;
+			width: 0;
+			transition: width 0.4s ease-in-out;
 	  }
 	  &:hover:after{
 		width: 100%;
 	  }
-  
 	}
-  }
+	&.dark a:after{
+		background-color: $main;
+	}
+}
   .hover_height{
 	&:hover{
 	  min-height: 54rem;

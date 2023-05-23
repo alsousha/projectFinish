@@ -1,55 +1,62 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
+import axios from 'axios'
 
+import { API_URL } from '../../constans';
+import { AuthContext } from '../../context/authContext';
 
+function LoginForm() {
+	const [inputs, setInputs] = useState({
+		username: "",
+		email: "",
+		password: ""
+	})
+	const [err, setError] = useState(null);
 
-function LoginForm({setIsLoggedIn, setUserName}) {
-	const [visibleForm, setVisibleForm] = useState(false);
-	const [login, setLogin] = useState('');
-	const [password, setPassword] = useState('');
-	const [isLoading, setIsloading] = useState(false);
+	const navigate = useNavigate()
+	const {login, currentUser } = useContext(AuthContext)
 
-	const navigate = useNavigate();
+	const handleChange = e=>{
+		setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
+	}
+	const handleSubmit = async e=>{
+		e.preventDefault()
+		// console.log(inputs);
+		try{
+			await login(inputs)
 
-	const handlLoginChange = (e) => {
-		setLogin(e.target.value);
-	  };
-	  const handlPasswordChange = (e) => {
-		setPassword(e.target.value);
-	  };
-	  const handleLogIn = (e) => {
-		e.preventDefault();
-		setIsLoggedIn(true); //change app state if user is logged
-		// setUserName(login); //send userName to header
-		localStorage.setItem('isLoggedIn', true);
-		localStorage.setItem('userName', login);
-		navigate('/teacher');
-		// navigate('/student');
-		// navigate('/admin');
-	  };
-
-
+			navigate('/')
+		}catch(err){
+			setError(err.response.data)
+		}
+	}
   return (
 	<div>
-		<form className='formColumn' onSubmit={handleLogIn}>
+		<form className='formColumn'>
 			<input 
-				type="text" 
-				value={login} 
-				placeholder='Login' 
-				onChange={handlLoginChange}
+				type="email" 
+				name="email"
+				placeholder='Login:' 
+				onChange={handleChange}
 				required
 			/>
 			<input 
 				type="password" 
-				value={password} 
-				placeholder='Password'
-				onChange={handlPasswordChange}
+				name="password"
+				placeholder='Password:'
+				onChange={handleChange}
 				required
 			/>
-			<button type='submit' className='btn_main'>Login</button>
+			<button onClick={handleSubmit} className='btn_main'>Login</button>
+			{err && <p className='error'>{err}</p>}
 		</form>
-		<div className='underline mt2'>Forget password?</div>
-		<div className='mt2'>Don't you have an account? <Link to="/register"><span className='underline'>Register</span></Link> </div>
+		<div className='italic mt2 hover-line'><Link to="/register">Forget password?</Link></div>
+		<div className='mt2 hover-line '>
+			<span>Don't you have an account?</span>&emsp;
+			<span className='italic'>
+				<Link to="/register" className="">Register</Link>
+			</span> 
+		</div>
 	  
 	</div>
   )

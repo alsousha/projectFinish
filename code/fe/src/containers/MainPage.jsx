@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { Intro } from '../components'
 import TeacherPage from './TeacherPage';
 import StudentPage from './StudentPage';
 import Register from './Register';
+import { AuthContext } from '../context/authContext';
 
 function MainPage({setIsLoggedIn, setUserName, isLoggedIn}) {
+	const { currentUser } = useContext(AuthContext)
+	console.log(currentUser);
+
 	const userData = {
 		id: 1,
 		name: 'Anna',

@@ -26,7 +26,7 @@ function TeacherPage({isLoggedIn, setIsLoggedIn, userData}) {
 	<div>
 	  
 	  <div className="mainPage d-flex">
-		{!isLoggedIn ? (
+		{!true ? (
 			<div className='container d-flex jcc'><h1>Page not found</h1></div>
 		) : (
 			<>

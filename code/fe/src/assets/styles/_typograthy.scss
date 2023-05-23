@@ -433,3 +433,12 @@ h1, h2,h3,h4{
   
 	}
   }
+.italic{
+	*{
+		font-style: italic;
+	}
+}
+.error{
+	text-align: center;
+	color: rgb(244, 87, 87);
+}
