@@ -5,67 +5,69 @@ import TeacherPage from './TeacherPage';
 import StudentPage from './StudentPage';
 import Register from './Register';
 import { AuthContext } from '../context/authContext';
+import NotFound from '../pages/404';
 
 function MainPage({setIsLoggedIn, setUserName, isLoggedIn}) {
+	// const [currentLink, setCurrentLink] = useState()
 	const { currentUser } = useContext(AuthContext)
-	console.log(currentUser);
+	const currentLink = currentUser ? `/${currentUser['role']}` : '/'
 
-	const userData = {
-		id: 1,
-		name: 'Anna',
-		lastname: 'Serhil',
-		userImgLink: 'https://loremflickr.com/320/240/girl',
-		role: 'teacher',
-		sbj: 'English',
-	  };
-	const userData2 = {
-	id: 2,
-	name: 'Ben',
-	lastname: 'Fanc',
-	userImgLink: 'https://loremflickr.com/320/240/boy',
-	role: 'student',
-	};
-	const activeUserRole = `/${userData.role}`
+
+	const roles = ['teacher', 'student', 'admin']
+	
+	// Mapping the routes
+	const renderedRoutes = roles.map((role, index) => (
+		<Route key={index} path={`/${role}/`} element={<Navigate to='/' replace/>}/>
+	));
+
+
+
+	// console.log("lonk" +currentLink);
+	// currentUser&&console.log("currentUser['role']"+currentUser['role']);
+
+
   return (
-	<div>
+	<div className='h100'>
 		{/* if user logged -> show Teacher/Student/AdminPage => Login/Register Page */}
-		{!isLoggedIn ?(
-			<>
+		{
+			currentUser!==null ?(
 				<Routes>
-					<Route path="/register" element={<Register />} />
-					<Route path="/" element={<Intro setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>} />
+					{currentUser['role']==='teacher'}&&<Route
+						exsct
+						path='/teacher/*'
+						element={
+						<TeacherPage
+							isLoggedIn={isLoggedIn}
+							setIsLoggedIn={setIsLoggedIn}
+						/>
+						}
+					/>	
+					{currentUser['role']==='student'}&&<Route
+						exsct
+						path='/student/*'
+						element={
+						<StudentPage
+							isLoggedIn={isLoggedIn}
+							setIsLoggedIn={setIsLoggedIn}
+						/>
+						}
+					/>
+					<Route path="/" element={<Navigate to={currentLink} replace/>}/> 			
+					<Route path="/" element={<Navigate to={'404'} replace/>}/> 			
 				</Routes>
-			</>
-			
-		):(
-			<Routes>
-				<Route
-					exsct
-					path='/teacher/*'
-					element={
-					<TeacherPage
-						isLoggedIn={isLoggedIn}
-						setIsLoggedIn={setIsLoggedIn}
-						userData={userData}
-						// setUserData={setUserData}
-					/>
-					}
-				/>	
-				<Route
-					exsct
-					path='/student/*'
-					element={
-					<StudentPage
-						isLoggedIn={isLoggedIn}
-						setIsLoggedIn={setIsLoggedIn}
-						userData={userData2}
-						// setUserData={setUserData}
-					/>
-					}
-				/>			
-				<Route path="/" element={<Navigate to={activeUserRole} replace/>}/>
-		    </Routes>
-		)}
+			):(
+				<>
+					<Routes>
+						{renderedRoutes}
+						<Route path="/register" element={<Register />} />
+						{/* <Route path="/login" element={<Register />} /> */}
+						<Route exact path="/" element={<Intro />} />
+						<Route exact path="/*" element={<NotFound/>} />
+					</Routes>
+				</>
+			)
+		}
+		
 	</div>
   )
 }

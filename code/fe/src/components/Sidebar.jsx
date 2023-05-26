@@ -1,4 +1,4 @@
-import React,{ useState } from 'react'
+import React,{ useState, useContext } from 'react'
 
 import { Link, NavLink } from "react-router-dom";
 import './components.scss'
@@ -7,19 +7,13 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import UserEditForm from './Forms/UserEditForm';
 import { ReactComponent as LogoutIcon } from '../assets/img/logout.svg';
 import { ReactComponent as EditIcon } from '../assets/img/edit.svg';
+import { AuthContext } from '../context/authContext';
 
-function Sidebar({items, handleLink, userData, setIsLoggedIn}) {
+function Sidebar({items, handleLink, setIsLoggedIn}) {
+	const { currentUser, logout } = useContext(AuthContext)
+
 	const [visibleUserEditForm, setVisibleUserEditForm] = useState(false);
-	// console.log(items);
-	const handleLogOut = () => {
-		if(window.confirm("Are you sure want to exit?")){
-			//change app state for logout
-			setIsLoggedIn(false);
-			localStorage.setItem('isLoggedIn', false);
-			localStorage.setItem('userName', '');
-		}
-		
-	  };
+	
 	const toggleVisibleUserEditForm = () =>{
 		setVisibleUserEditForm(!visibleUserEditForm)
 	}
@@ -31,20 +25,17 @@ function Sidebar({items, handleLink, userData, setIsLoggedIn}) {
 					<button className='editBtn userSection__btn hover-scale ' title="edit profile">
 						<EditIcon className='sidebar__icon' onClick={()=>toggleVisibleUserEditForm()}/>
 					</button>
-					<NavLink onClick={handleLogOut} to='/' className='exitBtn userSection__btn hover-scale' title="logout">
-						<LogoutIcon className='sidebar__icon'/>
-					</NavLink>
-					
+					<span className='exitBtn userSection__btn hover-scale' onClick={logout}><Link className="link" to="/"><LogoutIcon className='sidebar__icon'/></Link></span>	
 				</div>
 			</div>
 			<div className="bottom">
 				<div className="user__info d-flex f-column aic">
 					<div className="user__logo">
-						<img src={userData.userImgLink} alt="user_avatar" />
+						{/* <img src={userData.userImgLink} alt="user_avatar" /> */}
 					</div>
-					<div className="user__name t_24 t_bold"><h3>{userData.lastName} {userData.name}</h3></div>
-					<div className="user__role">{userData.role}</div>
-					<div className="user__sbj">{userData.sbj}</div>
+					<div className="user__name t_24 t_bold"><h3>{currentUser.lastName} {currentUser.name}</h3></div>
+					<div className="user__role">{currentUser.role}</div>
+					{/* <div className="user__sbj">{currentUser.sbj}</div> */}
 				</div>
 			</div>
 		</div>
@@ -58,7 +49,7 @@ function Sidebar({items, handleLink, userData, setIsLoggedIn}) {
 		))}
 		</nav>
 		{visibleUserEditForm ? (
-			<UserEditForm userData={userData} handleEditFormHide={toggleVisibleUserEditForm}/>
+			<UserEditForm  currentUser={currentUser} handleEditFormHide={toggleVisibleUserEditForm}/>
 		): ("")}
 		
 	</div>

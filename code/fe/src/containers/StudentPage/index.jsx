@@ -9,7 +9,7 @@ import Certifications from './Certifications'
 import GlobalTasks from './GlobalTasks'
 
 function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
-	console.log(isLoggedIn);
+	// console.log(isLoggedIn);
 	// const [classes, setClasses] = useState();
 
 	const linksData = [
@@ -23,10 +23,6 @@ function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
   return (
 	<div>
 	  <div className="mainPage d-flex">
-		{!isLoggedIn ? (
-			<div className='container d-flex jcc'><h1>Page not found</h1></div>
-		) : (
-			<>
 			<Sidebar 
 				items={linksData} 
 				userData={userData} 
@@ -42,10 +38,6 @@ function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
 					<Route path='/globalTasks' element={<GlobalTasks />} />
 				</Routes>
 			</div>
-			</>
-		)}
-		
-		
 	  </div>
 	</div>
   )

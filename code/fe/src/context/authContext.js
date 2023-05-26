@@ -9,12 +9,14 @@ export const AuthContextProvider = ({ children }) => {
   const login = async (inputs) => {
     const res = await axios.post('/auth/login', inputs);
     setCurrentUser(res.data); //send login fun to controller and update state
+    // console.log('res' + JSON.stringify(res).data);
   };
 
-  const logout = async (inputs) => {
-    console.log('rfr');
-    await axios.post('/auth/logout');
-    setCurrentUser(null);
+  const logout = async () => {
+    if (window.confirm('Are you sure want to exit?')) {
+      await axios.post('/auth/logout');
+      setCurrentUser(null);
+    }
   };
 
   useEffect(() => {

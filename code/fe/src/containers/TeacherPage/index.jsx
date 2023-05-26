@@ -26,30 +26,23 @@ function TeacherPage({isLoggedIn, setIsLoggedIn, userData}) {
 	<div>
 	  
 	  <div className="mainPage d-flex">
-		{!true ? (
-			<div className='container d-flex jcc'><h1>Page not found</h1></div>
-		) : (
-			<>
 			<Sidebar 
 				items={linksData} 
-				userData={userData} 
-				setIsLoggedIn={setIsLoggedIn}
+				// userData={userData} 
+				// setIsLoggedIn={setIsLoggedIn}
 			/>
 			<div className='mainContent'>
 				<h1>Teacher</h1>
 				<Routes>
-					<Route path='/classes' element={<Classes classes={classes}/>} />
+					<Route path='classes' element={<Classes classes={classes}/>} />
 					<Route path='/categories' element={<Categories />} />
 					<Route path='/write' element={<WriteTask />} />
 					<Route path='/tasks' element={<Tasks />} />
 					<Route path='/task/:id' element={<Task />} />
 					<Route path='/students' element={<Students />} />
+					<Route path='/' element={<span>logout</span>} />
 				</Routes>
 			</div>
-			</>
-		)}
-		
-		
 	  </div>
 	</div>
   )

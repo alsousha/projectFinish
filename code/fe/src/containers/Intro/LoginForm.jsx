@@ -15,6 +15,7 @@ function LoginForm() {
 
 	const navigate = useNavigate()
 	const {login, currentUser } = useContext(AuthContext)
+	
 
 	const handleChange = e=>{
 		setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
@@ -24,7 +25,9 @@ function LoginForm() {
 		// console.log(inputs);
 		try{
 			await login(inputs)
-
+			// const currentLink = currentUser ? `/${currentUser['role']}/*` : '/'
+			// //console.log("currentLink" +currentUser);
+			// // navigate(`${currentLink}`)
 			navigate('/')
 		}catch(err){
 			setError(err.response.data)

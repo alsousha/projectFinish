@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link } from "react-router-dom";
-import { AuthContext, logout } from '../../context/authContext'
+import { AuthContext } from '../../context/authContext'
 
 import './header.scss'
 import logo from '../../assets/img/logo.svg'
@@ -15,7 +15,7 @@ function Header() {
 			<span className="slogan">Funny App</span>
 		</a>
 		<span>{currentUser?.username}</span>
-		{currentUser ? <span onClick={logout}>Logoutt</span> : <Link className="link" to="/login">Login</Link>}
+		{currentUser ? <span onClick={logout}><Link className="link" to="/">Logoutt</Link></span> : <Link className="link" to="/">Login</Link>}
 	</header>
   )
 }

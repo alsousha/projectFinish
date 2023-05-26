@@ -1,14 +1,45 @@
 import React, { useState, useRef } from 'react'
+import { useNavigate} from 'react-router-dom';
+import axios from 'axios'
+
 import './forms.scss'
 import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import editSvg from '../../assets/img/edit.svg'
 import saveSvg from '../../assets/img/check-black.svg'
 
 
-function UserEditForm({userData, handleEditFormHide}) {
+function UserEditForm({handleEditFormHide, currentUser}) {
+	const [inputs, setInputs] = useState({
+		username: "",
+		role: "",
+		email: "",
+		password: ""
+	})
+	const [err, setError] = useState(null);
+	const navigate = useNavigate()
+	const handleChange = e=>{
+		// console.log(e.target.options[2].name);
+		setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
+		
+	}
+	const handleSubmit = async e=>{
+		// console.log(inputs);
+		e.preventDefault()
+		try{
+			await axios.post("/auth/register", inputs);
+			//!!! add timeout for msg success
+			navigate('/')
+		}catch(err){
+			setError(err.response.data)
+		}
+	}
+
+
+
+	const userData = null //!!tmp var
 	//input Name
 	const nameInput = useRef(null);
-	const [inputNameValue, setInputNameValue] = useState(userData.name);
+	const [inputNameValue, setInputNameValue] = useState(currentUser.name);
 	const [isActiveInputName, setIsActiveInputName] = useState(false);
 	const [inputStyleInputName, setInputStyleInputName] = useState({'border':'none'});
 	const [isReadonlyInputName, setIsReadonlyInputName] = useState(true);
@@ -32,7 +63,7 @@ function UserEditForm({userData, handleEditFormHide}) {
 
 	//input lastname
 	const lastnameInput = useRef(null);
-	const [inputLastnameValue, setInputLastnameValue] = useState(userData.lastname);
+	const [inputLastnameValue, setInputLastnameValue] = useState(currentUser.lastname);
 	const [isActiveInputLastname, setIsActiveInputLastname] = useState(false);
 	const [inputStyleInputLastname, setInputStyleInputLastname] = useState({'border':'none'});
 	const [isReadonlyInputLastname, setIsReadonlyInputLastname] = useState(true);
@@ -58,7 +89,7 @@ function UserEditForm({userData, handleEditFormHide}) {
 		</button>
 		<div className="editUserInfo__wrap d-flex jcsb">
 			<div className="editUserInfo__left w55">
-				<h2>Edit user: {userData.name}</h2>
+				<h2>Edit user: {currentUser.name}</h2>
 				<div className="userInfo">
 					<div className="userInfo__item d-flex">
 						<span className='userLabel label'>Lastname:</span>
@@ -104,10 +135,10 @@ function UserEditForm({userData, handleEditFormHide}) {
 							</div>
 						</div>
 					</div>
-					{userData.role === "teacher" ? (
+					{currentUser.role === "teacher" ? (
 						<div className="userInfo__item d-flex">
 							<span className='userLabel label'>Subject:</span>
-							<span className='label'>{userData.sbj}</span>
+							<span className='label'>{currentUser.sbj}</span>
 						</div>
 					)
 						: (<div></div>)
@@ -116,7 +147,7 @@ function UserEditForm({userData, handleEditFormHide}) {
 				</div>
 			</div>
 			<div className="editUserInfo__right w40">
-				<img src={userData.userImgLink} alt="user Image" className='userImg' />
+				{/* <img src={currentUser.userImgLink} alt="user Image" className='userImg' /> */}
 				<span>Change your avatar</span>
 			</div>
 		</div>

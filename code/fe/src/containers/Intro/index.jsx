@@ -14,7 +14,7 @@ function Intro({setIsLoggedIn, setUserName}) {
 
 						</div>
 						<div className="loginSection__form w35">
-							<LoginForm setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>
+							<LoginForm />
 						</div>
 
 					</div>

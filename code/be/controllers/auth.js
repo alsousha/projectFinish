@@ -6,16 +6,17 @@ import jwt from 'jsonwebtoken';
 export const register = (req, res) => {
   // console.log('register');
   //check existing user
-  const q = 'SELECT * FROM user WHERE email = ? OR username = ?';
+  const q = 'SELECT * FROM user WHERE email = ? OR name = ?';
   db.query(q, [req.body.email, req.body.username], (err, data) => {
     if (err) return res.json(err);
     if (data.length) return res.status(409).json('User already exists!');
     //hash the password
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
+    console.log('fdfs' + hash);
 
-    const q = 'INSERT INTO user(`username`, `email`,`password`) VALUES (?)';
-    const values = [req.body.username, req.body.email, hash];
+    const q = 'INSERT INTO user(`name`,`lastName`,`role`,`email`,`password`) VALUES (?)';
+    const values = [req.body.username, req.body.lastname, req.body.role, req.body.email, hash];
 
     db.query(q, [values], (err, data) => {
       if (err) return res.json(err);
@@ -23,9 +24,10 @@ export const register = (req, res) => {
     });
   });
 };
+//http://localhost:8800/api/auth/login
 export const login = (req, res) => {
   // console.log(req.body.email); //email from fe input
-  const q = 'SELECT * FROM user WHERE username = ?';
+  const q = 'SELECT * FROM user WHERE name = ?';
   db.query(q, [req.body.email], (err, data) => {
     if (err) return res.json(err);
     if (data.length === 0) return res.status(404).json('User not found!');
@@ -46,13 +48,14 @@ export const login = (req, res) => {
       .json(other); //set data in tab Response(Network), without password
   });
 };
+
+export const deleteUser = (req, res) => {};
 export const logout = (req, res) => {
-  console.log('sdf');
   res
     .clearCookie('access_token', {
       sameSite: 'none',
       secure: true,
     })
     .status(200)
-    .json('USer has been logged out.');
+    .json('User has been logged out.');
 };
