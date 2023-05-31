@@ -18,6 +18,12 @@ export const AuthContextProvider = ({ children }) => {
       setCurrentUser(null);
     }
   };
+  const deleteUser = async () => {
+    if (window.confirm('Are you sure want to delete this acount?')) {
+      await axios.post('/auth/delete');
+      setCurrentUser(null);
+    }
+  };
 
   useEffect(() => {
     //update localstorage when we change user
@@ -26,6 +32,8 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     //set data (currentUser, login, logout) to context
-    <AuthContext.Provider value={{ currentUser, login, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ currentUser, login, logout, deleteUser }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

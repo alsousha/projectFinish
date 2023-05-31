@@ -49,7 +49,32 @@ export const login = (req, res) => {
   });
 };
 
-export const deleteUser = (req, res) => {};
+export const deleteUser = (req, res) => {
+  console.log('delete');
+  // // SQL query to delete the user
+  // const q = 'DELETE FROM user WHERE id = ?';
+
+  // // Execute the query with the user ID parameter
+  // connection.query(query, [userId], (err, result) => {
+  //   // Release the connection back to the pool
+  //   connection.release();
+
+  //   if (err) {
+  //     callback(err);
+  //     return;
+  //   }
+
+  //   // Pass the result to the callback function
+  //   callback(null, result);
+  // });
+  // res
+  //   .clearCookie('access_token', {
+  //     sameSite: 'none',
+  //     secure: true,
+  //   })
+  //   .status(200)
+  //   .json('User has been deleted.');
+};
 export const logout = (req, res) => {
   res
     .clearCookie('access_token', {

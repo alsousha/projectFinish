@@ -1,166 +1,209 @@
-import React, { useState, useRef } from 'react'
-import { useNavigate} from 'react-router-dom';
+import React, { useContext,useState, useRef, useEffect } from 'react'
+import { useNavigate, Link} from 'react-router-dom';
 import axios from 'axios'
+import { AuthContext } from '../../context/authContext'
+
 
 import './forms.scss'
-import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
 import editSvg from '../../assets/img/edit.svg'
 import saveSvg from '../../assets/img/check-black.svg'
 
-
-function UserEditForm({handleEditFormHide, currentUser}) {
-	const [inputs, setInputs] = useState({
-		username: "",
-		role: "",
-		email: "",
-		password: ""
-	})
+function UserEditForm({handleEditFormHide}) {
+	const { currentUser, deleteUser} = useContext(AuthContext)
+	
 	const [err, setError] = useState(null);
-	const navigate = useNavigate()
-	const handleChange = e=>{
-		// console.log(e.target.options[2].name);
-		setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-		
-	}
-	const handleSubmit = async e=>{
-		// console.log(inputs);
-		e.preventDefault()
-		try{
-			await axios.post("/auth/register", inputs);
-			//!!! add timeout for msg success
-			navigate('/')
-		}catch(err){
-			setError(err.response.data)
-		}
-	}
 
+	// const initialUserData = {
+  //   name: currentUser.name,
+  //   lastname: currentUser.lastname,
+  //   // Add more fields as needed
+  // };
+	const [editingFields, setEditingFields] = useState({});
+  const [userData, setUserData] = useState(currentUser);
+  const [currentField, setCurrentField] = useState(null);
+  const [previousField, setPreviousField] = useState(null);
+  const [errors, setErrors] = useState({});
+	const inputRefs = {
+    name: useRef(null),
+    lastname: useRef(null),
+    email: useRef(null),
+    // Add refs for other fields as needed
+  };
 
+  const handleEdit = (fieldName) => {
+    if (currentField && currentField !== fieldName) {
+      handleSave(previousField);
+    }
+    setEditingFields((prevEditingFields) => ({
+      ...prevEditingFields,
+      [fieldName]: true,
+    }));
+    setCurrentField(fieldName);
+    setPreviousField(fieldName);
+  };
 
-	const userData = null //!!tmp var
-	//input Name
-	const nameInput = useRef(null);
-	const [inputNameValue, setInputNameValue] = useState(currentUser.name);
-	const [isActiveInputName, setIsActiveInputName] = useState(false);
-	const [inputStyleInputName, setInputStyleInputName] = useState({'border':'none'});
-	const [isReadonlyInputName, setIsReadonlyInputName] = useState(true);
-	const [editIconInputName, setEditIconInputName] = useState(editSvg);
+  const handleSave = (fieldName) => {
+    const fieldErrors = validateField(fieldName);
+    if (Object.keys(fieldErrors).length === 0) {
+      setEditingFields((prevEditingFields) => ({
+        ...prevEditingFields,
+        [fieldName]: false,
+      }));
+      setErrors({});
+      // Update user data with the changes
+      // You can send the updated data to an API or perform any necessary actions here
+    } else {
+      setErrors(fieldErrors);
+    }
+  };
 
-	const updateUserInfo = ()=>{
+  const handleChange = (e) => {
+		setErrors({});
+    const { name, value } = e.target;
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+  };
+	useEffect(() => {
+    if (editingFields[currentField] && inputRefs[currentField].current) {
+      inputRefs[currentField].current.focus();
+    }
+  }, [editingFields, currentField]);
 
-	}
-	const editUserName = () =>{
-		nameInput.current.focus()
-		if(!nameInput.current.value){
-			setInputStyleInputName({'borderColor': 'red'})
-			return
-		}
-		setIsReadonlyInputName(prevState => !prevState) //change input visiable (can enter data to input)
-		setIsActiveInputName(prevState => !prevState) //toggle active class for item
-		setEditIconInputName(prevState => prevState===editSvg? saveSvg : editSvg) //toggle edit/save btns
-		setInputStyleInputName({'border': '1px solid blue'})
-	}
-	//end input Name
+  const validateField = (fieldName) => {
+    const errors = {};
+    const value = userData[fieldName];
 
-	//input lastname
-	const lastnameInput = useRef(null);
-	const [inputLastnameValue, setInputLastnameValue] = useState(currentUser.lastname);
-	const [isActiveInputLastname, setIsActiveInputLastname] = useState(false);
-	const [inputStyleInputLastname, setInputStyleInputLastname] = useState({'border':'none'});
-	const [isReadonlyInputLastname, setIsReadonlyInputLastname] = useState(true);
-	const [editIconInputLastname, setEditIconInputLastname] = useState(editSvg);
+    switch (fieldName) {
+      case 'name':
+        if (!value.trim()) {
+          errors[fieldName] = 'Name is required';
+        }
+        break;
+			case 'lastname':
+			if (!value.trim()) {
+				errors[fieldName] = 'lastname is required';
+			}
+			break;
+      case 'email':
+        if (!value.trim()) {
+          errors[fieldName] = 'Email is required';
+        } else if (!isValidEmail(value)) {
+          errors[fieldName] = 'Invalid email address';
+        }
+        break;
+      // Add validation checks for other fields as needed
+      default:
+        break;
+    }
 
-	const editUserLastname = () =>{
-		lastnameInput.current.focus()
-		if(!lastnameInput.current.value){
-			setInputStyleInputLastname({'borderColor': 'red'})
-			return
-		}
-		setIsReadonlyInputLastname(prevState => !prevState) //change input visiable (can enter data to input)
-		setIsActiveInputLastname(prevState => !prevState) //toggle active class for item
-		setEditIconInputLastname(prevState => prevState===editSvg? saveSvg : editSvg) //toggle edit/save btns
-		setInputStyleInputLastname({'border': '1px solid blue'})
-	}
-	//end input Lastname
+    return errors;
+  };
+
+  const isValidEmail = (email) => {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   return (
 	<>
-	<form action='' className='editUserInfo popup' onSubmit={updateUserInfo}>
-		<button className='btnClose hover-scale' onClick={handleEditFormHide}>
-			<CancelTwoToneIcon />
-		</button>
-		<div className="editUserInfo__wrap d-flex jcsb">
-			<div className="editUserInfo__left w55">
-				<h2>Edit user: {currentUser.name}</h2>
-				<div className="userInfo">
-					<div className="userInfo__item d-flex">
-						<span className='userLabel label'>Lastname:</span>
-						<div className="change_input w25r d-flex">
-							<input 
-								ref={lastnameInput}
-								className={isActiveInputLastname? 'active change_input ': 'change_input '}
-								placeholder="Enter name"
-								style={inputStyleInputLastname}
-								readOnly={isReadonlyInputLastname}
-								value={inputLastnameValue} 
-								// onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
-								onChange={e => setInputLastnameValue(e.target.value)} 
+		<div className='editUserInfo popup'>
+			<div className="userInfo__item d-flex aic">
+				<span className='userLabel label'>Name:</span>
+				<div className="popup_input change_input w25r d-flex aic">
+				{editingFields.name ? ( 
+						<div className='popup_field       '>
+							<input
+								type="text"
+								name="name"
+								className='popup_field'
+								value={userData.name}
+								onChange={handleChange}
+								ref={inputRefs.name}
 							/>
-							<div className={isActiveInputName? 'input__btn active': 'input__btn '} >
-								<img 
-									src={editIconInputLastname} 
-									alt="edit icon"
-									onClick={editUserLastname}
-								/>							
-							</div>
+							{errors.name && <span className='input_error'>{errors.name}</span>}
 						</div>
-					</div>
-					<div className="userInfo__item d-flex">
-						<span className='userLabel label'>Name:</span>
-						<div className="change_input w25r d-flex">
-							<input 
-								ref={nameInput}
-								className={isActiveInputName? 'active change_input ': 'change_input '}
-								placeholder="Enter name"
-								style={inputStyleInputName}
-								readOnly={isReadonlyInputName}
-								value={inputNameValue} 
-								// onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
-								onChange={e => setInputNameValue(e.target.value)} 
-							/>
-							<div className={isActiveInputName? 'input__btn active': 'input__btn '} >
-								<img 
-									src={editIconInputName} 
-									alt="edit icon"
-									onClick={editUserName}
-								/>							
-							</div>
-						</div>
-					</div>
-					{currentUser.role === "teacher" ? (
-						<div className="userInfo__item d-flex">
-							<span className='userLabel label'>Subject:</span>
-							<span className='label'>{currentUser.sbj}</span>
-						</div>
-					)
-						: (<div></div>)
-					}
-					
+					) : (
+						<span className='popup_field'>{userData.name}</span>
+					)}
+					{editingFields.name ? (
+					<button onClick={() => handleSave('name')}>
+						<img src={saveSvg} alt="save img" />
+					</button>
+				) : (
+					<button onClick={() => handleEdit('name')}>
+						<img src={editSvg} alt="" />
+					</button>
+				)}
 				</div>
 			</div>
-			<div className="editUserInfo__right w40">
-				{/* <img src={currentUser.userImgLink} alt="user Image" className='userImg' /> */}
-				<span>Change your avatar</span>
+			<div className="userInfo__item d-flex aic">
+				<span className='userLabel label'>Lastname:</span>
+				<div className="popup_input change_input w25r d-flex aic">
+				{editingFields.lastname ? ( 
+						<div className='popup_field       '>
+							<input
+								type="text"
+								name="name"
+								className='popup_field'
+								value={userData.lastName}
+								onChange={handleChange}
+								ref={inputRefs.lastname}
+							/>
+							{errors.lastname && <span className='input_error'>{errors.lastname}</span>}
+						</div>
+					) : (
+						<span className='popup_field'>{userData.lastName}</span>
+					)}
+					{editingFields.lastname ? (
+					<button onClick={() => handleSave('lastname')}>
+						<img src={saveSvg} alt="save img" />
+					</button>
+				) : (
+					<button onClick={() => handleEdit('lastname')}>
+						<img src={editSvg} alt="" />
+					</button>
+				)}
+				</div>
 			</div>
-		</div>
-		<div className="form__bottom d-flex jcsb">
-			<input type="submit" />
-			<button>Delete account</button>
-		</div>
-		
 
-		
-	</form>
-	<div onClick={handleEditFormHide} className='overlay'></div>
-      </>
+			<div className="userInfo__item d-flex aic">
+				<span className='userLabel label'>Email:</span>
+				<div className="popup_input change_input w25r d-flex aic">
+				{editingFields.email ? ( 
+						<div className='popup_field       '>
+							<input
+								type="text"
+								name="email"
+								className='popup_field'
+								value={userData.email}
+								onChange={handleChange}
+								ref={inputRefs.email}
+							/>
+							{errors.email && <span className='input_error'>{errors.email}</span>}
+						</div>
+					) : (
+						<span className='popup_field'>{userData.email}</span>
+					)}
+					{editingFields.email ? (
+					<button onClick={() => handleSave('email')}>
+						<img src={saveSvg} alt="save img" />
+					</button>
+				) : (
+					<button onClick={() => handleEdit('email')}>
+						<img src={editSvg} alt="" />
+					</button>
+				)}
+				</div>
+			</div>
+	
+
+			{/* Add more fields here with their respective buttons */}
+		</div>
+
+		<div onClick={handleEditFormHide} className='overlay'></div>
+  </>
   )
 }
 
