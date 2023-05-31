@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2023 at 12:31 PM
+-- Generation Time: May 31, 2023 at 08:32 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -62,6 +62,13 @@ CREATE TABLE `class` (
   `id_teacher` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
+(1, 'first', 1, 12);
+
 -- --------------------------------------------------------
 
 --
@@ -90,7 +97,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id_user`, `id_class`, `total_points`) VALUES
-(38, 0, 0);
+(43, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -127,6 +134,13 @@ CREATE TABLE `subject` (
   `id_subject` int(3) NOT NULL,
   `subject_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `subject`
+--
+
+INSERT INTO `subject` (`id_subject`, `subject_name`) VALUES
+(12, 'math');
 
 -- --------------------------------------------------------
 
@@ -190,7 +204,7 @@ CREATE TABLE `task_template` (
 CREATE TABLE `teacher` (
   `id_user` int(3) NOT NULL,
   `count_of_tasks` int(3) NOT NULL,
-  `id_subject` int(3) DEFAULT NULL
+  `id_subject` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -198,7 +212,7 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`id_user`, `count_of_tasks`, `id_subject`) VALUES
-(36, 0, NULL);
+(42, 0, 12);
 
 -- --------------------------------------------------------
 
@@ -220,8 +234,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastName`) VALUES
-(36, 'teacher', 'alex@df.dsf', '$2b$10$GyDxPheIF1GxZmU712w3puuFgixTE09I8URgFtBzCu5s70I.pRAZm', 'Alex', 'agronov'),
-(38, 'student', 'alexstudent@df.dsf', '$2b$10$.gv4uI5zOxcbYWP9XNSOyeBbFcwoEvZUhV.jCCzH7Qw3goDs/PVTC', 'Alexstud', 'agronovdd');
+(42, 'teacher', 'alexstudent@df.dsf', '$2b$10$l7nMrlN0KrnIIa5TUAVSH.iI9ZnP2jyPXqXPrnRYA7yZbIMbHV.j6', 'Alexstud', 'agronovdd'),
+(43, 'student', 'Istud@df.dsf', '$2b$10$O2koLp/3yvHBWMFUFhgP/eSEgTSw7ed765u9GbGF2WlKZ6dajqoza', 'Istudent', 'mustud');
 
 --
 -- Triggers `user`
@@ -275,6 +289,7 @@ ALTER TABLE `class_folder`
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
+  ADD UNIQUE KEY `id_class` (`id_class`),
   ADD KEY `id_user` (`id_user`);
 
 --
@@ -323,7 +338,8 @@ ALTER TABLE `task_template`
 -- Indexes for table `teacher`
 --
 ALTER TABLE `teacher`
-  ADD UNIQUE KEY `id_user` (`id_user`);
+  ADD UNIQUE KEY `id_user` (`id_user`),
+  ADD UNIQUE KEY `id_subject` (`id_subject`);
 
 --
 -- Indexes for table `user`
@@ -352,7 +368,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `class_folder`
@@ -364,7 +380,7 @@ ALTER TABLE `class_folder`
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `id_subject` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_subject` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `task`
@@ -388,7 +404,7 @@ ALTER TABLE `task_template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- Constraints for dumped tables
