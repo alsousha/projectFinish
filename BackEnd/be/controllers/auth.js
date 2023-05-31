@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 
 //Function to Register new user
 export const register = (req, res) => {
-  // console.log("register" + req.body.username);
   //check existing user
   const q = "SELECT * FROM user WHERE email = ?";
   db.query(q, [req.body.email], (err, data) => {
@@ -14,7 +13,7 @@ export const register = (req, res) => {
     //hash the password
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    // console.log("fdfs" + hash);
+
 
     const q =
       "INSERT INTO user(`name`,`lastName`,`role`,`email`,`password`) VALUES (?)";
