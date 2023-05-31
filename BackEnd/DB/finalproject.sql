@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2023 at 08:32 PM
+-- Generation Time: May 31, 2023 at 09:15 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -226,16 +226,17 @@ CREATE TABLE `user` (
   `email` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(15) NOT NULL,
-  `lastName` varchar(15) NOT NULL
+  `lastName` varchar(15) NOT NULL,
+  `img_url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastName`) VALUES
-(42, 'teacher', 'alexstudent@df.dsf', '$2b$10$l7nMrlN0KrnIIa5TUAVSH.iI9ZnP2jyPXqXPrnRYA7yZbIMbHV.j6', 'Alexstud', 'agronovdd'),
-(43, 'student', 'Istud@df.dsf', '$2b$10$O2koLp/3yvHBWMFUFhgP/eSEgTSw7ed765u9GbGF2WlKZ6dajqoza', 'Istudent', 'mustud');
+INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastName`, `img_url`) VALUES
+(42, 'teacher', 'alexstudent@df.dsf', '$2b$10$l7nMrlN0KrnIIa5TUAVSH.iI9ZnP2jyPXqXPrnRYA7yZbIMbHV.j6', 'Alexstud', 'agronovdd', ''),
+(43, 'student', 'Istud@df.dsf', '$2b$10$O2koLp/3yvHBWMFUFhgP/eSEgTSw7ed765u9GbGF2WlKZ6dajqoza', 'Istudent', 'mustud', '');
 
 --
 -- Triggers `user`
