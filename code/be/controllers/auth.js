@@ -4,30 +4,59 @@ import jwt from 'jsonwebtoken';
 // import { API_URL } from '../../fe/src/constans.js';
 
 export const register = (req, res) => {
+  console.log(req);
   // console.log('register');
   //check existing user
-  const q = 'SELECT * FROM user WHERE email = ? OR name = ?';
-  db.query(q, [req.body.email, req.body.username], (err, data) => {
+  const q = 'SELECT * FROM user WHERE email = ? ';
+  db.query(q, [req.body.email], (err, data) => {
     if (err) return res.json(err);
     if (data.length) return res.status(409).json('User already exists!');
     //hash the password
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-    console.log('fdfs' + hash);
+    // console.log('fdfs' + hash);
 
-    const q = 'INSERT INTO user(`name`,`lastName`,`role`,`email`,`password`) VALUES (?)';
-    const values = [req.body.username, req.body.lastname, req.body.role, req.body.email, hash];
+    const q = 'INSERT INTO user(`name`,`lastname`,`role`,`email`,`password`,`img_url`) VALUES (?)';
+    const values = [
+      req.body.username,
+      req.body.lastname,
+      req.body.role,
+      req.body.email,
+      hash,
+      req.body.img_url,
+    ];
+    // const q2 = 'INSERT INTO teacher(`id_subject`) VALUES (?) WHERE id_user = ?';
 
     db.query(q, [values], (err, data) => {
       if (err) return res.json(err);
       return res.status(200).json('User has been created');
     });
+
+    // const q2 = 'INSERT INTO teacher(`id_user`, `id_subject`) VALUES (?, ?)';
+    const q2 = 'UPDATE teacher SET id_subject = ? WHERE id_user = ?';
+
+    // db.query(q, [values], (err, data) => {
+    //   if (err) return res.json(err);
+
+    //   const idUser = data.insertId; // Get the inserted id_user
+
+    //   const teacherValues = [
+    //     idUser,
+    //     // req.body.id_subject, // Assuming you have the id_subject value available
+    //     5, // Assuming you have the id_subject value available
+    //   ];
+
+    //   db.query(q2, teacherValues, (err, data) => {
+    //     if (err) return res.json(err);
+    //     return res.status(200).json('User and Teacher have been created');
+    //   });
+    // });
   });
 };
 //http://localhost:8800/api/auth/login
 export const login = (req, res) => {
   // console.log(req.body.email); //email from fe input
-  const q = 'SELECT * FROM user WHERE name = ?';
+  const q = 'SELECT * FROM user WHERE email = ?';
   db.query(q, [req.body.email], (err, data) => {
     if (err) return res.json(err);
     if (data.length === 0) return res.status(404).json('User not found!');

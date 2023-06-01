@@ -12,19 +12,12 @@ function MainPage({setIsLoggedIn, setUserName, isLoggedIn}) {
 	const { currentUser } = useContext(AuthContext)
 	const currentLink = currentUser ? `/${currentUser['role']}` : '/'
 
-
 	const roles = ['teacher', 'student', 'admin']
 	
 	// Mapping the routes
 	const renderedRoutes = roles.map((role, index) => (
 		<Route key={index} path={`/${role}/`} element={<Navigate to='/' replace/>}/>
 	));
-
-
-
-	// console.log("lonk" +currentLink);
-	// currentUser&&console.log("currentUser['role']"+currentUser['role']);
-
 
   return (
 	<div className='h100'>

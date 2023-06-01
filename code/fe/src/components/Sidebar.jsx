@@ -17,6 +17,7 @@ function Sidebar({items, handleLink, setIsLoggedIn}) {
 	const toggleVisibleUserEditForm = () =>{
 		setVisibleUserEditForm(!visibleUserEditForm)
 	}
+	// console.log(currentUser);
   return (
 	<div className='sidebar'>
 		<div className='userSection mb5'>
@@ -33,7 +34,7 @@ function Sidebar({items, handleLink, setIsLoggedIn}) {
 					<div className="user__logo">
 						{/* <img src={userData.userImgLink} alt="user_avatar" /> */}
 					</div>
-					<div className="user__name t_24 t_bold"><h3>{currentUser.lastName} {currentUser.name}</h3></div>
+					<div className="user__name t_24 t_bold"><h3>{currentUser.lastname} {currentUser.name}</h3></div>
 					<div className="user__role">{currentUser.role}</div>
 					{/* <div className="user__sbj">{currentUser.sbj}</div> */}
 				</div>

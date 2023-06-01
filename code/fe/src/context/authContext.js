@@ -11,7 +11,11 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(res.data); //send login fun to controller and update state
     // console.log('res' + JSON.stringify(res).data);
   };
-
+  const updateUser = async (data) => {
+    // const res = await axios.post('/auth/updateUser', inputs);
+    setCurrentUser(data);
+    // console.log('res' + JSON.stringify(res).data);
+  };
   const logout = async () => {
     if (window.confirm('Are you sure want to exit?')) {
       await axios.post('/auth/logout');
@@ -32,7 +36,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     //set data (currentUser, login, logout) to context
-    <AuthContext.Provider value={{ currentUser, login, logout, deleteUser }}>
+    <AuthContext.Provider value={{ currentUser, login, logout, deleteUser, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -9,20 +9,14 @@ import editSvg from '../../assets/img/edit.svg'
 import saveSvg from '../../assets/img/check-black.svg'
 
 function UserEditForm({handleEditFormHide}) {
-	const { currentUser, deleteUser} = useContext(AuthContext)
-	
-	const [err, setError] = useState(null);
-
-	// const initialUserData = {
-  //   name: currentUser.name,
-  //   lastname: currentUser.lastname,
-  //   // Add more fields as needed
-  // };
+	const { currentUser, deleteUser, updateUser} = useContext(AuthContext)
+	const [sbjs, setSbjs] = useState([]) //subjects from DB
+	const [message, setMessage] = useState({}); //msg from DB
 	const [editingFields, setEditingFields] = useState({});
   const [userData, setUserData] = useState(currentUser);
   const [currentField, setCurrentField] = useState(null);
   const [previousField, setPreviousField] = useState(null);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({}); //Validations errors
 	const inputRefs = {
     name: useRef(null),
     lastname: useRef(null),
@@ -30,47 +24,133 @@ function UserEditForm({handleEditFormHide}) {
     // Add refs for other fields as needed
   };
 
-  const handleEdit = (fieldName) => {
+	const [isCurrentInputValid, setIsCurrentInputValid] = useState(true)
+
+
+	const handleEdit = (fieldName) => {
+		setIsCurrentInputValid(false)
     if (currentField && currentField !== fieldName) {
       handleSave(previousField);
     }
-    setEditingFields((prevEditingFields) => ({
-      ...prevEditingFields,
-      [fieldName]: true,
-    }));
-    setCurrentField(fieldName);
-    setPreviousField(fieldName);
+		if(isCurrentInputValid){
+			setEditingFields((prevEditingFields) => ({
+				...prevEditingFields,
+				[fieldName]: true,
+			}));
+			setCurrentField(fieldName);
+			setPreviousField(fieldName);
+		}
   };
 
   const handleSave = (fieldName) => {
     const fieldErrors = validateField(fieldName);
     if (Object.keys(fieldErrors).length === 0) {
       setEditingFields((prevEditingFields) => ({
+				
         ...prevEditingFields,
         [fieldName]: false,
       }));
+		
+			console.log(editingFields);
       setErrors({});
+			setIsCurrentInputValid(true)
       // Update user data with the changes
-      // You can send the updated data to an API or perform any necessary actions here
+			update()
     } else {
       setErrors(fieldErrors);
+			setIsCurrentInputValid(false)
     }
   };
 
   const handleChange = (e) => {
+		// console.log("change");
+		const fieldErrors = validateField(previousField);
 		setErrors({});
     const { name, value } = e.target;
-    setUserData((prevUserData) => ({
-      ...prevUserData,
-      [name]: value,
-    }));
+		// if(name==='sbj'){
+		// 		updateTeacherSbj(value)
+		// 	}
+		if(name==='sbj' && !isCurrentInputValid){
+			setErrors(fieldErrors);
+			setIsCurrentInputValid(false)
+		}else{
+			// console.log(value);
+			setUserData((prevUserData) => ({
+				...prevUserData,
+				[name]: value,
+			}));
+			// console.log(userData);
+			if(name==='sbj'){
+				updateTeacherSbj(value)
+			}
+		}
+  
   };
+
+	const update = async () => {
+		axios
+    .put(`/users/${userData.id_user}`, userData)
+    .then((res) => {
+			const msg={
+				msgClass: res.status===200 ? "success" : "error",
+				message: res.data.message
+			}
+      setMessage(msg);
+			updateUser(userData)//update localstorage and context
+			 // Clear the message after 2 seconds 
+			setTimeout(() => {
+				setMessage('');
+			}, 2000);
+    })
+    .catch((error) => {
+      console.error('Error updating user:', error);
+    });
+  };
+	const updateTeacherSbj = async(option)=>{
+		// console.log("update");
+		// console.log(userData);
+		// console.log(option);
+		const currentSbjId = {option_id:option}
+		axios
+    .put(`/sbjs/${userData.id_user}`, currentSbjId)
+    .then((res) => {
+			const msg={
+				msgClass: res.status===200 ? "success" : "error",
+				message: res.data.message
+			}
+      setMessage(msg);
+			//updateUser(userData)//update localstorage and context
+			 // Clear the message after 2 seconds 
+			setTimeout(() => {
+				setMessage('');
+			}, 2000);
+    })
+    .catch((error) => {
+      console.error('Error updating user:', error);
+    });
+	}
+
+
+	//set focus for inputs
 	useEffect(() => {
     if (editingFields[currentField] && inputRefs[currentField].current) {
       inputRefs[currentField].current.focus();
     }
   }, [editingFields, currentField]);
-
+	
+	//set sbjs from bd
+	useEffect(() => {
+		const fetchSbjs = async () => {
+			try {
+				const res = await axios.get("/sbjs/");
+				setSbjs(res.data);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		fetchSbjs();
+	},[]);
+	
   const validateField = (fieldName) => {
     const errors = {};
     const value = userData[fieldName];
@@ -83,17 +163,9 @@ function UserEditForm({handleEditFormHide}) {
         break;
 			case 'lastname':
 			if (!value.trim()) {
-				errors[fieldName] = 'lastname is required';
+				errors[fieldName] = 'Lastname is required';
 			}
 			break;
-      case 'email':
-        if (!value.trim()) {
-          errors[fieldName] = 'Email is required';
-        } else if (!isValidEmail(value)) {
-          errors[fieldName] = 'Invalid email address';
-        }
-        break;
-      // Add validation checks for other fields as needed
       default:
         break;
     }
@@ -101,10 +173,8 @@ function UserEditForm({handleEditFormHide}) {
     return errors;
   };
 
-  const isValidEmail = (email) => {
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+
+
 
   return (
 	<>
@@ -142,19 +212,19 @@ function UserEditForm({handleEditFormHide}) {
 				<span className='userLabel label'>Lastname:</span>
 				<div className="popup_input change_input w25r d-flex aic">
 				{editingFields.lastname ? ( 
-						<div className='popup_field       '>
+						<div className='popup_field'>
 							<input
 								type="text"
-								name="name"
+								name="lastname"
 								className='popup_field'
-								value={userData.lastName}
+								value={userData.lastname}
 								onChange={handleChange}
 								ref={inputRefs.lastname}
 							/>
 							{errors.lastname && <span className='input_error'>{errors.lastname}</span>}
 						</div>
 					) : (
-						<span className='popup_field'>{userData.lastName}</span>
+						<span className='popup_field'>{userData.lastname}</span>
 					)}
 					{editingFields.lastname ? (
 					<button onClick={() => handleSave('lastname')}>
@@ -171,35 +241,31 @@ function UserEditForm({handleEditFormHide}) {
 			<div className="userInfo__item d-flex aic">
 				<span className='userLabel label'>Email:</span>
 				<div className="popup_input change_input w25r d-flex aic">
-				{editingFields.email ? ( 
-						<div className='popup_field       '>
-							<input
-								type="text"
-								name="email"
-								className='popup_field'
-								value={userData.email}
-								onChange={handleChange}
-								ref={inputRefs.email}
-							/>
-							{errors.email && <span className='input_error'>{errors.email}</span>}
-						</div>
-					) : (
-						<span className='popup_field'>{userData.email}</span>
-					)}
-					{editingFields.email ? (
-					<button onClick={() => handleSave('email')}>
-						<img src={saveSvg} alt="save img" />
-					</button>
-				) : (
-					<button onClick={() => handleEdit('email')}>
-						<img src={editSvg} alt="" />
-					</button>
-				)}
+					<div className='popup_field'>
+						<span>{userData.email}</span>
+					</div>
 				</div>
 			</div>
-	
-
-			{/* Add more fields here with their respective buttons */}
+			{userData.role==="teacher" && (
+			<div className="userInfo__item d-flex aic">
+				<span className='userLabel label'>Subject:</span>
+				<div className="popup_input change_input w25r d-flex aic">
+					<select id="sbjs" name="sbj" onChange={handleChange}>
+						<option key="0" value='0'>no subject</option>
+						{sbjs && sbjs.map(option => (
+							
+							<option key={option.id_subject} value={option.id_subject}>
+								{option.subject_name}
+							</option>
+						))}
+					</select>
+				</div>
+			</div>
+			)}		
+			
+			<div className="mt5">
+				{message && <span className={message.msgClass}>{message.message}</span>}
+			</div>
 		</div>
 
 		<div onClick={handleEditFormHide} className='overlay'></div>
