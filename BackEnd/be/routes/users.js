@@ -5,6 +5,6 @@ import { deleteUser, updateUser, subjectLevel } from "../controllers/user.js";
 const router = express.Router();
 router.delete("/delete", deleteUser);
 router.post("/updateuser", updateUser)
-router.post("/subjectlevel", subjectLevel);
+router.get("/subjectlevel", subjectLevel);
 
 export default router;

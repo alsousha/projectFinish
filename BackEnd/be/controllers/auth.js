@@ -1,37 +1,153 @@
 import { db } from "../db.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-// import { API_URL } from '../../fe/src/constans.js';
 
 //Function to Register new user
 export const register = (req, res) => {
-  //check existing user
-  const q = "SELECT * FROM user WHERE email = ?";
-  db.query(q, [req.body.email], (err, data) => {
-    if (err) return res.json(err);
-    if (data.length) return res.status(409).json("User already exists!");
-    //hash the password
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(req.body.password, salt);
+  const selectQuery = "SELECT * FROM user WHERE email = ?";
+  const userValues = [
+    req.body.username,
+    req.body.lastname,
+    req.body.role,
+    req.body.email,
+  ];
 
+  // Start the transaction
+  db.beginTransaction((err) => {
+    if (err) {
+      return res.json(err);
+    }
 
-    const q =
-      "INSERT INTO user(`name`,`lastName`,`role`,`email`,`password`) VALUES (?)";
-    const values = [
-      req.body.username,
-      req.body.lastname,
-      req.body.role,
-      req.body.email,
-      hash,
-    ];
+    db.query(selectQuery, [req.body.email], (err, data) => {
+      if (err) {
+        return db.rollback(() => {
+          res.json(err);
+        });
+      }
 
-    db.query(q, [values], (err, data) => {
-      if (err) return res.json(err);
-      return res.status(200).json("User has been created");
+      if (data.length) {
+        return db.rollback(() => {
+          res.status(409).json("User already exists!");
+        });
+      }
+
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(req.body.password, salt);
+      userValues.push(hash);
+
+      const userQuery =
+        "INSERT INTO user (`name`, `lastName`, `role`, `email`, `password`) VALUES (?)";
+
+      db.query(userQuery, [userValues], (err, userResult) => {
+        if (err) {
+          return db.rollback(() => {
+            res.json(err);
+          });
+        }
+
+        const userId = userResult.insertId;
+        const role = req.body.role;
+
+        if (role === "teacher") {
+          const teacherValues = [userId];
+          const teacherQuery = "INSERT INTO teacher (id_user) VALUES (?)";
+
+          db.query(teacherQuery, [teacherValues], (err, teacherResult) => {
+            if (err) {
+              return db.rollback(() => {
+                res.json(err);
+              });
+            }
+
+            const idSubjects = req.body.idSubjects || [];
+            if (idSubjects.length === 0) {
+              return db.rollback(() => {
+                res.json(
+                  "Please provide at least one subject for the teacher."
+                );
+              });
+            }
+
+            const teacherSubjValues = idSubjects.map((idSubject) => [
+              userId,
+              idSubject,
+            ]);
+            const teacherSubjQuery =
+              "INSERT INTO teacher_sbjs (id_user, id_subject) VALUES ?";
+
+            db.query(
+              teacherSubjQuery,
+              [teacherSubjValues],
+              (err, teacherSubjResult) => {
+                if (err) {
+                  return db.rollback(() => {
+                    res.json(err);
+                  });
+                }
+
+                db.commit((err) => {
+                  if (err) {
+                    return db.rollback(() => {
+                      res.json(err);
+                    });
+                  }
+
+                  res.status(200).json("Teacher registered successfully!");
+                });
+              }
+            );
+          });
+        } else if (role === "student") {
+          const classLevel = req.body.classLevel;
+          let studentValues = [[userId, classLevel]];
+          const studentQuery =
+            "INSERT INTO student (id_user, class_level) VALUES (?, ?)";
+
+          db.query(studentQuery, studentValues, (err, studentResult) => {
+            if (err) {
+              return db.rollback(() => {
+                res.json(err);
+              });
+            }
+
+            const idClass = req.body.idClass;
+            const studentClassValues = [userId, idClass];
+            const studentClassQuery =
+              "INSERT INTO student_class (id_user) VALUES (?)";
+
+            db.query(
+              studentClassQuery,
+              [studentClassValues],
+              (err, studentClassResult) => {
+                if (err) {
+                  return db.rollback(() => {
+                    res.json(err);
+                  });
+                }
+
+                db.commit((err) => {
+                  if (err) {
+                    return db.rollback(() => {
+                      res.json(err);
+                    });
+                  }
+                  res.status(200).json("Student registered successfully!");
+                });
+              }
+            );
+          });
+        } else {
+          return db.rollback(() => {
+            res.status(400).json("Invalid role!");
+          });
+        }
+      });
     });
   });
 };
-//http://localhost:8800/api/auth/login
+
+
+
 
 //Function for login
 export const login = (req, res) => {
