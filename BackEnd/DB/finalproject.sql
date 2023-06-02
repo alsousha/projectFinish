@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2023 at 09:15 PM
+-- Generation Time: Jun 02, 2023 at 03:24 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -62,13 +62,6 @@ CREATE TABLE `class` (
   `id_teacher` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `class`
---
-
-INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
-(1, 'first', 1, 12);
-
 -- --------------------------------------------------------
 
 --
@@ -88,7 +81,7 @@ CREATE TABLE `class_folder` (
 
 CREATE TABLE `student` (
   `id_user` int(3) NOT NULL,
-  `id_class` int(3) NOT NULL,
+  `class_level` int(2) UNSIGNED NOT NULL,
   `total_points` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -96,8 +89,15 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`id_user`, `id_class`, `total_points`) VALUES
-(43, 1, 0);
+INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
+(38, 0, 0),
+(47, 0, 0),
+(50, 0, 0),
+(54, 0, 0),
+(60, 12, 0),
+(61, 12, 0),
+(62, 12, 0),
+(64, 12, 0);
 
 -- --------------------------------------------------------
 
@@ -110,6 +110,25 @@ CREATE TABLE `student_certification` (
   `id_certif` int(3) NOT NULL,
   `data_get` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_class`
+--
+
+CREATE TABLE `student_class` (
+  `id_user` int(3) NOT NULL,
+  `id_class` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `student_class`
+--
+
+INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
+(62, 0),
+(64, 0);
 
 -- --------------------------------------------------------
 
@@ -140,7 +159,14 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`id_subject`, `subject_name`) VALUES
-(12, 'math');
+(1, 'math'),
+(2, 'english'),
+(3, 'history'),
+(4, 'java'),
+(5, 'python'),
+(6, 'geography'),
+(7, 'hebrew'),
+(8, 'russian');
 
 -- --------------------------------------------------------
 
@@ -202,17 +228,44 @@ CREATE TABLE `task_template` (
 --
 
 CREATE TABLE `teacher` (
-  `id_user` int(3) NOT NULL,
-  `count_of_tasks` int(3) NOT NULL,
-  `id_subject` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `id_user` int(30) NOT NULL,
+  `count_of_tasks` int(3) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `teacher`
 --
 
-INSERT INTO `teacher` (`id_user`, `count_of_tasks`, `id_subject`) VALUES
-(42, 0, 12);
+INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
+(46, 0),
+(49, 0),
+(56, 0),
+(58, 0),
+(59, 0),
+(66, 0),
+(78, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teacher_sbjs`
+--
+
+CREATE TABLE `teacher_sbjs` (
+  `id_user` int(3) NOT NULL,
+  `id_subject` int(3) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `teacher_sbjs`
+--
+
+INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
+(59, 12),
+(66, 1),
+(78, 2),
+(78, 3),
+(78, 11);
 
 -- --------------------------------------------------------
 
@@ -226,7 +279,7 @@ CREATE TABLE `user` (
   `email` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(15) NOT NULL,
-  `lastName` varchar(15) NOT NULL,
+  `lastname` varchar(15) NOT NULL,
   `img_url` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -234,29 +287,27 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastName`, `img_url`) VALUES
-(42, 'teacher', 'alexstudent@df.dsf', '$2b$10$l7nMrlN0KrnIIa5TUAVSH.iI9ZnP2jyPXqXPrnRYA7yZbIMbHV.j6', 'Alexstud', 'agronovdd', ''),
-(43, 'student', 'Istud@df.dsf', '$2b$10$O2koLp/3yvHBWMFUFhgP/eSEgTSw7ed765u9GbGF2WlKZ6dajqoza', 'Istudent', 'mustud', '');
-
---
--- Triggers `user`
---
-DELIMITER $$
-CREATE TRIGGER `asd` AFTER INSERT ON `user` FOR EACH ROW BEGIN
-  IF NEW.role = 'student' THEN
-    INSERT INTO `student` (`id_user`) VALUES (NEW.id_user);
-  END IF;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `user_insert_trigger` AFTER INSERT ON `user` FOR EACH ROW BEGIN
-  IF NEW.role = 'teacher' THEN
-    INSERT INTO `teacher` (`id_user`) VALUES (NEW.id_user);
-  END IF;
-END
-$$
-DELIMITER ;
+INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, `img_url`) VALUES
+(36, 'teacher', 'alex@df.dsf', '$2b$10$GyDxPheIF1GxZmU712w3puuFgixTE09I8URgFtBzCu5s70I.pRAZm', 'Alex', 'agronov', '0'),
+(38, 'student', 'alexstudent@df.dsf', '$2b$10$.gv4uI5zOxcbYWP9XNSOyeBbFcwoEvZUhV.jCCzH7Qw3goDs/PVTC', 'Alexstud', 'agronovdd', '0'),
+(46, 'teacher', 'asd@asd.asd', '$2b$10$E0ciFUB07pYF7J.OLs9jwOzaTkecT8tYnN965w6iQNgEARmeccewK', 'Alsu', 'Bogdanov', '0'),
+(47, 'student', 'qwe@qwe.we', '$2b$10$dSzxiUDrtMulnFTU6GHTU.JJhUnVYDg24pyMjwDAW9gXztrCzhsJe', 'Ben', 'Las', '0'),
+(49, 'teacher', 'qwe@qwe.qwe', '$2b$10$FOwLiYhwo0ZLZbyYi9SWvuyjP/kWlMk2np6UhS7CQmKY6dkeYY4yy', 'Benw', 'Dan', '0'),
+(50, 'student', 'qaz@qaz.qa', '$2b$10$dySC6c0qqySZaoVDDb4wF.52Y2QU1DfPkyFTvS.oivuffHh71r/qi', 'Stud', 'dd', '0'),
+(52, 'student', 'Istuduuu@df.dsf', '$2b$10$LYKATxS9LX6boxrci5zJl.qqBifu2PUYT.dKIdLGonynkAKyXU2Qe', 'alsouuuuu', 'mustuduuuu', '0'),
+(53, 'student', 'Istuduuuert@df.dsf', '$2b$10$kkcSR.7P0WktWYp8NDzEoOqEJUhZcAkLymSTtFmE4URPXMa022oIC', 'alsouuuuu23', 'mustuduuuu', '0'),
+(54, 'student', 'Istuduuuert4@df.dsf', '$2b$10$fqhmy9nAJliaSUUUj6g8ee5Wq6YXCIIbnPZVjfIE3ZSQLOfCx8Q6e', 'alsouuuuu234', 'mustuduuuu', '0'),
+(55, 'teacher', 'Istuduuuert445@df.dsf', '$2b$10$OAyPUn0.xHED5Sbyln3TAepBwRZCxKkE8W3qhN6KXRXmt5L36a8X6', 'alsouuuuu23445', 'mustuduuuu', '0'),
+(56, 'teacher', 'Isdfs@df.dsf', '$2b$10$KjxwPxByfmFiN7RrGtKT9ukWzizXLsHxV2DPptZepd8fIjQAcVNWW', 'alfsdsd', 'mustuduuuu', '0'),
+(57, 'teacher', 'newtest@df.dsf', '$2b$10$l8OND86VEgUSJH0zc58AEusbBHPLqByGTApRX2uux4IGz5DEKl3ri', 'newtest', 'new', ''),
+(58, 'teacher', 'newtest2@df.dsf', '$2b$10$8/RjVC0m1693qg4LAt6i/uSlHg5brQRNUJPoub76kqIf7HJ7fKiSO', 'newtest2', 'new', ''),
+(59, 'teacher', 'newtest22@df.dsf', '$2b$10$dUp.OyQ2MJGT3EV/yzTVa.wYy.6zfliLO.bXHr.JvvGQpLRWCxIC.', 'newtest22', 'new', ''),
+(60, 'student', 'newstud22@df.dsf', '$2b$10$oF5ustMUvp9BGeflJ1iBC.fovWWAaovrFTzgxcui10j7LzCZCDvKu', 'newstud22', 'new', ''),
+(61, 'student', 'newstud223@df.dsf', '$2b$10$iDhEi5HZOAe.L3n7xAO7ROYvXfDmrpHvEzkGbRLgKcGK9ETCW.oea', 'newstud223', 'new', ''),
+(62, 'student', 'newstud23@df.dsf', '$2b$10$MkZIionzlwUwrj4Pqb2I4.0xQh3DJ.CoLsZHPAYHxUuHFAwNt63oe', 'newstud23', 'new', ''),
+(64, 'student', 'newstud2311@df.dsf', '$2b$10$ddTmCMCE2YF6QECMs5vTa.mDtYfqkIKIev0vQ25vcK3rpnEGWv0Nq', 'newstud2311', 'new', ''),
+(66, 'teacher', 'testteacher1@df.dsf', '$2b$10$mee0DipJ5miS.F2gWC2y1uTonRgeQ0QOGoLa/A9Lt6VrcScV4SuS2', 'testteacher1', 'new', ''),
+(78, 'teacher', 'testteacher2@df.dsf', '$2b$10$8ej63s3DrCj1xD2wqzrQsOkDOFTiPbANRUwJMTbek86VoE0OhumJ2', 'testteacher2', 'new', '');
 
 --
 -- Indexes for dumped tables
@@ -290,7 +341,6 @@ ALTER TABLE `class_folder`
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
-  ADD UNIQUE KEY `id_class` (`id_class`),
   ADD KEY `id_user` (`id_user`);
 
 --
@@ -298,6 +348,12 @@ ALTER TABLE `student`
 --
 ALTER TABLE `student_certification`
   ADD PRIMARY KEY (`id_user`,`id_certif`);
+
+--
+-- Indexes for table `student_class`
+--
+ALTER TABLE `student_class`
+  ADD UNIQUE KEY `id_user` (`id_user`);
 
 --
 -- Indexes for table `student_task`
@@ -339,8 +395,13 @@ ALTER TABLE `task_template`
 -- Indexes for table `teacher`
 --
 ALTER TABLE `teacher`
-  ADD UNIQUE KEY `id_user` (`id_user`),
-  ADD UNIQUE KEY `id_subject` (`id_subject`);
+  ADD KEY `teacher_ibfk_1` (`id_user`);
+
+--
+-- Indexes for table `teacher_sbjs`
+--
+ALTER TABLE `teacher_sbjs`
+  ADD PRIMARY KEY (`id_user`,`id_subject`);
 
 --
 -- Indexes for table `user`
@@ -369,7 +430,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `class_folder`
@@ -381,7 +442,7 @@ ALTER TABLE `class_folder`
 -- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `id_subject` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_subject` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `task`
@@ -405,7 +466,7 @@ ALTER TABLE `task_template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- Constraints for dumped tables
