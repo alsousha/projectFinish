@@ -23,7 +23,7 @@ function LoginForm() {
 		e.preventDefault()
 		// console.log(inputs);
 		try{
-			await login(inputs)
+			await login(inputs) //call Context function to connect BD
 			// const currentLink = currentUser ? `/${currentUser['role']}/*` : '/'
 			// //console.log("currentLink" +currentUser);
 			// // navigate(`${currentLink}`)

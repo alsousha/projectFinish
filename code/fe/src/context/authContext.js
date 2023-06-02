@@ -6,9 +6,30 @@ export const AuthContextProvider = ({ children }) => {
   //get user data from localStorage and parse it from JSON
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
+  //This funcs update Context and call api funcs for update BD
   const login = async (inputs) => {
-    const res = await axios.post('/auth/login', inputs);
-    setCurrentUser(res.data); //send login fun to controller and update state
+    const res = await axios.post('/auth/login', inputs); //get user's data
+
+    const userTmp = res.data;
+
+    if (userTmp.role === 'teacher') {
+      //get subjects
+      try {
+        const res = await axios.get(`/sbjs/${userTmp.id_user}`);
+        const totalUserData = { ...userTmp, sbjs_id: res.data };
+        setCurrentUser(totalUserData);
+      } catch (err) {
+        console.log(err);
+      }
+
+      // console.log(res.data);
+      // console.log(userTmp.id_user);
+    } else if (userTmp.role === 'student') {
+      //get class level
+    }
+
+    // console.log(res.data);
+    // setCurrentUser(res.data); //send login fun to controller and update state
     // console.log('res' + JSON.stringify(res).data);
   };
   const updateUser = async (data) => {
@@ -24,13 +45,17 @@ export const AuthContextProvider = ({ children }) => {
   };
   const deleteUser = async () => {
     if (window.confirm('Are you sure want to delete this acount?')) {
-      await axios.post('/auth/delete');
-      setCurrentUser(null);
+      try {
+        await axios.delete(`/auth/${currentUser.id_user}`);
+        setCurrentUser(null);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   useEffect(() => {
-    //update localstorage when we change user
+    //update localstorage when we change user data
     localStorage.setItem('user', JSON.stringify(currentUser));
   }, [currentUser]);
 

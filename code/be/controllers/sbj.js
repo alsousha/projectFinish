@@ -9,6 +9,28 @@ export const getSbjs = (req, res) => {
     return res.status(200).json(data);
   });
 };
+export const getTeacherSbjs = (req, res) => {
+  // const q = `SELECT subject_name
+  // FROM subject
+  // JOIN teacher_sbjs ON teacher_sbjs.id_subject = subject.id_subject
+  // WHERE teacher_sbjs.id_user = ?`;
+
+  const q = `SELECT t2.subject_name
+	FROM teacher_sbjs t1
+	JOIN subject t2 ON t1.id_subject = t2.id_subject
+	WHERE t1.id_user = ?;`;
+  // const q = 'SELECT id_subject FROM `teacher_sbjs` WHERE id_user = ?';
+
+  db.query(q, [req.params.id], (err, data) => {
+    if (err) return res.status(500).send(err);
+
+    const teacherSbjs = data.map((row) => row.id_subject); //array that contain only id_subjects
+    console.log(teacherSbjs);
+
+    return res.status(200).json(teacherSbjs);
+  });
+};
+
 export const updateTeacherSubject = (req, res) => {
   const { id } = req.params;
   const q = 'UPDATE teacher SET id_subject = ? WHERE id_user = ?';

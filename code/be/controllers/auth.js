@@ -79,9 +79,28 @@ export const login = (req, res) => {
 };
 
 export const deleteUser = (req, res) => {
-  console.log('delete');
+  // console.log('delete1');
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  jwt.verify(token, 'jwtkey', (err, userInfo) => {
+    if (err) return res.status(403).json('Token is not valid!');
+
+    console.log('into jwt');
+    // console.log(req.data);
+    const userId = req.params.id;
+    console.log(userId);
+    const q = 'DELETE FROM user WHERE `id_user` = ?';
+
+    db.query(q, userId, (err, data) => {
+      if (err) return res.status(403).json('You can delete only your account!');
+
+      return res.json('User has been deleted!');
+    });
+  });
+
+  // console.log(token);
   // // SQL query to delete the user
-  // const q = 'DELETE FROM user WHERE id = ?';
+  const q = 'DELETE FROM user WHERE id = ?';
 
   // // Execute the query with the user ID parameter
   // connection.query(query, [userId], (err, result) => {

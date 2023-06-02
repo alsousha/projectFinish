@@ -2,7 +2,7 @@ import { db } from '../db.js';
 
 export const updateUser = (req, res) => {
   console.log(req.body);
-  console.log('update user');
+  // console.log('update user');
   const { id } = req.params;
   const { name, email, lastname } = req.body;
   const q = 'UPDATE user SET name = ?, email = ?, lastname = ? WHERE id_user = ?';
@@ -17,5 +17,3 @@ export const updateUser = (req, res) => {
     }
   });
 };
-export const login = (req, res) => {};
-export const logout = (req, res) => {};

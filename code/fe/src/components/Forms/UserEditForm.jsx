@@ -7,7 +7,9 @@ import { AuthContext } from '../../context/authContext'
 import './forms.scss'
 import editSvg from '../../assets/img/edit.svg'
 import saveSvg from '../../assets/img/check-black.svg'
-
+// {
+// 	1. add component for edit and save btns
+// }
 function UserEditForm({handleEditFormHide}) {
 	const { currentUser, deleteUser, updateUser} = useContext(AuthContext)
 	const [sbjs, setSbjs] = useState([]) //subjects from DB
@@ -17,6 +19,8 @@ function UserEditForm({handleEditFormHide}) {
   const [currentField, setCurrentField] = useState(null);
   const [previousField, setPreviousField] = useState(null);
   const [errors, setErrors] = useState({}); //Validations errors
+	const [selectedSubjects, setSelectedSubjects] = useState([]);
+
 	const inputRefs = {
     name: useRef(null),
     lastname: useRef(null),
@@ -29,6 +33,7 @@ function UserEditForm({handleEditFormHide}) {
 
 	const handleEdit = (fieldName) => {
 		setIsCurrentInputValid(false)
+		console.log("in handleEdit");
     if (currentField && currentField !== fieldName) {
       handleSave(previousField);
     }
@@ -37,7 +42,8 @@ function UserEditForm({handleEditFormHide}) {
 				...prevEditingFields,
 				[fieldName]: true,
 			}));
-			setCurrentField(fieldName);
+			console.log(fieldName);
+			// setCurrentField(fieldName);
 			setPreviousField(fieldName);
 		}
   };
@@ -55,7 +61,7 @@ function UserEditForm({handleEditFormHide}) {
       setErrors({});
 			setIsCurrentInputValid(true)
       // Update user data with the changes
-			update()
+			// update()
     } else {
       setErrors(fieldErrors);
 			setIsCurrentInputValid(false)
@@ -130,6 +136,27 @@ function UserEditForm({handleEditFormHide}) {
     });
 	}
 
+	const handleDelete = async e =>{
+		try{
+			await deleteUser()
+			console.log("handle");
+		}catch(err){
+			console.log(err);
+		}
+	}
+
+	const saveSubjects = () => {
+    // Perform the necessary operations with the selected subjects
+    // ...
+
+    // Clear the errors and update the editing fields
+    setErrors({});
+    setEditingFields((prevEditingFields) => ({
+      ...prevEditingFields,
+      sbjs: false,
+    }));
+  };
+
 
 	//set focus for inputs
 	useEffect(() => {
@@ -138,9 +165,10 @@ function UserEditForm({handleEditFormHide}) {
     }
   }, [editingFields, currentField]);
 	
-	//set sbjs from bd
+	//set sbjs 
 	useEffect(() => {
-		const fetchSbjs = async () => {
+		//Fetch the subjects from the DB
+		const fetchSubjects = async () => {
 			try {
 				const res = await axios.get("/sbjs/");
 				setSbjs(res.data);
@@ -148,8 +176,37 @@ function UserEditForm({handleEditFormHide}) {
 				console.log(err);
 			}
 		};
-		fetchSbjs();
-	},[]);
+
+		// Fetch the selected subjects for the teacher
+    const fetchSelectedSubjects = async () => {
+      try {
+        const res = await axios.get(`/sbjs/${userData.id_user}`);
+        setSelectedSubjects(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchSubjects();
+    fetchSelectedSubjects();
+  }, [userData.id_user]);
+	
+	
+	const handleSubjectChange = (e) => {
+    const { value } = e.target;
+    const updatedSelectedSubjects = [...selectedSubjects];
+
+    if (updatedSelectedSubjects.includes(value)) {
+      // Remove the subject from the selected subjects if it was unchecked
+      const index = updatedSelectedSubjects.indexOf(value);
+      updatedSelectedSubjects.splice(index, 1);
+    } else {
+      // Add the subject to the selected subjects if it was checked
+      updatedSelectedSubjects.push(value);
+    }
+
+    setSelectedSubjects(updatedSelectedSubjects);
+  };
 	
   const validateField = (fieldName) => {
     const errors = {};
@@ -172,9 +229,6 @@ function UserEditForm({handleEditFormHide}) {
 
     return errors;
   };
-
-
-
 
   return (
 	<>
@@ -246,9 +300,89 @@ function UserEditForm({handleEditFormHide}) {
 					</div>
 				</div>
 			</div>
+			{/* sbjs's checkbox for teacher */}
 			{userData.role==="teacher" && (
 			<div className="userInfo__item d-flex aic">
-				<span className='userLabel label'>Subject:</span>
+				<span className='userLabel label'>Subjects:</span>
+				<div className="user_sbjs d-flex f-column">
+				{editingFields.sbjs ? ( 
+						<div className='popup_field'>
+							bla-bla
+							{sbjs && sbjs.map(subject => (
+
+							<div key={subject.id}>
+							<label>
+								<input
+									type="checkbox"
+									name="sbjs"
+									value={subject.id}
+									checked={selectedSubjects.includes(subject.id)}
+									onChange={handleSubjectChange}
+								/>
+								{subject.name}
+							</label>
+							</div>
+
+
+								// <label key={item.subject_name}>
+								// 	<input type="checkbox" name={item.subject_name} />
+								// 	{item.subject_name}
+								// </label>
+								
+							))}
+
+							{/* <input
+								type="text"
+								name="sbjs"
+								className='popup_field'
+								value={userData.sbjs}
+								onChange={handleChange}
+								ref={inputRefs.sbjs}
+							/> */}
+							{errors.sbjs && <span className='input_error'>{errors.sbjs}</span>}
+						</div>
+					) : (
+						userData.sbjs_id && userData.sbjs_id.map(item => (
+							// <div key={item.subject_name}>
+							// 	{item.subject_name}
+							// </div>
+							<div key={item}>
+								{item}
+							</div>
+						))
+					)}
+				</div>
+				
+					{editingFields.lastname ? (
+					<button onClick={() => handleSave('sbjs')}>
+						<img src={saveSvg} alt="save img" />
+					</button>
+				) : (
+					<button onClick={() => handleEdit('sbjs')}>
+						<img src={editSvg} alt="" />
+					</button>
+				)}
+
+
+
+				
+				{/* <span className='userLabel label'>Subjects:</span>
+				<div className="popup_input change_input w25r d-flex aic">
+					{sbjs && sbjs.map(item => (
+						<label key={item.subject_name}>
+							<input type="checkbox" name={item.subject_name} />
+							{item.subject_name}
+						</label>
+						
+					))}
+				
+					
+				</div> */}
+
+				{/* 
+				
+				!!! Use it for student!!
+				
 				<div className="popup_input change_input w25r d-flex aic">
 					<select id="sbjs" name="sbj" onChange={handleChange}>
 						<option key="0" value='0'>no subject</option>
@@ -259,10 +393,12 @@ function UserEditForm({handleEditFormHide}) {
 							</option>
 						))}
 					</select>
-				</div>
+				</div> */}
 			</div>
 			)}		
-			
+			<div className="delete_user">
+				<button onClick={handleDelete}>Delete this account</button>
+			</div>
 			<div className="mt5">
 				{message && <span className={message.msgClass}>{message.message}</span>}
 			</div>

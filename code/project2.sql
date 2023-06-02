@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2023 at 09:32 AM
+-- Generation Time: Jun 02, 2023 at 09:57 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -209,7 +209,6 @@ CREATE TABLE `teacher` (
 
 INSERT INTO `teacher` (`id_user`, `count_of_tasks`, `id_subject`) VALUES
 (46, 0, 2),
-(48, 0, NULL),
 (49, 0, 2);
 
 -- --------------------------------------------------------
@@ -235,9 +234,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, `img_url`) VALUES
 (36, 'teacher', 'alex@df.dsf', '$2b$10$GyDxPheIF1GxZmU712w3puuFgixTE09I8URgFtBzCu5s70I.pRAZm', 'Alex', 'agronov', 0),
 (38, 'student', 'alexstudent@df.dsf', '$2b$10$.gv4uI5zOxcbYWP9XNSOyeBbFcwoEvZUhV.jCCzH7Qw3goDs/PVTC', 'Alexstud', 'agronovdd', 0),
-(46, 'teacher', 'asd@asd.asd', '$2b$10$E0ciFUB07pYF7J.OLs9jwOzaTkecT8tYnN965w6iQNgEARmeccewK', 'fgh', 'Bogdanov', 0),
+(46, 'teacher', 'asd@asd.asd', '$2b$10$E0ciFUB07pYF7J.OLs9jwOzaTkecT8tYnN965w6iQNgEARmeccewK', 'Alsu', 'Bogdanov', 0),
 (47, 'student', 'qwe@qwe.we', '$2b$10$dSzxiUDrtMulnFTU6GHTU.JJhUnVYDg24pyMjwDAW9gXztrCzhsJe', 'Ben', 'Las', 0),
-(48, 'teacher', 'bj@gbj.h', '$2b$10$xNwy1.1kIq1MUJWCkC8s9ekiYzX.jlzqS.myIzDcMOsuYueyuaCHa', 'bhj', ' bhjy', 0),
 (49, 'teacher', 'qwe@qwe.qwe', '$2b$10$FOwLiYhwo0ZLZbyYi9SWvuyjP/kWlMk2np6UhS7CQmKY6dkeYY4yy', 'Benw', 'Dan', 0),
 (50, 'student', 'qaz@qaz.qa', '$2b$10$dySC6c0qqySZaoVDDb4wF.52Y2QU1DfPkyFTvS.oivuffHh71r/qi', 'Stud', 'dd', 0);
 
@@ -407,7 +405,7 @@ ALTER TABLE `task_template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Constraints for dumped tables
