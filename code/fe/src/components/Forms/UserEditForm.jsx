@@ -25,7 +25,6 @@ function UserEditForm({handleEditFormHide}) {
     name: useRef(null),
     lastname: useRef(null),
     email: useRef(null),
-    // Add refs for other fields as needed
   };
 
 	const [isCurrentInputValid, setIsCurrentInputValid] = useState(true)
@@ -35,20 +34,22 @@ function UserEditForm({handleEditFormHide}) {
 		setIsCurrentInputValid(false)
 		console.log("in handleEdit");
     if (currentField && currentField !== fieldName) {
-      handleSave(previousField);
+      handleSave(previousField); //save previus field
     }
 		if(isCurrentInputValid){
 			setEditingFields((prevEditingFields) => ({
 				...prevEditingFields,
 				[fieldName]: true,
 			}));
-			console.log(fieldName);
-			// setCurrentField(fieldName);
+			
+			// console.log(fieldName);
+			setCurrentField(fieldName);
 			setPreviousField(fieldName);
 		}
   };
 
   const handleSave = (fieldName) => {
+		console.log("save");
     const fieldErrors = validateField(fieldName);
     if (Object.keys(fieldErrors).length === 0) {
       setEditingFields((prevEditingFields) => ({
@@ -160,7 +161,8 @@ function UserEditForm({handleEditFormHide}) {
 
 	//set focus for inputs
 	useEffect(() => {
-    if (editingFields[currentField] && inputRefs[currentField].current) {
+		
+    if (currentField!=="sbjs" && editingFields[currentField] && inputRefs[currentField].current) {
       inputRefs[currentField].current.focus();
     }
   }, [editingFields, currentField]);
@@ -305,47 +307,27 @@ function UserEditForm({handleEditFormHide}) {
 			<div className="userInfo__item d-flex aic">
 				<span className='userLabel label'>Subjects:</span>
 				<div className="user_sbjs d-flex f-column">
-				{editingFields.sbjs ? ( 
+					{editingFields.sbjs ? ( 
 						<div className='popup_field'>
-							bla-bla
 							{sbjs && sbjs.map(subject => (
-
-							<div key={subject.id}>
-							<label>
-								<input
-									type="checkbox"
-									name="sbjs"
-									value={subject.id}
-									checked={selectedSubjects.includes(subject.id)}
-									onChange={handleSubjectChange}
-								/>
-								{subject.name}
-							</label>
-							</div>
-
-
-								// <label key={item.subject_name}>
-								// 	<input type="checkbox" name={item.subject_name} />
-								// 	{item.subject_name}
-								// </label>
-								
+								<div key={subject.id_subject}>
+									<label>
+										<input
+											type="checkbox"
+											name="sbjs"
+											value={subject.subject_name}
+											checked={selectedSubjects.includes(subject.subject_name)}
+											onChange={handleSubjectChange}
+										/>
+										{subject.subject_name}
+									</label>
+								</div>
 							))}
 
-							{/* <input
-								type="text"
-								name="sbjs"
-								className='popup_field'
-								value={userData.sbjs}
-								onChange={handleChange}
-								ref={inputRefs.sbjs}
-							/> */}
 							{errors.sbjs && <span className='input_error'>{errors.sbjs}</span>}
 						</div>
 					) : (
 						userData.sbjs_id && userData.sbjs_id.map(item => (
-							// <div key={item.subject_name}>
-							// 	{item.subject_name}
-							// </div>
 							<div key={item}>
 								{item}
 							</div>
@@ -353,7 +335,7 @@ function UserEditForm({handleEditFormHide}) {
 					)}
 				</div>
 				
-					{editingFields.lastname ? (
+					{editingFields.sbjs ? (
 					<button onClick={() => handleSave('sbjs')}>
 						<img src={saveSvg} alt="save img" />
 					</button>

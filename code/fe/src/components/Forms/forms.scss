@@ -14,15 +14,16 @@
     border-radius: 1rem;
 	.popup_input{
 		flex-grow: 1;
-		button img{
-			height: 1.6rem;
-		}
+		
 	}
 	input[type="text"], input[type="email"],input[type="password"], textarea, select {
 		// border: 1px solid $main;
 		padding: 0;
 	}
 
+}
+.userInfo__item button img{
+	height: 1.6rem;
 }
 .overlay {
     position: fixed;

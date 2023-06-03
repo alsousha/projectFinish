@@ -16,7 +16,7 @@ export const AuthContextProvider = ({ children }) => {
       //get subjects
       try {
         const res = await axios.get(`/sbjs/${userTmp.id_user}`);
-        const totalUserData = { ...userTmp, sbjs_id: res.data };
+        const totalUserData = { ...userTmp, sbjs: res.data };
         setCurrentUser(totalUserData);
       } catch (err) {
         console.log(err);
