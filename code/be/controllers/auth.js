@@ -124,6 +124,7 @@ export const deleteUser = (req, res) => {
   //   .json('User has been deleted.');
 };
 export const logout = (req, res) => {
+  console.log('logout');
   res
     .clearCookie('access_token', {
       sameSite: 'none',

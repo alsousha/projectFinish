@@ -1,0 +1,16 @@
+@import "../assets/styles/vars";
+
+.editUserInfo__title{
+	background-color: $gray ;
+	padding: 2rem 3rem;
+	.inactive path{
+		fill: $blue;
+	}
+	.label{
+		line-height: 2;
+		color: $main;
+		margin-right: 1rem;
+		text-align: start;
+		width: 15rem;
+	}
+}

@@ -23,6 +23,24 @@ export const getTeacherSbjs = (req, res) => {
   });
 };
 
+//return subject's ids by subject's name
+export const getSbjsIdBySbjsName = (subject_names) => {
+  return new Promise((resolve, reject) => {
+    const q = 'SELECT id_subject FROM subject WHERE subject_name IN (?)';
+    const values = [subject_names];
+    db.query(q, values, (error, results) => {
+      if (error) {
+        console.error('Error retrieving data:', error);
+        reject(error);
+      } else {
+        const ids = results.map((row) => row.id_subject);
+        console.log('IDs:', ids);
+        resolve(ids);
+      }
+    });
+  });
+};
+
 export const updateTeacherSubject = (req, res) => {
   const { id } = req.params;
   const q = 'UPDATE teacher SET id_subject = ? WHERE id_user = ?';

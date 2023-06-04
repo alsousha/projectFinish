@@ -9,23 +9,17 @@ import { ReactComponent as LogoutIcon } from '../assets/img/logout.svg';
 import { ReactComponent as EditIcon } from '../assets/img/edit.svg';
 import { AuthContext } from '../context/authContext';
 
-function Sidebar({items, handleLink, setIsLoggedIn}) {
+function Sidebar({items, handleLink}) {
 	const { currentUser, logout } = useContext(AuthContext)
 
-	const [visibleUserEditForm, setVisibleUserEditForm] = useState(false);
-	
-	const toggleVisibleUserEditForm = () =>{
-		setVisibleUserEditForm(!visibleUserEditForm)
-	}
+
 	// console.log(currentUser);
   return (
 	<div className='sidebar'>
 		<div className='userSection mb5'>
 			<div className="top d-flex jce mb1">
 				<div className="userSection__btns d-flex">
-					<button className='editBtn userSection__btn hover-scale ' title="edit profile">
-						<EditIcon className='sidebar__icon' onClick={()=>toggleVisibleUserEditForm()}/>
-					</button>
+					<Link className="editBtn userSection__btn hover-scale link" to="profile"><EditIcon className='sidebar__icon' /></Link>	
 					<span className='exitBtn userSection__btn hover-scale' onClick={logout}><Link className="link" to="/"><LogoutIcon className='sidebar__icon'/></Link></span>	
 				</div>
 			</div>
@@ -48,11 +42,7 @@ function Sidebar({items, handleLink, setIsLoggedIn}) {
 					<NavLink to={item.link}>{item.linkName}</NavLink>
 			</li>
 		))}
-		</nav>
-		{visibleUserEditForm ? (
-			<UserEditForm  currentUser={currentUser} handleEditFormHide={toggleVisibleUserEditForm}/>
-		): ("")}
-		
+		</nav>		
 	</div>
   )
 }

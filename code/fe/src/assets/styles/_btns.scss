@@ -17,6 +17,19 @@
 		color: $white;
 	}
 }
+.btn_blue{
+	background-color: $blue;
+	padding: 1rem 2rem;
+	color: #FFFFFF;
+	font-size: 1.8rem;
+	border-radius: 10px;
+	cursor: pointer;
+	transition: all 0.3s;
+  
+	&:hover{
+	  background-color: #1fbbff;
+	}
+}
 //hh
 .btn_accent{
 	background-color: $main;
@@ -28,28 +41,16 @@
 }
 
 .btn_transp_main{
-font-size: 3rem;
-color: $main;
+font-size: 2rem;
+color: #1797cc;
 //border: 1px solid $accent;
 position: relative;
 display: block;
-padding-left: 3rem;
+padding: 1rem 2rem;
 font-weight: 700;
-&:after{
-	content: '';
-	position: absolute;
-	// background-image: url("../icons/arrow-left.png");
-	width: 1.5rem;
-	height: 1.6rem;
-	background-size: contain;
-	background-repeat: no-repeat;
-	transition: all .5s;
-	transform: translateY(10px) translateX(-10px);
+font-family: 'Nunito', sans-serif;
 }
-&:hover:after{
-	transform: translateY(10px) translateX(-35px);
-}
-}
+
 .btn_transp_accent{
 font-size: 3rem;
 color: $accent;

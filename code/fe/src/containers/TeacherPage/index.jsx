@@ -8,6 +8,7 @@ import Tasks from '../Tasks/'
 import Task from '../Tasks/Task';
 import WriteTask from '../Tasks/WriteTask';
 import Students from './Students'
+import Profile from '../../pages/Profile';
 
 function TeacherPage({isLoggedIn, setIsLoggedIn, userData}) {
 	console.log(isLoggedIn);
@@ -28,10 +29,8 @@ function TeacherPage({isLoggedIn, setIsLoggedIn, userData}) {
 	  <div className="mainPage d-flex">
 			<Sidebar 
 				items={linksData} 
-				// userData={userData} 
-				// setIsLoggedIn={setIsLoggedIn}
 			/>
-			<div className='mainContent'>
+			<div className='mainContent container'>
 				<h1>Teacher</h1>
 				<Routes>
 					<Route path='classes' element={<Classes classes={classes}/>} />
@@ -40,6 +39,7 @@ function TeacherPage({isLoggedIn, setIsLoggedIn, userData}) {
 					<Route path='/tasks' element={<Tasks />} />
 					<Route path='/task/:id' element={<Task />} />
 					<Route path='/students' element={<Students />} />
+					<Route path='/profile' element={<Profile />} />
 					<Route path='/' element={<span>logout</span>} />
 				</Routes>
 			</div>

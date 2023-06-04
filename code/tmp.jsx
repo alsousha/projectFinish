@@ -1,80 +1,91 @@
-<form action='' className='editUserInfo popup' onSubmit={updateUserInfo}>
-		<button className='btnClose hover-scale' onClick={handleEditFormHide}>
-			<CancelTwoToneIcon />
-		</button>
-		<div className="editUserInfo__wrap d-flex jcsb">
-			<div className="editUserInfo__left w55">
-				<h2>Edit user: {currentUser.name}</h2>
-				<div className="userInfo">
-					<div className="userInfo__item d-flex">
-						<span className='userLabel label'>Lastname:</span>
-						<div className="change_input w25r d-flex">
-							<input 
-								ref={lastnameInput}
-								className={isActiveInputLastname? 'active change_input ': 'change_input '}
-								placeholder="Enter name"
-								style={inputStyleInputLastname}
-								readOnly={isReadonlyInputLastname}
-								value={inputLastnameValue} 
-								// onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
-								onChange={e => setInputLastnameValue(e.target.value)} 
-							/>
-							<div className={isActiveInputName? 'input__btn active': 'input__btn '} >
-								<img 
-									src={editIconInputLastname} 
-									alt="edit icon"
-									onClick={editUserLastname}
-								/>							
-							</div>
-						</div>
-					</div>
-					<div className="userInfo__item d-flex">
-						<span className='userLabel label'>Name:</span>
-						<div className="change_input w25r d-flex">
-							<input 
-								ref={nameInput}
-								className={isActiveInputName? 'active change_input ': 'change_input '}
-								placeholder="Enter name"
-								style={inputStyleInputName}
-								readOnly={isReadonlyInputName}
-								value={inputNameValue} 
-								// onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
-								onChange={e => setInputNameValue(e.target.value)} 
-							/>
-							<div className={isActiveInputName? 'input__btn active': 'input__btn '} >
-								<img 
-									src={editIconInputName} 
-									alt="edit icon"
-									onClick={editUserName}
-								/>							
-							</div>
-						</div>
-					</div>
-					{currentUser.role === "teacher" ? (
-						<div className="userInfo__item d-flex">
-							<span className='userLabel label'>Subject:</span>
-							<span className='label'>{currentUser.sbj}</span>
-						</div>
-					)
-						: (<div></div>)
-					}
+			
+			// <div className="userInfo__item d-flex aic">
+			// 	<span className='userLabel label'>Email:</span>
+			// 	<div className="popup_input change_input w25r d-flex aic">
+			// 		<div className='popup_field'>
+			// 			<span>{userData.email}</span>
+			// 		</div>
+			// 	</div>
+			// </div>
+			// {/* sbjs's checkbox for teacher */}
+			// {userData.role==="teacher" && (
+			// <div className="userInfo__item d-flex aic">
+			// 	<span className='userLabel label'>Subjects:</span>
+			// 	<div className="user_sbjs d-flex f-column">
+			// 		{editingFields.sbjs ? ( 
+			// 			<div className='popup_field'>
+			// 				{sbjs && sbjs.map(subject => (
+			// 					<div key={subject.id_subject}>
+			// 						<label>
+			// 							<input
+			// 								type="checkbox"
+			// 								name="sbjs"
+			// 								value={subject.subject_name}
+			// 								checked={selectedSubjects.includes(subject.subject_name)}
+			// 								onChange={handleSubjectChange}
+			// 							/>
+			// 							{subject.subject_name}
+			// 						</label>
+			// 					</div>
+			// 				))}
+
+			// 				{errors.sbjs && <span className='input_error'>{errors.sbjs}</span>}
+			// 			</div>
+			// 		) : (
+			// 			userData.sbjs_id && userData.sbjs_id.map(item => (
+			// 				<div key={item}>
+			// 					{item}
+			// 				</div>
+			// 			))
+			// 		)}
+			// 	</div>
+				
+			// 		{editingFields.sbjs ? (
+			// 		<button onClick={() => handleSave('sbjs')}>
+			// 			<img src={saveSvg} alt="save img" />
+			// 		</button>
+			// 	) : (
+			// 		<button onClick={() => handleEdit('sbjs')}>
+			// 			<img src={editSvg} alt="" />
+			// 		</button>
+			// 	)}
+
+
+
+				
+			// 	{/* <span className='userLabel label'>Subjects:</span>
+			// 	<div className="popup_input change_input w25r d-flex aic">
+			// 		{sbjs && sbjs.map(item => (
+			// 			<label key={item.subject_name}>
+			// 				<input type="checkbox" name={item.subject_name} />
+			// 				{item.subject_name}
+			// 			</label>
+						
+			// 		))}
+				
 					
-				</div>
-			</div>
-			<div className="editUserInfo__right w40">
-				{/* <img src={currentUser.userImgLink} alt="user Image" className='userImg' /> */}
-				<span>Change your avatar</span>
-			</div>
-		</div>
-		<div className="form__bottom d-flex jcsb">
-			<input type="submit" />
-			<span onClick={deleteUser}>sdf
-				{/* <Link className="link" to="/">Delete account</Link> */}
-			</span> 
+			// 	</div> */}
 
-			{/* <button>Delete account</button> */}
-		</div>
-		
-
-		
-	</form>
+			// 	{/* 
+				
+			// 	!!! Use it for student!!
+				
+			// 	<div className="popup_input change_input w25r d-flex aic">
+			// 		<select id="sbjs" name="sbj" onChange={handleChange}>
+			// 			<option key="0" value='0'>no subject</option>
+			// 			{sbjs && sbjs.map(option => (
+							
+			// 				<option key={option.id_subject} value={option.id_subject}>
+			// 					{option.subject_name}
+			// 				</option>
+			// 			))}
+			// 		</select>
+			// 	</div> */}
+			// </div>
+			// )}		
+			// <div className="delete_user">
+			// 	<button onClick={handleDelete}>Delete this account</button>
+			// </div>
+			// <div className="mt5">
+			// 	{message && <span className={message.msgClass}>{message.message}</span>}
+			// </div>
