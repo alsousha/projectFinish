@@ -383,6 +383,105 @@ export const getTeachersStudent = (req, res) => {
   });
 };
 
+//Function that get id of certification and delete it
+export const deleteCertification = (req, res) => {
+  const id_certif = req.body.id_certif;
+
+  //delete the certification
+  const deleteQuery = "DELETE FROM certification WHERE id_certif = ?";
+  db.query(deleteQuery, [id_certif], (err, result) => {
+    if (err) {
+      return res.json(err);
+    }
+
+    // Check if any rows were affected
+    if (result.affectedRows === 0) {
+      return res.status(404).json("Certification not found!");
+    }
+
+    return res.status(200).json("Certification deleted successfully.");
+  });
+};
+
+//Function that get info categary and create new category.
+export const createCategory = (req, res) => {
+  const { category_name, id_subject } = req.body;
+
+  // Query to insert a new category into the table
+  const insertQuery =
+    "INSERT INTO category (category_name, id_subject) VALUES (?, ?)";
+  db.query(insertQuery, [category_name, id_subject], (err, result) => {
+    if (err) {
+      return res.json(err);
+    }
+
+    // Get the generated category ID
+    const id_category = result.insertId;
+
+    // Prepare the response object
+    const category = {
+      id_category,
+      category_name,
+      date_create: new Date().toISOString().slice(0, 19).replace("T", " "), // Format the date_create value correctly
+      id_subject,
+    };
+
+    return res.status(200).json(category);
+  });
+};
+
+//Function that get id teacher and return all categories(full info) for this teacher
+export const getCategoriesByTeacher = (req, res) => {
+  const id_user = req.body.id_user; // Access the teacher ID from the request body
+
+  // Query to retrieve categories by teacher
+  const query = `
+    SELECT id_category, category_name, date_create, id_subject
+    FROM category
+    WHERE id_subject IN (
+      SELECT id_subject
+      FROM subject
+      WHERE id_user = ?
+    )`;
+
+  db.query(query, [id_user], (err, result) => {
+    if (err) {
+      return res.json(err);
+    }
+
+    // Prepare the response object
+    const categories = result.map((row) => ({
+      id_category: row.id_category,
+      category_name: row.category_name,
+      date_create: new Date().toISOString().slice(0, 19).replace("T", " "),
+      id_subject: row.id_subject,
+    }));
+
+    return res.status(200).json(categories);
+  });
+};
+
+//Function that get category id and delete this category
+export const deleteCategory = (req, res) => {
+  const id_category = req.body.id_category; // Access the category ID from the request body
+
+  // Query to delete the category
+  const deleteQuery = "DELETE FROM category WHERE id_category = ?";
+  db.query(deleteQuery, [id_category], (err, result) => {
+    if (err) {
+      return res.json(err);
+    }
+
+    // Check if any rows were affected by the deletion
+    if (result.affectedRows === 0) {
+      return res.status(404).json("Category not found!");
+    }
+
+    return res.status(200).json("Category deleted successfully");
+  });
+};
+
+
 /**
  ============================
  End teacher`s functions

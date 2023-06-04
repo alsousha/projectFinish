@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2023 at 04:12 PM
+-- Generation Time: Jun 04, 2023 at 09:56 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -31,8 +31,16 @@ CREATE TABLE `category` (
   `id_category` int(10) NOT NULL,
   `category_name` varchar(15) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `id_subject` int(10) NOT NULL
+  `id_subject` int(10) NOT NULL,
+  `id_user` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`, `id_user`) VALUES
+(1, 'testname1', '2023-06-04 19:01:35', 3, 49);
 
 -- --------------------------------------------------------
 
@@ -338,6 +346,7 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id_category`),
+  ADD UNIQUE KEY `uk_category_user_category` (`id_user`,`id_category`),
   ADD KEY `fk_category_subject` (`id_subject`);
 
 --
@@ -397,10 +406,10 @@ ALTER TABLE `subject`
 --
 ALTER TABLE `task`
   ADD PRIMARY KEY (`id_task`),
-  ADD KEY `fk_task_teacher` (`id_teacher`),
+  ADD KEY `fk_task_category` (`id_category`),
   ADD KEY `fk_task_class` (`id_class`),
   ADD KEY `fk_task_task_template` (`id_taskTemplate`),
-  ADD KEY `fk_task_category` (`id_category`);
+  ADD KEY `fk_task_teacher` (`id_teacher`);
 
 --
 -- Indexes for table `task_folder`
@@ -449,13 +458,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `certification`
 --
 ALTER TABLE `certification`
-  MODIFY `id_certif` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_certif` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `class_folder`
@@ -501,7 +510,8 @@ ALTER TABLE `user`
 -- Constraints for table `category`
 --
 ALTER TABLE `category`
-  ADD CONSTRAINT `fk_category_subject` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`);
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `teacher` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_category_subject` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `class`
@@ -526,7 +536,7 @@ ALTER TABLE `student_certification`
 -- Constraints for table `student_class`
 --
 ALTER TABLE `student_class`
-  ADD CONSTRAINT `fk_student_class_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`),
+  ADD CONSTRAINT `fk_student_class_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_student_class_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`);
 
 --
@@ -540,10 +550,10 @@ ALTER TABLE `student_task`
 -- Constraints for table `task`
 --
 ALTER TABLE `task`
-  ADD CONSTRAINT `fk_task_category` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`),
-  ADD CONSTRAINT `fk_task_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`),
-  ADD CONSTRAINT `fk_task_task_template` FOREIGN KEY (`id_taskTemplate`) REFERENCES `task_template` (`id_template`),
-  ADD CONSTRAINT `fk_task_teacher` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_user`);
+  ADD CONSTRAINT `fk_task_category` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_task_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_task_task_template` FOREIGN KEY (`id_taskTemplate`) REFERENCES `task_template` (`id_template`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_task_teacher` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `task_folder`
