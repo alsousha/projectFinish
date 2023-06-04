@@ -107,7 +107,48 @@ function getUserPassword(userId, callback) {
     return callback(null, password);
   });
 }
+export const updateUserPassword = (req, res) => {
+  const { id } = req.params;
+  const { currentPassword, newPassword, confirmPassword } = req.body;
 
+  //fetch password from bd
+  getUserPassword(id, (err, password) => {
+    if (err) {
+      console.error('Error:', err);
+      // Handle the error
+      return;
+    }
+
+    if (!password) {
+      console.log('User not found');
+      return;
+    }
+
+    //password was fetching
+    // Compare the current password with the stored hashed password
+    bcrypt.compare(currentPassword, password, (err, isMatch) => {
+      if (err) {
+        console.error('Error comparing passwords:', err);
+        return res.status(500).json({ error: 'Server error' });
+      }
+
+      if (isMatch) {
+        // Passwords match, current password is valid
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(newPassword, salt);
+        const q = 'UPDATE user SET password = ? WHERE id_user = ?';
+
+        db.query(q, [hash, id], (err, data) => {
+          if (err) return res.status(402).json('Something wrong, try later');
+          return res.status(200).json('Password has been updated');
+        });
+      } else {
+        // Passwords do not match, current password is invalid
+        return res.status(401).json("Current password isn't correct");
+      }
+    });
+  });
+};
 export const checkPassword = (req, res) => {
   const { currentPassword, id_user } = req.body;
   //fetch password from bd
