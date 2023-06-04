@@ -146,9 +146,6 @@ export const register = (req, res) => {
   });
 };
 
-
-
-
 //Function for login
 export const login = (req, res) => {
   // console.log(req.body.email); //email from fe input

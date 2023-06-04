@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 02, 2023 at 03:24 PM
+-- Generation Time: Jun 03, 2023 at 04:12 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -49,6 +49,13 @@ CREATE TABLE `certification` (
   `img_url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `certification`
+--
+
+INSERT INTO `certification` (`id_certif`, `name_certif`, `point`, `flag_as_available`, `description`, `img_url`) VALUES
+(1, 'test1', 12, 1, 'hfhfghfgh', '');
+
 -- --------------------------------------------------------
 
 --
@@ -61,6 +68,14 @@ CREATE TABLE `class` (
   `class_level` int(12) NOT NULL,
   `id_teacher` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `class`
+--
+
+INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
+(1, 'geo class', 12, 66),
+(2, 'math class', 12, 66);
 
 -- --------------------------------------------------------
 
@@ -111,6 +126,13 @@ CREATE TABLE `student_certification` (
   `data_get` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `student_certification`
+--
+
+INSERT INTO `student_certification` (`id_user`, `id_certif`, `data_get`) VALUES
+(64, 1, '2023-06-03 14:01:04');
+
 -- --------------------------------------------------------
 
 --
@@ -127,8 +149,9 @@ CREATE TABLE `student_class` (
 --
 
 INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
-(62, 0),
-(64, 0);
+(62, 1),
+(64, 1),
+(64, 2);
 
 -- --------------------------------------------------------
 
@@ -205,8 +228,8 @@ CREATE TABLE `task_folder` (
 --
 
 CREATE TABLE `task_tasksfolder` (
-  `id_task` int(3) NOT NULL,
-  `id_tskFolder` int(3) NOT NULL
+  `id_task` int(11) NOT NULL,
+  `id_tskFolder` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -228,7 +251,7 @@ CREATE TABLE `task_template` (
 --
 
 CREATE TABLE `teacher` (
-  `id_user` int(30) NOT NULL,
+  `id_user` int(3) NOT NULL,
   `count_of_tasks` int(3) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -237,7 +260,6 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
-(46, 0),
 (49, 0),
 (56, 0),
 (58, 0),
@@ -264,8 +286,7 @@ INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
 (59, 12),
 (66, 1),
 (78, 2),
-(78, 3),
-(78, 11);
+(78, 3);
 
 -- --------------------------------------------------------
 
@@ -288,9 +309,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, `img_url`) VALUES
-(36, 'teacher', 'alex@df.dsf', '$2b$10$GyDxPheIF1GxZmU712w3puuFgixTE09I8URgFtBzCu5s70I.pRAZm', 'Alex', 'agronov', '0'),
+(36, 'teacher', 'alex@df.dsf', '$2b$10$sI2xoY2Ubh/hcBU8hf2TtucVRgFYuOUeixCwI0HhM79cDyAGf5QEu', 'Alexx', 'agronvv', '0'),
 (38, 'student', 'alexstudent@df.dsf', '$2b$10$.gv4uI5zOxcbYWP9XNSOyeBbFcwoEvZUhV.jCCzH7Qw3goDs/PVTC', 'Alexstud', 'agronovdd', '0'),
-(46, 'teacher', 'asd@asd.asd', '$2b$10$E0ciFUB07pYF7J.OLs9jwOzaTkecT8tYnN965w6iQNgEARmeccewK', 'Alsu', 'Bogdanov', '0'),
 (47, 'student', 'qwe@qwe.we', '$2b$10$dSzxiUDrtMulnFTU6GHTU.JJhUnVYDg24pyMjwDAW9gXztrCzhsJe', 'Ben', 'Las', '0'),
 (49, 'teacher', 'qwe@qwe.qwe', '$2b$10$FOwLiYhwo0ZLZbyYi9SWvuyjP/kWlMk2np6UhS7CQmKY6dkeYY4yy', 'Benw', 'Dan', '0'),
 (50, 'student', 'qaz@qaz.qa', '$2b$10$dySC6c0qqySZaoVDDb4wF.52Y2QU1DfPkyFTvS.oivuffHh71r/qi', 'Stud', 'dd', '0'),
@@ -317,7 +337,8 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id_category`);
+  ADD PRIMARY KEY (`id_category`),
+  ADD KEY `fk_category_subject` (`id_subject`);
 
 --
 -- Indexes for table `certification`
@@ -329,7 +350,8 @@ ALTER TABLE `certification`
 -- Indexes for table `class`
 --
 ALTER TABLE `class`
-  ADD PRIMARY KEY (`id_class`);
+  ADD PRIMARY KEY (`id_class`,`id_teacher`),
+  ADD KEY `fk_class_teacher` (`id_teacher`);
 
 --
 -- Indexes for table `class_folder`
@@ -341,25 +363,28 @@ ALTER TABLE `class_folder`
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
-  ADD KEY `id_user` (`id_user`);
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- Indexes for table `student_certification`
 --
 ALTER TABLE `student_certification`
-  ADD PRIMARY KEY (`id_user`,`id_certif`);
+  ADD PRIMARY KEY (`id_user`,`id_certif`),
+  ADD KEY `fk_student_certification_certification` (`id_certif`);
 
 --
 -- Indexes for table `student_class`
 --
 ALTER TABLE `student_class`
-  ADD UNIQUE KEY `id_user` (`id_user`);
+  ADD PRIMARY KEY (`id_user`,`id_class`),
+  ADD KEY `fk_student_class_class` (`id_class`);
 
 --
 -- Indexes for table `student_task`
 --
 ALTER TABLE `student_task`
-  ADD PRIMARY KEY (`id_user`,`id_task`);
+  ADD PRIMARY KEY (`id_user`,`id_task`),
+  ADD KEY `fk_student_task_task` (`id_task`);
 
 --
 -- Indexes for table `subject`
@@ -371,19 +396,25 @@ ALTER TABLE `subject`
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
-  ADD PRIMARY KEY (`id_task`);
+  ADD PRIMARY KEY (`id_task`),
+  ADD KEY `fk_task_teacher` (`id_teacher`),
+  ADD KEY `fk_task_class` (`id_class`),
+  ADD KEY `fk_task_task_template` (`id_taskTemplate`),
+  ADD KEY `fk_task_category` (`id_category`);
 
 --
 -- Indexes for table `task_folder`
 --
 ALTER TABLE `task_folder`
-  ADD PRIMARY KEY (`id_tskFolder`);
+  ADD PRIMARY KEY (`id_tskFolder`),
+  ADD KEY `fk_task_folder_class_folder` (`id_classFolder`);
 
 --
 -- Indexes for table `task_tasksfolder`
 --
 ALTER TABLE `task_tasksfolder`
-  ADD PRIMARY KEY (`id_task`,`id_tskFolder`);
+  ADD PRIMARY KEY (`id_task`,`id_tskFolder`),
+  ADD KEY `fk_task_tasksfolder_task_folder` (`id_tskFolder`);
 
 --
 -- Indexes for table `task_template`
@@ -424,13 +455,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `certification`
 --
 ALTER TABLE `certification`
-  MODIFY `id_certif` int(10) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `class`
---
-ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_certif` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `class_folder`
@@ -473,16 +498,77 @@ ALTER TABLE `user`
 --
 
 --
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `fk_category_subject` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`);
+
+--
+-- Constraints for table `class`
+--
+ALTER TABLE `class`
+  ADD CONSTRAINT `fk_class_teacher` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_user`);
+
+--
 -- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `student_certification`
+--
+ALTER TABLE `student_certification`
+  ADD CONSTRAINT `fk_student_certification_certification` FOREIGN KEY (`id_certif`) REFERENCES `certification` (`id_certif`),
+  ADD CONSTRAINT `fk_student_certification_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`);
+
+--
+-- Constraints for table `student_class`
+--
+ALTER TABLE `student_class`
+  ADD CONSTRAINT `fk_student_class_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`),
+  ADD CONSTRAINT `fk_student_class_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`);
+
+--
+-- Constraints for table `student_task`
+--
+ALTER TABLE `student_task`
+  ADD CONSTRAINT `fk_student_task_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`),
+  ADD CONSTRAINT `fk_student_task_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`);
+
+--
+-- Constraints for table `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `fk_task_category` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`),
+  ADD CONSTRAINT `fk_task_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`),
+  ADD CONSTRAINT `fk_task_task_template` FOREIGN KEY (`id_taskTemplate`) REFERENCES `task_template` (`id_template`),
+  ADD CONSTRAINT `fk_task_teacher` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_user`);
+
+--
+-- Constraints for table `task_folder`
+--
+ALTER TABLE `task_folder`
+  ADD CONSTRAINT `fk_task_folder_class_folder` FOREIGN KEY (`id_classFolder`) REFERENCES `class_folder` (`id_classFolder`);
+
+--
+-- Constraints for table `task_tasksfolder`
+--
+ALTER TABLE `task_tasksfolder`
+  ADD CONSTRAINT `fk_task_tasksfolder_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`),
+  ADD CONSTRAINT `fk_task_tasksfolder_task_folder` FOREIGN KEY (`id_tskFolder`) REFERENCES `task_folder` (`id_tskFolder`);
+
+--
 -- Constraints for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD CONSTRAINT `teacher_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `teacher_sbjs`
+--
+ALTER TABLE `teacher_sbjs`
+  ADD CONSTRAINT `teacher_sbjs_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `teacher` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
