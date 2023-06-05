@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 04, 2023 at 09:56 PM
+-- Generation Time: Jun 05, 2023 at 10:30 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -28,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `category` (
-  `id_category` int(10) NOT NULL,
+  `id_category` int(3) NOT NULL,
   `category_name` varchar(15) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `id_subject` int(10) NOT NULL,
+  `id_subject` int(3) NOT NULL,
   `id_user` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,7 +40,8 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`, `id_user`) VALUES
-(1, 'testname1', '2023-06-04 19:01:35', 3, 49);
+(1, 'test1', '2023-06-04 19:01:35', 3, 49),
+(4, 'test2', '2023-06-05 18:48:35', 3, 49);
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,9 @@ CREATE TABLE `class` (
 
 INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
 (1, 'geo class', 12, 66),
-(2, 'math class', 12, 66);
+(2, 'math class', 12, 66),
+(3, 'test class', 8, 66),
+(4, 'test class', 8, 66);
 
 -- --------------------------------------------------------
 
@@ -291,6 +294,7 @@ CREATE TABLE `teacher_sbjs` (
 --
 
 INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
+(49, 3),
 (59, 12),
 (66, 1),
 (78, 2),
@@ -458,7 +462,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_category` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -517,7 +521,7 @@ ALTER TABLE `category`
 -- Constraints for table `class`
 --
 ALTER TABLE `class`
-  ADD CONSTRAINT `fk_class_teacher` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_user`);
+  ADD CONSTRAINT `fk_class_teacher` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student`
@@ -529,22 +533,22 @@ ALTER TABLE `student`
 -- Constraints for table `student_certification`
 --
 ALTER TABLE `student_certification`
-  ADD CONSTRAINT `fk_student_certification_certification` FOREIGN KEY (`id_certif`) REFERENCES `certification` (`id_certif`),
-  ADD CONSTRAINT `fk_student_certification_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`);
+  ADD CONSTRAINT `fk_student_certification_certification` FOREIGN KEY (`id_certif`) REFERENCES `certification` (`id_certif`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_student_certification_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_class`
 --
 ALTER TABLE `student_class`
   ADD CONSTRAINT `fk_student_class_class` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_student_class_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`);
+  ADD CONSTRAINT `fk_student_class_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student_task`
 --
 ALTER TABLE `student_task`
-  ADD CONSTRAINT `fk_student_task_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`),
-  ADD CONSTRAINT `fk_student_task_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`);
+  ADD CONSTRAINT `fk_student_task_student` FOREIGN KEY (`id_user`) REFERENCES `student` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_student_task_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `task`
@@ -559,14 +563,14 @@ ALTER TABLE `task`
 -- Constraints for table `task_folder`
 --
 ALTER TABLE `task_folder`
-  ADD CONSTRAINT `fk_task_folder_class_folder` FOREIGN KEY (`id_classFolder`) REFERENCES `class_folder` (`id_classFolder`);
+  ADD CONSTRAINT `fk_task_folder_class_folder` FOREIGN KEY (`id_classFolder`) REFERENCES `class_folder` (`id_classFolder`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `task_tasksfolder`
 --
 ALTER TABLE `task_tasksfolder`
-  ADD CONSTRAINT `fk_task_tasksfolder_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`),
-  ADD CONSTRAINT `fk_task_tasksfolder_task_folder` FOREIGN KEY (`id_tskFolder`) REFERENCES `task_folder` (`id_tskFolder`);
+  ADD CONSTRAINT `fk_task_tasksfolder_task` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_task_tasksfolder_task_folder` FOREIGN KEY (`id_tskFolder`) REFERENCES `task_folder` (`id_tskFolder`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `teacher`
