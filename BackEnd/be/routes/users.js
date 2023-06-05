@@ -13,6 +13,9 @@ import {
   createCategory,
   getCategoriesByTeacher,
   deleteCategory,
+  editCategory,
+  getUsersInClass,
+  addNewClass,
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -28,5 +31,8 @@ router.delete("/deletecertif", deleteCertification);
 router.post("/createcat", createCategory);
 router.get("/getallcat", getCategoriesByTeacher);
 router.delete("/deletecat", deleteCategory);
+router.post("/editcat", editCategory);
+router.get("/userinclass", getUsersInClass);
+router.get("/addnewclass", addNewClass);
 
 export default router;

@@ -481,6 +481,108 @@ export const deleteCategory = (req, res) => {
   });
 };
 
+/**
+ * Function for edit category
+ * Function get id of category.
+ * Can edit just category name
+ */
+export const editCategory = (req, res) => {
+  const id_category = req.body.id_category;
+  const newCategoryName = req.body.category_name;
+  //console.log(newCategoryName);
+
+  // Query to update the category
+  const updateQuery =
+    "UPDATE category SET category_name = ? WHERE id_category = ?";
+  db.query(updateQuery, [newCategoryName, id_category], (err, result) => {
+    if (err) {
+      return res.json(err);
+    }
+
+    // Check if any rows were affected by the update
+    if (result.affectedRows === 0) {
+      return res.status(404).json("Category not found!");
+    }
+
+    return res.status(200).json("Category updated successfully");
+  });
+};
+
+/**
+ * Function that get id class, check all student in this class
+ *and return name and last name for all students
+ */
+export const getUsersInClass = (req, res) => {
+  const id_class = req.body.id_class;
+
+  const classQuery = "SELECT id_user FROM student_class WHERE id_class = ?";
+
+  db.query(classQuery, [id_class], (err, classResult) => {
+    //console.log(classResult);
+    if (err) {
+      return res.json(err);
+    }
+
+    // Check if any users were found in the class
+    if (classResult.length === 0) {
+      return res.status(404).json("No users found in the class!");
+    }
+
+    // Extract the id_user values from the classResult
+    const idUsers = classResult.map((row) => row.id_user);
+
+    const usersQuery = "SELECT name, lastname FROM user WHERE id_user IN (?)";
+
+    db.query(usersQuery, [idUsers], (err, usersResult) => {
+      if (err) {
+        return res.json(err);
+      }
+
+      // Check if any users were found in the user table
+      if (usersResult.length === 0) {
+        return res.status(404).json("No users found!");
+      }
+
+      // Return the names and last names of users
+      const users = usersResult.map((row) => ({
+        name: row.name,
+        lastname: row.lastname,
+      }));
+
+      return res.status(200).json(users);
+    });
+  });
+};
+
+/**
+ * Function that get id of teacher
+ * Get class name and class level
+ * and create new class
+ */
+export const addNewClass = (req, res) => {
+  const { id_class, id_teacher, class_name, class_level } = req.body;
+
+  // Insert the new class into the class table
+  const insertQuery =
+    "INSERT INTO class (id_class, class_name, class_level, id_teacher) VALUES (?, ?, ?, ?)";
+  db.query(
+    insertQuery,
+    [id_class, class_name, class_level, id_teacher],
+    (err, result) => {
+      if (err) {
+        console.error("Error adding new class:", err);
+        return res.status(500).json("Failed to add the new class.");
+      }
+
+      // Check if the new class was successfully inserted
+      if (result.affectedRows === 1) {
+        return res.status(200).json("New class added successfully!");
+      } else {
+        return res.status(500).json("Failed to add the new class.");
+      }
+    }
+  );
+};
 
 /**
  ============================
