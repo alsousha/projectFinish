@@ -3,6 +3,7 @@ import authRoutes from './routes/auth.js';
 import usersRoutes from './routes/users.js';
 import taskRoutes from './routes/tasks.js';
 import sbjsRoutes from './routes/sbjs.js';
+import studentRoutes from './routes/student.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -18,6 +19,7 @@ app.use('/api/tasks', taskRoutes); //call task routers for each url that starts 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/sbjs', sbjsRoutes);
+app.use('/api/student', studentRoutes);
 
 app.listen(8800, () => {
   console.log('Connected');

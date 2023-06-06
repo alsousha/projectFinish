@@ -26,6 +26,13 @@ export const AuthContextProvider = ({ children }) => {
       // console.log(userTmp.id_user);
     } else if (userTmp.role === 'student') {
       //get class level
+      try {
+        const res = await axios.get(`/student/${userTmp.id_user}/class-level`);
+        const totalUserData = { ...userTmp, lvl: res.data.classLevel };
+        setCurrentUser(totalUserData);
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     // console.log(res.data);

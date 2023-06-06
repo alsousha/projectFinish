@@ -7,6 +7,8 @@ import Homework from './Homework'
 import Statistic from './Statistic'
 import Certifications from './Certifications'
 import GlobalTasks from './GlobalTasks'
+import Profile from '../../pages/Profile';
+import NotFound from '../../pages/404';
 
 function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
 	// console.log(isLoggedIn);
@@ -36,6 +38,8 @@ function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
 					<Route path='/statistic' element={<Statistic />} />
 					<Route path='/certifications' element={<Certifications />} />
 					<Route path='/globalTasks' element={<GlobalTasks />} />
+					<Route path='/profile' element={<Profile />} />
+					<Route path='/' element={<span>logout</span>} />
 				</Routes>
 			</div>
 	  </div>

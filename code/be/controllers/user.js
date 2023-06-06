@@ -8,21 +8,36 @@ export const updateUser = (req, res) => {
   // console.log(req.body);
   // console.log('update user');
   const { id } = req.params;
-  const { name, email, lastname, sbjs } = req.body;
+  const { name, email, lastname, sbjs, lvl, role } = req.body;
 
   // console.log(sbjs);
   const q = 'UPDATE user SET name = ?, email = ?, lastname = ? WHERE id_user = ?';
 
-  // // Assuming you are using the mysql2 library for MySQL operations
   db.query(q, [name, email, lastname, id], (error) => {
     if (error) {
       console.error('Error updating user:', error);
       res.status(500).json({ error: 'Error updating user' });
-    } else {
+    } else if (role === 'teacher') {
       updateTeacherSubjects(id, sbjs, req, res);
       // res.status(200).json({ message: 'User updated successfully' });
+    } else if (role === 'student') {
+      updateStudentLvl(id, lvl, req, res);
     }
   });
+};
+const updateStudentLvl = async (id_user, lvl, req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    const q = 'UPDATE student SET class_level = ? WHERE id_user = ?';
+    db.query(q, [lvl, id_user], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.json('Class level was been updated.');
+    });
+    // console.log('Table updated successfully');
+  } catch (error) {
+    console.error('Error updating table:', error);
+  }
 };
 // const updateTeacherSubjects = async (id_user, subjects_names, req, res) => {
 //   const token = req.cookies.access_token;
@@ -56,6 +71,7 @@ const updateTeacherSubjects = async (id_user, subjects_names, req, res) => {
     console.error('Error updating table:', error);
   }
 };
+
 const deleteSbjsFromTeacher_sbjs = async (id_user, token) => {
   jwt.verify(token, 'jwtkey', (err, userInfo) => {
     if (err) return res.status(403).json('Token is not valid!');
@@ -82,6 +98,7 @@ const insertCheckedSbjsInTeacher_sbjs = async (id_user, subjects_ids, req, res, 
     const q = 'INSERT INTO  teacher_sbjs (`id_user`, `id_subject`) VALUES ?';
     const values = subjects_ids.map((id_subject) => [id_user, id_subject]);
 
+    console.log('values' + values);
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.json('Subjects was been added.');

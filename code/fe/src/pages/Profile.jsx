@@ -24,21 +24,40 @@ function Profile() {
 	const [messagePassword, setMessagePassword] = useState({}); //msg for password section from DB
 	
 	const [isResetPasswordVisiable, setIsResetPasswordVisiable] = useState(false)
+	const [selectedClassLvl, setSelectedClassLvl] = useState(userData.lvl); //set class level fot student when edit user
 	// console.log(userData);
 	// console.log(sbjs);
-	
+	const maxLevel = 12; // Maximum level
+	const lvlsElem = [];
+	for (let i = 1; i <= maxLevel; i++) {
+		lvlsElem.push(
+			<option key={`level-${i}`} value={i}>
+				{`Class ${i}`}
+			</option>
+		);
+	}
+
+	const handleSelectChange = (event) => {
+    setSelectedClassLvl(event.target.value);
+		setUserData((prevUserData) => ({
+      ...prevUserData,
+      ["lvl"]: event.target.value,
+    }));
+  };
 	const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prevUserData) => ({
       ...prevUserData,
       [name]: value,
     }));
+		// console.log(userData);
   };
 	const handleEdit = () => {
     setEditing(true);
   };
 
   const handleSave = () => {
+		
 		const fieldErrors = validateField();
 		if (Object.keys(fieldErrors).length === 0) {
 			setEditing(false);
@@ -49,19 +68,26 @@ function Profile() {
       //   [fieldName]: false,
       // }));
 		
-			console.log("saved");
+			// console.log("saved");
       setErrors({});
 			// setIsCurrentInputValid(true)
       // Update user data with the changes
+			// console.log(userData);
 			update()
     } else {
       setErrors(fieldErrors);
 			// setIsCurrentInputValid(false)
     }
     
-    // Update user data with the changes
-    // You can send the updated data to an API or perform any necessary actions here
   };
+	const handleDelete = async e =>{
+		try{
+			await deleteUser()
+			// console.log("handle");
+		}catch(err){
+			console.log(err);
+		}
+	}
 
 	//manage checboxes of sbjs
 	const handleSubjectChange = (e) => {
@@ -120,9 +146,9 @@ function Profile() {
 	const handlePasswordEdit = () =>{
 		setIsResetPasswordVisiable(true)
 	}
-	//set sbjs 
+	//set sbjs or class_level 
 	useEffect(() => {
-		//Fetch the subjects from the DB
+		//Fetch the subjects from the DB for teacher
 		const fetchSubjects = async () => {
 			try {
 				const res = await axios.get("/sbjs/");
@@ -131,22 +157,39 @@ function Profile() {
 				console.log(err);
 			}
 		};
+		if(userData.role==='teacher'){
+			// Fetch the selected subjects for the teacher
+			const fetchSelectedSubjects = async () => {
+				try {
+					const res = await axios.get(`/sbjs/${userData.id_user}`);
+					setSelectedSubjects(res.data);
+				} catch (err) {
+					console.log(err);
+				}
+			};
 
-		// Fetch the selected subjects for the teacher
-    const fetchSelectedSubjects = async () => {
-      try {
-        const res = await axios.get(`/sbjs/${userData.id_user}`);
-        setSelectedSubjects(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+			fetchSubjects();
+			fetchSelectedSubjects();
+		}else if(userData.role==='student'){
+			// Fetch the selected class level for the student
+			// const fetchSelectedClassLvl = async () => {
+			// 	try {
+			// 		const res = await axios.get(`/sbjs/${userData.id_user}/`);
+			// 		setSelectedSubjects(res.data);
+			// 	} catch (err) {
+			// 		console.log(err);
+			// 	}
+			// };
 
-    fetchSubjects();
-    fetchSelectedSubjects();
-  }, [userData.id_user]);
-	const updateUserPassword = async () => {
+			// fetchSubjects();
+			// fetchSelectedSubjects();
+
+		}
+
 		
+  }, [userData.id_user]);
+
+	const updateUserPassword = async () => {	
 		const passwordInputs = {"currentPassword":password, "newPassword":newPassword, "confirmPassword":confirmPassword}
 		
 		const msg={
@@ -160,10 +203,13 @@ function Profile() {
 				msg.msgClass = res.status===200 ? "success" : "error"
 				msg.message = res.data
    
+				setIsResetPasswordVisiable(false)
 				setMessagePassword(msg);
 				setTimeout(() => {
 					setMessagePassword('');
 				}, 2000);
+				
+
     })
     .catch((error) => {
       console.error('Error updating password:', error);
@@ -176,6 +222,7 @@ function Profile() {
     });
 		
   };
+
 	const update = async () => {
 		axios
     .put(`/users/${userData.id_user}`, userData)
@@ -185,7 +232,7 @@ function Profile() {
 				message: res.data.message
 			}
       setMessage(msg);
-			// updateUser(userData)//update localstorage and context
+			updateUser(userData)//update localstorage and context
 			 // Clear the message after 2 seconds 
 			setTimeout(() => {
 				setMessage('');
@@ -195,6 +242,7 @@ function Profile() {
       console.error('Error updating user\'s password:', error);
     });
   };
+
 	//validate userData
 	const validateField = () => {
     const errors = {};
@@ -209,11 +257,11 @@ function Profile() {
 						errors[fieldName] = 'Name is required';
 					}
 					break;
-				case 'lastname':
-				if (!value.trim()) {
-					errors[fieldName] = 'Lastname is required';
-				}
-				break;
+				// case 'lastname':
+				// if (!value.trim()) {
+				// 	errors[fieldName] = 'Lastname is required';
+				// }
+				// break;
 				case 'sbjs':
 				if (Array.isArray(value) && value.length === 0) {
 					errors[fieldName] = 'Select at least one subject';
@@ -278,18 +326,6 @@ function Profile() {
 		return errors;
 	};
 
-	// const checkCurrentPassword = async (currentPassword) => {
-	// 	const id_user = currentUser.id_user
-	// 	try {
-	// 		const response = await axios.post('/users/check-password', { currentPassword, id_user });
-	// 		// Assuming the backend returns a response indicating password validation
-	// 		const isValidCurrentPAssword = response.data.valid;
-	// 		return isValidCurrentPAssword
-	
-	// 	} catch (error) {
-	// 		console.error('Error checking current password:', error);
-	// 	}
-	// };
 	
 	return (
 		<>
@@ -428,6 +464,24 @@ function Profile() {
 						</div> */}
 					</div>
 					)}
+					{userData.role==="student" && (
+					<div className="userInfo__item d-flex aic">
+						<span className='userLabel label'>Level:</span>
+						<div className="user_sbjs d-flex f-column">
+							{editing ? ( 
+								<div className='editUserInfo_field'>
+									<select value={selectedClassLvl} onChange={handleSelectChange}>
+										{lvlsElem}
+									</select>
+									{errors.sbjs && <span className='input_error'>{errors.sbjs}</span>}
+								</div>
+							) : (
+								<span className='editUserInfo_field'>{userData.lvl}</span>
+							)}
+						</div>
+					</div>
+					)}
+
 				</div>
 				
 				<div className="mt5">
@@ -538,6 +592,9 @@ function Profile() {
 				</div>
 
 			
+			</div>
+			<div className="delete_user">
+				<button onClick={handleDelete}>Delete this account</button>
 			</div>
 
 		</>
