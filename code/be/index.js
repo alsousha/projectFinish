@@ -4,6 +4,7 @@ import usersRoutes from './routes/users.js';
 import taskRoutes from './routes/tasks.js';
 import sbjsRoutes from './routes/sbjs.js';
 import studentRoutes from './routes/student.js';
+import teacherRoutes from './routes/teacher.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -20,6 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/sbjs', sbjsRoutes);
 app.use('/api/student', studentRoutes);
+app.use('/api/teacher', teacherRoutes);
 
 app.listen(8800, () => {
   console.log('Connected');

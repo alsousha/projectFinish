@@ -31,7 +31,6 @@ function TeacherPage({isLoggedIn, setIsLoggedIn, userData}) {
 				items={linksData} 
 			/>
 			<div className='mainContent container'>
-				<h1>Teacher</h1>
 				<Routes>
 					<Route path='classes' element={<Classes classes={classes}/>} />
 					<Route path='/categories' element={<Categories />} />
