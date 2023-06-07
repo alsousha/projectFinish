@@ -1,591 +1,204 @@
-import { db } from "../db.js";
-import bcrypt from "bcrypt";
+import { db } from '../db.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-//Function for delete the user
-export const deleteUser = (req, res) => {
-  const email = req.body.email;
+import { getSbjsIdBySbjsName } from './sbj.js';
 
-  // Check if the user exists
-  const selectQuery = "SELECT * FROM user WHERE email = ?";
-  db.query(selectQuery, [email], (err, data) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    if (data.length === 0) {
-      return res.status(404).json("User not found!");
-    }
-
-    // User exists, delete the user
-    const deleteQuery = "DELETE FROM user WHERE email = ?";
-    db.query(deleteQuery, [email], (err, result) => {
-      if (err) {
-        return res.json(err);
-      }
-      return res.status(200).json("User deleted successfully!");
-    });
-  });
-};
-
-//Function for update user data
 export const updateUser = (req, res) => {
-  const { email, username, lastname, password } = req.body;
+  // console.log(req.body);
+  // console.log('update user');
+  const { id } = req.params;
+  const { name, email, lastname, sbjs, lvl, role } = req.body;
 
-  // Check if the user exists
-  const selectQuery = "SELECT * FROM user WHERE email = ?";
-  db.query(selectQuery, [email], (err, data) => {
-    if (err) {
-      return res.json(err);
+  // console.log(sbjs);
+  const q = 'UPDATE user SET name = ?, email = ?, lastname = ? WHERE id_user = ?';
+
+  db.query(q, [name, email, lastname, id], (error) => {
+    if (error) {
+      console.error('Error updating user:', error);
+      res.status(500).json({ error: 'Error updating user' });
+    } else if (role === 'teacher') {
+      updateTeacherSubjects(id, sbjs, req, res);
+      // res.status(200).json({ message: 'User updated successfully' });
+    } else if (role === 'student') {
+      updateStudentLvl(id, lvl, req, res);
     }
-    if (data.length === 0) {
-      return res.status(404).json("User not found!");
-    }
+  });
+};
+const updateStudentLvl = async (id_user, lvl, req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    const q = 'UPDATE student SET class_level = ? WHERE id_user = ?';
+    db.query(q, [lvl, id_user], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.json('Class level was been updated.');
+    });
+    // console.log('Table updated successfully');
+  } catch (error) {
+    console.error('Error updating table:', error);
+  }
+};
+// const updateTeacherSubjects = async (id_user, subjects_names, req, res) => {
+//   const token = req.cookies.access_token;
+//   if (!token) return res.status(401).json('Not authenticated!');
+//   try {
+//     // Delete existing entries for the given id_user
+//     await deleteSbjsFromTeacher_sbjs(id_user, token);
 
-    // Hash the new password
-    const saltRounds = 10;
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      if (err) {
-        return res.json(err);
-      }
+//     // Insert new sbjs for the given id_user and id_subjects
+//     const subjects_ids = await getSbjsIdBySbjsName(subjects_names); // reverse sbj's names to sbj's id
+//     await insertCheckedSbjsInTeacher_sbjs(id_user, subjects_ids, req, res, token);
 
-      // Update the user data with hashed password
-      const updateQuery =
-        "UPDATE user SET name = ?, lastName = ?, password = ? WHERE email = ?";
-      db.query(
-        updateQuery,
-        [username, lastname, hash, email],
-        (err, result) => {
-          if (err) {
-            return res.json(err);
-          }
-          //console.log([username, lastname, hash, email]);
-          return res.status(200).json("User updated successfully!");
+//     console.log('Table updated successfully');
+//   } catch (error) {
+//     console.error('Error updating table:', error);
+//   }
+// };
+const updateTeacherSubjects = async (id_user, subjects_names, req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    // Delete existing entries for the given id_user
+    await deleteSbjsFromTeacher_sbjs(id_user, token);
+
+    // Insert new sbjs for the given id_user and id_subjects
+    const subjects_ids = await getSbjsIdBySbjsName(subjects_names); // reverse sbj's names to sbj's id
+    await insertCheckedSbjsInTeacher_sbjs(id_user, subjects_ids, req, res, token);
+
+    console.log('Table updated successfully');
+  } catch (error) {
+    console.error('Error updating table:', error);
+  }
+};
+
+const deleteSbjsFromTeacher_sbjs = async (id_user, token) => {
+  jwt.verify(token, 'jwtkey', (err, userInfo) => {
+    if (err) return res.status(403).json('Token is not valid!');
+
+    return new Promise((resolve, reject) => {
+      const q = 'DELETE FROM teacher_sbjs WHERE id_user = ?';
+      db.query(q, id_user, (error, results) => {
+        if (error) {
+          console.error('Error deleteEntriesForUser user', error);
+          reject(error);
+        } else {
+          console.log('User deleteEntriesForUser successfully');
+          resolve({ message: 'User deleteEntriesForUser successfully' });
         }
-      );
+      });
     });
   });
 };
 
-/** 
-//Function for get subject id for teachers and class id for students
-export const subjectLevel = (req, res) => {
-  const userId = req.body.id_user;
+const insertCheckedSbjsInTeacher_sbjs = async (id_user, subjects_ids, req, res, token) => {
+  jwt.verify(token, 'jwtkey', (err) => {
+    if (err) return res.status(403).json('Token is not valid!');
 
-  // Query the user table to check the user's role
-  const selectQuery = "SELECT role FROM user WHERE id_user = ?";
-  db.query(selectQuery, [userId], (err, data) => {
+    const q = 'INSERT INTO  teacher_sbjs (`id_user`, `id_subject`) VALUES ?';
+    const values = subjects_ids.map((id_subject) => [id_user, id_subject]);
+
+    console.log('values' + values);
+    db.query(q, [values], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.json('Subjects was been added.');
+    });
+  });
+};
+
+// Function to get the user's password
+function getUserPassword(userId, callback) {
+  const q = 'SELECT password FROM user WHERE id_user = ?';
+  db.query(q, [userId], (err, res) => {
     if (err) {
-      return res.json(err);
+      console.error('Error retrieving user password:', err);
+      return callback(err, null);
     }
 
-    if (data.length === 0) {
-      return res.status(404).json("User not found");
+    if (res.length === 0) {
+      // User not found
+      return callback(null, null);
     }
 
-    const role = data[0].role;
+    const password = res[0].password;
+    return callback(null, password);
+  });
+}
+export const updateUserPassword = (req, res) => {
+  const { id } = req.params;
+  const { currentPassword, newPassword, confirmPassword } = req.body;
 
-    if (role === "teacher") {
-      // Query the teacher table to get the subject ID of the teacher
-      const teacherQuery = "SELECT id_subject FROM teacher_sbjs WHERE id_user = ?";
-      db.query(teacherQuery, [userId], (err, teacherData) => {
-        if (err) {
-          return res.json(err);
-        }
+  //fetch password from bd
+  getUserPassword(id, (err, password) => {
+    if (err) {
+      console.error('Error:', err);
+      // Handle the error
+      return;
+    }
 
-        if (teacherData.length === 0) {
-          return res.status(404).json("Teacher not found");
-        }
+    if (!password) {
+      console.log('User not found');
+      return;
+    }
 
-        const subjectId = teacherData[0].id_subject;
+    //password was fetching
+    // Compare the current password with the stored hashed password
+    bcrypt.compare(currentPassword, password, (err, isMatch) => {
+      if (err) {
+        console.error('Error comparing passwords:', err);
+        return res.status(500).json({ error: 'Server error' });
+      }
 
-        // Query the subject table to retrieve the subject name based on the subject ID
-        const subjectQuery =
-          "SELECT subject_name FROM subject WHERE id_subject = ?";
-        db.query(subjectQuery, [subjectId], (err, subjectData) => {
-          if (err) {
-            return res.json(err);
-          }
+      if (isMatch) {
+        // Passwords match, current password is valid
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(newPassword, salt);
+        const q = 'UPDATE user SET password = ? WHERE id_user = ?';
 
-          if (subjectData.length === 0) {
-            return res.status(404).json("Subject not found");
-          }
-
-          const subjectName = subjectData[0].subject_name;
-
-          return res.status(200).json(subjectName);
+        db.query(q, [hash, id], (err, data) => {
+          if (err) return res.status(402).json('Something wrong, try later');
+          return res.status(200).json('Password has been updated');
         });
-      });
-    } else if (role === "student") {
-      // Query the student table to get the class ID of the student
-      const studentQuery = "SELECT id_class FROM student WHERE id_user = ?";
-      db.query(studentQuery, [userId], (err, studentData) => {
-        if (err) {
-          return res.json(err);
-        }
-
-        if (studentData.length === 0) {
-          return res.status(404).json("Student not found");
-        }
-
-        const classId = studentData[0].id_class;
-
-        // Query the class table to retrieve the class name based on the class ID
-        const classQuery = "SELECT class_name FROM class WHERE id_class = ?";
-        db.query(classQuery, [classId], (err, classData) => {
-          if (err) {
-            return res.json(err);
-          }
-
-          if (classData.length === 0) {
-            return res.status(404).json("Class not found");
-          }
-
-          const className = classData[0].class_name;
-
-          return res.status(200).json(className);
-        });
-      });
-    } else {
-      // Handle if the user's role is neither teacher nor student
-      return res.status(401).json("User is neither a teacher nor a student");
-    }
-  });
-};
-*/
-
-/**
- ============================
- Start student`s functions
- ============================
- */
-//Function that return student`s class level, class id and class name
-export const getStudentClasses = (req, res) => {
-  const userId = req.body.userId; // Access the student ID from the "userId" property
-
-  // Query to retrieve class_level from student table
-  const studentQuery = "SELECT class_level FROM student WHERE id_user = ?";
-  //console.log(userId);
-  db.query(studentQuery, [userId], (err, studentResult) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    if (studentResult.length === 0) {
-      return res.status(404).json("Student not found!");
-    }
-
-    const classLevel = studentResult[0].class_level;
-
-    // Query to retrieve associated class IDs from student_class table
-    const studentClassQuery =
-      "SELECT id_class FROM student_class WHERE id_user = ?";
-    db.query(studentClassQuery, [userId], (err, studentClassResult) => {
-      if (err) {
-        return res.json(err);
-      }
-
-      const classIds = studentClassResult.map((row) => row.id_class);
-
-      // Query to retrieve class names from class table
-      const classQuery = "SELECT class_name FROM class WHERE id_class IN (?)";
-      db.query(classQuery, [classIds], (err, classResult) => {
-        if (err) {
-          return res.json(err);
-        }
-
-        const classNames = classResult.map((row) => row.class_name);
-
-        // Prepare the response object
-        const response = {
-          id_user: userId,
-          class_level: classLevel,
-          class_ids: classIds,
-          class_names: classNames,
-        };
-
-        return res.status(200).json(response);
-      });
-    });
-  });
-};
-
-export const getCerfiticationForStud = (req, res) => {
-  const userId = req.body.userId; // Access the user ID from the request body
-
-  // Query to retrieve certification names and dates for the given user
-  const certificationQuery = `
-    SELECT c.name_certif, sc.data_get
-    FROM certification c
-    INNER JOIN student_certification sc ON c.id_certif = sc.id_certif
-    WHERE sc.id_user = ?
-  `;
-
-  db.query(certificationQuery, [userId], (err, result) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    // Extract the name_certif and data_get values from the result
-    const certifications = result.map((row) => {
-      const dateObj = new Date(row.data_get);
-      const date = dateObj.toDateString(); // Get the date component in the format: "Sat Jun 03 2023"
-      const time = dateObj.toLocaleTimeString();
-
-      return {
-        name_certif: row.name_certif,
-        date: date,
-        time: time,
-      };
-    });
-
-    return res.status(200).json(certifications);
-  });
-};
-
-/**
- ============================
- End student`s functions
- ============================
- */
-
-/**
- ============================
- Start teacher`s functions
- ============================
- */
-//Function that return teacher`s class id, class name and class level
-export const getTeacherClasses = (req, res) => {
-  const teacherId = req.body.userId; // Access the teacher ID from the "userId" property
-
-  // Query to retrieve class information for the teacher
-  const query = `
-    SELECT id_class, class_name, class_level
-    FROM class
-    WHERE id_teacher = ?
-  `;
-
-  db.query(query, [teacherId], (err, result) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    // Prepare the response object
-    const response = {
-      user: teacherId,
-      class_ids: [],
-      class_names: [],
-      class_levels: [],
-    };
-
-    // Populate the response object with class information
-    result.forEach((row) => {
-      response.class_ids.push(row.id_class);
-      response.class_names.push(row.class_name);
-      response.class_levels.push(row.class_level);
-    });
-
-    return res.status(200).json(response);
-  });
-};
-
-//Function that return teacher`s subjects id and subjects names
-export const getTeacherSubjects = (req, res) => {
-  const userId = req.body.userId; // Access the teacher ID from the "userId" property
-
-  // Query to retrieve associated subject IDs from teacher_sbjs table
-  const teacherSubjectsQuery =
-    "SELECT id_subject FROM teacher_sbjs WHERE id_user = ?";
-  db.query(teacherSubjectsQuery, [userId], (err, teacherSubjectsResult) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    const subjectIds = teacherSubjectsResult.map((row) => row.id_subject);
-
-    // Prepare placeholders for the SQL query
-    const placeholders = subjectIds.map(() => "?").join(",");
-
-    // Query to retrieve subject names from subject table
-    const subjectQuery = `SELECT subject_name FROM subject WHERE id_subject IN (${placeholders})`;
-    db.query(subjectQuery, subjectIds, (err, subjectResult) => {
-      if (err) {
-        return res.json(err);
-      }
-
-      const subjectNames = subjectResult.map((row) => row.subject_name);
-
-      // Prepare the response object
-      const response = {
-        id_user: userId,
-        subject_ids: subjectIds,
-        subject_names: subjectNames,
-      };
-
-      return res.status(200).json(response);
-    });
-  });
-};
-
-//Function that return all student for specific teacher
-export const getTeachersStudent = (req, res) => {
-  const userId = req.body.userId; // Access the teacher ID from the "userId" property
-
-  // Query to retrieve class IDs for the given teacher
-  const classQuery = "SELECT id_class FROM class WHERE id_teacher = ?";
-  db.query(classQuery, [userId], (err, classResult) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    const classIds = classResult.map((row) => row.id_class);
-
-    // Check if there are no class IDs for the teacher
-    if (classIds.length === 0) {
-      return res.status(404).json("No classes found for the teacher!");
-    }
-
-    // Query to retrieve student IDs for the classes taught by the teacher
-    const studentQuery =
-      "SELECT id_user FROM student_class WHERE id_class IN (?)";
-    db.query(studentQuery, [classIds], (err, studentResult) => {
-      if (err) {
-        return res.json(err);
-      }
-
-      const studentIds = studentResult.map((row) => row.id_user);
-
-      // Check if there are no student IDs for the classes
-      if (studentIds.length === 0) {
-        return res.status(404).json("No students found for the classes!");
-      }
-
-      // Query to retrieve user data for the students
-      const userQuery =
-        "SELECT id_user, role, email, name, lastname, img_url FROM user WHERE id_user IN (?)";
-      db.query(userQuery, [studentIds], (err, userResult) => {
-        if (err) {
-          return res.json(err);
-        }
-
-        // Prepare the response object
-        const response = userResult.map((row) => ({
-          id_user: row.id_user,
-          role: row.role,
-          email: row.email,
-          name: row.name,
-          lastname: row.lastname,
-          img_url: row.img_url,
-        }));
-
-        return res.status(200).json(response);
-      });
-    });
-  });
-};
-
-//Function that get id of certification and delete it
-export const deleteCertification = (req, res) => {
-  const id_certif = req.body.id_certif;
-
-  //delete the certification
-  const deleteQuery = "DELETE FROM certification WHERE id_certif = ?";
-  db.query(deleteQuery, [id_certif], (err, result) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    // Check if any rows were affected
-    if (result.affectedRows === 0) {
-      return res.status(404).json("Certification not found!");
-    }
-
-    return res.status(200).json("Certification deleted successfully.");
-  });
-};
-
-//Function that get info categary and create new category.
-export const createCategory = (req, res) => {
-  const { category_name, id_subject } = req.body;
-
-  // Query to insert a new category into the table
-  const insertQuery =
-    "INSERT INTO category (category_name, id_subject) VALUES (?, ?)";
-  db.query(insertQuery, [category_name, id_subject], (err, result) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    // Get the generated category ID
-    const id_category = result.insertId;
-
-    // Prepare the response object
-    const category = {
-      id_category,
-      category_name,
-      date_create: new Date().toISOString().slice(0, 19).replace("T", " "), // Format the date_create value correctly
-      id_subject,
-    };
-
-    return res.status(200).json(category);
-  });
-};
-
-//Function that get id teacher and return all categories(full info) for this teacher
-export const getCategoriesByTeacher = (req, res) => {
-  const id_user = req.body.id_user; // Access the teacher ID from the request body
-
-  // Query to retrieve categories by teacher
-  const query = `
-    SELECT id_category, category_name, date_create, id_subject
-    FROM category
-    WHERE id_subject IN (
-      SELECT id_subject
-      FROM subject
-      WHERE id_user = ?
-    )`;
-
-  db.query(query, [id_user], (err, result) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    // Prepare the response object
-    const categories = result.map((row) => ({
-      id_category: row.id_category,
-      category_name: row.category_name,
-      date_create: new Date().toISOString().slice(0, 19).replace("T", " "),
-      id_subject: row.id_subject,
-    }));
-
-    return res.status(200).json(categories);
-  });
-};
-
-//Function that get category id and delete this category
-export const deleteCategory = (req, res) => {
-  const id_category = req.body.id_category; // Access the category ID from the request body
-
-  // Query to delete the category
-  const deleteQuery = "DELETE FROM category WHERE id_category = ?";
-  db.query(deleteQuery, [id_category], (err, result) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    // Check if any rows were affected by the deletion
-    if (result.affectedRows === 0) {
-      return res.status(404).json("Category not found!");
-    }
-
-    return res.status(200).json("Category deleted successfully");
-  });
-};
-
-/**
- * Function for edit category
- * Function get id of category.
- * Can edit just category name
- */
-export const editCategory = (req, res) => {
-  const id_category = req.body.id_category;
-  const newCategoryName = req.body.category_name;
-  //console.log(newCategoryName);
-
-  // Query to update the category
-  const updateQuery =
-    "UPDATE category SET category_name = ? WHERE id_category = ?";
-  db.query(updateQuery, [newCategoryName, id_category], (err, result) => {
-    if (err) {
-      return res.json(err);
-    }
-
-    // Check if any rows were affected by the update
-    if (result.affectedRows === 0) {
-      return res.status(404).json("Category not found!");
-    }
-
-    return res.status(200).json("Category updated successfully");
-  });
-};
-
-/**
- * Function that get id class, check all student in this class
- *and return name and last name for all students
- */
-export const getUsersInClass = (req, res) => {
-  const id_class = req.body.id_class;
-
-  const classQuery = "SELECT id_user FROM student_class WHERE id_class = ?";
-
-  db.query(classQuery, [id_class], (err, classResult) => {
-    //console.log(classResult);
-    if (err) {
-      return res.json(err);
-    }
-
-    // Check if any users were found in the class
-    if (classResult.length === 0) {
-      return res.status(404).json("No users found in the class!");
-    }
-
-    // Extract the id_user values from the classResult
-    const idUsers = classResult.map((row) => row.id_user);
-
-    const usersQuery = "SELECT name, lastname FROM user WHERE id_user IN (?)";
-
-    db.query(usersQuery, [idUsers], (err, usersResult) => {
-      if (err) {
-        return res.json(err);
-      }
-
-      // Check if any users were found in the user table
-      if (usersResult.length === 0) {
-        return res.status(404).json("No users found!");
-      }
-
-      // Return the names and last names of users
-      const users = usersResult.map((row) => ({
-        name: row.name,
-        lastname: row.lastname,
-      }));
-
-      return res.status(200).json(users);
-    });
-  });
-};
-
-/**
- * Function that get id of teacher
- * Get class name and class level
- * and create new class
- */
-export const addNewClass = (req, res) => {
-  const { id_class, id_teacher, class_name, class_level } = req.body;
-
-  // Insert the new class into the class table
-  const insertQuery =
-    "INSERT INTO class (id_class, class_name, class_level, id_teacher) VALUES (?, ?, ?, ?)";
-  db.query(
-    insertQuery,
-    [id_class, class_name, class_level, id_teacher],
-    (err, result) => {
-      if (err) {
-        console.error("Error adding new class:", err);
-        return res.status(500).json("Failed to add the new class.");
-      }
-
-      // Check if the new class was successfully inserted
-      if (result.affectedRows === 1) {
-        return res.status(200).json("New class added successfully!");
       } else {
-        return res.status(500).json("Failed to add the new class.");
+        // Passwords do not match, current password is invalid
+        return res.status(401).json("Current password isn't correct");
       }
-    }
-  );
+    });
+  });
 };
+export const checkPassword = (req, res) => {
+  const { currentPassword, id_user } = req.body;
+  //fetch password from bd
+  getUserPassword(id_user, (err, password) => {
+    if (err) {
+      console.error('Error:', err);
+      // Handle the error
+      return;
+    }
 
-/**
- ============================
- End teacher`s functions
- ============================
- */
+    if (!password) {
+      // User not found
+      console.log('User not found');
+      return;
+    }
+
+    //password was fetching
+    // Compare the current password with the stored hashed password
+    bcrypt.compare(currentPassword, password, (err, isMatch) => {
+      if (err) {
+        console.error('Error comparing passwords:', err);
+        return res.status(500).json({ error: 'Server error' });
+      }
+
+      if (isMatch) {
+        // Passwords match, current password is valid
+        return res.json({ valid: true });
+      } else {
+        // Passwords do not match, current password is invalid
+        return res.json({ valid: false });
+      }
+    });
+
+    // console.log('User password:', password);
+  });
+};
