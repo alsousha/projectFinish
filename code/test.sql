@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2023 at 08:48 PM
+-- Generation Time: Jun 07, 2023 at 06:26 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -34,6 +34,15 @@ CREATE TABLE `category` (
   `id_subject` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`) VALUES
+(1, 'cat1', '2023-06-07 01:29:37', 3),
+(2, 'cat2', '2023-06-06 01:30:08', 4),
+(3, 'cat3', '2023-06-04 01:30:08', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -58,7 +67,6 @@ CREATE TABLE `certification` (
 CREATE TABLE `class` (
   `id_class` int(3) NOT NULL,
   `class_name` varchar(15) NOT NULL,
-  `class_level` int(2) UNSIGNED NOT NULL,
   `id_teacher` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -66,9 +74,11 @@ CREATE TABLE `class` (
 -- Dumping data for table `class`
 --
 
-INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
-(1, '1a', 1, 109),
-(2, '1b', 1, 109);
+INSERT INTO `class` (`id_class`, `class_name`, `id_teacher`) VALUES
+(1, 'sd', 109),
+(3, '2ce', 109),
+(8, '1a', 109),
+(15, '1c', 109);
 
 -- --------------------------------------------------------
 
@@ -291,7 +301,8 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id_category`);
+  ADD PRIMARY KEY (`id_category`),
+  ADD KEY `id_subject` (`id_subject`);
 
 --
 -- Indexes for table `certification`
@@ -395,7 +406,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -407,7 +418,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `class_folder`
@@ -448,6 +459,12 @@ ALTER TABLE `user`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `class`
