@@ -40,17 +40,23 @@ function Classes() {
 	const handleDelete = (itemId) => {
 		if (window.confirm('Are you sure delete this class?')) {
 			deleteItem(itemId)
+			fetchData(); //refetchData
     }
 		
   };
 	const handleSave = (itemId) => {
+		console.log("save");
 		const fieldErrors = validateField(['class_name']);
 		if (Object.keys(fieldErrors).length === 0) {
+			// console.log(classes+" 1");
+			
 			setClasses((prevItems) =>
 				prevItems.map((item) =>
 					item.id_class === itemId ? { ...item, class_name: editedText } : item
 				)
 			);
+			// console.log(classes+" 2");
+			// fetchData();
 			setEditingItemId(null);
 			setErrors({});
 			update({id_class: itemId, class_name: editedText}) //send current class data for response to serever
@@ -65,6 +71,7 @@ function Classes() {
 		if (Object.keys(fieldErrors).length === 0) {
 			console.log("sdfsdf");
 			addNewClass()
+			fetchData(); //refetchData
 			
 			setErrors({});
 			setNewClassname("")
@@ -125,6 +132,8 @@ function Classes() {
 				message: res.data.message
 			}
       setMessage(msg);
+			// setClasses(classes)
+
 	
 			 // Clear the message after 2 seconds 
 			setTimeout(() => {
@@ -164,7 +173,7 @@ function Classes() {
     .then((res) => {
 			const msg={
 				msgClass: res.status===200 ? "success" : "error",
-				message: res.data.message
+				message: res.data
 			}
       setMessage(msg);
 			// setCurrentClass({})
@@ -178,19 +187,19 @@ function Classes() {
     });
   };
 
+	const fetchData = async () => {
+		try {
+			const res = await axios.get(`/teacher/${userData.id_user}/classes`);
+			// console.log(res.data.data);
+			setClasses(res.data.data);
+			// console.log(classes[0].class_name + " 2");
+		} catch (err) {
+			console.log(err);
+		}
+	};
 	useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`/teacher/${userData.id_user}/classes`);
-				// console.log(res.data.data);
-				setClasses(res.data.data);
-				// console.log(classes[0].class_name + " 2");
-      } catch (err) {
-        console.log(err);
-      }
-    };
     fetchData();
-  }, [classes]);
+  }, []);
 
 	//add focus for active input
 	useEffect(() => {
@@ -204,7 +213,7 @@ function Classes() {
 		<div className="container">
 		<h2 className='center'>My Classes</h2>
 		<div className="classes__wrap table_data mt4">
-			<div className="mt5">
+			<div className="mt5 msg_block">
 				{message && <span className={message.msgClass}>{message.message}</span>}
 			</div>
 			{classes && classes.map(item => (
@@ -228,9 +237,15 @@ function Classes() {
 						</div>
           )}
 					<div className="class_folder table_icon">
-						<Link className="link d-flex jcsb aic g1" to="/"><FolderIcon/>Class folder</Link>
+						<Link 
+							className="link d-flex jcsb aic g1" 
+							to={`/teacher/classfolder/${item.id_class}`}
+						>
+							<FolderIcon/>
+							Class folder
+						</Link>
 					</div>
-					<div className="class_accounts"><Link className="link d-flex jcsb aic g1" to="/"><CardIcon/>Accounts</Link></div>
+					<div className="class_accounts"><Link className="link d-flex jcsb aic g1" to={`/teacher/accounts/${item.id_class}`}><CardIcon/>Accounts</Link></div>
 					<div className="class_statistic"></div>
 					<div className="class_edit table_icon">
 						{editingItemId === item.id_class ? (

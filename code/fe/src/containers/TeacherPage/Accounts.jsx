@@ -5,17 +5,13 @@ import axios from 'axios'
 import '../containers.scss'
 
 
-import { ReactComponent as FolderIcon } from '../../assets/img/folder.svg';
-import { ReactComponent as EditIcon } from '../../assets/img/edit2.svg';
 import { ReactComponent as AddUserIcon } from '../../assets/img/add_user.svg';
 import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/img/delete.svg';
-// import { ReactComponent as CardIcon } from '../../assets/img/card.svg';
 import { ReactComponent as AddIcon } from '../../assets/img/add2.svg';
-import { ReactComponent as SaveIcon } from '../../assets/img/save.svg';
 import Loading from '../../components/Loading.jsx';
 
-function Students() {
+function Accounts() {
 	const { id_class } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
 	const [hasAccess, setHasAccess] = useState(false);
@@ -80,18 +76,18 @@ function Students() {
   };
 
 	const handleAddNewItem = () => {
-		// const fieldErrors = validateField(['email']);
-		// // console.log(fieldErrors);
+		const fieldErrors = validateField(['email']);
+		// console.log(fieldErrors);
 
-		// if (Object.keys(fieldErrors).length === 0) {
-		// 	addNewItem()
+		if (Object.keys(fieldErrors).length === 0) {
+			addNewItem()
 			
-		// 	// setErrors({});
-		// 	// setNewCatname("")
-		// 	// setIsAddClassVisiable(false)
-		// }else{
-		// 	setErrors(fieldErrors);
-		// }
+			// setErrors({});
+			// setNewCatname("")
+			// setIsAddClassVisiable(false)
+		}else{
+			setErrors(fieldErrors);
+		}
     
   };
 
@@ -99,7 +95,7 @@ function Students() {
     // setEditedText(e.target.value);
   };
 	const handleInputAddItemChange = (e) => {
-    // setNewItemName(e.target.value);
+    setNewItemName(e.target.value);
   };
 
 	const validateField = (fieldNames) => {
@@ -238,14 +234,14 @@ function Students() {
 	const fetchData = async () => {
 		// console.log(id_class);
 		try {
-			const res = await axios.post(`/teacher/${currentUser.id_user}/students_all`);
+			const res = await axios.post(`/teacher/${currentUser.id_user}/students`, {id_class: id_class});
 			if(!res.data.noStudents){
 				setClassName(res.data.data[0].class_name)
 				setAccounts(res.data.data)
 			}else{
 				setClassName(res.data.class_name)
 			}
-			console.log(res.data);
+			// console.log(res.data);
 		} catch (err) {
 			console.log(err);
 		}
@@ -258,61 +254,68 @@ function Students() {
 
 	useEffect(() => {
     fetchData();
-		setIsLoading(false)
-
   }, []);
 
-	
+	useEffect(() => {
+		if (isAddItemVisiable) {
+			inputRef.current.focus();
+		}
+	}, [isAddItemVisiable]);
 
-		//add focus for active input
-	
-	// useEffect(() => {
-	// 	if (isAddItemVisiable) {
-	// 		inputRef.current.focus();
-	// 	}
-	// }, [isAddItemVisiable]);
-
-	
+	useEffect(() => {
+    const checkOwnership = async () => {
+      try {
+        // Make an API request to check if the class ID exists for the teacher
+        const res = await axios.get(`/teacher/${currentUser.id_user}/classes`);
+        setHasAccess(res.data.data.some((item) => item.id_class === Number(id_class)));
+      } catch (error) {
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    checkOwnership();
+  }, [id_class, currentUser.id_user]);
 	
 	if (isLoading) {
     return <Loading/>;
   }
+	if (!hasAccess) {
+    return <div>Error: You do not have access to this class.</div>;
+  }
   return (
 	<div className='mt4 section_accounts'>
 		<div className="container">
-		<h2>All students:</h2>
+		<h2>Accounts of Class: {class_name}</h2>
 			<div className="back mt2 btn_main">
 				<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
 			</div>
-			<div className="cats__wrap table_data mt4">
+		<div className="cats__wrap table_data mt4">
 			<div className="mt5">
 				{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
 			</div>
-			<div className="class_item title d-flex jcsb aic mb2">
+			<div className="table_item title d-flex jcsb aic mb2">
 				<span className='table_elem small'>N.</span>
 				<span className='table_elem'>Name</span>
 				<span className='table_elem'>Lastname</span>
 				<span className='table_elem'>Email</span>
-				<span className='table_elem'>Class</span>
 			</div>
 			{accounts.length!==0 ? accounts.map((item, i) => (
-				<div key={item.id_user + i} className="class_item d-flex jcsb aic mb2">
-					<div className="d-flex jcsb aic table mr4">
+				<div key={item.id_user + i} className="table_item d-flex jcsb aic mb2">
+					<div className="d-flex jcsb aic table">
 							<span className='table_elem small'>{i+1}.</span>
 							<span className='table_elem'>{item.name}&nbsp;</span>
 							<span className='table_elem'>{item.lastname}&nbsp;</span>
 							<span className='table_elem'>{item.email}</span>
-							<span className='table_elem'>{item.class_name}</span>
 					</div>
-					{/* <div className="class_delete table_icon">
+					<div className="class_delete table_icon">
 						<button onClick={() => handleDelete(item.id_user)} ><DeleteIcon/></button>
-					</div> */}
+					</div>
 				</div>
 			)):(
 				<div className="no-items">Student's list is empty</div>
 			)}
 
-			{/* {isAddItemVisiable && (
+			{isAddItemVisiable && (
 				<>
 				<div>Enter student's email:</div>
 				<div className="cat_item d-flex jcsb aic mb2">
@@ -336,10 +339,10 @@ function Students() {
 				</div>
 				</>
 				
-			)} */}
+			)}
 			
 		</div>
-		{/* <div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddItemVisiable(true)}><AddIcon/>add new student</button></div> */}
+		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddItemVisiable(true)}><AddIcon/>add new student</button></div>
 
 		</div>
 	  
@@ -349,4 +352,4 @@ function Students() {
 }
 
 
-export default Students
+export default Accounts;

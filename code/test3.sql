@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2023 at 11:58 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 07, 2023 at 06:26 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,13 +39,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`) VALUES
-(20, 'sdf', '2023-06-10 11:59:20', 3),
-(21, '34w', '2023-06-10 11:59:27', 5),
-(22, 'ert', '2023-06-10 11:59:32', 7),
-(23, 'fsh', '2023-06-10 11:59:35', 7),
-(24, 'ryeyery', '2023-06-10 11:59:44', 7),
-(25, 'dfh', '2023-06-10 11:59:48', 4),
-(26, 'ryjj', '2023-06-10 12:01:02', 3);
+(1, 'cat1', '2023-06-07 01:29:37', 3),
+(2, 'cat2', '2023-06-06 01:30:08', 4),
+(3, 'cat3', '2023-06-04 01:30:08', 3);
 
 -- --------------------------------------------------------
 
@@ -71,7 +67,6 @@ CREATE TABLE `certification` (
 CREATE TABLE `class` (
   `id_class` int(3) NOT NULL,
   `class_name` varchar(15) NOT NULL,
-  `class_level` int(2) UNSIGNED NOT NULL,
   `id_teacher` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -79,10 +74,22 @@ CREATE TABLE `class` (
 -- Dumping data for table `class`
 --
 
-INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
-(1, '1a', 1, 109),
-(2, '1b', 1, 109),
-(16, '3a', 0, 109);
+INSERT INTO `class` (`id_class`, `class_name`, `id_teacher`) VALUES
+(1, 'sd', 109),
+(3, '2ce', 109),
+(8, '1a', 109),
+(15, '1c', 109);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class_folder`
+--
+
+CREATE TABLE `class_folder` (
+  `id_classFolder` int(3) NOT NULL,
+  `classFolder_name` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -101,11 +108,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
-(111, 2, 0),
-(111, 2, 0),
-(113, 2, 0),
-(114, 3, 0),
-(115, 0, 0);
+(111, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -129,15 +132,6 @@ CREATE TABLE `student_class` (
   `id_user` int(3) NOT NULL,
   `id_class` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `student_class`
---
-
-INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
-(111, 1),
-(113, 1),
-(114, 1);
 
 -- --------------------------------------------------------
 
@@ -198,24 +192,14 @@ CREATE TABLE `task` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taskfolder`
+-- Table structure for table `task_folder`
 --
 
-CREATE TABLE `taskfolder` (
+CREATE TABLE `task_folder` (
   `id_tskFolder` int(3) NOT NULL,
   `tskFolder_name` varchar(15) NOT NULL,
-  `id_class` int(3) NOT NULL
+  `id_classFolder` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `taskfolder`
---
-
-INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `id_class`) VALUES
-(2, 'sdfds', 1),
-(3, 'folder3', 2),
-(4, 'folder4', 1),
-(6, 'dd', 1);
 
 -- --------------------------------------------------------
 
@@ -258,9 +242,6 @@ CREATE TABLE `teacher` (
 INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
 (108, 0),
 (109, 0),
-(112, 0),
-(108, 0),
-(109, 0),
 (112, 0);
 
 -- --------------------------------------------------------
@@ -280,14 +261,8 @@ CREATE TABLE `teacher_sbjs` (
 
 INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
 (108, 2),
-(109, 1),
-(109, 2),
 (109, 3),
 (109, 4),
-(109, 5),
-(109, 6),
-(109, 7),
-(109, 8),
 (112, 3),
 (112, 4),
 (112, 6);
@@ -316,10 +291,7 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 (108, 'teacher', 'asd@asd.asd', '$2b$10$x2xiJBE0FguyC1aDEy4bNuRixrWaPt9fnJV.owzdGylZczxlKcnPe', 'ads', '', 'avatar-2.svg'),
 (109, 'teacher', 'qwe@qwe.qwe', '$2b$10$zWNKl901/kNW5Wv.09.OoOFWe.87jZLaIpV2xsgN0zCZfL6jaP7UC', 'Daly', 'Fary', 'avatar-2.svg'),
 (111, 'student', 'qwe@qwe.we', '$2b$10$2yQz1kYdfj0umQnh/wnQUOlb9ONBiBbLEhprBLezAN1/O0jtdL01e', 'Da', 'Rony', 'avatar-2.svg'),
-(112, 'teacher', 'asd@asd.asddd', '$2b$10$i6bVZwFfn6MxAm32dDFRD.xxFK4J8YHtSFQl4fjcNwxZ.xMSh1VRa', 'Kate', 'Marf', 'avatar-2.svg'),
-(113, 'student', 'wer@wer.wer', '$2b$10$9F3wFgNKCbqBmoBPz9BFnuv.puJvlct3GUz.4pfh6x4oPt6BnLtcq', 'wer', 'werr', 'avatar-2.svg'),
-(114, 'student', 'sdf2@sdf.sdf', '$2b$10$RfeXvDDyNbQxZzkvV056o.iOv5KER7fBGUSb.TqlR.sbCXsoSotzu', 'sdf', 'sdff', 'avatar-2.svg'),
-(115, 'student', 'xcv@xcv.xcv', '$2b$10$ioT5Ic7n/7WV26QRR2aXu.rhYlXTe7.95uDr.2UzJxnVdFKi/fERW', 'xcv', 'xcvv', 'avatar-2.svg');
+(112, 'teacher', 'asd@asd.asddd', '$2b$10$i6bVZwFfn6MxAm32dDFRD.xxFK4J8YHtSFQl4fjcNwxZ.xMSh1VRa', 'Kate', 'Marf', 'avatar-2.svg');
 
 --
 -- Indexes for dumped tables
@@ -329,7 +301,8 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id_category`);
+  ADD PRIMARY KEY (`id_category`),
+  ADD KEY `id_subject` (`id_subject`);
 
 --
 -- Indexes for table `certification`
@@ -343,6 +316,12 @@ ALTER TABLE `certification`
 ALTER TABLE `class`
   ADD PRIMARY KEY (`id_class`),
   ADD KEY `id_teacher` (`id_teacher`);
+
+--
+-- Indexes for table `class_folder`
+--
+ALTER TABLE `class_folder`
+  ADD PRIMARY KEY (`id_classFolder`);
 
 --
 -- Indexes for table `student`
@@ -361,9 +340,7 @@ ALTER TABLE `student_certification`
 -- Indexes for table `student_class`
 --
 ALTER TABLE `student_class`
-  ADD PRIMARY KEY (`id_user`,`id_class`),
-  ADD UNIQUE KEY `id_user` (`id_user`),
-  ADD KEY `id_class` (`id_class`);
+  ADD UNIQUE KEY `id_user` (`id_user`);
 
 --
 -- Indexes for table `student_task`
@@ -384,11 +361,10 @@ ALTER TABLE `task`
   ADD PRIMARY KEY (`id_task`);
 
 --
--- Indexes for table `taskfolder`
+-- Indexes for table `task_folder`
 --
-ALTER TABLE `taskfolder`
-  ADD PRIMARY KEY (`id_tskFolder`),
-  ADD KEY `id_class` (`id_class`);
+ALTER TABLE `task_folder`
+  ADD PRIMARY KEY (`id_tskFolder`);
 
 --
 -- Indexes for table `task_tasksfolder`
@@ -430,7 +406,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -442,7 +418,13 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `class_folder`
+--
+ALTER TABLE `class_folder`
+  MODIFY `id_classFolder` int(3) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -457,10 +439,10 @@ ALTER TABLE `task`
   MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `taskfolder`
+-- AUTO_INCREMENT for table `task_folder`
 --
-ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+ALTER TABLE `task_folder`
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `task_template`
@@ -472,11 +454,17 @@ ALTER TABLE `task_template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `class`
@@ -501,14 +489,7 @@ ALTER TABLE `student_certification`
 -- Constraints for table `student_class`
 --
 ALTER TABLE `student_class`
-  ADD CONSTRAINT `student_class_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `student_class_ibfk_2` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `taskfolder`
---
-ALTER TABLE `taskfolder`
-  ADD CONSTRAINT `taskfolder_ibfk_1` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `student_class_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `teacher`

@@ -3,3 +3,74 @@
 @import "assets/styles/setup";
 
 
+.msg_block{
+	height: 3rem;
+}
+.back{
+	padding-left: 7px;
+}
+.counter{
+	display: inline-block;
+	 width: 3rem;
+}
+.mr4{
+	margin-right: 4rem;
+}
+.table_item{
+	border-bottom: 1px solid #ccc;
+	&.title{
+		padding-right: 4rem;
+		border-bottom: 3px solid #ccc;
+
+		.table_elem{
+			font-weight: 600;
+		}
+	}
+}
+.table{
+	flex-grow: 1;
+}
+.table_elem {
+  flex: 1;
+  padding: 5px;
+  
+}
+.small{
+	flex: 0.1;
+}
+.table__wrap{
+	
+} 
+.big>svg{
+	width: 12rem;
+	height: 12rem;
+	&:hover{
+		transform: scale(1.04);
+		transition: all 1s;
+	}
+}
+.folder{
+	position: relative;
+	cursor: pointer;
+	.icons__wrap{
+		position: absolute;
+		right: -5px;
+    transform: translateX(100%);
+		svg{
+			width: 2.5rem;
+			height: 2.5rem;
+		}
+	}
+	input{
+		width: 12rem;
+		background-color: transparent;
+		padding: 0;
+	}
+	.input_error{
+		position: absolute;
+    bottom: 0;
+    width: 14rem;
+    color: red;
+    transform: translateY(100%);
+	}
+}
