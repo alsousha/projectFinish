@@ -113,3 +113,10 @@
 .no-wrap{
   flex-wrap: nowrap;
 }
+.flex-4{
+	flex-wrap: wrap;
+	&>div{
+		width: 25%;
+		margin-bottom: 4rem;
+	}
+}

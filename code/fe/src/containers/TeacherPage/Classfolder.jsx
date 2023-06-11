@@ -341,7 +341,7 @@ function Classfolder() {
 			<div className="mt5">
 				{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
 			</div>
-		<div className="table__wrap folder mt4 d-flex jcsb">
+		<div className="table__wrap flex-4 mt4 d-flex jcsb">
 			
 			
 			{tskfolders.length!==0 ? tskfolders.map((item, i) => (

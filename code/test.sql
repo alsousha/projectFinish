@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2023 at 11:58 PM
+-- Generation Time: Jun 11, 2023 at 05:32 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,13 +39,10 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`) VALUES
-(20, 'sdf', '2023-06-10 11:59:20', 3),
-(21, '34w', '2023-06-10 11:59:27', 5),
-(22, 'ert', '2023-06-10 11:59:32', 7),
-(23, 'fsh', '2023-06-10 11:59:35', 7),
-(24, 'ryeyery', '2023-06-10 11:59:44', 7),
-(25, 'dfh', '2023-06-10 11:59:48', 4),
-(26, 'ryjj', '2023-06-10 12:01:02', 3);
+(21, 'Strings', '2023-06-10 11:59:27', 4),
+(25, 'Arrays in Javad', '2023-06-10 11:59:48', 4),
+(27, 'Stings', '2023-06-11 06:55:13', 4),
+(28, 'List', '2023-06-11 07:33:41', 4);
 
 -- --------------------------------------------------------
 
@@ -103,9 +100,12 @@ CREATE TABLE `student` (
 INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 (111, 2, 0),
 (111, 2, 0),
-(113, 2, 0),
+(113, 4, 0),
 (114, 3, 0),
-(115, 0, 0);
+(115, 0, 0),
+(116, 5, 0),
+(117, 3, 0),
+(118, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -137,7 +137,10 @@ CREATE TABLE `student_class` (
 INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
 (111, 1),
 (113, 1),
-(114, 1);
+(114, 1),
+(116, 1),
+(117, 2),
+(118, 2);
 
 -- --------------------------------------------------------
 
@@ -215,7 +218,9 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `id_class`) VALUES
 (2, 'sdfds', 1),
 (3, 'folder3', 2),
 (4, 'folder4', 1),
-(6, 'dd', 1);
+(6, 'dd', 1),
+(7, 'folder5', 1),
+(8, 'folder6', 1);
 
 -- --------------------------------------------------------
 
@@ -280,12 +285,8 @@ CREATE TABLE `teacher_sbjs` (
 
 INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
 (108, 2),
-(109, 1),
-(109, 2),
-(109, 3),
 (109, 4),
 (109, 5),
-(109, 6),
 (109, 7),
 (109, 8),
 (112, 3),
@@ -317,9 +318,12 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 (109, 'teacher', 'qwe@qwe.qwe', '$2b$10$zWNKl901/kNW5Wv.09.OoOFWe.87jZLaIpV2xsgN0zCZfL6jaP7UC', 'Daly', 'Fary', 'avatar-2.svg'),
 (111, 'student', 'qwe@qwe.we', '$2b$10$2yQz1kYdfj0umQnh/wnQUOlb9ONBiBbLEhprBLezAN1/O0jtdL01e', 'Da', 'Rony', 'avatar-2.svg'),
 (112, 'teacher', 'asd@asd.asddd', '$2b$10$i6bVZwFfn6MxAm32dDFRD.xxFK4J8YHtSFQl4fjcNwxZ.xMSh1VRa', 'Kate', 'Marf', 'avatar-2.svg'),
-(113, 'student', 'wer@wer.wer', '$2b$10$9F3wFgNKCbqBmoBPz9BFnuv.puJvlct3GUz.4pfh6x4oPt6BnLtcq', 'wer', 'werr', 'avatar-2.svg'),
+(113, 'student', 'wer@wer.wer', '$2b$10$9F3wFgNKCbqBmoBPz9BFnuv.puJvlct3GUz.4pfh6x4oPt6BnLtcq', 'Angry', 'Kohan', 'avatar-2.svg'),
 (114, 'student', 'sdf2@sdf.sdf', '$2b$10$RfeXvDDyNbQxZzkvV056o.iOv5KER7fBGUSb.TqlR.sbCXsoSotzu', 'sdf', 'sdff', 'avatar-2.svg'),
-(115, 'student', 'xcv@xcv.xcv', '$2b$10$ioT5Ic7n/7WV26QRR2aXu.rhYlXTe7.95uDr.2UzJxnVdFKi/fERW', 'xcv', 'xcvv', 'avatar-2.svg');
+(115, 'student', 'xcv@xcv.xcv', '$2b$10$ioT5Ic7n/7WV26QRR2aXu.rhYlXTe7.95uDr.2UzJxnVdFKi/fERW', 'xcv', 'xcvv', 'avatar-2.svg'),
+(116, 'student', 'ert@ert.ert', '$2b$10$41heVKLzyMihvoP/vi0jJulWu3j7NHTdxWSyWwMyOtd/.WL32IiK6', 'ert', 'ertt', 'avatar-2.svg'),
+(117, 'student', 'dfg@dfg.dfg', '$2b$10$fc5mKybedcG4RTDDAf27GOY4ZdfPW1bDosIdVe6ujyjTOQcDH5AqK', 'dfg', 'dfgg', 'avatar-2.svg'),
+(118, 'student', 'cvb@cvb.cvb', '$2b$10$VpWZbm7PLZJF2mcAqG9NPejlZTv.P.ZeSc/CEzEhXw37rmykLNLAW', 'cvb', 'cvbb', 'avatar-2.svg');
 
 --
 -- Indexes for dumped tables
@@ -430,7 +434,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -460,7 +464,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `task_template`
@@ -472,7 +476,7 @@ ALTER TABLE `task_template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- Constraints for dumped tables

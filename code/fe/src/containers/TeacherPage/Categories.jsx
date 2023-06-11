@@ -5,27 +5,28 @@ import axios from 'axios'
 import '../containers.scss'
 
 
-// import { ReactComponent as FolderIcon } from '../../assets/img/folder.svg';
 import { ReactComponent as EditIcon } from '../../assets/img/edit2.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/img/delete.svg';
-// import { ReactComponent as CardIcon } from '../../assets/img/card.svg';
 import { ReactComponent as AddIcon } from '../../assets/img/add2.svg';
 import { ReactComponent as SaveIcon } from '../../assets/img/save.svg';
 
 function Categories() {
 	const inputRef = useRef(null);
 	const { currentUser} = useContext(AuthContext)
-	// const [userData, setUserData] = useState(currentUser);
 
+	//main array
 	const [cats, setCats] = useState([]);
 	const [catsFormat, setCatsFormat] = useState()
 	// const [editing, setEditing] = useState(false);
 	// const [errors, setErrors] = useState({}); //Validations errors
+
+  //update elems
 	const [editingItemId, setEditingItemId] = useState(null);
 	const [editedText, setEditedText] = useState('');
+	//errors
 	const [message, setMessage] = useState({}); //msg from DB
 	const [errors, setErrors] = useState({}); //Validations errors
-	//add new class
+	//add new item
 	const [newCatname, setNewCatname] = useState('')
 	const [newSbj, setNewSbj] = useState({})
 	const[isAddClassVisiable, setIsAddClassVisiable] = useState(false)
@@ -44,31 +45,25 @@ function Categories() {
 	}
 		
 	const handleSave = (itemId) => {
-		console.log(newSbj);
 		const fieldErrors = validateField(['cat_name']);
 		if (Object.keys(fieldErrors).length === 0) {
 			// console.log(cats);
-			// setCats((prevItems) => {
-			// 	const updatedCats = { ...prevItems };
-			// 	const item = updatedCats[itemId];
-			// 	if (item) {
-			// 		item.forEach((catItem) => {
-			// 			catItem.category_name = editedText;
-			// 		});
-			// 	}
-			// 	return updatedCats;
-			// });
 			setCats((prevItems) =>
 				prevItems.map((item) =>
-					item.id_category === itemId ? { ...item, category_name: editedText } : item
+					item.id_category === itemId ? { ...item, category_name: editedText, subject_name: newCatname} : item
 				)
 			);
 			setEditingItemId(null);
-			// console.log(currentData);
-			// setErrors({});
-			update({id_cat: itemId, cat_name: editedText}) //send current cat data for response to serever
+			setErrors({})
+			update({id_cat: itemId, cat_name: editedText, subject_name: newCatname}) //send current cat data for response to serever
+			if(catsFormat&&catsFormat.length===1){
+				setActiveTab(0)
+			}
+			console.log(activeTab);
+			fetchData()
 		}else{
 			setErrors(fieldErrors);
+			
 		}
 		setNewSbj({})
     
@@ -76,17 +71,17 @@ function Categories() {
 
 	const handleAddNewCat = () => {
 		const fieldErrors = validateField(['add_cat']);
-		// console.log(fieldErrors);
+		console.log(fieldErrors);
 
-		if (Object.keys(fieldErrors).length === 0) {
-			addNewCat()
+		// if (Object.keys(fieldErrors).length === 0) {
+		// 	addNewCat()
 			
-			setErrors({});
-			setNewCatname("")
-			setIsAddClassVisiable(false)
-		}else{
-			setErrors(fieldErrors);
-		}
+		// 	setErrors({});
+		// 	setNewCatname("")
+		// 	setIsAddClassVisiable(false)
+		// }else{
+		// 	setErrors(fieldErrors);
+		// }
     
   };
 
@@ -96,6 +91,10 @@ function Categories() {
 	const handleInputAddCatChange = (e) => {
     setNewCatname(e.target.value);
   };
+	const handleSelectChange = async e=>{
+		// console.log(e.target.value + " select");
+		setNewSbj(e.target.value)
+	}
 
 	const validateField = (fieldNames) => {
     const errors = {};
@@ -108,6 +107,11 @@ function Categories() {
 						errors[fieldName] = 'Category name is required';
 					}
 				break;
+				case 'cat_name':
+					if (!editedText.trim()) {
+						errors[fieldName] = 'Category name is required';
+					}
+				break;
 			
 				default:
 					break;
@@ -116,24 +120,6 @@ function Categories() {
 		// console.log(errors);
     return errors;
   };
-
-	const handleSelectChange = async e=>{
-		// console.log(e.target.value + " select");
-		setNewSbj(e.target.value)
-		// setNewCat(sbj: e.target.value)
-		// console.log(e.target.options[2].name);
-		// if(e.target.name==="role"){
-		// 	if(e.target.value==="teacher"){
-		// 		setVisiableLevelInput(false)
-		// 		setVisiableSbjInput(true)
-		// 	}else{
-		// 		setVisiableLevelInput(true)
-		// 		setVisiableSbjInput(false)
-		// 	}
-		// }
-		// setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-		
-	}
 
 	//axios for DB
 	const addNewCat = async ()=>{
@@ -167,11 +153,13 @@ function Categories() {
 		axios
     .put(`/teacher/cat/${currentData.id_cat}`, dataToSend)
     .then((res) => {
-			// const msg={
-			// 	msgClass: res.status===200 ? "success" : "error",
-			// 	message: res.data
-			// }
-      // setMessage(msg);
+			const msg={
+				msgClass: res.status===200 ? "success" : "error",
+				text: res.data
+			}
+			// console.log(msg);
+      // setMessage({msg});
+			// console.log(message);
 			// // setCurrentClass({})
 			// // updateUser(userData)//update localstorage and context
 			//  // Clear the message after 2 seconds 
@@ -233,25 +221,8 @@ function Categories() {
 
 	useEffect(() => {
 		const separateArrays = separateArrayBySubject(cats);
-		setCatsFormat(separateArrays);
-		// setCountTeacherSbjs(Object.keys(separateArrays).length); //count of current sbjs of teacher
-		// setCountTeacherSbjs(currentUser.sbjs.length); //count of current sbjs of teacher
-    // const fetchData = async () => {
-    //   try {
-    //     // const res = await axios.get(`/teacher/${currentUser.id_user}/cats`);
-		// 		// console.log(res.data);
-		// 		// const separateArrays = separateArrayBySubject(res.data);
-				
-		// 		// setCats(separateArrays(res.data));
-		// 		// console.log(JSON.stringify(separateArrays) + "separateArrays");
-		// 		// setCatsFormat(separateArrays);
-		// 		// console.log(cats);
-				
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    // fetchData();
+		setCatsFormat(Object.values(separateArrays));
+		
   }, [cats]);
 
 	//add focus for active input
@@ -266,19 +237,41 @@ function Categories() {
 		setNewSbj(currentUser.sbjs[0])// set by default first teacher\s sbj to select (add new cat elem)
   }, []);
 
+  const [activeTab, setActiveTab] = useState(0);
+	console.log("Activ"+activeTab);
+
+
+console.log(catsFormat&&catsFormat.length);
+// console.log(arr[0]);
+	// console.log(catsFormat&&catsFormat[activeTab][0].category_name);
+	// console.log(Object.values(catsFormat)[2]);
   return (
 	<div className='mt4 section_categories'>
 		<div className="container">
 		<h2 className='center'>My Categories</h2>
 		<div className="cats__wrap table_data mt4">
-			<div className="mt5 msg_block">
-				{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
+			<div className="mt2 msg_block">
+				{/* {message ? <span className={message.msgClass}>{message.text}</span> : <span></span>} */}
 			</div>
-			{catsFormat && Object.values(catsFormat).map((arr, i) => (
-				<div className="subject_section" key={i++}>
-					<div className="subject_name mt5"><h3>{arr[0].subject_name}</h3></div>
-					
-					{arr.map((item) => (
+			<div>
+				<ul className="tab-list">
+					{catsFormat && catsFormat.map((tab,i) => (
+						<li
+							key={"tab-"+i}
+							className={i === activeTab ? 'active' : ''}
+							onClick={() => setActiveTab(i)}
+						>
+						{tab[0].subject_name}
+						</li>
+					))}
+				</ul>
+				{/* {activeTab} */}
+				{/* {catsFormat &&catsFormat[activeTab]&& catsFormat[activeTab][0].subject_name} */}
+
+				<div className="tab-content">
+				{errors.cat_name && <span className='input_error mp2'>{errors.cat_name}</span>}
+					{catsFormat &&catsFormat[activeTab]&& catsFormat[activeTab].map((item, i) => (
+					<div key={"tabContent-"+i} >
 						<div key={item.id_category} className="">
 							<div  className="table_item d-flex jcs g2 aic mb2">
 								{editingItemId === item.id_category ? (
@@ -290,17 +283,18 @@ function Categories() {
 											ref={inputRef}
 											onChange={handleInputChange}
 										/>
-										{/* {currentUser.sbjs.length>1 && (
-											<select id="sbjs" name="sbj_cat" onChange={handleSelectChange} defaultValue={currentUser.sbjs[i]}>
+										{currentUser.sbjs.length>1 && (
+											<select name="sbj_cat" onChange={handleSelectChange} defaultValue={catsFormat[activeTab][0].subject_name}>
 												{currentUser.sbjs && currentUser.sbjs.map((elem, j)=>(
 													<option key={`sbj-${j}`} value={elem}>
-														{elem}{j}{i}
+														{elem}
 													</option>
 												))}
 											</select>
 											)}
-										{errors.cat_name && <span className='input_error'>{errors.cat_name}</span>} */}
+										
 									</div>
+									
 									
 								) : (
 									<div className="item_title">
@@ -325,9 +319,18 @@ function Categories() {
 								</div>
 							</div>
 						</div>
-					))}
+
+						{/* {tab.id === activeTab && (
+							<ul>
+								{tab.elements.map(element => (
+									<li key={element}>{element}</li>
+								))}
+							</ul>
+						)} */}
 				</div>
-			))}
+	))}
+				</div>
+			</div>
 
 			{isAddClassVisiable && (
 				<div className="cat_item d-flex jcsb aic mb2">
@@ -363,7 +366,7 @@ function Categories() {
 
 		</div>
 	  
-
+		
 	</div>
   )
 }

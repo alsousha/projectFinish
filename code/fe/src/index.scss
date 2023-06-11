@@ -38,9 +38,7 @@
 .small{
 	flex: 0.1;
 }
-.table__wrap{
-	
-} 
+
 .big>svg{
 	width: 12rem;
 	height: 12rem;
@@ -52,10 +50,10 @@
 .folder{
 	position: relative;
 	cursor: pointer;
+	margin-right: 3.5rem;
 	.icons__wrap{
 		position: absolute;
-		right: -5px;
-    transform: translateX(100%);
+		right: 0;
 		svg{
 			width: 2.5rem;
 			height: 2.5rem;
@@ -73,4 +71,26 @@
     color: red;
     transform: translateY(100%);
 	}
+}
+.tab-list{
+	display: flex;
+	gap: 2rem;
+	margin-bottom: 2rem;
+	margin-top: 2rem;
+	li{
+		color: gray;
+		cursor: pointer;
+		&.active{
+			color: black;
+		}
+
+	}
+}
+.tab-content{
+	.inactive{
+		opacity: 0.5;
+	}
+}
+.input_error{
+	color: $error;
 }

@@ -1,91 +1,54 @@
-			
-			// <div className="userInfo__item d-flex aic">
-			// 	<span className='userLabel label'>Email:</span>
-			// 	<div className="popup_input change_input w25r d-flex aic">
-			// 		<div className='popup_field'>
-			// 			<span>{userData.email}</span>
-			// 		</div>
-			// 	</div>
-			// </div>
-			// {/* sbjs's checkbox for teacher */}
-			// {userData.role==="teacher" && (
-			// <div className="userInfo__item d-flex aic">
-			// 	<span className='userLabel label'>Subjects:</span>
-			// 	<div className="user_sbjs d-flex f-column">
-			// 		{editingFields.sbjs ? ( 
-			// 			<div className='popup_field'>
-			// 				{sbjs && sbjs.map(subject => (
-			// 					<div key={subject.id_subject}>
-			// 						<label>
-			// 							<input
-			// 								type="checkbox"
-			// 								name="sbjs"
-			// 								value={subject.subject_name}
-			// 								checked={selectedSubjects.includes(subject.subject_name)}
-			// 								onChange={handleSubjectChange}
-			// 							/>
-			// 							{subject.subject_name}
-			// 						</label>
-			// 					</div>
-			// 				))}
-
-			// 				{errors.sbjs && <span className='input_error'>{errors.sbjs}</span>}
-			// 			</div>
-			// 		) : (
-			// 			userData.sbjs_id && userData.sbjs_id.map(item => (
-			// 				<div key={item}>
-			// 					{item}
-			// 				</div>
-			// 			))
-			// 		)}
-			// 	</div>
-				
-			// 		{editingFields.sbjs ? (
-			// 		<button onClick={() => handleSave('sbjs')}>
-			// 			<img src={saveSvg} alt="save img" />
-			// 		</button>
-			// 	) : (
-			// 		<button onClick={() => handleEdit('sbjs')}>
-			// 			<img src={editSvg} alt="" />
-			// 		</button>
-			// 	)}
-
-
-
-				
-			// 	{/* <span className='userLabel label'>Subjects:</span>
-			// 	<div className="popup_input change_input w25r d-flex aic">
-			// 		{sbjs && sbjs.map(item => (
-			// 			<label key={item.subject_name}>
-			// 				<input type="checkbox" name={item.subject_name} />
-			// 				{item.subject_name}
-			// 			</label>
+{catsFormat && catsFormat.map((arr, i) => (
+	<div className="subject_section" key={i++}>
+		<div className="subject_name mt5"><h3>{arr[0].subject_name}</h3></div>
+		
+		{arr.map((item) => (
+			<div key={item.id_category} className="">
+				<div  className="table_item d-flex jcs g2 aic mb2">
+					{editingItemId === item.id_category ? (
+						<div className="">
+							<input
+								type="text"
+								name="cat_name"
+								value={editedText}
+								ref={inputRef}
+								onChange={handleInputChange}
+							/>
+							{/* {currentUser.sbjs.length>1 && (
+								<select id="sbjs" name="sbj_cat" onChange={handleSelectChange} defaultValue={currentUser.sbjs[i]}>
+									{currentUser.sbjs && currentUser.sbjs.map((elem, j)=>(
+										<option key={`sbj-${j}`} value={elem}>
+											{elem}{j}{i}
+										</option>
+									))}
+								</select>
+								)}
+							{errors.cat_name && <span className='input_error'>{errors.cat_name}</span>} */}
+						</div>
 						
-			// 		))}
+					) : (
+						<div className="item_title">
+							<span className='editUserInfo_field'>{item.category_name}</span>
+						</div>
+					)}
 				
-					
-			// 	</div> */}
-
-			// 	{/* 
-				
-			// 	!!! Use it for student!!
-				
-			// 	<div className="popup_input change_input w25r d-flex aic">
-			// 		<select id="sbjs" name="sbj" onChange={handleChange}>
-			// 			<option key="0" value='0'>no subject</option>
-			// 			{sbjs && sbjs.map(option => (
+					<div className="cat_edit table_icon">
+						{editingItemId === item.id_category ? (
+							<button onClick={() => handleSave(item.id_category)} className=''>
+								<SaveIcon/>
+							</button>
 							
-			// 				<option key={option.id_subject} value={option.id_subject}>
-			// 					{option.subject_name}
-			// 				</option>
-			// 			))}
-			// 		</select>
-			// 	</div> */}
-			// </div>
-			// )}		
-			// <div className="delete_user">
-			// 	<button onClick={handleDelete}>Delete this account</button>
-			// </div>
-			// <div className="mt5">
-			// 	{message && <span className={message.msgClass}>{message.message}</span>}
-			// </div>
+						) : (
+							<button onClick={() => handleEdit(item.id_category,  item.category_name)} className=''>
+								<EditIcon className=""/>
+							</button>
+						)}
+					</div>
+					<div className="class_delete table_icon">
+						<button  onClick={() => handleDelete(item.id_category)}><DeleteIcon/></button>
+					</div>
+				</div>
+			</div>
+		))}
+	</div>
+))}

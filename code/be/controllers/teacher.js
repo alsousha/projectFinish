@@ -192,15 +192,26 @@ export const updateCategory = (req, res) => {
   if (!token) return res.status(401).json('Not authenticated!');
   try {
     const id_cat = req.params.id;
-    // console.log(req.body.category_name);
-    // console.log(req.body.subject_name);
+    console.log(req.body.category_name);
+    console.log(req.body.subject_name);
     // console.log(id_cat);
-    const q = 'UPDATE category SET category_name = ? WHERE id_category = ?';
-    db.query(q, [req.body.category_name, id_cat], (error, result) => {
+    const q = `
+			UPDATE category
+			SET category_name = ?,
+					id_subject = (
+						SELECT id_subject
+						FROM subject
+						WHERE subject_name = ?
+						LIMIT 1
+					)
+			WHERE id_category = ?
+		`;
+
+    db.query(q, [req.body.category_name, req.body.subject_name, id_cat], (error, result) => {
       // Check if any rows were affected by the update
-      if (result.affectedRows === 0) {
-        return res.status(404).json('Category not found!');
-      }
+      // if (result.affectedRows === 0) {
+      //   return res.status(404).json('Category not found!');
+      // }
       if (error) {
         console.error('Error updating category:', error);
         res.status(500).json({ error: 'Error updating category' });
