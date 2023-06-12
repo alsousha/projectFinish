@@ -27,7 +27,7 @@ function Categories() {
 	//add new item
 	const [newItemName, setNewItemName] = useState('')
 	const [newSbj, setNewSbj] = useState('')
-	const[isAddVisiable, setIsAddVisiable] = useState(false)
+	const [isAddVisiable, setIsAddVisiable] = useState(false)
 
 	const [activeTab, setActiveTab] = useState(0);
 	// console.log(cats);
@@ -41,16 +41,20 @@ function Categories() {
 	const handleDelete = (itemId) => {
 		if (window.confirm('Are you sure delete this class?')) {
 			deleteItem(itemId)
+			if(dataArrayFormat&&dataArrayFormat[activeTab].length===1&&dataArrayFormat.length===activeTab+1){
+				//if the last tab and last category, when we delete it or change its sbj -> first tab will be active
+				setActiveTab(0)
+			}
     }
 	}
 		
-	const handleSave = (itemId) => {
-		const fieldErrors = validateField(['item_name'], itemId);
-		
+	const handleSave = (itemId, id_sbj) => {
+		const fieldErrors = validateField(['item_name'], itemId, id_sbj);
+		// console.log(fieldErrors);
 		if (Object.keys(fieldErrors).length === 0) {
 			const sbjToSend = (editedSbj==='') ? dataArrayFormat && dataArrayFormat[activeTab][0].subject_name : editedSbj
 
-			// console.log(sbjToSend);
+			// // console.log(sbjToSend);
 			setDataArray((prevItems) =>
 				prevItems.map((item) =>
 					item.id_category === itemId ? { ...item, category_name: editedText, subject_name: sbjToSend} : item
@@ -58,6 +62,10 @@ function Categories() {
 			);
 			update({id_cat: itemId, cat_name: editedText, subject_name: sbjToSend}) //send current cat data for response to serever
 			
+			if(dataArrayFormat&&dataArrayFormat[activeTab].length===1&&dataArrayFormat.length===activeTab+1 && editedSbj!==''){
+				//if the last tab and last category, when we delete it or change its sbj -> first tab will be active
+				setActiveTab(0)
+			}
 			//reset data
 			setEditedSbj('')
 			setEditingItemId(null);
@@ -66,17 +74,13 @@ function Categories() {
 			fetchData()
 		}else{
 			setErrors(fieldErrors);
-			console.log("sdf");
-			console.log(errors);
+			
 		}
-		// setNewSbj('')
-    if(dataArrayFormat&&dataArrayFormat.length===activeTab+1){
-			//if the last tab and last category, when we delete it or change its sbj -> first tab will be active
-			setActiveTab(0)
-		}
+   
   };
 
 	const handleAddNewItem = () => {
+		// console.log("Sdf");
 		const fieldErrors = validateField(['add_item']);
 		// console.log(fieldErrors);
 
@@ -111,13 +115,9 @@ function Categories() {
 		setNewSbj(e.target.value)
 		console.log("sekl"+newSbj);
 	}
-	function isDublicateItemName(itemForCheck, arr, itemId){
-		return arr.some((obj) => obj.category_name === itemForCheck && obj.id_category !==itemId);
-		// const existsInArray = arr.some((obj) => obj.category_name === targetString);
+	
 
-	}
-
-	const validateField = (fieldNames, itemId) => {
+	const validateField = (fieldNames, itemId, id_sbj) => {
     const errors = {};
 		fieldNames.forEach(fieldName => {
 			// const value = userData[fieldName];
@@ -132,11 +132,9 @@ function Categories() {
 				case 'item_name':
 					if (!editedText.trim()) {
 						errors[fieldName] = 'Category name is required';
-					}else if(isDublicateItemName(editedText, dataArray, itemId)){
+					}else if(isDublicateItemName(editedText, dataArray, itemId, id_sbj)){
 						errors[fieldName] = 'Item with this name exists!';
 					}
-					
-					// isDublicateItem()
 				break;
 			
 				default:
@@ -149,11 +147,23 @@ function Categories() {
 
 	//axios for DB
 	const addNewItem = async ()=>{
-		//if user doesn't change sbj in select->will get first by default
-		const sbjToSend = (newSbj==='') ? dataArrayFormat && dataArrayFormat[activeTab][0].subject_name : newSbj
+
+		let sbjToSend=''
+		//list of items is empty
+		if(dataArrayFormat && dataArrayFormat.length===0){
+			//doesn't change select -> will get from currentUSer sbjs list
+			sbjToSend = (newSbj==='') ? currentUser.sbjs[0] : newSbj
+		}else{
+			//if user doesn't change sbj in select->will get first by default
+			sbjToSend = (newSbj==='') ? 
+			dataArrayFormat && dataArrayFormat.length!==0 && dataArrayFormat[activeTab][0].subject_name 
+			: newSbj
+		}
+				
 		axios
 		.post(`/teacher/cats/${currentUser.id_user}`, {category_name: newItemName, subject_name: sbjToSend})
 		.then((res) => {
+			// console.log(res.data);
 			setDataArray((prev) =>
 				[...prev, res.data]
 			);	
@@ -218,6 +228,7 @@ function Categories() {
 
 	//separate categories by id_subject
 	function separateArrayBySubject(data) {
+		// console.log(data);
 		return data.reduce((result, item) => {
 			const idSubject = item.id_subject;
 			if (!result[idSubject]) {
@@ -227,7 +238,11 @@ function Categories() {
 			return result;
 		}, {});
 	}
-	
+
+	function isDublicateItemName(itemForCheck, arr, itemId, id_sbj){
+		return arr.some((obj) => obj.category_name === itemForCheck && obj.id_category !==itemId && obj.id_subject === id_sbj);
+
+	}
 	//fetch cats of teacher
 	const fetchData = async () => {
 		try {
@@ -255,13 +270,19 @@ function Categories() {
       inputRef.current.focus();
     }
   }, [editingItemId]);
+
+	useEffect(() => {
+    if (isAddVisiable) {
+      inputRef.current.focus();
+    }
+  }, [isAddVisiable]);
 	
 	//effect run once when component was created
 	// useEffect(() => {
 	// 	setNewSbj(currentUser.sbjs[0])// set by default first teacher\s sbj to select (add new cat elem)
   // }, []);
 
-  
+  // console.log(dataArrayFormat.l);
 
 
   return (
@@ -270,6 +291,8 @@ function Categories() {
 		<h2 className='center'>My Categories</h2>
 		<div className="cats__wrap table_data mt4">
 			<div className="mt2 msg_block">
+				{errors.item_name && <span className='input_error mp2'>{errors.item_name}</span>}
+
 				{message ? <span className={message.msgClass}>{message.text}</span> : <span></span>}
 			</div>
 			<div>
@@ -288,59 +311,62 @@ function Categories() {
 				{/* {catsFormat &&catsFormat[activeTab]&& catsFormat[activeTab][0].subject_name} */}
 
 				<div className="tab-content">
-				{errors.item_name && <span className='input_error mp2'>{errors.item_name}</span>}
-					{dataArrayFormat &&dataArrayFormat[activeTab]&& dataArrayFormat[activeTab].map((item, i) => (
-					<div key={"tabContent-"+i} >
-						<div key={item.id_category} className="">
-							<div  className="table_item d-flex jcs g2 aic mb2">
-								{editingItemId === item.id_category ? (
-									<div className="">
-										<input
-											type="text"
-											name="item_name"
-											value={editedText}
-											ref={inputRef}
-											onChange={handleInputChange}
-										/>
-										{currentUser.sbjs.length>1 && (
-											<select name="sbj_cat" onChange={handleSelectChange} defaultValue={dataArrayFormat[activeTab][0].subject_name}>
-												{currentUser.sbjs && currentUser.sbjs.map((elem, j)=>(
-													<option key={`sbj-${j}`} value={elem}>
-														{elem}
-													</option>
-												))}
-											</select>
+					{dataArrayFormat && dataArrayFormat[activeTab] && dataArrayFormat.length!==0 ? 
+						dataArrayFormat[activeTab].map((item, i) => (
+							<div key={"tabContent-"+i} >
+								<div key={item.id_category} className="">
+									<div  className="table_item d-flex jcs g2 aic mb2">
+										{editingItemId === item.id_category ? (
+											<div className="">
+												<input
+													type="text"
+													name="item_name"
+													value={editedText}
+													ref={inputRef}
+													onChange={handleInputChange}
+												/>
+												{currentUser.sbjs.length>1 && (
+													<select name="sbj_cat" onChange={handleSelectChange} defaultValue={dataArrayFormat[activeTab][0].subject_name}>
+														{currentUser.sbjs && currentUser.sbjs.map((elem, j)=>(
+															<option key={`sbj-${j}`} value={elem}>
+																{elem}
+															</option>
+														))}
+													</select>
+													)}
+												
+											</div>
+											
+											
+										) : (
+											<div className="item_title">
+												<span className='editUserInfo_field'>{item.category_name}</span>
+											</div>
+										)}
+									
+										<div className="cat_edit table_icon">
+											{editingItemId === item.id_category ? (
+												<button onClick={() => handleSave(item.id_category, item.id_subject)} className=''>
+													<SaveIcon/>
+												</button>
+												
+											) : (
+												<button onClick={() => handleEdit(item.id_category,  item.category_name)} className=''>
+													<EditIcon className=""/>
+												</button>
 											)}
-										
+										</div>
+										<div className="class_delete table_icon">
+											<button  onClick={() => handleDelete(item.id_category)}><DeleteIcon/></button>
+										</div>
 									</div>
-									
-									
-								) : (
-									<div className="item_title">
-										<span className='editUserInfo_field'>{item.category_name}</span>
-									</div>
-								)}
-							
-								<div className="cat_edit table_icon">
-									{editingItemId === item.id_category ? (
-										<button onClick={() => handleSave(item.id_category)} className=''>
-											<SaveIcon/>
-										</button>
-										
-									) : (
-										<button onClick={() => handleEdit(item.id_category,  item.category_name)} className=''>
-											<EditIcon className=""/>
-										</button>
-									)}
 								</div>
-								<div className="class_delete table_icon">
-									<button  onClick={() => handleDelete(item.id_category)}><DeleteIcon/></button>
-								</div>
-							</div>
-						</div>
 
-				</div>
-	))}
+							</div>
+							)):(
+								<div className="no-items">List is empty</div>
+							)
+					}
 				</div>
 			</div>
 
@@ -355,7 +381,12 @@ function Categories() {
 							onChange={handleInputAddChange}
 						/>
 						{currentUser.sbjs.length>1 && (
-							<select id="sbjs" name="sbj_cat" onChange={handleSelectAddChange} defaultValue={dataArrayFormat[activeTab][0].subject_name}>
+							<select 
+								id="sbjs" 
+								name="sbj_cat" 
+								onChange={handleSelectAddChange} 
+								defaultValue={dataArrayFormat&&dataArrayFormat.length!==0 ? 
+									dataArrayFormat[activeTab][0].subject_name : ""}>
 								{currentUser.sbjs && currentUser.sbjs.map((elem, i)=>(
 									<option key={`sbj-${i}`} value={elem}>
 										{elem}

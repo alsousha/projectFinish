@@ -104,8 +104,8 @@ export const addNewCategory = (req, res) => {
   // console.log('add');
   try {
     const { category_name, subject_name } = req.body;
-    console.log(category_name);
-    console.log(subject_name);
+    // console.log(category_name);
+    // console.log(subject_name);
     // Query to insert a new category into the table
     const q = `
 			INSERT INTO category (category_name, id_subject)
@@ -377,20 +377,9 @@ export const getTasksFoldersByIdClass = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
   const { id_class } = req.body;
-  // console.log(id);
-
-  // const query = `
-  // SELECT c.id_category, c.category_name, c.date_create, c.id_subject, s.subject_name
-  // FROM category c
-  // JOIN subject s ON c.id_subject = s.id_subject
-  // WHERE c.id_subject IN (
-  // 	SELECT id_subject
-  // 	FROM teacher_sbjs
-  // 	WHERE id_user = ?
-  // )`;
 
   const q = `
-	SELECT *
+	SELECT t.id_tskFolder, t.tskFolder_name, t.id_subject, s.subject_name
 	FROM taskfolder t
 	JOIN subject s ON t.id_subject = s.id_subject
 	WHERE id_class = ?
@@ -398,27 +387,18 @@ export const getTasksFoldersByIdClass = (req, res) => {
 
   db.query(q, [id_class], (err, data) => {
     if (err) return res.status(500).json(err);
-    if (data.length === 0) {
-      return res.status(404).json('Folders not found');
-    }
-    // Check if the tsks exists
     const dataRes = {
       noElements: data.length === 0,
       data: data,
-      // class_name: data[0].class_name,
     };
+
     //get class name for title
     const qName = 'SELECT class_name FROM class WHERE id_class = ?';
     db.query(qName, [id_class], (err, data) => {
       if (err) return res.status(500).json(err);
-      dataRes.class_name = data[0].class_name;
-      // console.log(data[0].class_name);
+      dataRes.class_name = data.length !== 0 ? data[0].class_name : '';
       res.status(200).json(dataRes);
     });
-    // return res.status(404).json('Students not found');
-
-    // console.log(data);
-    // res.status(200).json(dataRes);
   });
 };
 export const updateTskFolder = (req, res) => {
@@ -481,9 +461,21 @@ export const addNewTskFolder = (req, res) => {
   if (!token) return res.status(401).json('Not authenticated!');
 
   try {
-    const { tskFolder_name, id_class } = req.body;
-    const q = 'INSERT INTO taskfolder (tskFolder_name, id_class) VALUES (?,?)';
-    db.query(q, [tskFolder_name, id_class], (error) => {
+    const { tskFolder_name, id_class, subject_name } = req.body;
+    console.log(tskFolder_name);
+    console.log(id_class);
+    console.log(subject_name);
+    // const q = 'INSERT INTO taskfolder (tskFolder_name, id_class) VALUES (?,?)';
+
+    const q = `
+			INSERT INTO taskfolder (tskFolder_name, id_class, id_subject)
+			SELECT ?, ?, s.id_subject
+			FROM subject AS s
+			WHERE s.subject_name = ?
+			LIMIT 1
+		`;
+
+    db.query(q, [tskFolder_name, id_class, subject_name], (error) => {
       if (error) {
         console.error('Failed to add the new folder.', error);
         res.status(500).json({ error: 'Error add folder' });
