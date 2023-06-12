@@ -12,7 +12,7 @@ import {
   deleteStudentFromClass,
   addStudentsToClass,
   getAllStudentsByTeacher,
-  getTasksFoldersByTeacher,
+  getTasksFoldersByIdClass,
   updateTskFolder,
   deleteTskFolder,
   addNewTskFolder,
@@ -34,7 +34,7 @@ router.post('/:id/students_all', getAllStudentsByTeacher);
 router.post('/students/:id', addStudentsToClass);
 router.delete('/students/:id', deleteStudentFromClass);
 
-router.post('/:id/taskfolders', getTasksFoldersByTeacher);
+router.post('/taskfolders', getTasksFoldersByIdClass);
 router.put('/tskfolder/:id', updateTskFolder);
 router.delete('/tskfolder/:id', deleteTskFolder);
 router.post('/tskfolder', addNewTskFolder);

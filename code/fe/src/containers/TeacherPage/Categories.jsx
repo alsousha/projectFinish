@@ -15,27 +15,27 @@ function Categories() {
 	const { currentUser} = useContext(AuthContext)
 
 	//main array
-	const [cats, setCats] = useState([]);
-	const [catsFormat, setCatsFormat] = useState()
-	// const [editing, setEditing] = useState(false);
-	// const [errors, setErrors] = useState({}); //Validations errors
-
-  //update elems
+	const [dataArray, setDataArray] = useState([]);
+	const [dataArrayFormat, setDataArrayFormat] = useState()
+	
 	const [editingItemId, setEditingItemId] = useState(null);
 	const [editedText, setEditedText] = useState('');
+	const [editedSbj, setEditedSbj] = useState('');
 	//errors
 	const [message, setMessage] = useState({}); //msg from DB
 	const [errors, setErrors] = useState({}); //Validations errors
 	//add new item
-	const [newCatname, setNewCatname] = useState('')
-	const [newSbj, setNewSbj] = useState({})
-	const[isAddClassVisiable, setIsAddClassVisiable] = useState(false)
+	const [newItemName, setNewItemName] = useState('')
+	const [newSbj, setNewSbj] = useState('')
+	const[isAddVisiable, setIsAddVisiable] = useState(false)
 
+	const [activeTab, setActiveTab] = useState(0);
 	// console.log(cats);
-	const handleEdit = (itemId, initialText) => {
+	const handleEdit = (itemId, itemText) => {
 		setErrors({})
     setEditingItemId(itemId);
-		setEditedText(initialText);
+		setEditedText(itemText);
+	
   };
 
 	const handleDelete = (itemId) => {
@@ -45,72 +45,98 @@ function Categories() {
 	}
 		
 	const handleSave = (itemId) => {
-		const fieldErrors = validateField(['cat_name']);
+		const fieldErrors = validateField(['item_name'], itemId);
+		
 		if (Object.keys(fieldErrors).length === 0) {
-			// console.log(cats);
-			setCats((prevItems) =>
+			const sbjToSend = (editedSbj==='') ? dataArrayFormat && dataArrayFormat[activeTab][0].subject_name : editedSbj
+
+			// console.log(sbjToSend);
+			setDataArray((prevItems) =>
 				prevItems.map((item) =>
-					item.id_category === itemId ? { ...item, category_name: editedText, subject_name: newCatname} : item
+					item.id_category === itemId ? { ...item, category_name: editedText, subject_name: sbjToSend} : item
 				)
 			);
+			update({id_cat: itemId, cat_name: editedText, subject_name: sbjToSend}) //send current cat data for response to serever
+			
+			//reset data
+			setEditedSbj('')
 			setEditingItemId(null);
+			setEditedText('')
 			setErrors({})
-			update({id_cat: itemId, cat_name: editedText, subject_name: newCatname}) //send current cat data for response to serever
-			if(catsFormat&&catsFormat.length===1){
-				setActiveTab(0)
-			}
-			console.log(activeTab);
 			fetchData()
 		}else{
 			setErrors(fieldErrors);
-			
+			console.log("sdf");
+			console.log(errors);
 		}
-		setNewSbj({})
-    
+		// setNewSbj('')
+    if(dataArrayFormat&&dataArrayFormat.length===activeTab+1){
+			//if the last tab and last category, when we delete it or change its sbj -> first tab will be active
+			setActiveTab(0)
+		}
   };
 
-	const handleAddNewCat = () => {
-		const fieldErrors = validateField(['add_cat']);
-		console.log(fieldErrors);
+	const handleAddNewItem = () => {
+		const fieldErrors = validateField(['add_item']);
+		// console.log(fieldErrors);
 
-		// if (Object.keys(fieldErrors).length === 0) {
-		// 	addNewCat()
+		if (Object.keys(fieldErrors).length === 0) {
+			addNewItem()
 			
-		// 	setErrors({});
-		// 	setNewCatname("")
-		// 	setIsAddClassVisiable(false)
-		// }else{
-		// 	setErrors(fieldErrors);
-		// }
+			setErrors({});
+			setNewItemName("")
+			setIsAddVisiable(false)
+			fetchData()
+		}else{
+			setErrors(fieldErrors);
+		}
     
   };
 
 	const handleInputChange = (e) => {
     setEditedText(e.target.value);
   };
-	const handleInputAddCatChange = (e) => {
-    setNewCatname(e.target.value);
+
+	const handleInputAddChange = (e) => {
+    setNewItemName(e.target.value);
   };
+
 	const handleSelectChange = async e=>{
 		// console.log(e.target.value + " select");
+		setEditedSbj(e.target.value)
+		// console.log("sekl"+newSbj);
+	}
+	const handleSelectAddChange = async e=>{
+		// console.log(e.target.value + " select");
 		setNewSbj(e.target.value)
+		console.log("sekl"+newSbj);
+	}
+	function isDublicateItemName(itemForCheck, arr, itemId){
+		return arr.some((obj) => obj.category_name === itemForCheck && obj.id_category !==itemId);
+		// const existsInArray = arr.some((obj) => obj.category_name === targetString);
+
 	}
 
-	const validateField = (fieldNames) => {
+	const validateField = (fieldNames, itemId) => {
     const errors = {};
 		fieldNames.forEach(fieldName => {
 			// const value = userData[fieldName];
 
 			switch (fieldName) {
-				case 'add_cat':
-					if (!newCatname.trim()) {
+				case 'add_item':
+					if (!newItemName.trim()) {
 						errors[fieldName] = 'Category name is required';
 					}
+					
 				break;
-				case 'cat_name':
+				case 'item_name':
 					if (!editedText.trim()) {
 						errors[fieldName] = 'Category name is required';
+					}else if(isDublicateItemName(editedText, dataArray, itemId)){
+						errors[fieldName] = 'Item with this name exists!';
 					}
+					
+					// isDublicateItem()
 				break;
 			
 				default:
@@ -122,50 +148,47 @@ function Categories() {
   };
 
 	//axios for DB
-	const addNewCat = async ()=>{
+	const addNewItem = async ()=>{
+		//if user doesn't change sbj in select->will get first by default
+		const sbjToSend = (newSbj==='') ? dataArrayFormat && dataArrayFormat[activeTab][0].subject_name : newSbj
 		axios
-		.post(`/teacher/cats/${currentUser.id_user}`, {category_name: newCatname, subject_name: newSbj})
+		.post(`/teacher/cats/${currentUser.id_user}`, {category_name: newItemName, subject_name: sbjToSend})
 		.then((res) => {
-			// console.log(res.data);
-			// const tmpCat = res.data
-			setCats((prevCats) =>
-				[...prevCats, res.data]
+			setDataArray((prev) =>
+				[...prev, res.data]
 			);	
 			
 			const msg={
 				msgClass: res.status===200 ? "success" : "error",
-				message: res.status===200 ? "New category added successfully!" : 'Error add category'
+				text: res.status===200 ? "New item added successfully!" : 'Error add item'
 			}
       setMessage(msg);
-	
 			 // Clear the message after 2 seconds 
 			setTimeout(() => {
 				setMessage('');
 			}, 2000);
     })
     .catch((error) => {
-      console.error('Error updating class name', error);
+      console.error('Error add item', error);
     });
 	}
 	const update = async (currentData) => {
-		const dataToSend = {category_name:currentData.cat_name, subject_name: newSbj} 
-		// console.log("currentData.class_name");
+		const dataToSend = {category_name:currentData.cat_name, subject_name: currentData.subject_name} 
 		axios
     .put(`/teacher/cat/${currentData.id_cat}`, dataToSend)
     .then((res) => {
+			setDataArray((prev) =>
+				[...prev, res.data]
+			);	
 			const msg={
 				msgClass: res.status===200 ? "success" : "error",
-				text: res.data
+				text: res.status===200 ? "Item updated!" : 'Error updating'
 			}
-			// console.log(msg);
-      // setMessage({msg});
-			// console.log(message);
-			// // setCurrentClass({})
-			// // updateUser(userData)//update localstorage and context
-			//  // Clear the message after 2 seconds 
-			// setTimeout(() => {
-			// 	setMessage('');
-			// }, 2000);
+			setMessage(msg);
+			 // Clear the message after 2 seconds 
+			setTimeout(() => {
+				setMessage('');
+			}, 2000);
     })
     .catch((error) => {
       console.error('Error updating class name', error);
@@ -209,7 +232,7 @@ function Categories() {
 	const fetchData = async () => {
 		try {
 			const res = await axios.get(`/teacher/${currentUser.id_user}/cats`);
-			setCats(res.data)
+			setDataArray(res.data)
 		} catch (err) {
 			console.log(err);
 		}
@@ -217,13 +240,14 @@ function Categories() {
 
 	useEffect(() => {
     fetchData();
+		setEditedSbj("")	
   }, []);
 
 	useEffect(() => {
-		const separateArrays = separateArrayBySubject(cats);
-		setCatsFormat(Object.values(separateArrays));
+		const separateArrays = separateArrayBySubject(dataArray);
+		setDataArrayFormat(Object.values(separateArrays));
 		
-  }, [cats]);
+  }, [dataArray]);
 
 	//add focus for active input
 	useEffect(() => {
@@ -233,29 +257,24 @@ function Categories() {
   }, [editingItemId]);
 	
 	//effect run once when component was created
-	useEffect(() => {
-		setNewSbj(currentUser.sbjs[0])// set by default first teacher\s sbj to select (add new cat elem)
-  }, []);
+	// useEffect(() => {
+	// 	setNewSbj(currentUser.sbjs[0])// set by default first teacher\s sbj to select (add new cat elem)
+  // }, []);
 
-  const [activeTab, setActiveTab] = useState(0);
-	console.log("Activ"+activeTab);
+  
 
 
-console.log(catsFormat&&catsFormat.length);
-// console.log(arr[0]);
-	// console.log(catsFormat&&catsFormat[activeTab][0].category_name);
-	// console.log(Object.values(catsFormat)[2]);
   return (
 	<div className='mt4 section_categories'>
 		<div className="container">
 		<h2 className='center'>My Categories</h2>
 		<div className="cats__wrap table_data mt4">
 			<div className="mt2 msg_block">
-				{/* {message ? <span className={message.msgClass}>{message.text}</span> : <span></span>} */}
+				{message ? <span className={message.msgClass}>{message.text}</span> : <span></span>}
 			</div>
 			<div>
 				<ul className="tab-list">
-					{catsFormat && catsFormat.map((tab,i) => (
+					{dataArrayFormat && dataArrayFormat.map((tab,i) => (
 						<li
 							key={"tab-"+i}
 							className={i === activeTab ? 'active' : ''}
@@ -269,8 +288,8 @@ console.log(catsFormat&&catsFormat.length);
 				{/* {catsFormat &&catsFormat[activeTab]&& catsFormat[activeTab][0].subject_name} */}
 
 				<div className="tab-content">
-				{errors.cat_name && <span className='input_error mp2'>{errors.cat_name}</span>}
-					{catsFormat &&catsFormat[activeTab]&& catsFormat[activeTab].map((item, i) => (
+				{errors.item_name && <span className='input_error mp2'>{errors.item_name}</span>}
+					{dataArrayFormat &&dataArrayFormat[activeTab]&& dataArrayFormat[activeTab].map((item, i) => (
 					<div key={"tabContent-"+i} >
 						<div key={item.id_category} className="">
 							<div  className="table_item d-flex jcs g2 aic mb2">
@@ -278,13 +297,13 @@ console.log(catsFormat&&catsFormat.length);
 									<div className="">
 										<input
 											type="text"
-											name="cat_name"
+											name="item_name"
 											value={editedText}
 											ref={inputRef}
 											onChange={handleInputChange}
 										/>
 										{currentUser.sbjs.length>1 && (
-											<select name="sbj_cat" onChange={handleSelectChange} defaultValue={catsFormat[activeTab][0].subject_name}>
+											<select name="sbj_cat" onChange={handleSelectChange} defaultValue={dataArrayFormat[activeTab][0].subject_name}>
 												{currentUser.sbjs && currentUser.sbjs.map((elem, j)=>(
 													<option key={`sbj-${j}`} value={elem}>
 														{elem}
@@ -320,30 +339,23 @@ console.log(catsFormat&&catsFormat.length);
 							</div>
 						</div>
 
-						{/* {tab.id === activeTab && (
-							<ul>
-								{tab.elements.map(element => (
-									<li key={element}>{element}</li>
-								))}
-							</ul>
-						)} */}
 				</div>
 	))}
 				</div>
 			</div>
 
-			{isAddClassVisiable && (
+			{isAddVisiable && (
 				<div className="cat_item d-flex jcsb aic mb2">
 					<div className="d-flex g1">
 						<input
 							type="text"
-							name="add_cat"
-							value={newCatname}
+							name="add_item"
+							value={newItemName}
 							ref={inputRef}
-							onChange={handleInputAddCatChange}
+							onChange={handleInputAddChange}
 						/>
 						{currentUser.sbjs.length>1 && (
-							<select id="sbjs" name="sbj_cat" onChange={handleSelectChange}>
+							<select id="sbjs" name="sbj_cat" onChange={handleSelectAddChange} defaultValue={dataArrayFormat[activeTab][0].subject_name}>
 								{currentUser.sbjs && currentUser.sbjs.map((elem, i)=>(
 									<option key={`sbj-${i}`} value={elem}>
 										{elem}
@@ -351,18 +363,18 @@ console.log(catsFormat&&catsFormat.length);
 								))}
 							</select>
 							)}
-						{errors.add_cat && <span className='input_error'>{errors.add_cat}</span>}
+						{errors.add_item && <span className='input_error'>{errors.add_item}</span>}
 
 					</div>
 
-					<button onClick={() => handleAddNewCat()} className=''>
+					<button onClick={() => handleAddNewItem()} className=''>
 						<SaveIcon/>
 					</button>
 				</div>
 			)}
 			
 		</div>
-		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddClassVisiable(true)}><AddIcon/>add new category</button></div>
+		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddVisiable(true)}><AddIcon/>add new category</button></div>
 
 		</div>
 	  

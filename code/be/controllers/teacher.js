@@ -104,40 +104,27 @@ export const addNewCategory = (req, res) => {
   // console.log('add');
   try {
     const { category_name, subject_name } = req.body;
-    console.log(category_name, subject_name);
+    console.log(category_name);
+    console.log(subject_name);
     // Query to insert a new category into the table
-    const q =
-      'INSERT INTO category (category_name, id_subject) SELECT ?, subject.id_subject FROM subject WHERE subject.subject_name = ? LIMIT 1';
+    const q = `
+			INSERT INTO category (category_name, id_subject)
+			SELECT ?, subject.id_subject
+			FROM subject
+			WHERE subject.subject_name = ?
+			LIMIT 1
+		`;
 
     db.query(q, [category_name, subject_name], (err, result) => {
       if (err) {
-        return res.json(err);
+        console.error('Failed to add the new category.', err);
+        res.status(500).json({ error: 'Error add category' });
+      } else {
+        res.status(200).json({ message: 'New category added successfully!' });
       }
 
       // Get the generated category ID
-      const id_category = result.insertId;
-
-      // Retrieve the id_subject
-      const selectSubjectIdQuery = 'SELECT id_subject FROM subject WHERE subject_name = ? LIMIT 1';
-      db.query(selectSubjectIdQuery, [subject_name], (err, subjectResult) => {
-        if (err) {
-          res.status(500).json({ error: 'Error updating category' });
-        }
-
-        // Extract the id_subject from the result
-        const id_subject = subjectResult[0].id_subject;
-
-        // Prepare the response object
-        const category = {
-          id_category,
-          category_name,
-          date_create: new Date().toISOString().slice(0, 19).replace('T', ' '),
-          id_subject,
-          subject_name,
-        };
-
-        return res.status(200).json(category);
-      });
+      // const id_category = result.insertId;
     });
   } catch (error) {
     console.error('Failed to add the new category.', error);
@@ -148,17 +135,6 @@ export const getCategoriesByTeacher = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
   const { id } = req.params;
-  console.log(id);
-
-  // Query to retrieve categories by teacher
-  // const query = `
-  //   SELECT id_category, category_name, date_create, id_subject
-  //   FROM category
-  //   WHERE id_subject IN (
-  //     SELECT id_subject
-  //     FROM teacher_sbjs
-  //     WHERE id_user = ?
-  //   )`;
 
   const query = `
 	SELECT c.id_category, c.category_name, c.date_create, c.id_subject, s.subject_name
@@ -397,46 +373,52 @@ export const addStudentsToClass = (req, res) => {
 };
 
 //task's folders
-export const getTasksFoldersByTeacher = (req, res) => {
+export const getTasksFoldersByIdClass = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
   const { id_class } = req.body;
   // console.log(id);
 
+  // const query = `
+  // SELECT c.id_category, c.category_name, c.date_create, c.id_subject, s.subject_name
+  // FROM category c
+  // JOIN subject s ON c.id_subject = s.id_subject
+  // WHERE c.id_subject IN (
+  // 	SELECT id_subject
+  // 	FROM teacher_sbjs
+  // 	WHERE id_user = ?
+  // )`;
+
   const q = `
-	SELECT id_tskFolder, tskFolder_name
-	FROM taskfolder
+	SELECT *
+	FROM taskfolder t
+	JOIN subject s ON t.id_subject = s.id_subject
 	WHERE id_class = ?
 	`;
 
   db.query(q, [id_class], (err, data) => {
     if (err) return res.status(500).json(err);
-    // Check if the tsks exists
     if (data.length === 0) {
-      //get class name for title
-      const qName = 'SELECT class_name FROM class WHERE id_class = ?';
-      db.query(qName, [id_class], (err, data) => {
-        if (err) return res.status(500).json(err);
-        // Check if the class exists
-        if (data.length === 0) {
-          return res.status(404).json('Class not found');
-        }
-        const dataRes = {
-          noElements: true,
-          class_name: data[0].class_name,
-        };
-        console.log(data[0].class_name);
-        res.status(200).json(dataRes);
-      });
-      // return res.status(404).json('Students not found');
-    } else {
-      const dataRes = {
-        noElements: false,
-        data: data,
-      };
-      // console.log(data);
-      res.status(200).json(dataRes);
+      return res.status(404).json('Folders not found');
     }
+    // Check if the tsks exists
+    const dataRes = {
+      noElements: data.length === 0,
+      data: data,
+      // class_name: data[0].class_name,
+    };
+    //get class name for title
+    const qName = 'SELECT class_name FROM class WHERE id_class = ?';
+    db.query(qName, [id_class], (err, data) => {
+      if (err) return res.status(500).json(err);
+      dataRes.class_name = data[0].class_name;
+      // console.log(data[0].class_name);
+      res.status(200).json(dataRes);
+    });
+    // return res.status(404).json('Students not found');
+
+    // console.log(data);
+    // res.status(200).json(dataRes);
   });
 };
 export const updateTskFolder = (req, res) => {
@@ -444,10 +426,20 @@ export const updateTskFolder = (req, res) => {
   if (!token) return res.status(401).json('Not authenticated!');
   try {
     const id_tskfolder = req.params.id;
-    console.log(req.body.tskFolder_name);
-
-    const q = 'UPDATE taskfolder SET tskFolder_name = ? WHERE id_tskFolder = ?';
-    db.query(q, [req.body.tskFolder_name, id_tskfolder], (error, result) => {
+    // console.log(req.body.tskFolder_name);
+    const q = `
+		UPDATE taskfolder
+		SET tskFolder_name = ?,
+				id_subject = (
+					SELECT id_subject
+					FROM subject
+					WHERE subject_name = ?
+					LIMIT 1
+				)
+		WHERE id_tskFolder = ?
+	`;
+    // const q = 'UPDATE taskfolder SET tskFolder_name = ? WHERE id_tskFolder = ?';
+    db.query(q, [req.body.tskFolder_name, req.body.subject_name, id_tskfolder], (error, result) => {
       // Check if any rows were affected by the update
       if (result.affectedRows === 0) {
         return res.status(404).json('Folder not found!');

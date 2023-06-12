@@ -29,17 +29,17 @@ function Classfolder() {
 
 	const [class_name, setClassName] = useState('');
 	const [tskfolders, setTaskfolders] = useState([]);
-	// const [catsFormat, setCatsFormat] = useState()
-	// const [editing, setEditing] = useState(false);
-	// const [errors, setErrors] = useState({}); //Validations errors
-	// const [editedText, setEditedText] = useState('');
+	const [foldersFormat, setFoldersFormat] = useState()
+
 	const [message, setMessage] = useState({}); //msg from DB
 	const [errors, setErrors] = useState({}); //Validations errors
 	//add new class
 	const [newItemName, setNewItemName] = useState('')
-	// const [newSbj, setNewSbj] = useState({})
+	const [newSbj, setNewSbj] = useState({})
 	const[isAddItemVisiable, setIsAddItemVisiable] = useState(false)
 
+
+	const [activeTab, setActiveTab] = useState(0);
 	// console.log(cats);
 	const handleEdit = (itemId, initialText) => {
 		setErrors({})
@@ -50,13 +50,14 @@ function Classfolder() {
 	const handleDelete = (itemId) => {
 		if (window.confirm('are you sure you want to delete this folder and all its tasks?')) {
 			deleteItem(itemId)
+			fetchData()
     }
 	}
 		
 	const handleSave = (itemId) => {
-		console.log(editedText);
+		// console.log(editedText);
 		const fieldErrors = validateField(['item_name']);
-		console.log(fieldErrors);
+		// console.log(fieldErrors);
 		if (Object.keys(fieldErrors).length === 0) {
 			setTaskfolders((prevItems) =>
 				prevItems.map((item) =>
@@ -66,13 +67,17 @@ function Classfolder() {
 			setEditingItemId(null);
 			setErrors({});
 
-			update({id_tskfolder: itemId, tskFolder_name: editedText}) //send current data for response to serever
+			update({id_tskfolder: itemId, tskFolder_name: editedText, subject_name: newSbj}) //send current data for response to serever
+			fetchData()
 		}else{
 			setErrors(fieldErrors);
 		}
-    
+    setNewSbj({})
+    if(foldersFormat&&foldersFormat.length===activeTab+1){
+			//if the last tab and last category, when we delete it or change its sbj -> first tab will be active
+			setActiveTab(0)
+		}
   };
-
 	
 	const handleAddNewItem = () => {
 		const fieldErrors = validateField(['new_item']);
@@ -122,8 +127,8 @@ function Classfolder() {
   };
 
 	const handleSelectChange = async e=>{
-		console.log(e.target.value + " select");
-		// setNewSbj(e.target.value)
+		// console.log(e.target.value + " select");
+		setNewSbj(e.target.value)
 		// setNewCat(sbj: e.target.value)
 		// console.log(e.target.options[2].name);
 		// if(e.target.name==="role"){
@@ -218,29 +223,29 @@ function Classfolder() {
     .catch((error) => {
       console.error('Error deleting student', error);
     });
-		fetchData()
+		// fetchData()
   };
 
-	//separate categories by id_subject
+	//separate folders by id_subject
 	function separateArrayBySubject(data) {
-		// return data.reduce((result, item) => {
-		// 	const idSubject = item.id_subject;
-		// 	if (!result[idSubject]) {
-		// 		result[idSubject] = [];
-		// 	}
-		// 	result[idSubject].push(item);
-		// 	return result;
-		// }, {});
+		return data.reduce((result, item) => {
+			const idSubject = item.id_subject;
+			if (!result[idSubject]) {
+				result[idSubject] = [];
+			}
+			result[idSubject].push(item);
+			return result;
+		}, {});
 	}
 	
 	//fetch tsks folders of teacher
 	const fetchData = async () => {
 		// console.log(id_class);
 		try {
-			const res = await axios.post(`/teacher/${currentUser.id_user}/taskfolders`, {id_class: id_class});
+			const res = await axios.post(`/teacher/taskfolders`, {id_class: id_class});
 			if(!res.data.noElements){
-				// console.log(res.data.data[0].class_name);
-				setClassName(res.data.data[0].class_name)
+				console.log(res.data);
+				setClassName(res.data.class_name)
 				setTaskfolders(res.data.data)
 				// console.log(tskfolders);
 			}else{
@@ -250,11 +255,6 @@ function Classfolder() {
 		} catch (err) {
 			console.log(err);
 		}
-	};
-	// Helper function to check email format using regular expression
-	const isValidEmail = (email) => {
-		const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-		return emailRegex.test(email);
 	};
 
 	//add focus for active input
@@ -266,45 +266,17 @@ function Classfolder() {
 		
 	useEffect(() => {
     fetchData();
+		setNewSbj(currentUser.sbjs[0])// set by default first teacher\s sbj to select (add new cat elem)
+
   }, []);
 
-	// useEffect(() => {
-	// 	const separateArrays = separateArrayBySubject(cats);
-	// 	setCatsFormat(separateArrays);
-	// 	// setCountTeacherSbjs(Object.keys(separateArrays).length); //count of current sbjs of teacher
-	// 	// setCountTeacherSbjs(currentUser.sbjs.length); //count of current sbjs of teacher
-  //   // const fetchData = async () => {
-  //   //   try {
-  //   //     // const res = await axios.get(`/teacher/${currentUser.id_user}/cats`);
-	// 	// 		// console.log(res.data);
-	// 	// 		// const separateArrays = separateArrayBySubject(res.data);
-				
-	// 	// 		// setCats(separateArrays(res.data));
-	// 	// 		// console.log(JSON.stringify(separateArrays) + "separateArrays");
-	// 	// 		// setCatsFormat(separateArrays);
-	// 	// 		// console.log(cats);
-				
-  //   //   } catch (err) {
-  //   //     console.log(err);
-  //   //   }
-  //   // };
-  //   // fetchData();
-  // }, [cats]);
+	useEffect(() => {
+		const separateArrays = separateArrayBySubject(tskfolders);
+		setFoldersFormat(Object.values(separateArrays));
+		console.log(foldersFormat);
+		
+  }, [tskfolders]);
 
-	//add focus for active input
-	// useEffect(() => {
-  //   if (editingItemId) {
-  //     inputRef.current.focus();
-  //   }j
-  // }, [editingItemId]);
-	
-	//effect run once when component was created
-	// useEffect(() => {
-	// 	setNewSbj(currentUser.sbjs[0])// set by default first teacher\s sbj to select (add new cat elem)
-  // }, []);
-
-		//add focus for active input
-	
 	useEffect(() => {
 		if (isAddItemVisiable) {
 			inputRef.current.focus();
@@ -331,6 +303,8 @@ function Classfolder() {
 	if (!hasAccess) {
     return <div>Error: You do not have access to this class.</div>;
   }
+
+	
   return (
 	<div className='mt4 section_accounts'>
 		<div className="container">
@@ -346,7 +320,7 @@ function Classfolder() {
 			
 			{tskfolders.length!==0 ? tskfolders.map((item, i) => (
 				<div key={item.id_tskFolder + i} className="table_item mb2">
-					<div className="folder big d-flex f-column">
+					{/* <div className="folder big d-flex f-column">
 						
 						<FolderIcon/>
 						{editingItemId === item.id_tskFolder ? (
@@ -389,7 +363,7 @@ function Classfolder() {
 							<button  onClick={() => handleDelete(item.id_tskFolder)}><DeleteIcon/></button>
 						</div>
 					</div>
-				</div>
+				</div> */}
 					
 				</div>
 			)):(
@@ -399,6 +373,74 @@ function Classfolder() {
 			
 			
 		</div>
+
+		<ul className="tab-list">
+			{foldersFormat && foldersFormat.map((tab,i) => (
+				<li
+					key={"tab-"+i}
+					className={i === activeTab ? 'active' : ''}
+					onClick={() => setActiveTab(i)}
+				>
+				{tab[0].subject_name}
+				</li>
+			))}
+		</ul>
+		<div className="tab-content">
+			{/* {errors.item_name && <span className='input_error mp2'>{errors.item_name}</span>} */}
+				{foldersFormat &&foldersFormat[activeTab]&& foldersFormat[activeTab].map((item, i) => (
+				<div key={"tabContent-"+i} >
+					<div key={item.id_tskFolder} className="">
+						<div  className="table_item d-flex jcs g2 aic mb2">
+							{editingItemId === item.id_tskFolder ? (
+								<div className="">
+									<input
+										type="text"
+										name="item_name"
+										value={editedText}
+										ref={inputRef}
+										onChange={handleInputChange}
+									/>
+									{currentUser.sbjs.length>1 && (
+										<select name="sbj_cat" onChange={handleSelectChange} defaultValue={foldersFormat[activeTab][0].subject_name}>
+											{currentUser.sbjs && currentUser.sbjs.map((elem, j)=>(
+												<option key={`sbj-${j}`} value={elem}>
+													{elem}
+												</option>
+											))}
+										</select>
+										)}
+									
+								</div>
+								
+								
+							) : (
+								<div className="item_title">
+									<span className='editUserInfo_field'>{item.tskFolder_name}</span>
+								</div>
+							)}
+						
+							<div className="cat_edit table_icon">
+								{editingItemId === item.id_tskFolder ? (
+									<button onClick={() => handleSave(item.id_tskFolder)} className=''>
+										<CheckIcon/>
+									</button>
+									
+								) : (
+									<button onClick={() => handleEdit(item.id_tskFolder,  item.tskFolder_name)} className=''>
+										<EditIcon className=""/>
+									</button>
+								)}
+							</div>
+							<div className="class_delete table_icon">
+								<button  onClick={() => handleDelete(item.id_tskFolder)}><DeleteIcon/></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				))}
+		</div>
+
+		
 		{isAddItemVisiable && (
 				<>
 				<div>Enter folder name:</div>
@@ -412,7 +454,15 @@ function Classfolder() {
 							ref={inputRef}
 							onChange={handleInputAddItemChange}
 						/>
-						
+						{currentUser.sbjs.length>1 && (
+							<select id="sbjs" name="sbj_cat" onChange={handleSelectChange}>
+								{currentUser.sbjs && currentUser.sbjs.map((elem, i)=>(
+									<option key={`sbj-${i}`} value={elem}>
+										{elem}
+									</option>
+								))}
+							</select>
+							)}
 						{errors.new_item && <span className='input_error'>{errors.new_item}</span>}
 
 					</div>
