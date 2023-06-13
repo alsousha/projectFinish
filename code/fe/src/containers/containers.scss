@@ -4,9 +4,45 @@
 	width: 100%;
 	.tasks_wrap{
 		flex: 3;
+		margin: 2rem;
+		.arr_item{
+			min-height: 4rem;
+			padding: 2rem;
+			
+			.arr_item-inner{
+				border: 1px solid $main;
+				border-radius: 2rem;
+				min-height: 14rem;
+				padding: 1rem;
+				cursor: pointer;
+
+			}
+		}
 	}
 	.sidebar_filter{
-		flex: 1;
+		flex: 0.7;
+		height: 100vh;
+		background-color: $main;
+		color: $white;
+		padding: 2rem;
+		.filter_item{
+			padding: 2rem 0;
+			border-bottom: 1px solid $white;
+			h3{
+				color: $accent;
+				margin-bottom: 1rem;
+			}
+			.filter_item-inner{
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0 1rem;
+				label> input{
+					margin-right: 0.5rem;
+				}
+			}
+		}
+		
+
 	}
 }
 .table_data{
@@ -23,8 +59,4 @@
 }
 .main{
 	flex: 1;
-}
-.sidebar_filter{
-	width: 30rem;
-	border: 1px solid pink;
 }

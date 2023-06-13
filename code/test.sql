@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2023 at 05:21 AM
+-- Generation Time: Jun 13, 2023 at 08:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,17 +39,17 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`) VALUES
-(79, 'asffee', '2023-06-12 01:17:03', 3),
 (82, 'xxxe', '2023-06-12 01:39:22', 4),
-(84, 'yy', '2023-06-12 01:39:47', 3),
 (85, 'edwds', '2023-06-12 01:40:14', 4),
-(86, 'dds', '2023-06-12 01:41:31', 3),
-(90, 'fdg', '2023-06-12 01:47:45', 3),
 (91, 'wer', '2023-06-12 01:48:16', 4),
-(92, 'i', '2023-06-12 02:00:37', 2),
-(93, 'hi', '2023-06-12 02:04:28', 2),
 (94, 'sdfe', '2023-06-12 02:04:33', 4),
-(96, 'eee', '2023-06-12 02:31:58', 3);
+(105, 'ff', '2023-06-12 15:22:26', 1),
+(106, 'te', '2023-06-12 15:22:36', 1),
+(110, 'category 1', '2023-06-12 15:33:26', 2),
+(112, 'category 2', '2023-06-12 15:38:41', 2),
+(114, 'category5', '2023-06-12 21:04:52', 2),
+(115, 'category3', '2023-06-12 21:05:03', 3),
+(116, 'category 4', '2023-06-13 13:04:23', 3);
 
 -- --------------------------------------------------------
 
@@ -144,12 +144,13 @@ CREATE TABLE `student_class` (
 --
 
 INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
-(111, 1),
 (113, 1),
-(114, 1),
 (116, 1),
 (117, 2),
-(118, 2);
+(117, 17),
+(118, 1),
+(118, 2),
+(118, 17);
 
 -- --------------------------------------------------------
 
@@ -198,14 +199,28 @@ INSERT INTO `subject` (`id_subject`, `subject_name`) VALUES
 CREATE TABLE `task` (
   `id_task` int(3) NOT NULL,
   `task_name` varchar(15) NOT NULL,
-  `create_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `task_create_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `task_inner` longtext NOT NULL,
-  `count_points` int(2) NOT NULL,
+  `task_weight` int(2) NOT NULL,
+  `task_level` int(2) UNSIGNED NOT NULL,
   `id_teacher` int(3) NOT NULL,
-  `id_class` int(3) NOT NULL,
-  `id_taskTemplate` int(3) NOT NULL,
-  `id_category` int(3) NOT NULL
+  `id_category` int(3) NOT NULL,
+  `id_template` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `task`
+--
+
+INSERT INTO `task` (`id_task`, `task_name`, `task_create_date`, `task_inner`, `task_weight`, `task_level`, `id_teacher`, `id_category`, `id_template`) VALUES
+(1, 'task1_templ1', '2023-06-13 08:38:35', '', 3, 1, 108, 110, 1),
+(2, 'task2_templ1', '2023-06-13 08:38:35', '', 4, 2, 108, 112, 1),
+(3, 'task3_templ1', '2023-06-13 08:39:29', '', 1, 1, 108, 112, 1),
+(4, 'task4_templ2', '2023-06-13 08:39:29', '', 5, 3, 108, 112, 2),
+(5, 'task4_teml2_his', '2023-06-13 14:49:18', '', 5, 3, 108, 115, 2),
+(6, 'task5_teml2_his', '2023-06-13 14:49:18', '', 3, 3, 108, 115, 2),
+(7, 'task6_teml2_his', '2023-06-13 14:50:00', '', 3, 3, 108, 115, 2),
+(8, 'task7_teml1_his', '2023-06-13 14:50:38', '', 3, 2, 108, 115, 1);
 
 -- --------------------------------------------------------
 
@@ -226,7 +241,14 @@ CREATE TABLE `taskfolder` (
 
 INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `id_class`, `id_subject`) VALUES
 (13, 'folder12', 2, 4),
-(14, 'folder422', 2, 4);
+(14, 'folder422', 2, 4),
+(18, 'ssss', 17, 2),
+(19, 'aaa', 17, 2),
+(20, 'qwe', 2, 3),
+(29, 'sdf', 17, 2),
+(30, 'gfh', 17, 3),
+(31, 'tyrt', 17, 2),
+(33, 'ert', 18, 3);
 
 -- --------------------------------------------------------
 
@@ -250,6 +272,14 @@ CREATE TABLE `task_template` (
   `template_name` varchar(10) NOT NULL,
   `template_inner` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `task_template`
+--
+
+INSERT INTO `task_template` (`id_template`, `template_name`, `template_inner`) VALUES
+(1, 'template1', ''),
+(2, 'template2', '');
 
 -- --------------------------------------------------------
 
@@ -300,6 +330,26 @@ INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
 (112, 3),
 (112, 4),
 (112, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `template`
+--
+
+CREATE TABLE `template` (
+  `id_template` int(11) NOT NULL,
+  `template_name` varchar(255) NOT NULL,
+  `template_inner` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `template`
+--
+
+INSERT INTO `template` (`id_template`, `template_name`, `template_inner`) VALUES
+(1, 'template1', ''),
+(2, 'template2', '');
 
 -- --------------------------------------------------------
 
@@ -375,7 +425,6 @@ ALTER TABLE `student_certification`
 --
 ALTER TABLE `student_class`
   ADD PRIMARY KEY (`id_user`,`id_class`),
-  ADD UNIQUE KEY `id_user` (`id_user`),
   ADD KEY `id_class` (`id_class`);
 
 --
@@ -394,7 +443,10 @@ ALTER TABLE `subject`
 -- Indexes for table `task`
 --
 ALTER TABLE `task`
-  ADD PRIMARY KEY (`id_task`);
+  ADD PRIMARY KEY (`id_task`),
+  ADD KEY `id_category` (`id_category`),
+  ADD KEY `id_teacher` (`id_teacher`),
+  ADD KEY `id_template` (`id_template`);
 
 --
 -- Indexes for table `taskfolder`
@@ -430,6 +482,12 @@ ALTER TABLE `teacher_sbjs`
   ADD KEY `id_subject` (`id_subject`);
 
 --
+-- Indexes for table `template`
+--
+ALTER TABLE `template`
+  ADD PRIMARY KEY (`id_template`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -444,7 +502,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -468,19 +526,25 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `task_template`
 --
 ALTER TABLE `task_template`
-  MODIFY `id_template` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_template` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `template`
+--
+ALTER TABLE `template`
+  MODIFY `id_template` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -523,6 +587,14 @@ ALTER TABLE `student_certification`
 ALTER TABLE `student_class`
   ADD CONSTRAINT `student_class_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_class_ibfk_2` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `task`
+--
+ALTER TABLE `task`
+  ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_ibfk_2` FOREIGN KEY (`id_teacher`) REFERENCES `teacher` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`id_template`) REFERENCES `template` (`id_template`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `taskfolder`

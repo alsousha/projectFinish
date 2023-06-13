@@ -268,7 +268,8 @@ export const getAllStudentsByTeacher = (req, res) => {
   if (!token) return res.status(401).json('Not authenticated!');
 
   const { id } = req.params;
-  const q = `SELECT user.id_user, user.name, user.lastname, user.email, student_class.id_class, class.class_name FROM user 
+  const q = `SELECT user.id_user, user.name, user.lastname, user.email, student_class.id_class, class.class_name 
+						 FROM user 
 						 JOIN student_class ON user.id_user = student_class.id_user
 						 JOIN class ON student_class.id_class = class.id_class
   					 WHERE class.id_teacher = ?`;
@@ -276,37 +277,10 @@ export const getAllStudentsByTeacher = (req, res) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
     if (data.length === 0) {
-      // const qCatName = 'SELECT class_name FROM class WHERE id_class = ?';
-      // db.query(qCatName, [id_class], (err, data) => {
-      //   if (err) return res.status(500).json(err);
-      //   // Check if the class exists
-      //   if (data.length === 0) {
-      //     return res.status(404).json('Class not found');
-      //   }
-      //   const dataRes = {
-      //     noStudents: true,
-      //     class_name: data[0].class_name,
-      //   };
-      //   // console.log(data[0].class_name);
-      //   res.status(200).json(dataRes);
-      // });
-      const dataRes = {
-        noStudents: true,
-        class_name: data[0].class_name,
-      };
-      // console.log(data[0].class_name);
-      res.status(200).json(dataRes);
-      // return res.status(404).json('Students not found');
+      return res.status(200).json('Students not found');
     } else {
-      const dataRes = {
-        noStudents: false,
-        data: data,
-      };
-      // console.log(data[0].class_name);
-      res.status(200).json(dataRes);
+      res.status(200).json(data);
     }
-    // console.log(data);
-    // Send the students as the response
   });
 };
 

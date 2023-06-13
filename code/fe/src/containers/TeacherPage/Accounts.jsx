@@ -300,7 +300,7 @@ function Accounts() {
 				<span className='table_elem'>Email</span>
 			</div>
 			{accounts.length!==0 ? accounts.map((item, i) => (
-				<div key={item.id_user + i} className="table_item d-flex jcsb aic mb2">
+				<div key={"account-"+item.id_user + i} className="table_item d-flex jcsb aic mb2">
 					<div className="d-flex jcsb aic table">
 							<span className='table_elem small'>{i+1}.</span>
 							<span className='table_elem'>{item.name}&nbsp;</span>

@@ -209,12 +209,21 @@ const Tasks = () => {
 	// console.log(filteredData);
 
 	return (
-		<div className='d-flex'>
-			<div className="arr_wrap tasks_wrap">
-				{filteredData && filteredData.map((elem, i) => (
-					<div key={"task-"+i} className="arr_item">{elem.task_name}</div>	
-				))}
+		<div className='d-flex '>
+			<div className="container ">
+				<h2 className='center mt4'>Tasks</h2>
+				<div className="arr_wrap tasks_wrap d-flex flex-4 jcsb">
+					
+						{filteredData && filteredData.map((elem, i) => (
+							<div className="arr_item">
+								<div key={"task-"+i} className="arr_item-inner hover-shadow">{elem.task_name}</div>	
+							</div>
+						))}
+					
+					
+				</div>
 			</div>
+			
 			<div className="sidebar_filter"><SidebarFilter updateFilteredData={updateFilteredData}/></div>
 		</div>
 	)
