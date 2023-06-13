@@ -16,6 +16,8 @@ import {
   updateTskFolder,
   deleteTskFolder,
   addNewTskFolder,
+  getAllTemplates,
+  getSubjectsByTeacher,
 } from '../controllers/teacher.js';
 
 const router = express.Router();
@@ -40,5 +42,8 @@ router.delete('/tskfolder/:id', deleteTskFolder);
 router.post('/tskfolder', addNewTskFolder);
 // router.get('classes/:id')
 // router.put('/:id', updateTeacherSubject);
+
+router.get('/templates', getAllTemplates);
+router.get('/sbjs/:id', getSubjectsByTeacher);
 
 export default router;

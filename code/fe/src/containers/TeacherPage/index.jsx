@@ -12,6 +12,8 @@ import Students from './Students'
 import Profile from '../../pages/Profile';
 import Classfolder from './Classfolder';
 
+import '../containers.scss'
+
 function TeacherPage() {
 	// const [classes, setClasses] = useState();
 
@@ -29,7 +31,7 @@ function TeacherPage() {
 			<Sidebar 
 				items={linksData} 
 			/>
-			<div className='mainContent container'>
+			<div className='mainContent'>
 				<Routes>
 					<Route path='classes' element={<Classes/>} />
 					<Route path='accounts/:id_class' element={<Accounts/>} />

@@ -1,54 +1,143 @@
-{catsFormat && catsFormat.map((arr, i) => (
-	<div className="subject_section" key={i++}>
-		<div className="subject_name mt5"><h3>{arr[0].subject_name}</h3></div>
-		
-		{arr.map((item) => (
-			<div key={item.id_category} className="">
-				<div  className="table_item d-flex jcs g2 aic mb2">
-					{editingItemId === item.id_category ? (
-						<div className="">
+<div className="main">
+			<h2>Filter Tasks</h2>
+			{subjects && subjects.length>1 && (
+				<div>
+					<h3>Subjects</h3>
+					<label>
+						<input
+							type="checkbox"
+							checked={selectedSubjects.includes('all')}
+							onChange={() => handleSubjectsChange('all')}
+						/>
+						All
+					</label>
+					{subjects.map(subject => (
+						<label key={"sbj"+subject.id_subject}>
 							<input
-								type="text"
-								name="cat_name"
-								value={editedText}
-								ref={inputRef}
-								onChange={handleInputChange}
+								type="checkbox"
+								checked={selectedSubjects.includes(subject.id_subject)}
+								onChange={() => handleSubjectsChange(subject)}
 							/>
-							{/* {currentUser.sbjs.length>1 && (
-								<select id="sbjs" name="sbj_cat" onChange={handleSelectChange} defaultValue={currentUser.sbjs[i]}>
-									{currentUser.sbjs && currentUser.sbjs.map((elem, j)=>(
-										<option key={`sbj-${j}`} value={elem}>
-											{elem}{j}{i}
-										</option>
-									))}
-								</select>
-								)}
-							{errors.cat_name && <span className='input_error'>{errors.cat_name}</span>} */}
-						</div>
-						
-					) : (
-						<div className="item_title">
-							<span className='editUserInfo_field'>{item.category_name}</span>
-						</div>
-					)}
-				
-					<div className="cat_edit table_icon">
-						{editingItemId === item.id_category ? (
-							<button onClick={() => handleSave(item.id_category)} className=''>
-								<SaveIcon/>
-							</button>
-							
-						) : (
-							<button onClick={() => handleEdit(item.id_category,  item.category_name)} className=''>
-								<EditIcon className=""/>
-							</button>
-						)}
-					</div>
-					<div className="class_delete table_icon">
-						<button  onClick={() => handleDelete(item.id_category)}><DeleteIcon/></button>
-					</div>
+							{subject.subject_name}
+						</label>
+					))}
 				</div>
+			)}
+        
+
+      <div>
+        <h3>Categories</h3>
+				<label>
+          <input
+            type="checkbox"
+            checked={selectedCategories.includes('all')}
+            onChange={() => handleCategoryChange('all')}
+          />
+          All
+        </label>
+        {categories.map(category => (
+          <label key={"cat"+category.id_category}>
+            <input
+              type="checkbox"
+              checked={selectedCategories.includes(category.id_category)}
+              onChange={() => handleCategoryChange(category)}
+            />
+            {category.category_name}
+          </label>
+        ))}
+      </div>
+			<div>
+        <h3>Templates</h3>
+				<label>
+          <input
+            type="checkbox"
+            checked={selectedTemplates.includes('all')}
+            onChange={() => handleTemplateChange('all')}
+          />
+          All
+        </label>
+        {templates.map(template => (
+          <label key={"temp"+template.id_template}>
+            <input
+              type="checkbox"
+              checked={selectedTemplates.includes(template.id_template)}
+              onChange={() => handleTemplateChange(template)}
+            />
+            {template.template_name}
+          </label>
+        ))}
+      </div>
+			<div>
+			
 			</div>
-		))}
-	</div>
-))}
+			<div>
+        <h3>Levels</h3>
+				<label>
+          <input
+            type="checkbox"
+            checked={selectedLevels.includes('all')}
+            onChange={() => handleLevelChange('all')}
+          />
+          All
+        </label>
+        {levels.map(level => (
+					<label key={"lvl"+level}>
+						<input
+							type="checkbox"
+							checked={selectedLevels.includes(level)}
+							onChange={() => handleLevelChange(level)}
+						/>
+						{level}
+					</label>
+				))}
+      </div>
+			<div>
+        <h3>Weight</h3>
+				<label>
+          <input
+            type="checkbox"
+            checked={selectedWeights.includes('all')}
+            onChange={() => handleWeightChange('all')}
+          />
+          All
+        </label>
+        {weights.map(weight => (
+					<label key={"weight"+weight}>
+						<input
+							type="checkbox"
+							checked={selectedWeights.includes(weight)}
+							onChange={() => handleWeightChange(weight)}
+						/>
+						{weight}
+					</label>
+				))}
+      </div>
+
+
+			<div className="arr__wrap">
+				{filteredData && filteredData.map((elem, i) => (
+					<div key={"task-"+i} className="arr_item">{elem.task_name}</div>	
+
+				))}
+			</div>
+      {/* 
+      <div>
+        <h3>Task Weight</h3>
+        {taskWeights.map(weight => (
+          <label key={weight}>
+            <input
+              type="radio"
+              checked={selectedTaskWeight === weight}
+              onChange={() => handleTaskWeightChange(weight)}
+            />
+            {weight}
+          </label>
+        ))}
+      </div>
+      <h2>Tasks</h2>
+      <ul>
+        {filteredTasks.map(task => (
+          <li key={task.id}>{task.name}</li>
+        ))}
+      </ul> */}
+			</div>

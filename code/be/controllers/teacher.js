@@ -487,3 +487,43 @@ export const addNewTskFolder = (req, res) => {
     console.error('Failed to add the new folder.', error);
   }
 };
+
+export const getAllTemplates = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const q = `
+	SELECT *
+	FROM template
+	`;
+
+  db.query(q, (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the user exists
+    if (data.length === 0) {
+      return res.status(404).json('Templates not found');
+    }
+    // console./log(data);
+    res.status(200).json(data);
+  });
+};
+
+export const getSubjectsByTeacher = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { id } = req.params;
+  const q = `SELECT ts.id_subject, s.subject_name
+						 FROM teacher_sbjs ts
+						 JOIN subject s ON ts.id_subject = s.id_subject
+  					 WHERE ts.id_user = ?`;
+  db.query(q, [id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the data exists
+    if (data.length === 0) {
+      return res.status(404).json('subjects not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};

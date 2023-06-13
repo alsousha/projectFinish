@@ -1,4 +1,14 @@
 @import "../assets/styles/vars";
+
+.mainContent{
+	width: 100%;
+	.tasks_wrap{
+		flex: 3;
+	}
+	.sidebar_filter{
+		flex: 1;
+	}
+}
 .table_data{
 	svg{
 		width: 4rem;
@@ -10,4 +20,11 @@
 		}
 	}
 
+}
+.main{
+	flex: 1;
+}
+.sidebar_filter{
+	width: 30rem;
+	border: 1px solid pink;
 }
