@@ -277,7 +277,7 @@ export const getAllStudentsByTeacher = (req, res) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
     if (data.length === 0) {
-      return res.status(200).json('Students not found');
+      return res.status(201).json('Students not found');
     } else {
       res.status(200).json(data);
     }

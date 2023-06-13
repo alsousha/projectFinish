@@ -239,11 +239,8 @@ function Students() {
 		// console.log(id_class);
 		try {
 			const res = await axios.post(`/teacher/${currentUser.id_user}/students_all`);
-			if(!res.data.noStudents){
-				setClassName(res.data.data[0].class_name)
-				setAccounts(res.data.data)
-			}else{
-				setClassName(res.data.class_name)
+			if(res.status === 200){
+				setAccounts(res.data)
 			}
 			console.log(res.data);
 		} catch (err) {
@@ -280,70 +277,43 @@ function Students() {
   return (
 	<div className='mt4 section_accounts'>
 		<div className="container">
-		<h2>All students:</h2>
+			<h2>All students:</h2>
 			<div className="back mt2 btn_main">
 				<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
 			</div>
 			<div className="cats__wrap table_data mt4">
-			<div className="mt5">
-				{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
-			</div>
-			<div className="class_item title d-flex jcsb aic mb2">
-				<span className='table_elem small'>N.</span>
-				<span className='table_elem'>Name</span>
-				<span className='table_elem'>Lastname</span>
-				<span className='table_elem'>Email</span>
-				<span className='table_elem'>Class</span>
-			</div>
-			{accounts.length!==0 ? accounts.map((item, i) => (
-				<div key={item.id_user + i} className="class_item d-flex jcsb aic mb2">
-					<div className="d-flex jcsb aic table mr4">
-							<span className='table_elem small'>{i+1}.</span>
-							<span className='table_elem'>{item.name}&nbsp;</span>
-							<span className='table_elem'>{item.lastname}&nbsp;</span>
-							<span className='table_elem'>{item.email}</span>
-							<span className='table_elem'>{item.class_name}</span>
-					</div>
-					{/* <div className="class_delete table_icon">
-						<button onClick={() => handleDelete(item.id_user)} ><DeleteIcon/></button>
-					</div> */}
+				<div className="mt5">
+					{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
 				</div>
-			)):(
-				<div className="no-items">Student's list is empty</div>
-			)}
-
-			{/* {isAddItemVisiable && (
-				<>
-				<div>Enter student's email:</div>
-				<div className="cat_item d-flex jcsb aic mb2">
-					<div className="d-flex g1">
-						
-						<input
-							type="text"
-							name="email"
-							value={newItemName}
-							ref={inputRef}
-							onChange={handleInputAddItemChange}
-						/>
-						
-						{errors.email && <span className='input_error'>{errors.email}</span>}
-
-					</div>
-
-					<button onClick={() => handleAddNewItem()} className=''>
-						<AddUserIcon/>
-					</button>
+				<div className="class_item title d-flex jcsb aic mb2">
+					<span className='table_elem small'>N.</span>
+					<span className='table_elem'>Name</span>
+					<span className='table_elem'>Lastname</span>
+					<span className='table_elem'>Email</span>
+					<span className='table_elem'>Class</span>
 				</div>
-				</>
+
 				
-			)} */}
-			
-		</div>
-		{/* <div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddItemVisiable(true)}><AddIcon/>add new student</button></div> */}
+				{accounts && accounts.length!==0 ? accounts.map((item, i) => (
+					<div key={item.id_user + i} className="class_item d-flex jcsb aic mb2">
+						<div className="d-flex jcsb aic table mr4">
+								<span className='table_elem small'>{i+1}.</span>
+								<span className='table_elem'>{item.name}&nbsp;</span>
+								<span className='table_elem'>{item.lastname}&nbsp;</span>
+								<span className='table_elem'>{item.email}</span>
+								<span className='table_elem'>{item.class_name}</span>
+						</div>
+						{/* <div className="class_delete table_icon">
+							<button onClick={() => handleDelete(item.id_user)} ><DeleteIcon/></button>
+						</div> */}
+					</div>
+				)):(
+					<div className="no-items">Student's list is empty</div>
+				)}
 
+		
+			</div>
 		</div>
-	  
-
 	</div>
   )
 }
