@@ -133,3 +133,43 @@ export const publishFolder = (req, res) => {
     console.error('Failed to publish the folder', error);
   }
 };
+export const createTask = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  // console.log('add');
+  try {
+    const { taskData } = req.body;
+    const date_create = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const q = `
+			INSERT INTO task 
+			(task_name, task_create_date, task_weight, task_level, id_teacher , id_category , id_template ) 
+			values 
+			(?,?,?,?,?,?,?)
+  	`;
+
+    // console.log(date_create);
+    // console.log(taskData);
+    db.query(
+      q,
+      [
+        taskData.task_name,
+        date_create,
+        taskData.weight,
+        taskData.level,
+        taskData.id_teacher,
+        taskData.id_category,
+        taskData.id_template,
+      ],
+      (err, result) => {
+        if (err) {
+          console.error('Failed to create the task.', err);
+          res.status(500).json({ error: 'Error create the task' });
+        } else {
+          res.status(200).json({ message: 'Create the task successfully!' });
+        }
+      },
+    );
+  } catch (error) {
+    console.error('Failed to create the task', error);
+  }
+};

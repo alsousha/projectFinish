@@ -346,6 +346,7 @@ function Classfolders() {
 	<div className='mt4 section_accounts'>
 		<div className="container">
 			<h2>Class folder of Class: {class_name}</h2>
+			<h3 className='mt2'>Create folders of class</h3>
 			<div className="back mt2 btn_main">
 				<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
 			</div>

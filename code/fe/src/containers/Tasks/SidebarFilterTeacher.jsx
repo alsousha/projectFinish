@@ -147,7 +147,7 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 			const updatedLevels = selectedLevels.includes('all')
 			? [level]
 			: selectedLevels.includes(level)
-			? selectedLevels.filter((item)=> item.task_level !== level)
+			? selectedLevels.filter((item)=> item !== level)
 			: [...selectedLevels, level]
 			// console.log(updatedLevels);
 			setSelectedLevels(updatedLevels)
@@ -162,7 +162,7 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 			const updatedWeight = selectedWeights.includes('all')
 			? [weight]
 			: selectedWeights.includes(weight)
-			? selectedWeights.filter((item)=> item.task_weight !== weight)
+			? selectedWeights.filter((item)=> item !== weight)
 			: [...selectedWeights, weight]
 			// console.log(updatedLevels);
 			setSelectedWeights(updatedWeight)

@@ -1,9 +1,16 @@
 import express from 'express';
-import { getStudentClassLevel, getStudentSbjs } from '../controllers/student.js';
+import {
+  getStudentClassLevel,
+  getStudentSbjs,
+  getTasksFoldersBySubject,
+  getTasksByFolder,
+} from '../controllers/student.js';
 
 const router = express.Router();
 router.get('/:id/class-level', getStudentClassLevel);
 router.get('/sbjs/:id', getStudentSbjs);
+router.get('/taskfolders/:id', getTasksFoldersBySubject);
+router.get('/tasksbyfolder/:id', getTasksByFolder);
 
 // router.get('/:id', getTeacherSbjs);
 // router.put('/:id', updateTeacherSubject);

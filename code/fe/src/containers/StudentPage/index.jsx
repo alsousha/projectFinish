@@ -31,7 +31,6 @@ function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
 				setIsLoggedIn={setIsLoggedIn}
 			/>
 			<div className='mainContent'>
-				<h1>Student</h1>
 				<Routes>
 					<Route path='/subjects' element={<Subjects />} />
 					<Route path='/homework' element={<Homework />} />
