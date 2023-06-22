@@ -5,6 +5,10 @@ import axios from 'axios';
 import { Link} from 'react-router-dom';
 import SidebarFilter from './SidebarFilterTeacher.jsx';
 import '../containers.scss'
+import Task_card from './Task_card.jsx';
+
+import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
+import { ReactComponent as AddIcon } from '../../assets/img/add2.svg';
 
 
 
@@ -202,7 +206,6 @@ const Tasks = () => {
 	// const updateDataArray = (newData) => {
   //   setDataArray(newData);
   // };
-
 	const updateFilteredData = (newData) => {
     setFilteredData(newData);
   };
@@ -212,11 +215,21 @@ const Tasks = () => {
 		<div className='d-flex '>
 			<div className="container ">
 				<h2 className='center mt4'>Tasks</h2>
+				<div className="back mt2 btn_main">
+					<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
+				</div>
+				<div className="add_newItem mt2">
+					<Link className="d-flex aic g1" to="/teacher/newtask">
+					<AddIcon/><span>add new task</span>
+					</Link>
+
+					
+				</div>
 				<div className="arr_wrap tasks_wrap d-flex flex-4 jcsb">
 					
 						{filteredData && filteredData.map((elem, i) => (
-							<div className="arr_item">
-								<div key={"task-"+i} className="arr_item-inner hover-shadow">{elem.task_name}</div>	
+							<div className="arr_item" key={"task-"+i}>
+								<Task_card item={elem.task_name}/>
 							</div>
 						))}
 					

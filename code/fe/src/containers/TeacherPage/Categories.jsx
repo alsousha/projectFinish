@@ -113,7 +113,7 @@ function Categories() {
 	const handleSelectAddChange = async e=>{
 		// console.log(e.target.value + " select");
 		setNewSbj(e.target.value)
-		console.log("sekl"+newSbj);
+		// console.log("sekl"+newSbj);
 	}
 	
 

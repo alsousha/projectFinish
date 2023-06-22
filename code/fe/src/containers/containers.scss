@@ -5,19 +5,7 @@
 	.tasks_wrap{
 		flex: 3;
 		margin: 2rem;
-		.arr_item{
-			min-height: 4rem;
-			padding: 2rem;
-			
-			.arr_item-inner{
-				border: 1px solid $main;
-				border-radius: 2rem;
-				min-height: 14rem;
-				padding: 1rem;
-				cursor: pointer;
-
-			}
-		}
+		
 	}
 	.sidebar_filter{
 		flex: 0.7;
@@ -45,6 +33,28 @@
 
 	}
 }
+.arr_item{
+	min-height: 4rem;
+	padding: 2rem;
+	
+	.arr_item-inner{
+		border: 1px solid $main;
+		border-radius: 2rem;
+		min-height: 14rem;
+		padding: 1rem;
+		cursor: pointer;
+
+	}
+	&.no-active{
+		opacity: 0.5;
+		cursor: auto;
+		pointer-events: none;
+		&:hover{
+			box-shadow: none;
+		}
+
+	}
+}
 .table_data{
 	svg{
 		width: 4rem;
@@ -59,4 +69,31 @@
 }
 .main{
 	flex: 1;
+}
+.add_tasks__wrap{
+	.select{
+		flex:1;
+	}
+	.add_tasks__inner{
+		padding: 2rem;
+		flex:3;
+		border: 1px solid $main-light;
+		height: 40rem;
+		border-radius: 1rem;
+		flex-wrap: wrap;
+		align-items: start;
+	}
+}
+.task_data{
+	.task_data-item{
+		margin-top: 2rem;
+		display: flex;
+		gap: 1rem;
+		.label{
+			display: block;
+			min-width: 10rem;
+			max-width: 12rem;
+			width: 100%;
+		}
+	}
 }

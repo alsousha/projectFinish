@@ -15,7 +15,7 @@ import { ReactComponent as CheckIcon } from '../../assets/img/check2.svg';
 import { ReactComponent as EditIcon } from '../../assets/img/edit2.svg';
 import Loading from '../../components/Loading.jsx';
 
-function Classfolder() {
+function Classfolders() {
 
 	const { id_class } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
@@ -51,14 +51,33 @@ function Classfolder() {
 
 	const handleDelete = (itemId) => {
 		if (window.confirm('Are you sure delete this folder?')) {
-			deleteItem(itemId)
-			if(dataArrayFormat&&dataArrayFormat[activeTab].length===1&&dataArrayFormat.length===activeTab+1){
-				//if the last tab and last category, when we delete it or change its sbj -> first tab will be active
-				setActiveTab(0)
-			}
+			isExistsTaskDone(itemId)
+			.then((data) => {
+				if(!data){
+					//not exists done tasks, we can delete folder
+					deleteItem(itemId)
+					if(dataArrayFormat&&dataArrayFormat[activeTab].length===1&&dataArrayFormat.length===activeTab+1){
+						//if the last tab and last category, when we delete it or change its sbj -> first tab will be active
+						setActiveTab(0)
+					}
+				}
+				const msg={
+					msgClass: !data ? "success" : "error",
+					message: !data ? "Delete successful" :"You can not delete this folder. There are completed tasks in it"
+				}	
+				setMessage(msg);
+				setTimeout(() => {
+					setMessage('');
+				}, 2000);
+				
+			})
+			.catch((error) => {
+				console.error('Error checking if tasks exists', error);
+			});
+			
     }
 	}
-		
+	
 	const handleSave = (itemId, id_sbj) => {
 		const fieldErrors = validateField(['item_name'], itemId, id_sbj);
 		
@@ -156,6 +175,9 @@ function Classfolder() {
 		setNewSbj(e.target.value)
 		// console.log("sekl"+newSbj);
 	}
+	const handleAddSection = () => {
+		setIsAddVisiable(!isAddVisiable)
+	}
 	//axios for DB
 	const addNewItem = async ()=>{
 		let sbjToSend=''
@@ -173,17 +195,12 @@ function Classfolder() {
 		axios
 		.post(`/teacher/tskfolder`, {tskFolder_name: newItemName, id_class: id_class, subject_name: sbjToSend})
 		.then((res) => {
-			// console.log(res.data);
-			// setDataArray((prev) =>
-			// 	[...prev, res.data]
-			// );	
 			
 			const msg={
 				msgClass: res.status===200 ? "success" : "error",
 				text: res.status===200 ? "New item added successfully!" : 'Error add item'
 			}
-			// console.log(msg);
-      setMessage(msg);
+			setMessage(msg);
 			 // Clear the message after 2 seconds 
 			setTimeout(() => {
 				setMessage('');
@@ -218,28 +235,34 @@ function Classfolder() {
     });
   };
 
-	const deleteItem = async (itemId) => {
+	const isExistsTaskDone = (id_tskfolder) => {
+		return new Promise((resolve, reject) => {
+			axios
+				.get(`/teacher/isexiststasksdone/${id_tskfolder}`)
+				.then((res) => {
+					if (res.status === 200) {
+						resolve(true); // Done tasks exist
+					} else {
+						resolve(false); // Done tasks do not exist
+					}
+				})
+				.catch((error) => {
+					console.error('Error checking if tasks exist', error);
+					reject(error);
+				});
+		});
+	};
 	
+	const deleteItem = async (itemId) => {
 		axios
     .delete(`/teacher/tskfolder/${itemId}`)
     .then((res) => {
-			const msg={
-				msgClass: res.status===200 ? "success" : "error",
-				message: res.data
-			}			
-      setMessage(msg);
-			// setCurrentClass({})
-			 // Clear the message after 2 seconds 
-			setTimeout(() => {
-				setMessage('');
-			}, 2000);
 			fetchData();
     })
     .catch((error) => {
       console.error('Error updating class name', error);
     });
   };
-
 	//separate folders by id_subject
 	function separateArrayBySubject(data) {
 		return data&&data.reduce((result, item) => {
@@ -251,11 +274,6 @@ function Classfolder() {
 			return result;
 		}, {});
 	}
-	
-	// function isDublicateItemName(itemForCheck, arr, itemId, id_sbj){
-	// 	return arr.some((obj) => obj.category_name === itemForCheck && obj.id_category !==itemId && obj.id_subject === id_sbj);
-
-	// }
 
 	//fetch tsks folders of teacher
 	const fetchData = async () => {
@@ -320,7 +338,9 @@ function Classfolder() {
 	if (!hasAccess) {
     return <div>Error: You do not have access to this class.</div>;
   }
-	// console.log(dataArray);
+	// console.log(dataArrayFormat[activeTab][0].subject_name);
+	// console.log(dataArrayFormat[0][0].subject_name);
+	// console.log();
 	
   return (
 	<div className='mt4 section_accounts'>
@@ -331,8 +351,9 @@ function Classfolder() {
 			</div>
 			<div className="mt2">
 				{errors.item_name && <span className='input_error mp2'>{errors.item_name}</span>}
-
-				{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
+				<div className="msg_block">
+					{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
+				</div>
 			</div>
 			<div className="">
 				<ul className="tab-list">
@@ -346,15 +367,56 @@ function Classfolder() {
 						</li>
 					))}
 				</ul>
+				{isAddVisiable && (
+					<div className="cat_item d-flex jcsb aic mb2">
+						<div className="d-flex g1">
+							<input
+								type="text"
+								name="add_item"
+								value={newItemName}
+								ref={inputRef}
+								onChange={handleInputAddChange}
+							/>
+							{currentUser.sbjs.length>1 && (
+								<select 
+									id="sbjs" 
+									name="sbj_cat" 
+									onChange={handleSelectAddChange} 
+									defaultValue={dataArrayFormat&&dataArrayFormat.length!==0 ? 
+										dataArrayFormat[activeTab][0].subject_name : ""}>
+									{currentUser.sbjs && currentUser.sbjs.map((elem, i)=>(
+										<option key={`sbj-${i}`} value={elem}>
+											{elem}
+										</option>
+									))}
+								</select>
+								)}
+							{errors.add_item && <span className='input_error'>{errors.add_item}</span>}
+
+						</div>
+
+						<button onClick={() => handleAddNewItem()} className=''>
+							<CheckIcon/>
+						</button>
+					</div>
+				)}
+				<div className="add_newItem mt2">
+					<button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new folder</button></div>
+										
 				<div className="table__wrap flex-4 mt4 d-flex jcsb">
 					{dataArrayFormat && dataArrayFormat[activeTab] && dataArrayFormat.length!==0 ? 
 						dataArrayFormat[activeTab].map((item, i) => (
 							<div key={"tabContent-"+i} >
-								<div key={item.id_tskFolder} className="table_item mb2">
-									<div  className="folder big d-flex f-column">
-										<FolderIcon/>
+								<div key={item.id_tskFolder} className="folder__wrap mb2">
+									<div className="folder big d-flex f-column">
+									<Link 
+										to={`/teacher/singlefolder/${item.id_tskFolder}?
+										folder_name=${encodeURIComponent(item.tskFolder_name)}&
+										sbj=${encodeURIComponent(dataArrayFormat.length>1?dataArrayFormat[activeTab][0].subject_name:dataArrayFormat[0][0].subject_name)}`}>
+										<FolderIcon />
+									</Link>
 										{editingItemId === item.id_tskFolder ? (
-											<div className="">
+											<div className="folder__edit">
 												<input
 													type="text"
 													name="item_name"
@@ -402,41 +464,7 @@ function Classfolder() {
 							)
 					}
 				</div>
-				{isAddVisiable && (
-					<div className="cat_item d-flex jcsb aic mb2">
-						<div className="d-flex g1">
-							<input
-								type="text"
-								name="add_item"
-								value={newItemName}
-								ref={inputRef}
-								onChange={handleInputAddChange}
-							/>
-							{currentUser.sbjs.length>1 && (
-								<select 
-									id="sbjs" 
-									name="sbj_cat" 
-									onChange={handleSelectAddChange} 
-									defaultValue={dataArrayFormat&&dataArrayFormat.length!==0 ? 
-										dataArrayFormat[activeTab][0].subject_name : ""}>
-									{currentUser.sbjs && currentUser.sbjs.map((elem, i)=>(
-										<option key={`sbj-${i}`} value={elem}>
-											{elem}
-										</option>
-									))}
-								</select>
-								)}
-							{errors.add_item && <span className='input_error'>{errors.add_item}</span>}
-
-						</div>
-
-						<button onClick={() => handleAddNewItem()} className=''>
-							<CheckIcon/>
-						</button>
-					</div>
-				)}
-				<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddVisiable(true)}><AddIcon/>add new folder</button></div>
-
+				
 			</div>
 		</div>
 	  
@@ -446,4 +474,4 @@ function Classfolder() {
 }
 
 
-export default Classfolder
+export default Classfolders

@@ -6,16 +6,17 @@ import Classes from './Classes'
 import Categories from './Categories'
 import Accounts from './Accounts'
 import Tasks from '../Tasks/'
+import NewTask from '../Tasks/NewTask'
 import Task from '../Tasks/Task';
 import WriteTask from '../Tasks/WriteTask';
 import Students from './Students'
 import Profile from '../../pages/Profile';
-import Classfolder from './Classfolder';
+import Classfolders from './Classfolders';
 
 import '../containers.scss'
+import SingleClassFolder from './SingleClassFolder';
 
 function TeacherPage() {
-	// const [classes, setClasses] = useState();
 
 	const linksData = [
 		{"id": 0, "link": "classes", "linkName": "My classes"},
@@ -35,11 +36,13 @@ function TeacherPage() {
 				<Routes>
 					<Route path='classes' element={<Classes/>} />
 					<Route path='accounts/:id_class' element={<Accounts/>} />
-					<Route path='classfolder/:id_class' element={<Classfolder/>} />
+					<Route path='classfolder/:id_class' element={<Classfolders/>} />
+					<Route path='singlefolder/:id_tskFolder' element={<SingleClassFolder/>} />
 					<Route path='/categories' element={<Categories />} />
 					<Route path='/write' element={<WriteTask />} />
 					<Route path='/tasks' element={<Tasks />} />
 					<Route path='/task/:id' element={<Task />} />
+					<Route path='/newtask' element={<NewTask />} />
 					<Route path='/students' element={<Students />} />
 					<Route path='/profile' element={<Profile />} />
 					<Route path='/' element={<span>logout</span>} />

@@ -163,6 +163,52 @@ export const getCategoriesByTeacher = (req, res) => {
     return res.status(200).json(categories);
   });
 };
+export const getCategoriesBySubject = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  const { id_folder } = req.body;
+  // console.log(id_folder);
+
+  const q = `
+		SELECT c.id_category, c.category_name, c.id_subject
+		FROM category c
+		JOIN taskfolder tf ON c.id_subject = tf.id_subject
+		WHERE tf.id_tskFolder = ?;
+	`;
+
+  db.query(q, [id_folder], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the user exists
+    if (data.length === 0) {
+      return res.status(404).json('Categories not found');
+    }
+    console.log(data);
+    res.status(200).json(data);
+  });
+};
+export const getCategoriesBySpecSubject = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  const { id } = req.params;
+  // console.log(id_folder);
+
+  const q = `
+		SELECT id_category, category_name
+		FROM category 
+		WHERE id_subject = ?;
+	`;
+
+  db.query(q, [id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the user exists
+    if (data.length === 0) {
+      return res.status(404).json('Categories not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+
 export const updateCategory = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
@@ -429,6 +475,35 @@ export const deleteTskFolder = (req, res) => {
     console.error('Error deleting category:', err);
   }
 };
+export const isExistsTasksDone = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    const id_tskfolder = req.params.id;
+    console.log(id_tskfolder);
+    const q = `
+		SELECT EXISTS (
+			SELECT 1
+			FROM task t
+			JOIN task_tasksfolder tt ON t.id_task = tt.id_task
+			WHERE tt.id_tskFolder = ? AND t.is_done = true
+		) AS is_exists;
+	`;
+    // const q = 'UPDATE taskfolder SET tskFolder_name = ? WHERE id_tskFolder = ?';
+    db.query(q, id_tskfolder, (error, data) => {
+      if (error) {
+        console.error('Failed to fetch data', error);
+        res.status(500).json({ error: 'Error to fetch data' });
+      } else {
+        if (data[0].is_exists) res.status(200).json({ message: 'There are tasks done' });
+        else res.status(204).json({ message: 'There are not tasks done!' });
+        // console.log(data[0].is_exists);
+      }
+    });
+  } catch (error) {
+    console.error('Error updating table:', error);
+  }
+};
 
 export const addNewTskFolder = (req, res) => {
   const token = req.cookies.access_token;
@@ -436,9 +511,9 @@ export const addNewTskFolder = (req, res) => {
 
   try {
     const { tskFolder_name, id_class, subject_name } = req.body;
-    console.log(tskFolder_name);
-    console.log(id_class);
-    console.log(subject_name);
+    // console.log(tskFolder_name);
+    // console.log(id_class);
+    // console.log(subject_name);
     // const q = 'INSERT INTO taskfolder (tskFolder_name, id_class) VALUES (?,?)';
 
     const q = `
@@ -496,6 +571,43 @@ export const getSubjectsByTeacher = (req, res) => {
     // Check if the data exists
     if (data.length === 0) {
       return res.status(404).json('subjects not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+export const getFolderByTeacher = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { id_teacher, id_folder } = req.body;
+  const q = `SELECT f.id_tskFolder
+						 FROM taskfolder f
+						 JOIN class c ON f.id_class = c.id_class
+  					 WHERE c.id_teacher = ? AND f.id_tskFolder = ?`;
+  db.query(q, [id_teacher, id_folder], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the data exists
+    if (data.length === 0) {
+      return res.status(404).json('tasks not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+export const getTasksByFolder = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  const { id_folder } = req.body;
+  const q = `SELECT tf.id_tskFolder, tf.id_task, t.task_name 
+           FROM task_tasksfolder tf
+           JOIN task t ON tf.id_task = t.id_task
+           WHERE tf.id_tskFolder = ?`;
+  db.query(q, [id_folder], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the data exists
+    if (data.length === 0) {
+      return res.status(201).json('tasks not found');
     }
     // console.log(data);
     res.status(200).json(data);

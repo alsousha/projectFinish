@@ -18,6 +18,11 @@ import {
   addNewTskFolder,
   getAllTemplates,
   getSubjectsByTeacher,
+  getFolderByTeacher,
+  getTasksByFolder,
+  getCategoriesBySubject,
+  isExistsTasksDone,
+  getCategoriesBySpecSubject,
 } from '../controllers/teacher.js';
 
 const router = express.Router();
@@ -30,6 +35,8 @@ router.delete('/cats/:id', deleteCategory);
 router.post('/cats/:id/', addNewCategory);
 router.put('/cat/:id', updateCategory);
 router.get('/:id/cats', getCategoriesByTeacher);
+router.post('/catssubject', getCategoriesBySubject);
+router.get('/catsbysubject/:id', getCategoriesBySpecSubject);
 
 router.post('/:id/students', getStudentsByTeacher);
 router.post('/:id/students_all', getAllStudentsByTeacher);
@@ -40,6 +47,10 @@ router.post('/taskfolders', getTasksFoldersByIdClass);
 router.put('/tskfolder/:id', updateTskFolder);
 router.delete('/tskfolder/:id', deleteTskFolder);
 router.post('/tskfolder', addNewTskFolder);
+router.post('/folder', getFolderByTeacher);
+router.get('/isexiststasksdone/:id', isExistsTasksDone);
+router.post('/tasksbyfolder', getTasksByFolder);
+
 // router.get('classes/:id')
 // router.put('/:id', updateTeacherSubject);
 

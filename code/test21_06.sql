@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2023 at 10:03 PM
+-- Generation Time: Jun 21, 2023 at 08:57 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,17 +39,16 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`) VALUES
-(82, 'Strings', '2023-06-12 01:39:22', 4),
-(85, 'Loops', '2023-06-12 01:40:14', 4),
-(91, 'Functions', '2023-06-12 01:48:16', 5),
-(94, 'variables', '2023-06-12 02:04:33', 5),
-(105, 'math1', '2023-06-12 15:22:26', 1),
-(106, 'math2', '2023-06-12 15:22:36', 1),
-(110, 'Present Simple', '2023-06-12 15:33:26', 2),
-(112, 'Past Simple', '2023-06-12 15:38:41', 2),
-(114, 'Future', '2023-06-12 21:04:52', 2),
-(115, 'Israel', '2023-06-12 21:05:03', 3),
-(116, 'Europe', '2023-06-13 13:04:23', 3);
+(82, 'xxxe', '2023-06-12 01:39:22', 4),
+(85, 'edwds', '2023-06-12 01:40:14', 4),
+(91, 'wer', '2023-06-12 01:48:16', 4),
+(94, 'sdfe', '2023-06-12 02:04:33', 4),
+(105, 'ff', '2023-06-12 15:22:26', 1),
+(106, 'te', '2023-06-12 15:22:36', 1),
+(117, 'category1', '2023-06-14 10:04:22', 2),
+(118, 'category2', '2023-06-14 10:04:30', 2),
+(119, 'category3', '2023-06-14 10:04:41', 2),
+(120, 'category4', '2023-06-14 10:04:47', 3);
 
 -- --------------------------------------------------------
 
@@ -84,12 +83,12 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
-(19, 'a1', 0, 120),
-(20, 'a2', 0, 120),
-(22, 'a2', 0, 121),
-(23, 'a4', 0, 121),
-(24, 'a5', 0, 122),
-(25, 'a6', 0, 122);
+(1, '1a', 1, 109),
+(2, '1b', 1, 109),
+(16, '3a', 0, 109),
+(17, '1a', 0, 108),
+(18, '2a', 0, 108),
+(19, '3s', 0, 108);
 
 -- --------------------------------------------------------
 
@@ -108,29 +107,14 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
-(123, 0, 0),
-(124, 0, 0),
-(125, 2, 0),
-(126, 2, 0),
-(127, 3, 0),
-(128, 3, 0),
-(129, 0, 0),
-(130, 2, 0),
-(131, 3, 0),
-(132, 4, 0),
-(133, 4, 0),
-(134, 4, 0),
-(135, 5, 0),
-(136, 5, 0),
-(137, 5, 0),
-(138, 6, 0),
-(139, 6, 0),
-(140, 6, 0),
-(141, 6, 0),
-(142, 0, 0),
-(143, 0, 0),
-(144, 2, 0),
-(145, 1, 0);
+(111, 2, 0),
+(111, 2, 0),
+(113, 4, 0),
+(114, 3, 0),
+(115, 0, 0),
+(116, 5, 0),
+(117, 3, 0),
+(118, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -160,28 +144,12 @@ CREATE TABLE `student_class` (
 --
 
 INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
-(123, 19),
-(124, 19),
-(125, 20),
-(126, 20),
-(127, 22),
-(128, 22),
-(129, 19),
-(130, 20),
-(131, 22),
-(132, 23),
-(133, 23),
-(134, 23),
-(135, 24),
-(136, 24),
-(137, 24),
-(138, 25),
-(139, 25),
-(140, 25),
-(141, 25),
-(142, 19),
-(143, 19),
-(144, 20);
+(113, 1),
+(116, 1),
+(117, 2),
+(118, 1),
+(118, 2),
+(118, 17);
 
 -- --------------------------------------------------------
 
@@ -234,7 +202,6 @@ CREATE TABLE `task` (
   `task_inner` longtext NOT NULL,
   `task_weight` int(2) NOT NULL,
   `task_level` int(2) UNSIGNED NOT NULL,
-  `is_done` tinyint(1) NOT NULL DEFAULT 0,
   `id_teacher` int(3) NOT NULL,
   `id_category` int(3) NOT NULL,
   `id_template` int(11) NOT NULL
@@ -244,16 +211,15 @@ CREATE TABLE `task` (
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`id_task`, `task_name`, `task_create_date`, `task_inner`, `task_weight`, `task_level`, `is_done`, `id_teacher`, `id_category`, `id_template`) VALUES
-(9, 'task1_templ1', '2023-06-14 16:57:33', '', 2, 3, 0, 120, 105, 1),
-(10, 'task4_templ2', '2023-06-14 17:00:34', '', 2, 4, 0, 120, 105, 1),
-(11, 'task2_templ1', '2023-06-14 18:58:46', '', 6, 3, 1, 121, 110, 1),
-(12, 'task3_templ2', '2023-06-14 19:01:08', '', 2, 4, 0, 121, 110, 2),
-(13, 'task3_templ1', '2023-06-14 19:01:08', '', 6, 3, 0, 121, 114, 1),
-(14, 'task2_templ1', '2023-06-14 19:03:07', '', 2, 4, 0, 122, 85, 1),
-(15, 'task8_templ1', '2023-06-14 19:03:07', '', 6, 4, 0, 122, 82, 1),
-(16, 'task9_templ1', '2023-06-14 19:04:44', '', 6, 4, 0, 122, 91, 1),
-(17, 'task10_templ2', '2023-06-14 19:04:44', '', 5, 4, 0, 122, 94, 2);
+INSERT INTO `task` (`id_task`, `task_name`, `task_create_date`, `task_inner`, `task_weight`, `task_level`, `id_teacher`, `id_category`, `id_template`) VALUES
+(9, 'task1_templ1', '2023-06-14 10:06:58', '', 2, 3, 108, 117, 1),
+(10, 'task4_templ2', '2023-06-14 10:06:58', '', 2, 4, 108, 118, 2),
+(11, 'task2_templ1', '2023-06-14 10:08:02', '', 6, 3, 108, 117, 1),
+(12, 'task3_templ2', '2023-06-14 10:08:02', '', 2, 4, 108, 118, 2),
+(13, 'task3_templ1', '2023-06-14 10:08:02', '', 6, 3, 108, 118, 1),
+(14, 'task2_templ2', '2023-06-14 10:08:02', '', 2, 4, 108, 118, 2),
+(15, 'task8_templ1', '2023-06-14 10:09:27', '', 6, 4, 108, 119, 1),
+(16, 'task9_templ2', '2023-06-14 10:09:48', '', 6, 4, 108, 119, 1);
 
 -- --------------------------------------------------------
 
@@ -264,7 +230,6 @@ INSERT INTO `task` (`id_task`, `task_name`, `task_create_date`, `task_inner`, `t
 CREATE TABLE `taskfolder` (
   `id_tskFolder` int(3) NOT NULL,
   `tskFolder_name` varchar(15) NOT NULL,
-  `is_publish` tinyint(1) NOT NULL DEFAULT 0,
   `id_class` int(3) NOT NULL,
   `id_subject` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -273,12 +238,15 @@ CREATE TABLE `taskfolder` (
 -- Dumping data for table `taskfolder`
 --
 
-INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_class`, `id_subject`) VALUES
-(18, 'mathclass1', 0, 19, 1),
-(19, 'historyclass1', 0, 20, 3),
-(38, 'tasks for 26.06', 0, 22, 2),
-(39, 'tasks for 30.06', 1, 22, 2),
-(49, 'tasks', 1, 22, 2);
+INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `id_class`, `id_subject`) VALUES
+(13, 'folder12', 2, 4),
+(14, 'folder422', 2, 4),
+(18, 'folder1di', 17, 2),
+(19, 'aaa', 17, 3),
+(20, 'qwe', 2, 3),
+(30, 'gfh', 17, 2),
+(33, 'ert', 18, 3),
+(34, 'folder2', 17, 2);
 
 -- --------------------------------------------------------
 
@@ -296,17 +264,8 @@ CREATE TABLE `task_tasksfolder` (
 --
 
 INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
-(9, 18),
 (10, 18),
-(11, 38),
-(11, 39),
-(11, 49),
-(12, 38),
-(12, 49),
-(13, 38),
-(13, 50),
-(13, 51),
-(13, 52);
+(12, 18);
 
 -- --------------------------------------------------------
 
@@ -344,9 +303,12 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
-(120, 0),
-(121, 0),
-(122, 0);
+(108, 0),
+(109, 0),
+(112, 0),
+(108, 0),
+(109, 0),
+(112, 0);
 
 -- --------------------------------------------------------
 
@@ -364,11 +326,16 @@ CREATE TABLE `teacher_sbjs` (
 --
 
 INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
-(120, 1),
-(120, 3),
-(121, 2),
-(122, 4),
-(122, 5);
+(108, 2),
+(108, 3),
+(109, 4),
+(109, 5),
+(109, 6),
+(109, 7),
+(109, 8),
+(112, 3),
+(112, 4),
+(112, 6);
 
 -- --------------------------------------------------------
 
@@ -411,32 +378,16 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, `img_url`) VALUES
-(120, 'teacher', 'alexagronov@gmail.com', '$2b$10$MskEw0m3eErbaEkLnXHW1umFevqVn9qLXxuwU7Lm7IRyOPBtUA/LO', 'Alex', 'Agronov', 'avatar-2.svg'),
-(121, 'teacher', 'alsu@gmail.com', '$2b$10$KotdRWbF0cpl2idkVeNwQOWVElVw7v6pw9lAarY8bJ7Lje6N9pEJ2', 'Alsu', 'Bogdanova', 'avatar-2.svg'),
-(122, 'teacher', 'anton@gmail.com', '$2b$10$owpGhUMeYj1S0CnTPo3p7eD1ZB0zrGbE8o3MW/1L8hN1CAcefJeSq', 'Anton', 'Antonov', 'avatar-2.svg'),
-(123, 'student', 'avi@gmail.com', '$2b$10$gtxQLRLPEhmnIrozt5BjqOua8cn0Lw/KLRmbCSPQdA.fVS4UiILcC', 'Avi', 'Avinov', 'avatar-2.svg'),
-(124, 'student', 'avraham@gmail.com', '$2b$10$VmtrDvJix3IJyxdhxpHLPOZb.GCT8.4dfQTOS3T5Az/ymswQyMaWq', 'Avraham', 'Avramov', 'avatar-2.svg'),
-(125, 'student', 'bety@gmail.com', '$2b$10$vVavTanmI21giNjLCL.qS.hlhG0py212ABfXGbWL02WAu5lR1M2om', 'Bety', 'Betynov', 'avatar-2.svg'),
-(126, 'student', 'carl@gmail.com', '$2b$10$rEpHdJ56XckshaFWvIS.EuDxOepIT3uUR6MLByo0gMxuPc/iokwrS', 'Carl', 'Carlov', 'avatar-2.svg'),
-(127, 'student', 'david@gmail.com', '$2b$10$sS93eM9r/3H3Ro5F53eeSeDU.bV4lvHKGoMeKUtGqaqDEr.jN7PGG', 'David', 'Davidov', 'avatar-2.svg'),
-(128, 'student', 'hely@gmail.com', '$2b$10$72zvBwGxZDV0iiR3iMSyoOYewCo9ijkEpzMjAMD1Oi1xjapHoH70S', 'Hely', 'Helynov', 'avatar-2.svg'),
-(129, 'student', 'reuven@gmail.com', '$2b$10$.6OEUwLpgQsmuRERJcPO3epEJvwEdqsFK3.KpVz.6KF0hIkflcyqO', 'Reuven', 'Reuvenov', 'avatar-2.svg'),
-(130, 'student', 'valery@gmail.com', '$2b$10$xkT4c.J.xNMJMLrB3dL2LeNWvicu5QbAawRnSDKn/foq5wFxOMyMK', 'Valery', 'valerynov', 'avatar-2.svg'),
-(131, 'student', 'tania@gmail.com', '$2b$10$4EE.wsZmXBN67kpxo/jXZufFgqIVDdWKopJXLgugcuYuQ86S./UPO', 'Tania', 'Tanianov', 'avatar-2.svg'),
-(132, 'student', 'shem@gmail.com', '$2b$10$am3NkloaaxoW1yA4WIwrQe5di22RPGAzlxZuRgxtN.TUtg2aytsuC', 'Shem', 'Shemov', 'avatar-2.svg'),
-(133, 'student', 'gil@gmail.com', '$2b$10$2rW2wPMZzjgu2TNB9ZXH4ualAtCNYjrhL6nHcl4vIkGENx6DphOde', 'Gil', 'gilov', 'avatar-2.svg'),
-(134, 'student', 'artyom@gmail.com', '$2b$10$aq7dEoZXDP.uh.1VoVRAbetpb79hhZuYoxWPmmD82quMZdcrGfG3O', 'Artyom', 'Artyomov', 'avatar-2.svg'),
-(135, 'student', 'diana@gmail.com', '$2b$10$Ku.nwWg/3K8PyhNShUHxh.xvzKFlKXil/wkognOXuuhVO6RwJcFmG', 'Diana', 'Dianov', 'avatar-2.svg'),
-(136, 'student', 'alon@gmail.com', '$2b$10$owq6OI5q9eYXp8xyBXA/LexriLPRs7ujhmjfuMb9iZqF51a2nYrLu', 'Alon', 'Alonov', 'avatar-2.svg'),
-(137, 'student', 'shimi@gmail.com', '$2b$10$mAxZA2tP9fluQdV4T3/hxOrVOLOzmSqndZ5VIKqtyQVGFeFweDPEy', 'shimi', 'shimov', 'avatar-2.svg'),
-(138, 'student', 'revital@gmail.com', '$2b$10$ihfO5xNVWrifT2TEDAONnenk12342saiDdYoGHOpFwArU/bLKYmQS', 'Revital', 'Revitalov', 'avatar-2.svg'),
-(139, 'student', 'sky@gmail.com', '$2b$10$RtFwr0iG8bY7vMSHlipaAuXUfarZqqmtUdTdtJ4zSSTG2O7zbPlbG', 'Sky', 'Skyov', 'avatar-2.svg'),
-(140, 'student', 'ira@gmail.com', '$2b$10$kg9n6i1TVphnl.AFMjZkp.Cqe94u6qRDGpQmi/nhJaYBmJojLBQn6', 'Ira', 'Iranov', 'avatar-2.svg'),
-(141, 'student', 'tolik@gmail.com', '$2b$10$9L7MN41jmQYPZ/wulrUUjumI7ZTPTFg6gMnOwOfW.RPvp.9bp6QO.', 'Tolik', 'Tolikov', 'avatar-2.svg'),
-(142, 'student', 'rina@gmail.com', '$2b$10$HQNIjZTfAPbf44yp0H/OkePwoytrkT.U2zbL4SDKOHb70zJi.Joz6', 'Rina', 'Rinov', 'avatar-2.svg'),
-(143, 'student', 'ola@gmail.com', '$2b$10$RdX1mEXfVIBQqI.b3j3P0uu1vifRul3/5hUfuGmSTUW6mPKYPEuUu', 'ola', 'olanov', 'avatar-2.svg'),
-(144, 'student', 'keren@gmail.com', '$2b$10$wHz0CYWRRG33V2mC9nMgz.BTRWC7WAkp7Dy2Tz9TgjKmu9w6vx8vK', 'Keren', 'Kerenov', 'avatar-2.svg'),
-(145, 'student', 'ivan@gmail.com', '$2b$10$qgEGALMrH.DhnUfC72A4ceSYsR4JMpRoGdTg4O76UvS7ShVqGqt1S', 'Ivan', 'Ivanov', 'avatar-2.svg');
+(108, 'teacher', 'asd@asd.asd', '$2b$10$x2xiJBE0FguyC1aDEy4bNuRixrWaPt9fnJV.owzdGylZczxlKcnPe', 'Alla', 'Kats', 'avatar-2.svg'),
+(109, 'teacher', 'qwe@qwe.qwe', '$2b$10$zWNKl901/kNW5Wv.09.OoOFWe.87jZLaIpV2xsgN0zCZfL6jaP7UC', 'Daly', 'Fary', 'avatar-2.svg'),
+(111, 'student', 'qwe@qwe.we', '$2b$10$2yQz1kYdfj0umQnh/wnQUOlb9ONBiBbLEhprBLezAN1/O0jtdL01e', 'Da', 'Rony', 'avatar-2.svg'),
+(112, 'teacher', 'asd@asd.asddd', '$2b$10$i6bVZwFfn6MxAm32dDFRD.xxFK4J8YHtSFQl4fjcNwxZ.xMSh1VRa', 'Kate', 'Marf', 'avatar-2.svg'),
+(113, 'student', 'wer@wer.wer', '$2b$10$9F3wFgNKCbqBmoBPz9BFnuv.puJvlct3GUz.4pfh6x4oPt6BnLtcq', 'Angry', 'Kohan', 'avatar-2.svg'),
+(114, 'student', 'sdf2@sdf.sdf', '$2b$10$RfeXvDDyNbQxZzkvV056o.iOv5KER7fBGUSb.TqlR.sbCXsoSotzu', 'sdf', 'sdff', 'avatar-2.svg'),
+(115, 'student', 'xcv@xcv.xcv', '$2b$10$ioT5Ic7n/7WV26QRR2aXu.rhYlXTe7.95uDr.2UzJxnVdFKi/fERW', 'xcv', 'xcvv', 'avatar-2.svg'),
+(116, 'student', 'ert@ert.ert', '$2b$10$41heVKLzyMihvoP/vi0jJulWu3j7NHTdxWSyWwMyOtd/.WL32IiK6', 'ert', 'ertt', 'avatar-2.svg'),
+(117, 'student', 'dfg@dfg.dfg', '$2b$10$fc5mKybedcG4RTDDAf27GOY4ZdfPW1bDosIdVe6ujyjTOQcDH5AqK', 'dfg', 'dfgg', 'avatar-2.svg'),
+(118, 'student', 'cvb@cvb.cvb', '$2b$10$VpWZbm7PLZJF2mcAqG9NPejlZTv.P.ZeSc/CEzEhXw37rmykLNLAW', 'cvb', 'cvbb', 'avatar-2.svg');
 
 --
 -- Indexes for dumped tables
@@ -515,7 +466,8 @@ ALTER TABLE `taskfolder`
 -- Indexes for table `task_tasksfolder`
 --
 ALTER TABLE `task_tasksfolder`
-  ADD PRIMARY KEY (`id_task`,`id_tskFolder`);
+  ADD PRIMARY KEY (`id_task`,`id_tskFolder`),
+  ADD KEY `id_tskFolder` (`id_tskFolder`);
 
 --
 -- Indexes for table `task_template`
@@ -557,7 +509,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT for table `certification`
@@ -569,7 +521,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -581,13 +533,13 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `task_template`
@@ -605,7 +557,7 @@ ALTER TABLE `template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- Constraints for dumped tables
@@ -657,6 +609,13 @@ ALTER TABLE `task`
 ALTER TABLE `taskfolder`
   ADD CONSTRAINT `taskfolder_ibfk_1` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `taskfolder_ibfk_2` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `task_tasksfolder`
+--
+ALTER TABLE `task_tasksfolder`
+  ADD CONSTRAINT `task_tasksfolder_ibfk_1` FOREIGN KEY (`id_task`) REFERENCES `task` (`id_task`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `task_tasksfolder_ibfk_2` FOREIGN KEY (`id_tskFolder`) REFERENCES `taskfolder` (`id_tskFolder`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `teacher`

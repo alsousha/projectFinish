@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/authContext.js';
 
 import axios from 'axios';
-import { Link} from 'react-router-dom';
-import SidebarFilter from './SidebarFilterTeacher.jsx';
 import '../containers.scss'
 
 function SidebarFilterTeacher({ updateFilteredData}) {
@@ -71,7 +69,7 @@ function SidebarFilterTeacher({ updateFilteredData}) {
       const response = await axios.get(`/teacher/sbjs/${currentUser.id_user}`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching categories', error);
+      console.error('Error fetching subjects', error);
       throw error;
     }
   };
@@ -89,7 +87,7 @@ function SidebarFilterTeacher({ updateFilteredData}) {
       const response = await axios.get(`/teacher/templates`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching categories', error);
+      console.error('Error fetching templates', error);
       throw error;
     }
   };
