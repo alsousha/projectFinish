@@ -129,6 +129,73 @@ export const publishFolder = (req, res) => {
         res.status(200).json({ message: 'Publish the folder successfully!' });
       }
     });
+
+    // db.query(q, [id_tskFolder], (err, result) => {
+    //   if (err) {
+    //     console.error('Failed to publish the folder', err);
+    //     res.status(500).json({ error: 'Error publish the folder' });
+    //   } else {
+    //     let students;
+    //     let tasks;
+    //     // const idTask = result.insertId;
+    //     //get all students by id_tskFolder
+    //     const q2 = `
+    // 			SELECT id_user
+    // 			FROM student_class sc
+    // 			JOIN taskfolder t ON sc.id_class = t.id_class
+    // 			WHERE t.id_tskFolder = ?
+    // 		`;
+
+    //     db.query(q2, [id_tskFolder], (err, result) => {
+    //       if (err) {
+    //         console.error('Failed to retrieve student IDs.', err);
+    //         res.status(500).json({ error: 'Error retrieving student IDs' });
+    //       } else {
+    //         console.log(result);
+    //         students = result;
+    //         //get all tasks from id_tskFolder
+    //         const q3 = `
+    // 					SELECT id_task
+    // 					FROM task_tasksfolder
+    // 					WHERE id_tskFolder = ?
+    // 				`;
+    //         db.query(q3, [id_tskFolder], (err, result) => {
+    //           if (err) {
+    //             console.error('Failed to retrieve student IDs.', err);
+    //             res.status(500).json({ error: 'Error retrieving student IDs' });
+    //           } else {
+    //             console.log(result);
+    //             tasks = result;
+    //             const insertQueries = [];
+    //             students.forEach((studentId) => {
+    //               tasks.forEach((taskId) => {
+    //                 const insertQuery = `
+    // 									INSERT INTO student_task (id_user, id_task) VALUES (?, ?)
+    // 								`;
+    //                 insertQueries.push({
+    //                   query: insertQuery,
+    //                   params: [studentId, taskId],
+    //                 });
+    //               });
+    //             });
+    //             insertQueries.forEach((queryObj) => {
+    //               const { query, params } = queryObj;
+    //               db.query(query, params, (err, result) => {
+    //                 if (err) {
+    //                   console.error('Failed to insert student_task data.', err);
+    //                 } else {
+    //                   console.log('Inserted student_task data successfully.');
+    //                 }
+    //               });
+    //             });
+    //             // res.status(200).json({ message: 'Publish the folder successfully!' });
+    //           }
+    //         });
+    //         // res.status(200).json({ message: 'Publish the folder successfully!' });
+    //       }
+    //     });
+    //   }
+    // });
   } catch (error) {
     console.error('Failed to publish the folder', error);
   }
@@ -165,11 +232,33 @@ export const createTask = (req, res) => {
           console.error('Failed to create the task.', err);
           res.status(500).json({ error: 'Error create the task' });
         } else {
+          // console.log(result);
           res.status(200).json({ message: 'Create the task successfully!' });
         }
       },
     );
   } catch (error) {
     console.error('Failed to create the task', error);
+  }
+};
+export const deleteTask = (req, res) => {
+  // console.log('ddd');
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  // Delete the task
+  try {
+    const { id } = req.params;
+    const q = 'DELETE FROM task WHERE id_task = ?';
+    // console.log(id);
+    db.query(q, id, (err) => {
+      if (err) {
+        console.error('Error deleting task:', err);
+        return res.status(500).json('Failed to delete the task.');
+      } else {
+        return res.status(200).json('Task deleted successfully!');
+      }
+    });
+  } catch (error) {
+    console.error('Error deleting task:', err);
   }
 };

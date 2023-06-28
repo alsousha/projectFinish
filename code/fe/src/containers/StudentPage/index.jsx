@@ -19,7 +19,7 @@ function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
 		{"id": 1, "link": "homework", "linkName": "My homework"},
 		{"id": 2, "link": "statistic", "linkName": "My statistic"},
 		{"id": 3, "link": "certifications", "linkName": "My certifications"},
-		{"id": 4, "link": "tasks", "linkName": "GlobalTasks"}
+		{"id": 4, "link": "globalTasks", "linkName": "GlobalTasks"}
 	]
 	
   return (

@@ -115,7 +115,9 @@ function Categories() {
 		setNewSbj(e.target.value)
 		// console.log("sekl"+newSbj);
 	}
-	
+	const handleAddSection = () => {
+		setIsAddVisiable(!isAddVisiable)
+	}
 
 	const validateField = (fieldNames, itemId, id_sbj) => {
     const errors = {};
@@ -405,7 +407,7 @@ function Categories() {
 			)}
 			
 		</div>
-		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddVisiable(true)}><AddIcon/>add new category</button></div>
+		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new category</button></div>
 
 		</div>
 	  

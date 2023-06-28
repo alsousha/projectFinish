@@ -41,6 +41,7 @@
 		border: 1px solid $main;
 		border-radius: 2rem;
 		min-height: 14rem;
+		width: 14rem;
 		padding: 1rem;
 		cursor: pointer;
 
@@ -48,7 +49,7 @@
 	&.no-active{
 		opacity: 0.5;
 		cursor: auto;
-		pointer-events: none;
+		pointer-events: auto;
 		&:hover{
 			box-shadow: none;
 		}
@@ -96,4 +97,9 @@
 			width: 100%;
 		}
 	}
+}
+.task_status svg{
+	width: 2rem;
+	height: 2rem;
+
 }

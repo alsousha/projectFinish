@@ -28,7 +28,7 @@ function Classes() {
 	//add new class
 	const [newClassname, setNewClassname] = useState('')
 	const[isAddClassVisiable, setIsAddClassVisiable] = useState(false)
-
+	const[isAddVisiable, setIsAddVisiable] = useState(false)
 
 	
 	
@@ -88,7 +88,9 @@ function Classes() {
 	const handleInputAddClassChange = (e) => {
     setNewClassname(e.target.value);
   };
-
+	const handleAddSection = () => {
+		setIsAddVisiable(!isAddVisiable)
+	}
 	const validateField = (fieldNames) => {
     const errors = {};
 		fieldNames.forEach(fieldName => {
@@ -262,11 +264,9 @@ function Classes() {
 					<div className="class_delete table_icon">
 						<button onClick={() => handleDelete(item.id_class)} ><DeleteIcon/></button>
 					</div>
-
-					
 				</div>
 			))}
-			{isAddClassVisiable && (
+			{isAddVisiable && (
 				<div className="class_item d-flex jcsb aic mb2">
 					<div className="item_title">
 						<input
@@ -286,7 +286,7 @@ function Classes() {
 			)}
 			
 		</div>
-		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddClassVisiable(true)}><AddIcon/>add new class</button></div>
+		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new class</button></div>
 
 		</div>
 	  

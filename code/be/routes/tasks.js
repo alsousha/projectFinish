@@ -7,6 +7,7 @@ import {
   getFolderStatus,
   publishFolder,
   createTask,
+  deleteTask,
 } from '../controllers/task.js';
 
 const router = express.Router();
@@ -16,6 +17,7 @@ router.get('/all/:id', getTasksByTeacher);
 router.get('/taskscategory/:id', getTasksByCategory);
 router.post('/tasktofolder/:id', addTaskToFolder);
 router.delete('/taskfromfolder/:id', deleteTaskFromFolder);
+router.delete('/task/:id', deleteTask);
 router.get('/folderstatus/:id', getFolderStatus);
 router.post('/publishfolder/', publishFolder);
 router.post('/createtask/', createTask);

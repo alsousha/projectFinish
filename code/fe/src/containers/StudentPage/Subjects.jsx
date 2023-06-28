@@ -7,6 +7,10 @@ import '../containers.scss'
 import { ReactComponent as FolderIcon } from '../../assets/img/folder.svg';
 import Task_card from '../Tasks/Task_card.jsx';
 
+import { ReactComponent as DoneIcon } from '../../assets/img/done.svg';
+import { ReactComponent as NotDoneIcon } from '../../assets/img/notdone.svg';
+
+
 
 
 function Subjects() {
@@ -90,7 +94,8 @@ function Subjects() {
 				</div>
 				<div className="d-flex g1 mt3">
 				{tasks&&tasks.map((item) => (
-					<div className="arr_item d-flex f-column jcc" key={"task_student"+item.id_task}>
+					<div className="arr_item d-flex f-column jcc task_status" key={"task_student"+item.id_task}>
+						{item.is_done===1 ? <DoneIcon/> : <NotDoneIcon/>}
 						<Task_card item={item.task_name}/>
 						{/* <button className=""  onClick={() => handleFolderClick(item.id_task)}>
 							{item.task_name}

@@ -110,8 +110,8 @@
 .center { text-align: center; }
 .right{ text-align: right;}
 .left{text-align: left;}
-.no-wrap{
-  flex-wrap: nowrap;
+.f-wrap{
+  flex-wrap: wrap;
 }
 .flex-4{
 	flex-wrap: wrap;
