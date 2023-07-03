@@ -13,11 +13,14 @@ import { ReactComponent as InfoIcon } from '../../assets/img/info.svg';
 import { ReactComponent as QuestionIcon } from '../../assets/img/question.svg';
 import { ReactComponent as EditIcon } from '../../assets/img/edit3.svg';
 import TaskSequence from './TaskSequence.jsx';
+import Loading from '../../components/Loading.jsx';
+
 
 const Task = () => {
 	const { id } = useParams(); //id task
 
 	const { currentUser} = useContext(AuthContext)
+	const [isLoading, setIsLoading] = useState(true);
 	const [hasAccess, setHasAccess] = useState(false);
 	
 	const [showMoreInfo, setShowMoreInfo] = useState(false);
@@ -35,17 +38,14 @@ const Task = () => {
 				// console.log(res);
         setHasAccess(res.data.some((item) => item.id_task === Number(id)));
       } catch (error) {
+      }finally {
+        setIsLoading(false);
       }
     };
     checkOwnership();
   }, [id, currentUser.id_user]);
 	
-	useEffect(() => {
-    
-  }, []);
-	if (!hasAccess) {
-    return <div>Error: You do not have access to this task.</div>;
-  }
+	
 	const handleToggleShowInfo = () => {
 		setShowMoreInfo(prev => !prev);  
 		setShowTaskText(false);  
@@ -57,7 +57,16 @@ const Task = () => {
 	function capitalizeFirstLetter(str) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
-
+	if (isLoading) {
+    return <Loading/>;
+  }
+	if (!hasAccess) {
+    return <div>Error: You do not have access to this task.</div>;
+  }
+	const textResult = {
+		'success': `Well done! You answered correctly. Congrats you got ${task.task_weight} points`,
+		'fail': 'Your answer is not entirely correct. Try again!'
+	}
 
 
 	return (
@@ -117,9 +126,9 @@ const Task = () => {
 					</div>
 					<div className="task_todo mt3">
 						{task&&task.template_name==="Sequance"&&(
-							<TaskSequence task={task}/>
+							<TaskSequence task={task} textResult={textResult}/>
 						)}
-						<button className='btn_accent'>Check</button>
+						
 					</div>
 				</div>
 			</div>

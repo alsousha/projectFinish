@@ -50,10 +50,11 @@
 
 .btn_transp_main{
 font-size: 2rem;
-color: #1797cc;
-//border: 1px solid $accent;
-position: relative;
-display: block;
+color: $main;
+border: 1px solid $accent;
+border-radius: 1rem;
+// position: relative;
+// display: block;
 padding: 1rem 2rem;
 font-weight: 700;
 font-family: 'Nunito', sans-serif;

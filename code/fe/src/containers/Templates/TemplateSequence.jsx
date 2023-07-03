@@ -72,6 +72,8 @@ function TemplateSequence({generalTaskData, handleMessage, setSelectedData, spec
 	const validateField = (dataObject) =>{
 		// console.log(generalTaskData.selectedFile.type);
 		const allValuesNotEmpty = Object.values(dataObject).every(value => value !== '');
+		// console.log(Object.values(dataObject).length);
+		// console.log(dataObject);
 		const allowedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
 		const msg = {
 			msgClass:'',
@@ -94,6 +96,10 @@ function TemplateSequence({generalTaskData, handleMessage, setSelectedData, spec
 			//check inputs
 			msg.msgClass='error';
 			msg.text='Elements of sequence cannot be empty'
+		}else if(Object.values(dataObject).length<2){
+			//contains less 2 items in sequance
+			msg.msgClass='error';
+			msg.text='Count of elements must be more one'
 		}
 		return msg;
 	}
@@ -123,7 +129,7 @@ function TemplateSequence({generalTaskData, handleMessage, setSelectedData, spec
 		formData.append('specificTaskData', JSON.stringify(specificTaskData));
 		formData.append('id_teacher', id_teacher);
 		formData.append('selectedFile', dataToSend.selectedFile); 
-// console.log(formData.get('selectedFile'));
+		// console.log(formData.get('selectedFile'));
 		// console.log(specificTaskData);
 		axios
 		.post(`/tasks/edittask/${idTask}`, formData, {

@@ -8,6 +8,7 @@
 		width: 50rem;
 		border-radius: 2rem;
 		border: 2px solid;
+		z-index: 9;
 		button{
 			line-height: 1.5;
 			min-width:6rem;
@@ -21,6 +22,7 @@
 		padding: 2rem;
 		width: 50rem;
 		border-radius: 2rem;
+		z-index: 9;
 		.more__info-item{
 			span:first-child{
 				font-weight: 300;
@@ -71,6 +73,32 @@
 .task_data-item{
 	.task__thumb img{
 		width: 10rem;
+	}
+}
+.task_content{
+	position: relative;
+	.success{
+		text-align: inherit;
+	}
+	.fail{
+		color: $error;
+	}
+	.popup__taskresult{
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+    left: 50%;
+    top: 50%;
+    width: 45rem;
+    height: 20rem;
+    border: 2px solid;
+    border-radius: 2rem;
+    background-color: white;
+    padding: 2rem;
+    text-align: center;
+    transform: translateX(-50%) translateY(-50%);
 	}
 }
 
