@@ -15,7 +15,7 @@ function Header() {
 			<span className="slogan">Funny App</span>
 		</a>
 		<span>{currentUser?.username}</span>
-		{currentUser ? <span onClick={logout}><Link className="link" to="/">Logoutt</Link></span> : <Link className="link" to="/">Login</Link>}
+		{/* {currentUser ? <span onClick={logout}><Link className="link" to="/">Logoutt</Link></span> : <Link className="link" to="/">Login</Link>} */}
 	</header>
   )
 }

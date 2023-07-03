@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Время создания: Июн 23 2023 г., 01:11
--- Версия сервера: 10.4.28-MariaDB
--- Версия PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Jul 03, 2023 at 04:17 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `test`
+-- Database: `test`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `category`
+-- Table structure for table `category`
 --
 
 CREATE TABLE `category` (
@@ -35,7 +35,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `category`
+-- Dumping data for table `category`
 --
 
 INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subject`) VALUES
@@ -54,7 +54,7 @@ INSERT INTO `category` (`id_category`, `category_name`, `date_create`, `id_subje
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `certification`
+-- Table structure for table `certification`
 --
 
 CREATE TABLE `certification` (
@@ -69,7 +69,7 @@ CREATE TABLE `certification` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `class`
+-- Table structure for table `class`
 --
 
 CREATE TABLE `class` (
@@ -80,22 +80,23 @@ CREATE TABLE `class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `class`
+-- Dumping data for table `class`
 --
 
 INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
 (19, 'a1', 0, 120),
 (20, 'a2', 0, 120),
-(22, 'a2', 0, 121),
+(22, 'a2w', 0, 121),
 (23, 'a4', 0, 121),
 (24, 'a5', 0, 122),
 (25, 'a6', 0, 122),
-(26, '1a', 0, 146);
+(26, '1a', 0, 146),
+(27, 'a1', 0, 121);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student`
+-- Table structure for table `student`
 --
 
 CREATE TABLE `student` (
@@ -105,7 +106,7 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `student`
+-- Dumping data for table `student`
 --
 
 INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
@@ -136,7 +137,7 @@ INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student_certification`
+-- Table structure for table `student_certification`
 --
 
 CREATE TABLE `student_certification` (
@@ -148,7 +149,7 @@ CREATE TABLE `student_certification` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student_class`
+-- Table structure for table `student_class`
 --
 
 CREATE TABLE `student_class` (
@@ -157,7 +158,7 @@ CREATE TABLE `student_class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `student_class`
+-- Dumping data for table `student_class`
 --
 
 INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
@@ -189,7 +190,7 @@ INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `student_task`
+-- Table structure for table `student_task`
 --
 
 CREATE TABLE `student_task` (
@@ -202,7 +203,7 @@ CREATE TABLE `student_task` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `subject`
+-- Table structure for table `subject`
 --
 
 CREATE TABLE `subject` (
@@ -211,7 +212,7 @@ CREATE TABLE `subject` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `subject`
+-- Dumping data for table `subject`
 --
 
 INSERT INTO `subject` (`id_subject`, `subject_name`) VALUES
@@ -227,48 +228,49 @@ INSERT INTO `subject` (`id_subject`, `subject_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `task`
+-- Table structure for table `task`
 --
 
 CREATE TABLE `task` (
   `id_task` int(3) NOT NULL,
-  `task_name` varchar(15) NOT NULL,
+  `task_name` varchar(255) NOT NULL,
+  `task_text` varchar(500) NOT NULL,
   `task_create_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `task_inner` longtext NOT NULL,
   `task_weight` int(2) NOT NULL,
   `task_level` int(2) UNSIGNED NOT NULL,
+  `task_img` varchar(255) NOT NULL,
   `is_done` tinyint(1) NOT NULL DEFAULT 0,
   `id_teacher` int(3) NOT NULL,
   `id_category` int(3) NOT NULL,
-  `id_template` int(11) NOT NULL
+  `id_template` int(11) NOT NULL,
+  `specific_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`specific_data`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `task`
+-- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`id_task`, `task_name`, `task_create_date`, `task_inner`, `task_weight`, `task_level`, `is_done`, `id_teacher`, `id_category`, `id_template`) VALUES
-(9, 'task1_templ1', '2023-06-14 16:57:33', '', 2, 3, 0, 120, 105, 1),
-(10, 'task4_templ2', '2023-06-14 17:00:34', '', 2, 4, 0, 120, 105, 1),
-(11, 'task2_templ1', '2023-06-14 18:58:46', '', 6, 3, 1, 121, 110, 1),
-(12, 'task3_templ2', '2023-06-14 19:01:08', '', 2, 4, 0, 121, 110, 2),
-(13, 'task3_templ1', '2023-06-14 19:01:08', '', 6, 3, 0, 121, 114, 1),
-(16, 'task9_templ1', '2023-06-14 19:04:44', '', 6, 4, 0, 122, 91, 1),
-(17, 'task10_templ2', '2023-06-14 19:04:44', '', 5, 4, 0, 122, 94, 2),
-(18, 'dfg', '2023-06-22 17:30:10', '', 1, 1, 0, 121, 110, 1),
-(19, 'Task get kuku', '2023-06-22 17:42:11', '', 3, 7, 0, 121, 112, 2),
-(20, 'Kuku2', '2023-06-22 17:50:23', '', 1, 1, 0, 121, 112, 2),
-(21, 'Kuku5', '2023-06-22 17:51:30', '', 5, 8, 0, 121, 110, 1),
-(22, 'Kuku3', '2023-06-22 17:53:44', '', 1, 1, 0, 121, 110, 1),
-(23, 'NodeOne in java', '2023-06-22 19:58:44', '', 1, 1, 0, 146, 117, 1),
-(24, 'NodeTwo in java', '2023-06-22 19:59:02', '', 1, 1, 0, 146, 117, 2),
-(25, 'Queue in java 1', '2023-06-22 20:00:18', '', 1, 1, 0, 146, 118, 1),
-(26, 'Queue in java 2', '2023-06-22 20:00:41', '', 1, 1, 0, 146, 118, 1);
+INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `task_weight`, `task_level`, `task_img`, `is_done`, `id_teacher`, `id_category`, `id_template`, `specific_data`) VALUES
+(32, 'sdf23sd', '<p><em>Inadf </em>dfgr<strong>eq</strong></p><p><u>werd</u></p>', '2023-07-02 23:12:27', 1, 1, 'uploads/resized_dog.png', 0, 121, 110, 1, '{\"input-0\":\"sdf\",\"input-1\":\"sdwe\"}'),
+(33, 'sdf', '', '2023-06-30 19:47:11', 1, 1, 'uploads\\sequence.jpg', 0, 121, 110, 1, '{\"input-0\":\"dfg\",\"input-1\":\"ert\"}'),
+(34, 'task1', '', '2023-06-30 19:50:46', 5, 6, 'uploads\\match.jpg', 0, 121, 114, 1, '{\"input-0\":\"ert\",\"input-1\":\"hgj\"}'),
+(35, 'task3', '', '2023-06-30 19:52:59', 1, 1, 'uploads\\logo.png', 0, 121, 110, 1, '{\"input-0\":\"we\"}'),
+(36, 'Task kuku', '<p>werxcv</p>', '2023-07-02 23:15:53', 1, 1, 'uploads/resized_img_false.png', 0, 121, 110, 1, '{\"input-0\":\"wer\",\"input-1\":\"sdf\",\"input-2\":\"rty\"}'),
+(37, 'kuu2', '', '2023-06-30 23:09:14', 1, 1, 'uploads\\sequence.jpg', 0, 121, 110, 1, '{\"input-0\":\"dg\"}'),
+(38, 'Kuku3new2', '<p>fdgty new</p>', '2023-07-02 23:11:12', 1, 1, 'uploads/resized_img_false.png', 0, 121, 110, 1, '{\"input-0\":\"hjk\",\"input-1\":\"tyu\",\"input-2\":\"uio\",\"input-3\":\"new\"}'),
+(40, 'Task seq', '<p>Instruction of task sequance</p>', '2023-07-02 23:16:10', 1, 1, 'uploads/resized_cat.png', 0, 121, 114, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
+(41, 'Task seq3', 'Instruction of task sequance3', '2023-07-01 14:13:14', 3, 8, 'uploads\\edit.png', 0, 121, 112, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"asd2\",\"input-2\":\"zxc3\"}'),
+(45, 'dfg', 'dfgrt', '2023-07-01 14:47:57', 3, 4, 'uploads/resized_wp2062648.jpg', 0, 121, 110, 1, '{\"input-0\":\"dfg\"}'),
+(49, 'rw', '<p>fdgertgd</p>', '2023-07-01 15:32:31', 1, 1, 'uploads/resized_wp2062648.jpg', 0, 121, 110, 1, '{\"input-0\":\"et\"}'),
+(52, 't', '<p>ert</p>', '2023-07-01 15:36:29', 1, 1, 'uploads/resized_levelone_two.png', 0, 121, 110, 1, '{\"input-0\":\"er\"}'),
+(53, 'sdf', '<p>wer</p>', '2023-07-01 15:39:33', 1, 1, 'uploads/resized_israel.png', 0, 121, 112, 1, '{\"input-0\":\"rtyu\"}'),
+(54, 'Example Sequence', '<h2>Lorem, ipsum dolor </h2><p>Sit amet consectetur adipisicing elit. Beatae, fugit repellendus, non perferendis illum iusto ipsam, incidunt ut sunt sint nostrum molestiae officia eveniet <a href=\"www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\">ullam </a>molestias illo maiores velit atque.</p><p><u>Incidunt </u>ut sunt sint nostrum molestiae officia eveniet ullam molestias illo <strong>maiores </strong>velit atque.</p><ol><li>molestiae </li><li>nostrum </li><li>illum </li></ol>', '2023-07-01 15:49:21', 3, 5, 'uploads/resized_tt.jpg', 0, 121, 110, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
+(55, 'tdknnew2', '<p>loihg <strong>sdfkn </strong>adsf</p>', '2023-07-02 22:44:31', 1, 1, 'uploads/resized_exit.png', 0, 121, 110, 1, '{\"input-0\":\"df\",\"input-1\":\"dfer\",\"input-2\":\"reee\"}');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `taskfolder`
+-- Table structure for table `taskfolder`
 --
 
 CREATE TABLE `taskfolder` (
@@ -280,7 +282,7 @@ CREATE TABLE `taskfolder` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `taskfolder`
+-- Dumping data for table `taskfolder`
 --
 
 INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_class`, `id_subject`) VALUES
@@ -295,7 +297,7 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_cl
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `task_tasksfolder`
+-- Table structure for table `task_tasksfolder`
 --
 
 CREATE TABLE `task_tasksfolder` (
@@ -304,13 +306,12 @@ CREATE TABLE `task_tasksfolder` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `task_tasksfolder`
+-- Dumping data for table `task_tasksfolder`
 --
 
 INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
 (9, 18),
 (10, 18),
-(11, 38),
 (11, 39),
 (11, 49),
 (12, 38),
@@ -320,6 +321,7 @@ INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
 (13, 51),
 (13, 52),
 (14, 56),
+(21, 38),
 (23, 57),
 (24, 58),
 (25, 58);
@@ -327,7 +329,7 @@ INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `task_template`
+-- Table structure for table `task_template`
 --
 
 CREATE TABLE `task_template` (
@@ -337,7 +339,7 @@ CREATE TABLE `task_template` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `task_template`
+-- Dumping data for table `task_template`
 --
 
 INSERT INTO `task_template` (`id_template`, `template_name`, `template_inner`) VALUES
@@ -347,7 +349,7 @@ INSERT INTO `task_template` (`id_template`, `template_name`, `template_inner`) V
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `teacher`
+-- Table structure for table `teacher`
 --
 
 CREATE TABLE `teacher` (
@@ -356,7 +358,7 @@ CREATE TABLE `teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Дамп данных таблицы `teacher`
+-- Dumping data for table `teacher`
 --
 
 INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
@@ -368,7 +370,7 @@ INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `teacher_sbjs`
+-- Table structure for table `teacher_sbjs`
 --
 
 CREATE TABLE `teacher_sbjs` (
@@ -377,7 +379,7 @@ CREATE TABLE `teacher_sbjs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `teacher_sbjs`
+-- Dumping data for table `teacher_sbjs`
 --
 
 INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
@@ -392,27 +394,27 @@ INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `template`
+-- Table structure for table `template`
 --
 
 CREATE TABLE `template` (
   `id_template` int(11) NOT NULL,
   `template_name` varchar(255) NOT NULL,
-  `template_inner` varchar(255) NOT NULL
+  `template_img` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Дамп данных таблицы `template`
+-- Dumping data for table `template`
 --
 
-INSERT INTO `template` (`id_template`, `template_name`, `template_inner`) VALUES
-(1, 'template1', ''),
-(2, 'template2', '');
+INSERT INTO `template` (`id_template`, `template_name`, `template_img`) VALUES
+(1, 'Sequance', 'sequence.jpg'),
+(2, 'Matching Pairs', 'match.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -426,7 +428,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Дамп данных таблицы `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, `img_url`) VALUES
@@ -459,63 +461,63 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 (146, 'teacher', 'kate@gmail.com', '$2b$10$.6lVybCmI4gtJLhG74/5SOBmH5gCxJGmy6SXBOa5.lhFbsDA0bcsu', 'Kate', 'Branch', 'avatar-2.svg');
 
 --
--- Индексы сохранённых таблиц
+-- Indexes for dumped tables
 --
 
 --
--- Индексы таблицы `category`
+-- Indexes for table `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id_category`),
   ADD KEY `id_subject` (`id_subject`);
 
 --
--- Индексы таблицы `certification`
+-- Indexes for table `certification`
 --
 ALTER TABLE `certification`
   ADD PRIMARY KEY (`id_certif`);
 
 --
--- Индексы таблицы `class`
+-- Indexes for table `class`
 --
 ALTER TABLE `class`
   ADD PRIMARY KEY (`id_class`),
   ADD KEY `id_teacher` (`id_teacher`);
 
 --
--- Индексы таблицы `student`
+-- Indexes for table `student`
 --
 ALTER TABLE `student`
   ADD KEY `id_user` (`id_user`);
 
 --
--- Индексы таблицы `student_certification`
+-- Indexes for table `student_certification`
 --
 ALTER TABLE `student_certification`
   ADD PRIMARY KEY (`id_user`,`id_certif`),
   ADD KEY `id_certif` (`id_certif`);
 
 --
--- Индексы таблицы `student_class`
+-- Indexes for table `student_class`
 --
 ALTER TABLE `student_class`
   ADD PRIMARY KEY (`id_user`,`id_class`),
   ADD KEY `id_class` (`id_class`);
 
 --
--- Индексы таблицы `student_task`
+-- Indexes for table `student_task`
 --
 ALTER TABLE `student_task`
   ADD PRIMARY KEY (`id_user`,`id_task`);
 
 --
--- Индексы таблицы `subject`
+-- Indexes for table `subject`
 --
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`id_subject`);
 
 --
--- Индексы таблицы `task`
+-- Indexes for table `task`
 --
 ALTER TABLE `task`
   ADD PRIMARY KEY (`id_task`),
@@ -524,7 +526,7 @@ ALTER TABLE `task`
   ADD KEY `id_template` (`id_template`);
 
 --
--- Индексы таблицы `taskfolder`
+-- Indexes for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
   ADD PRIMARY KEY (`id_tskFolder`),
@@ -532,139 +534,139 @@ ALTER TABLE `taskfolder`
   ADD KEY `id_subject` (`id_subject`);
 
 --
--- Индексы таблицы `task_tasksfolder`
+-- Indexes for table `task_tasksfolder`
 --
 ALTER TABLE `task_tasksfolder`
   ADD PRIMARY KEY (`id_task`,`id_tskFolder`);
 
 --
--- Индексы таблицы `task_template`
+-- Indexes for table `task_template`
 --
 ALTER TABLE `task_template`
   ADD PRIMARY KEY (`id_template`);
 
 --
--- Индексы таблицы `teacher`
+-- Indexes for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD KEY `teacher_ibfk_1` (`id_user`);
 
 --
--- Индексы таблицы `teacher_sbjs`
+-- Indexes for table `teacher_sbjs`
 --
 ALTER TABLE `teacher_sbjs`
   ADD PRIMARY KEY (`id_user`,`id_subject`),
   ADD KEY `id_subject` (`id_subject`);
 
 --
--- Индексы таблицы `template`
+-- Indexes for table `template`
 --
 ALTER TABLE `template`
   ADD PRIMARY KEY (`id_template`);
 
 --
--- Индексы таблицы `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id_user`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT для таблицы `category`
+-- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
   MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
--- AUTO_INCREMENT для таблицы `certification`
+-- AUTO_INCREMENT for table `certification`
 --
 ALTER TABLE `certification`
   MODIFY `id_certif` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `class`
+-- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT для таблицы `subject`
+-- AUTO_INCREMENT for table `subject`
 --
 ALTER TABLE `subject`
   MODIFY `id_subject` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT для таблицы `task`
+-- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- AUTO_INCREMENT для таблицы `taskfolder`
+-- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
   MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
--- AUTO_INCREMENT для таблицы `task_template`
+-- AUTO_INCREMENT for table `task_template`
 --
 ALTER TABLE `task_template`
   MODIFY `id_template` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `template`
+-- AUTO_INCREMENT for table `template`
 --
 ALTER TABLE `template`
   MODIFY `id_template` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
 
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Constraints for dumped tables
 --
 
 --
--- Ограничения внешнего ключа таблицы `category`
+-- Constraints for table `category`
 --
 ALTER TABLE `category`
   ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `class`
+-- Constraints for table `class`
 --
 ALTER TABLE `class`
   ADD CONSTRAINT `class_ibfk_1` FOREIGN KEY (`id_teacher`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `student`
+-- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `student_certification`
+-- Constraints for table `student_certification`
 --
 ALTER TABLE `student_certification`
   ADD CONSTRAINT `student_certification_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_certification_ibfk_2` FOREIGN KEY (`id_certif`) REFERENCES `certification` (`id_certif`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `student_class`
+-- Constraints for table `student_class`
 --
 ALTER TABLE `student_class`
   ADD CONSTRAINT `student_class_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_class_ibfk_2` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `task`
+-- Constraints for table `task`
 --
 ALTER TABLE `task`
   ADD CONSTRAINT `task_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -672,20 +674,20 @@ ALTER TABLE `task`
   ADD CONSTRAINT `task_ibfk_3` FOREIGN KEY (`id_template`) REFERENCES `template` (`id_template`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `taskfolder`
+-- Constraints for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
   ADD CONSTRAINT `taskfolder_ibfk_1` FOREIGN KEY (`id_class`) REFERENCES `class` (`id_class`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `taskfolder_ibfk_2` FOREIGN KEY (`id_subject`) REFERENCES `subject` (`id_subject`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `teacher`
+-- Constraints for table `teacher`
 --
 ALTER TABLE `teacher`
   ADD CONSTRAINT `teacher_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `teacher_sbjs`
+-- Constraints for table `teacher_sbjs`
 --
 ALTER TABLE `teacher_sbjs`
   ADD CONSTRAINT `teacher_sbjs_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE,

@@ -38,6 +38,14 @@
 	line-height: 2;
 	border-radius: 1rem;
 	padding: 0.8rem;
+	&:hover{
+		transform: scale(1.03);
+		transition: all 0.5s;
+	}
+	&:active{
+		transform: scale(0.95);
+		transition: all 0.5s;
+	}
 }
 
 .btn_transp_main{

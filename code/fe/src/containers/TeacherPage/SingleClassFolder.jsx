@@ -13,8 +13,9 @@ import { ReactComponent as AddIcon } from '../../assets/img/add2.svg';
 import { ReactComponent as AddIcon2 } from '../../assets/img/add.svg';
 
 
-function SingleClassFolder(props) {
 
+
+function SingleClassFolder(props) {
 	const { id_tskFolder } = useParams();
 	const location = useLocation();
 	
@@ -89,6 +90,8 @@ function SingleClassFolder(props) {
 	
 
 	useEffect(() => {
+
+
 		// Fetch initial list of tasks
     fetchData().then(data => setDataArray(data));
 		fetchFolderStatus().then(data=>{
@@ -301,6 +304,7 @@ const publishFolder = async()=>{
 		<div className='mt3'>
 			<div className="container">
 				<h2>Folder: {folder_name}</h2>
+
 				<h3 className='mt2 mb1'>Subject: {subject_name}</h3>
 				<div className="mt2 mb1">
 					<h3 className=''>Status: {isFolderPublish? 'publish' : 'not publish'}</h3>	

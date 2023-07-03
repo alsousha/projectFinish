@@ -31,12 +31,13 @@ const Tasks = () => {
 				setMessage('');
 			}, 2000);
 		}else{
-			deleteItem(task.id_task)
-		}
-		// 
+			if (window.confirm('Are you sure delete this task?')) {
+				deleteItem(task.id_task)
+			}
+		} 
 	}
 	const deleteItem = async(id_task)=>{
-		console.log(id_task);
+		// console.log(id_task);
 		axios
 		.delete(`/tasks/task/${id_task}`)
 		.then((res) => {
@@ -82,7 +83,7 @@ const Tasks = () => {
 					
 						{filteredData && filteredData.map((elem, i) => (
 							<div className="arr_item d-flex f-column jcc" key={"task-"+i}>
-								<Task_card item={elem.task_name} className=""/>
+								<Task_card item={elem} className=""/>
 								{<button onClick={() => handleDeleteItem(elem)} className={elem.is_done&&'no-active_info'}><DeleteIcon/></button>}
 
 							</div>

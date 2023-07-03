@@ -1,0 +1,137 @@
+@import "../../assets/styles/vars";
+.task_inner-top{
+	position: relative;
+	.task__text{
+		position: absolute;
+		background-color: $accent;
+		padding: 2rem;
+		width: 50rem;
+		border-radius: 2rem;
+		border: 2px solid;
+		button{
+			line-height: 1.5;
+			min-width:6rem;
+		}
+	}
+	.more__info{
+		position: absolute;
+		background-color: white;
+		border: 2px solid;
+		margin-left: 4rem;
+		padding: 2rem;
+		width: 50rem;
+		border-radius: 2rem;
+		.more__info-item{
+			span:first-child{
+				font-weight: 300;
+			}
+			span:last-child{
+				font-weight: 800;
+			}
+		} 
+	}
+}
+.editorContainer{
+	width: 50rem;
+	
+	.ql-editor{
+		height: 20rem;
+		
+	}
+}
+.ql-container{
+	font-size: 1.6rem !important;
+	font-family: inherit !important;
+	.ql-tooltip.ql-hidden{
+		height: 0;
+	}
+}
+.task_todo{
+	display: flex;
+	flex-direction: column;
+	min-height: 50rem;
+	background-color: $white;
+	border: 6px solid;
+	padding: 2rem;
+	.task_content{
+		flex-grow: 1;
+		.seq__item{
+			cursor: pointer;
+			border: 1px solid $main;
+			background-color: $accent;
+			font-weight: 600;
+			padding: 1rem;
+			border-radius: 1rem;
+			margin-bottom: 5px;
+	
+		}
+	}
+	
+}
+.task_data-item{
+	.task__thumb img{
+		width: 10rem;
+	}
+}
+
+
+/* .App {
+  text-align: center;
+} */
+
+/* .App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 1.5vmin);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.characters {
+  list-style: none;
+  padding-left: 0;
+}
+
+.characters li {
+  display: flex;
+  align-items: center;
+  border: solid 2px #d0d0d0;
+  border-radius: .2em;
+  padding: .5em .8em .5em .5em;
+  margin-bottom: 1em;
+}
+
+.characters p {
+  max-width: none;
+  font-weight: bold;
+  margin: 0;
+}
+
+.characters-thumb {
+  overflow: hidden;
+  flex-shrink: 0;
+  width: 2em;
+  height: 2em;
+  background-color: #e8e8e8;
+  padding: .5em;
+  margin-right: .5em;
+}
+
+.characters-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+} */

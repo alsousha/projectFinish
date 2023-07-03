@@ -5,6 +5,7 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   //get user data from localStorage and parse it from JSON
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+  // const [globalData, setGlobalData] = useState({})
 
   //This funcs update Context and call api funcs for update BD
   const login = async (inputs) => {
@@ -60,7 +61,6 @@ export const AuthContextProvider = ({ children }) => {
       }
     }
   };
-
   useEffect(() => {
     //update localstorage when we change user data
     localStorage.setItem('user', JSON.stringify(currentUser));

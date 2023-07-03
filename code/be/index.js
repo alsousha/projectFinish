@@ -16,6 +16,8 @@ app.use(cors()); //for use of shared resources
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/uploads', express.static('uploads'));
+
 app.use('/api/tasks', taskRoutes); //call task routers for each url that starts '/api/tasks'
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);

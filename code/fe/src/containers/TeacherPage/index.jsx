@@ -16,6 +16,7 @@ import Classfolders from './Classfolders';
 import '../containers.scss'
 import SingleClassFolder from './SingleClassFolder';
 import TaskSequence from '../Tasks/TaskSequence';
+import EditTask from '../Tasks/EditTask';
 
 function TeacherPage() {
 
@@ -40,9 +41,10 @@ function TeacherPage() {
 					<Route path='classfolder/:id_class' element={<Classfolders/>} />
 					<Route path='singlefolder/:id_tskFolder' element={<SingleClassFolder/>} />
 					<Route path='/categories' element={<Categories />} />
-					<Route path='/write' element={<WriteTask />} />
+					{/* <Route path='/write' element={<WriteTask />} /> */}
 					<Route path='/tasks' element={<Tasks />} />
 					<Route path='/task/:id' element={<Task />} />
+					<Route path='/taskedit/:id' element={<EditTask />} />
 					<Route path='/task/sequence/:id' element={<TaskSequence />} />
 					<Route path='/newtask' element={<NewTask />} />
 					<Route path='/students' element={<Students />} />

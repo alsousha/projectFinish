@@ -1,82 +1,65 @@
-import React, { useState } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import './Task.css';
+import React, { useContext, useState, useEffect } from 'react';
+import { AuthContext } from '../../context/authContext.js';
+import { useLocation, useParams } from 'react-router-dom';
 
-const finalSpaceCharacters = [
-  {
-    id: 'gary',
-    name: 'Gary Goodspeed',
-    thumb: '/images/gary.png'
-  },
-  {
-    id: 'cato',
-    name: 'Little Cato',
-    thumb: '/images/cato.png'
-  },
-  {
-    id: 'kvn',
-    name: 'KVN',
-    thumb: '/images/kvn.png'
-  },
-  {
-    id: 'mooncake',
-    name: 'Mooncake',
-    thumb: '/images/mooncake.png'
-  },
-  {
-    id: 'quinn',
-    name: 'Quinn Ergon',
-    thumb: '/images/quinn.png'
-  }
-]
+import axios from 'axios'
 
-function TaskSequence() {
-	const [characters, updateCharacters] = useState(finalSpaceCharacters);
+import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import './Task.scss';
 
+import { ReactComponent as InfoIcon } from '../../assets/img/info.svg';
+
+function TaskSequence({task}) {
+	// console.log(task);
+
+	//convert obj to array (task.specific_data: {"input-0":"dfg","input-1":"ert"})
+	const arr = task&&Object.entries(JSON.parse(task.specific_data)).map(([key, value]) => {
+		const inputIndex = key.split('-')[1]; // Extract the index from the key
+		return { input: value, id: inputIndex };
+	});
+	const [seqItems, setSeqItems] = useState(arr);
+	// console.log(seqItems);
+
+	
   function handleOnDragEnd(result) {
     if (!result.destination) return;
 
-    const items = Array.from(characters);
+    const items = Array.from(seqItems);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    updateCharacters(items);
+    setSeqItems(items);
   }
-
+	
+	
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Final Space Characters</h1>
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-          <Droppable droppableId="characters">
-            {(provided) => (
-              <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
-                {characters.map(({id, name, thumb}, index) => {
-                  return (
-                    <Draggable key={id} draggableId={id} index={index}>
-                      {(provided) => (
-                        <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                          <div className="characters-thumb">
-                            <img src={thumb} alt={`${name} Thumb`} />
-                          </div>
-                          <p>
-                            { name }
-                          </p>
-                        </li>
-                      )}
-                    </Draggable>
-                  );
-                })}
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </header>
-      <p>
-        Images from <a href="https://final-space.fandom.com/wiki/Final_Space_Wiki">Final Space Wiki</a>
-      </p>
-    </div>
+		<div className="task_content">
+			<DragDropContext onDragEnd={handleOnDragEnd}>
+				<Droppable droppableId="characters">
+					{(provided) => (
+						<ul className="seq__wrap" {...provided.droppableProps} ref={provided.innerRef}>
+							{seqItems.map(({input, id}, index) => {
+								return (
+									<Draggable key={id} draggableId={id} index={index}>
+										{(provided) => (
+											<li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} className='seq__item'>
+												
+												<p>
+													{ input }
+												</p>
+											</li>
+										)}
+									</Draggable>
+								);
+							})}
+							{provided.placeholder}
+						</ul>
+					)}
+				</Droppable>
+			</DragDropContext>
+		</div>
+			
+				
   );
 }
 

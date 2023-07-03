@@ -27,6 +27,7 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 	useEffect(() => {
     // Fetch initial list of tasks
     fetchData().then(data => {
+			console.log(data);
 			setDataArray(data)
 			// setFilteredData(data)
 			updateFilteredData(data)
