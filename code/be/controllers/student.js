@@ -1,18 +1,18 @@
 import { db } from '../db.js';
 
-export const getStudentClassLevel = (req, res) => {
+export const getStudentData = (req, res) => {
   const { id } = req.params;
-  const q = 'SELECT class_level FROM student WHERE id_user = ?';
+  const q = 'SELECT class_level, total_points FROM student WHERE id_user = ?';
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
       return res.status(404).json('User not found');
     }
-    const classLevel = data[0].class_level;
-    res.status(200).json({ classLevel });
+    // const classLevel = data[0].class_level;
+    // console.log(data);
+    res.status(200).json(data[0]);
   });
 };
-
 export const getStudentSbjs = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
@@ -60,14 +60,18 @@ export const getTasksByFolder = (req, res) => {
   if (!token) return res.status(401).json('Not authenticated!');
 
   const { id } = req.params;
-  console.log(id);
+  const { id_user } = req.body;
+  // console.log(id);
   const q = `
-  SELECT task.id_task, task.task_name, task.is_done
+  SELECT task.*, c.category_name, s.subject_name, st.is_task_done
   FROM task
+	JOIN category c ON task.id_category = c.id_category
+	JOIN subject s ON c.id_subject = s.id_subject
+	JOIN student_task st ON task.id_task = st.id_task and st.id_user = ?
   JOIN task_tasksfolder ON task.id_task = task_tasksfolder.id_task
   WHERE task_tasksfolder.id_tskFolder = ?
 `;
-  db.query(q, [id], (err, data) => {
+  db.query(q, [id_user, id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
       return res.status(204).json('Tasks not found');
@@ -104,17 +108,43 @@ export const getHWByStudent = (req, res) => {
   const { id } = req.params;
   console.log(id);
   const q = `
-  SELECT t.id_task, t.task_name
-  FROM student_task st
-  JOIN task t ON st.id_task = t.id_task
-  WHERE st.is_task_done=0 and st.id_user = ?
+  SELECT t.*, c.category_name, s.subject_name
+FROM student_task st
+JOIN task t ON st.id_task = t.id_task
+JOIN category c ON t.id_category = c.id_category
+JOIN subject s ON c.id_subject = s.id_subject
+WHERE st.is_task_done = 0 AND st.id_user = ?;
 `;
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
       return res.status(204).json('Tasks not found');
     }
-    // console.log(data);
+    console.log(data);
     res.status(200).json(data);
   });
+};
+export const updatePoints = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    const id_user = req.params.id;
+    const task_weight = req.body.task_weight;
+    const q = `
+			UPDATE student
+			SET total_points = total_points + ? 
+			WHERE id_user = ?
+		`;
+
+    db.query(q, [task_weight, id_user], (error, result) => {
+      if (error) {
+        console.error('Error updating category:', error);
+        res.status(500).json({ error: 'Error updating points' });
+      } else {
+        res.status(200).json({ message: 'Points updated successfully' });
+      }
+    });
+  } catch (error) {
+    console.error('Error updating table:', error);
+  }
 };

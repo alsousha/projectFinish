@@ -11,6 +11,7 @@ import { ReactComponent as DeleteIcon } from '../../assets/img/remove.svg';
 import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
 import { ReactComponent as AddIcon } from '../../assets/img/add2.svg';
 import { ReactComponent as AddIcon2 } from '../../assets/img/add.svg';
+import MoreInfo from '../../components/MoreInfo.jsx';
 
 
 
@@ -39,6 +40,7 @@ function SingleClassFolder(props) {
   const [selectedCategory, setSelectedCategory] = useState({});
   // const [selectedTask, setSelectedTask] = useState({});
 	const [isAddVisiable, setIsAddVisiable] = useState(false)
+	const [publishBtnClass, setPublishBtnClass] = useState('no-active')
 	const [textAddTasks, setTextAddTasks] = useState("Please, choose first category")
 
 	const navigate = useNavigate();
@@ -47,7 +49,10 @@ function SingleClassFolder(props) {
 		try {
 			const res = await axios.post(`/teacher/tasksbyfolder`, {id_folder: id_tskFolder});
 			// if(res.status===200) setDataArray(res.data)
-			if(res.status===200) return res.data
+			if(res.status===200){
+				// console.log(res.data);
+				return res.data
+			} 
 		} catch (err) {
 			console.log(err);
 		}
@@ -90,8 +95,6 @@ function SingleClassFolder(props) {
 	
 
 	useEffect(() => {
-
-
 		// Fetch initial list of tasks
     fetchData().then(data => setDataArray(data));
 		fetchFolderStatus().then(data=>{
@@ -177,6 +180,7 @@ function SingleClassFolder(props) {
 		
 	}
 	const handlePublishTasks = () =>{
+		// console.log(dataArray);
 		if (window.confirm('Are you sure want to publish this folder?')) {
       publishFolder();
       // setCurrentUser(null);
@@ -195,7 +199,7 @@ const updatedTasksInAddSection = (data) => {
 };
 //func for change class of added task
 const updatedTasks = (id_task) => tasks.map(item => {
-	console.log(item);
+	// console.log(item);
   if (item.id_task === id_task) {
 		// console.log(item.classNam);
 		const newClassName = item.className === 'no-active' ? 'active' : 'no-active';
@@ -204,7 +208,6 @@ const updatedTasks = (id_task) => tasks.map(item => {
     return item;
   }
 });
-
 
 //axios for DB
 const addNewItem = async(id_task)=>{			
@@ -220,7 +223,7 @@ const addNewItem = async(id_task)=>{
 				return [...prev, res.data];
 			}
 		});	
-		
+		setPublishBtnClass('active')
 		const msg={
 			msgClass: res.status===200 ? "success" : "error",
 			text: res.status===200 ? "Task added successfully!" : 'Error add task'
@@ -236,7 +239,6 @@ const addNewItem = async(id_task)=>{
 	});
 }
 const deleteItem = async(id_task)=>{
-	console.log(id_task);
 	axios
 	.delete(`/tasks/taskfromfolder/${id_task}?folder=${id_tskFolder}`)
 	.then((res) => {
@@ -249,7 +251,7 @@ const deleteItem = async(id_task)=>{
 		// 		return [...prev, res.data];
 		// 	}
 		// });	
-		
+		if(dataArray.length=== 1) setPublishBtnClass('no-active')
 		fetchData().then(data => {
 			setDataArray(data)
 			setTasks(updatedTasks(id_task));
@@ -258,6 +260,7 @@ const deleteItem = async(id_task)=>{
 			msgClass: res.status===200 ? "success" : "error",
 			text: res.status===200 ? "Task deleted successfully!" : 'Error delete task'
 		}
+		
 		setMessage(msg);
 		 // Clear the message after 2 seconds 
 		setTimeout(() => {
@@ -271,7 +274,7 @@ const deleteItem = async(id_task)=>{
 }
 const publishFolder = async()=>{			
 	axios
-	.post(`/tasks/publishfolder/`, {id_tskFolder: id_tskFolder})
+	.post(`/tasks/publishfolder/${id_tskFolder}`)
 	.then((res) => {
 		if(res.status===200){
 			setIsFolderPublish(1)
@@ -290,26 +293,20 @@ const publishFolder = async()=>{
 		console.error('Error add item', error);
 	});
 }
-// console.log(isFolderPublish);
-//tasks that exists in folder will be with specific class
-// const updatedTasks = tasks.map(task => {
-//   if (dataArray.some(item => item.id === task.id)) {
-//     return { ...task, className: 'no-active' };
-//   }
-//   return task;
-// });
-
-// console.log(tasks);
-	return (
+const isPublishText = 'You can not modify this folder bacause it was published'
+const isNotPublishText = 'Please Add/Remove Tasks and click the "Publish Tasks" button. Please note that once a folder is published, you will not be able to edit or delete the folder'
+return (
 		<div className='mt3'>
 			<div className="container">
 				<h2>Folder: {folder_name}</h2>
 
 				<h3 className='mt2 mb1'>Subject: {subject_name}</h3>
+				
 				<div className="mt2 mb1">
-					<h3 className=''>Status: {isFolderPublish? 'publish' : 'not publish'}</h3>	
-					{!isFolderPublish && <button className='btn_accent' onClick={handlePublishTasks}>Publish tasks</button>}
+					<h3 className='mb1'>Status: {isFolderPublish? 'publish' : 'not publish'}</h3>	
+					{!isFolderPublish && <button className={`btn_accent ${publishBtnClass}`} onClick={handlePublishTasks}>Publish tasks</button>}
 				</div>
+				<MoreInfo text={isFolderPublish ? isPublishText : isNotPublishText}/>
 				<div className="back mt2 btn_main">
 					<button onClick={handleGoBack} className="d-flex aic g1"><BackIcon/><span>Go Back</span></button>
 				</div>
@@ -322,7 +319,7 @@ const publishFolder = async()=>{
 					{dataArray&&dataArray.length!==0 ?
 						dataArray.map((item,i)=>(
 							<div key={"f-task"+item.id_task} className="arr_item d-flex f-column jcc">
-								<Task_card item={item.task_name}/>
+								<Task_card item={item}/>
 								{!isFolderPublish && <button onClick={() => handleDeleteItem(item.id_task)} className='mt1'><DeleteIcon/></button>}
 							</div>
 						)
@@ -366,7 +363,7 @@ const publishFolder = async()=>{
 									{tasks&&tasks.length!==0 ?
 										tasks.map((item,i)=>(
 											<div key={"add-task"+item.id_task} className={`arr_item d-flex f-column ${item.className}`}>
-												<Task_card item={item.task_name}/>
+												<Task_card item={item}/>
 												<button onClick={() => handleAddNewItem(item.id_task)} className='mt1'>
 													<AddIcon2/>
 												</button>

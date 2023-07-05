@@ -4,236 +4,23 @@ import { Link, useParams } from "react-router-dom";
 import axios from 'axios'
 import '../containers.scss'
 
-
-import { ReactComponent as FolderIcon } from '../../assets/img/folder.svg';
-import { ReactComponent as EditIcon } from '../../assets/img/edit2.svg';
-import { ReactComponent as AddUserIcon } from '../../assets/img/add_user.svg';
 import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
-import { ReactComponent as DeleteIcon } from '../../assets/img/delete.svg';
-// import { ReactComponent as CardIcon } from '../../assets/img/card.svg';
-import { ReactComponent as AddIcon } from '../../assets/img/add2.svg';
-import { ReactComponent as SaveIcon } from '../../assets/img/save.svg';
+import { ReactComponent as AZIcon } from '../../assets/img/az.svg';
+import { ReactComponent as ZAIcon } from '../../assets/img/za.svg';
 import Loading from '../../components/Loading.jsx';
 
 function Students() {
-	const { id_class } = useParams();
 	const [isLoading, setIsLoading] = useState(true);
-	const [hasAccess, setHasAccess] = useState(false);
-
-	const inputRef = useRef(null);
+	
 	const { currentUser} = useContext(AuthContext)
 	
-	const [class_name, setClassName] = useState('');
 	const [accounts, setAccounts] = useState([]);
-	// const [catsFormat, setCatsFormat] = useState()
-	// const [editing, setEditing] = useState(false);
-	// const [errors, setErrors] = useState({}); //Validations errors
-	// const [editingItemId, setEditingItemId] = useState(null);
-	// const [editedText, setEditedText] = useState('');
-	const [message, setMessage] = useState({}); //msg from DB
-	const [errors, setErrors] = useState({}); //Validations errors
-	//add new class
-	const [newItemName, setNewItemName] = useState('')
-	// const [newSbj, setNewSbj] = useState({})
-	const[isAddItemVisiable, setIsAddItemVisiable] = useState(false)
+	const [accountsActiveOrder, setAccountsActiveOrder] = useState([]);
+	const [classes, setClasses] = useState();
+	const [selectedClass, setSelectedClass] = useState('all');
+	const [az, setAzActive] = useState(false);
+	const [za, setZaActive] = useState(false);
 
-	// console.log(cats);
-	const handleEdit = (itemId, initialText) => {
-		// setErrors({})
-    // setEditingItemId(itemId);
-		// setEditedText(initialText);
-  };
-
-	const handleDelete = (itemId) => {
-		if (window.confirm('Are you sure delete this class?')) {
-			deleteItem(itemId)
-    }
-	}
-		
-	const handleSave = (itemId) => {
-		// const fieldErrors = validateField(['cat_name']);
-		// if (Object.keys(fieldErrors).length === 0) {
-		// 	// console.log(cats);
-		// 	// setCats((prevItems) => {
-		// 	// 	const updatedCats = { ...prevItems };
-		// 	// 	const item = updatedCats[itemId];
-		// 	// 	if (item) {
-		// 	// 		item.forEach((catItem) => {
-		// 	// 			catItem.category_name = editedText;
-		// 	// 		});
-		// 	// 	}
-		// 	// 	return updatedCats;
-		// 	// });
-		// 	setAccounts((prevItems) =>
-		// 		prevItems.map((item) =>
-		// 			item.id_category === itemId ? { ...item, category_name: editedText } : item
-		// 		)
-		// 	);
-		// 	setEditingItemId(null);
-		// 	// console.log(currentData);
-		// 	// setErrors({});
-		// 	update({id_cat: itemId, cat_name: editedText}) //send current cat data for response to serever
-		// }else{
-		// 	setErrors(fieldErrors);
-		// }
-    
-  };
-
-	const handleAddNewItem = () => {
-		// const fieldErrors = validateField(['email']);
-		// // console.log(fieldErrors);
-
-		// if (Object.keys(fieldErrors).length === 0) {
-		// 	addNewItem()
-			
-		// 	// setErrors({});
-		// 	// setNewCatname("")
-		// 	// setIsAddClassVisiable(false)
-		// }else{
-		// 	setErrors(fieldErrors);
-		// }
-    
-  };
-
-	const handleInputChange = (e) => {
-    // setEditedText(e.target.value);
-  };
-	const handleInputAddItemChange = (e) => {
-    // setNewItemName(e.target.value);
-  };
-
-	const validateField = (fieldNames) => {
-    const errors = {};
-		fieldNames.forEach(fieldName => {
-
-			switch (fieldName) {
-				case 'email':
-					if (!newItemName.trim()) {
-						errors[fieldName] = 'Email is required';
-					}else if (!isValidEmail(newItemName)) {
-						errors[fieldName] = 'Invalid email format';
-					}
-					break;
-				default:
-					break;
-			}
-		})
-		// console.log(errors);
-    return errors;
-  };
-
-	const handleSelectChange = async e=>{
-		console.log(e.target.value + " select");
-		// setNewSbj(e.target.value)
-		// setNewCat(sbj: e.target.value)
-		// console.log(e.target.options[2].name);
-		// if(e.target.name==="role"){
-		// 	if(e.target.value==="teacher"){
-		// 		setVisiableLevelInput(false)
-		// 		setVisiableSbjInput(true)
-		// 	}else{
-		// 		setVisiableLevelInput(true)
-		// 		setVisiableSbjInput(false)
-		// 	}
-		// }
-		// setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-		
-	}
-
-	//axios for DB
-	const addNewItem = async ()=>{
-		axios
-		.post(`/teacher/students/${currentUser.id_user}`, {student_email: newItemName, id_class:id_class})
-		.then((res) => {
-			// console.log(res.data);
-			// const tmpCat = res.data
-			setAccounts((prevCats) =>
-				[...prevCats, res.data]
-			);	
-			
-			console.log(res.status===200);
-			const msg={
-				msgClass: res.status===200 ? "success" : "error",
-				message: res.status===200 ? "New student added successfully!" : 'Error add student'
-			}
-      setMessage(msg);
-			fetchData()
-			setNewItemName('')
-			setIsAddItemVisiable(false)
-			 // Clear the message after 2 seconds 
-			
-    })
-    .catch((error) => {
-      console.error('Error updating class name', error);
-			const msg={
-				msgClass:  "error",
-				message: 'Error add student'
-			}
-      setMessage(msg);
-    })
-		.finally(() => {
-      setTimeout(() => {
-				setMessage('');
-			}, 2000);
-    });
-	}
-	const update = async (currentData) => {
-		// const dataToSend = {"cat_name":currentData.cat_name} 
-		// console.log("currentData.class_name");
-		// axios
-    // .put(`/teacher/cat/${currentData.id_cat}`, dataToSend)
-    // .then((res) => {
-		// 	const msg={
-		// 		msgClass: res.status===200 ? "success" : "error",
-		// 		message: res.data
-		// 	}
-    //   setMessage(msg);
-		// 	// setCurrentClass({})
-		// 	// updateUser(userData)//update localstorage and context
-		// 	 // Clear the message after 2 seconds 
-		// 	setTimeout(() => {
-		// 		setMessage('');
-		// 	}, 2000);
-    // })
-    // .catch((error) => {
-    //   console.error('Error updating class name', error);
-    // });
-  };
-	const deleteItem = async (itemId) => {
-	
-		axios
-    .delete(`/teacher/students/${itemId}?class=${id_class}` )
-    .then((res) => {
-			const msg={
-				msgClass: res.status===200 ? "success" : "error",
-				message: res.data
-			}			
-      setMessage(msg);
-			// setCurrentClass({})
-			 // Clear the message after 2 seconds 
-			setTimeout(() => {
-				setMessage('');
-			}, 2000);
-			// fetchData();
-    })
-    .catch((error) => {
-      console.error('Error deleting student', error);
-    });
-		fetchData()
-  };
-
-	//separate categories by id_subject
-	function separateArrayBySubject(data) {
-		// return data.reduce((result, item) => {
-		// 	const idSubject = item.id_subject;
-		// 	if (!result[idSubject]) {
-		// 		result[idSubject] = [];
-		// 	}
-		// 	result[idSubject].push(item);
-		// 	return result;
-		// }, {});
-	}
-	
 	//fetch students of teacher
 	const fetchData = async () => {
 		// console.log(id_class);
@@ -241,35 +28,72 @@ function Students() {
 			const res = await axios.post(`/teacher/${currentUser.id_user}/students_all`);
 			if(res.status === 200){
 				setAccounts(res.data)
+				setAccountsActiveOrder(res.data)
+			}
+			// console.log(res.data);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+	console.log(accountsActiveOrder);
+	const fetchClasses = async () => {
+		// console.log(id_class);
+		try {
+			const res = await axios.get(`/teacher/${currentUser.id_user}/classes`);
+			if(res.status === 200){
+				console.log(res.data);
+				setClasses(res.data.data)
 			}
 			console.log(res.data);
 		} catch (err) {
 			console.log(err);
 		}
 	};
-	// Helper function to check email format using regular expression
-	const isValidEmail = (email) => {
-		const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-		return emailRegex.test(email);
-	};
-
+	
 	useEffect(() => {
     fetchData();
+		fetchClasses()
 		setIsLoading(false)
-
+		
   }, []);
 
-	
+	const handleAZ = () => {
+		setAzActive(prev => !prev)
+		setZaActive(false)
+		if(az){
+			//deactive az filter
+			setAccountsActiveOrder(accounts)
+		}else{
+			const sortedAccounts = [...accounts].sort((a, b) => a.lastname.localeCompare(b.lastname));
 
-		//add focus for active input
-	
-	// useEffect(() => {
-	// 	if (isAddItemVisiable) {
-	// 		inputRef.current.focus();
-	// 	}
-	// }, [isAddItemVisiable]);
+			setAccountsActiveOrder(sortedAccounts)
+		}
+	};
 
+	const handleZA = () => {
+		setZaActive(prev => !prev)
+		setAzActive(false)
+		if(za){
+			//deactive za filter
+			setAccountsActiveOrder(accounts)
+		}else{
+			const sortedAccounts = [...accounts].sort((a, b) => b.lastname.localeCompare(a.lastname));
+			setAccountsActiveOrder(sortedAccounts)
+		}
+	};
+	const handleClassChange = (e) => {
+		setSelectedClass(e.target.value)
+		if (selectedClass === 'all') {
+			setAccountsActiveOrder(accounts);
+		} else {
+			console.log("ddd");
+			const filteredAccounts = accounts.filter(item => item.id_class && item.id_class.toString() === selectedClass);
+			console.log(filteredAccounts);
+			setAccountsActiveOrder(filteredAccounts);
+		}
 	
+		// setSelectedClass(selectedClass);
+	};
 	
 	if (isLoading) {
     return <Loading/>;
@@ -281,31 +105,53 @@ function Students() {
 			<div className="back mt2 btn_main">
 				<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
 			</div>
-			<div className="cats__wrap table_data mt4">
-				<div className="mt5">
-					{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
-				</div>
+			<div className="btns d-flex g1 mt3">
+				<button className={`btn_sort az hover-scale ${az&&'active'}`} onClick={handleAZ}><AZIcon/></button>
+				<button className={`btn_sort za ${za&&'active'}`} onClick={handleZA}><ZAIcon/></button>
+				<select value={selectedClass} onChange={(e)=>handleClassChange(e)}>
+					<option value="all">All Classes</option>
+					{/* Render the available classes as options */}
+					{classes&&classes.map((classItem) => (
+						<option key={classItem.id_class} value={classItem.class_name}>{classItem.class_name}</option>
+					))}
+				</select>
+			</div>
+			<div className="cats__wrap table_data mt2">
 				<div className="class_item title d-flex jcsb aic mb2">
 					<span className='table_elem small'>N.</span>
-					<span className='table_elem'>Name</span>
 					<span className='table_elem'>Lastname</span>
+					<span className='table_elem'>Name</span>
 					<span className='table_elem'>Email</span>
 					<span className='table_elem'>Class</span>
 				</div>
-
 				
-				{accounts && accounts.length!==0 ? accounts.map((item, i) => (
-					<div key={item.id_user + i} className="class_item d-flex jcsb aic mb2">
-						<div className="d-flex jcsb aic table mr4">
+				{/* {accountsActiveOrder && accountsActiveOrder.length !== 0 ? (
+				accountsActiveOrder
+					.filter(item => selectedClass === 'all' || (item.id_class && selectedClass === item.id_class.toString()))
+					.map((item, i) => (
+						<div key={`${item.id_user + i}-acc`} className="class_item d-flex jcsb aic mb2">
+							<div className="d-flex jcsb aic table">
 								<span className='table_elem small'>{i+1}.</span>
-								<span className='table_elem'>{item.name}&nbsp;</span>
 								<span className='table_elem'>{item.lastname}&nbsp;</span>
+								<span className='table_elem'>{item.name}&nbsp;</span>
+								<span className='table_elem'>{item.email}</span>
+								<span className='table_elem'>{item.class_name}</span>
+							</div>
+						</div>
+					))
+				) : (
+					<div className="no-items">Student's list is empty</div>
+				)} */}
+				
+				{accountsActiveOrder && accountsActiveOrder.length!==0 ? accountsActiveOrder.map((item, i) => (
+					<div key={`${item.id_user}-${i}-acc`} className="class_item d-flex jcsb aic mb2">
+						<div className="d-flex jcsb aic table">
+								<span className='table_elem small'>{i+1}.</span>
+								<span className='table_elem'>{item.lastname}&nbsp;</span>
+								<span className='table_elem'>{item.name}&nbsp;</span>
 								<span className='table_elem'>{item.email}</span>
 								<span className='table_elem'>{item.class_name}</span>
 						</div>
-						{/* <div className="class_delete table_icon">
-							<button onClick={() => handleDelete(item.id_user)} ><DeleteIcon/></button>
-						</div> */}
 					</div>
 				)):(
 					<div className="no-items">Student's list is empty</div>

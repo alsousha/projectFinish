@@ -16,6 +16,11 @@
 .mr4{
 	margin-right: 4rem;
 }
+.class_item.title{
+	font-weight: 600;
+	font-size: 2.1rem;
+	border-bottom: 3px solid;
+}
 .table_item{
 	border-bottom: 1px solid #ccc;
 	padding: 2rem;
@@ -34,7 +39,7 @@
 .table_elem {
   flex: 1;
   padding: 5px;
-  
+  border-bottom: 1px solid;
 }
 .small{
 	flex: 0.1;

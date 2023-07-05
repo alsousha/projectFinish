@@ -147,3 +147,10 @@
 	height: 2rem;
 
 }
+.btn_sort{
+	border: 1px solid transparent;
+	&.active{
+		border: 1px solid $main;
+	}
+}
+

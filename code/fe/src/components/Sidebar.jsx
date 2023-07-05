@@ -7,6 +7,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import UserEditForm from './Forms/UserEditForm';
 import { ReactComponent as LogoutIcon } from '../assets/img/logout.svg';
 import { ReactComponent as EditIcon } from '../assets/img/edit.svg';
+import { ReactComponent as PointIcon } from '../assets/img/point.svg';
 import { AuthContext } from '../context/authContext';
 
 function Sidebar({items, handleLink}) {
@@ -17,7 +18,15 @@ function Sidebar({items, handleLink}) {
   return (
 	<div className='sidebar'>
 		<div className='userSection mb5'>
-			<div className="top d-flex jce mb1">
+			<div className="top d-flex jcsb aic mb1">
+				<div className="point d-flex jcsb aic">
+					{currentUser.role==='student' && (
+						<>
+							<PointIcon/>
+							<span>{currentUser.points}</span>
+						</>
+					)}
+				</div>
 				<div className="userSection__btns d-flex">
 					<Link className="editBtn userSection__btn hover-scale link" to="profile"><EditIcon className='sidebar__icon' /></Link>	
 					<span className='exitBtn userSection__btn hover-scale' onClick={logout}><Link className="link" to="/"><LogoutIcon className='sidebar__icon'/></Link></span>	

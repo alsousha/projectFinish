@@ -230,13 +230,16 @@ export const getTasksByTeacher = (req, res) => {
   if (!token) return res.status(401).json('Not authenticated!');
 
   const { id } = req.params;
-  const q = `SELECT  tsk.*, c.category_name, t.template_name, s.id_subject, s.subject_name
-					FROM task tsk 
-					JOIN category c ON tsk.id_category = c.id_category
-					JOIN template t ON tsk.id_template = t.id_template
-					JOIN subject s ON c.id_subject = s.id_subject
-					WHERE tsk.id_teacher = ?`;
-  db.query(q, [id], (err, data) => {
+  const countTask = parseInt(req.query.count);
+  const q = `
+	SELECT tsk.*, c.category_name, t.template_name, s.id_subject, s.subject_name
+  FROM task tsk 
+  JOIN category c ON tsk.id_category = c.id_category
+  JOIN template t ON tsk.id_template = t.id_template
+  JOIN subject s ON c.id_subject = s.id_subject
+  WHERE tsk.id_teacher = ?
+  LIMIT ?`;
+  db.query(q, [id, countTask], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
     if (data.length === 0) {
@@ -247,13 +250,41 @@ export const getTasksByTeacher = (req, res) => {
     res.status(200).json(data);
   });
 };
+export const getTaskByUser = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { id } = req.params;
+  const { role, task_id } = req.body;
+  let q;
+  if (role === 'student') {
+    q = `SELECT id_task 
+		FROM student_task  
+		WHERE id_user = ? and id_task = ?`;
+  } else if (role === 'teacher') {
+    q = `SELECT id_task 
+		FROM task  
+		WHERE id_teacher = ? and id_task = ?`;
+  }
+
+  db.query(q, [id, task_id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the user exists
+    if (data.length === 0) {
+      return res.status(204).json('Tasks not found');
+    }
+    // Send the class level as the response
+    res.status(200).json(data);
+  });
+};
+
 export const getTasksByCategory = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
 
   const { id } = req.params;
   // console.log(id);
-  const q = `SELECT  task_name, id_task
+  const q = `SELECT  *
 					FROM task 
 					WHERE id_category = ?`;
   db.query(q, [id], (err, data) => {
@@ -356,98 +387,47 @@ export const getFolderStatus = (req, res) => {
     res.status(200).json(data[0].is_publish);
   });
 };
+
 export const publishFolder = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
-  console.log('add');
   try {
-    const { id_tskFolder } = req.body;
+    // const { id_tskFolder } = req.body;
+    const { id } = req.params;
     const q = `
 			UPDATE taskfolder
 			SET is_publish = TRUE
 			WHERE id_tskFolder = ?  	
 		`;
 
-    db.query(q, [id_tskFolder], (err, result) => {
+    db.query(q, [id], (err, result) => {
       if (err) {
         console.error('Failed to publish the folder.', err);
         res.status(500).json({ error: 'Error publish the folder' });
       } else {
-        res.status(200).json({ message: 'Publish the folder successfully!' });
+        const q2 = `
+					INSERT INTO student_task (id_user, id_task, id_tskFolder)
+					SELECT sc.id_user, ttf.id_task, ttf.id_tskFolder
+					FROM task_tasksfolder ttf
+					JOIN taskFolder tf ON ttf.id_tskfolder = tf.id_tskFolder
+					JOIN student_class sc ON tf.id_class = sc.id_class
+					WHERE ttf.id_tskFolder = ?;`;
+
+        db.query(q2, [id], (err, result) => {
+          if (err) {
+            console.error('Failed to publish the folder.', err);
+            res.status(500).json({ error: 'Error publish the folder' });
+          } else {
+            res.status(200).json({ message: 'Publish the folder successfully!' });
+          }
+        });
+        // res.status(200).json({ message: 'Publish the folder successfully!' });
       }
     });
-
-    // db.query(q, [id_tskFolder], (err, result) => {
-    //   if (err) {
-    //     console.error('Failed to publish the folder', err);
-    //     res.status(500).json({ error: 'Error publish the folder' });
-    //   } else {
-    //     let students;
-    //     let tasks;
-    //     // const idTask = result.insertId;
-    //     //get all students by id_tskFolder
-    //     const q2 = `
-    // 			SELECT id_user
-    // 			FROM student_class sc
-    // 			JOIN taskfolder t ON sc.id_class = t.id_class
-    // 			WHERE t.id_tskFolder = ?
-    // 		`;
-
-    //     db.query(q2, [id_tskFolder], (err, result) => {
-    //       if (err) {
-    //         console.error('Failed to retrieve student IDs.', err);
-    //         res.status(500).json({ error: 'Error retrieving student IDs' });
-    //       } else {
-    //         console.log(result);
-    //         students = result;
-    //         //get all tasks from id_tskFolder
-    //         const q3 = `
-    // 					SELECT id_task
-    // 					FROM task_tasksfolder
-    // 					WHERE id_tskFolder = ?
-    // 				`;
-    //         db.query(q3, [id_tskFolder], (err, result) => {
-    //           if (err) {
-    //             console.error('Failed to retrieve student IDs.', err);
-    //             res.status(500).json({ error: 'Error retrieving student IDs' });
-    //           } else {
-    //             console.log(result);
-    //             tasks = result;
-    //             const insertQueries = [];
-    //             students.forEach((studentId) => {
-    //               tasks.forEach((taskId) => {
-    //                 const insertQuery = `
-    // 									INSERT INTO student_task (id_user, id_task) VALUES (?, ?)
-    // 								`;
-    //                 insertQueries.push({
-    //                   query: insertQuery,
-    //                   params: [studentId, taskId],
-    //                 });
-    //               });
-    //             });
-    //             insertQueries.forEach((queryObj) => {
-    //               const { query, params } = queryObj;
-    //               db.query(query, params, (err, result) => {
-    //                 if (err) {
-    //                   console.error('Failed to insert student_task data.', err);
-    //                 } else {
-    //                   console.log('Inserted student_task data successfully.');
-    //                 }
-    //               });
-    //             });
-    //             // res.status(200).json({ message: 'Publish the folder successfully!' });
-    //           }
-    //         });
-    //         // res.status(200).json({ message: 'Publish the folder successfully!' });
-    //       }
-    //     });
-    //   }
-    // });
   } catch (error) {
     console.error('Failed to publish the folder', error);
   }
 };
-
 export const deleteTask = (req, res) => {
   // console.log('ddd');
   const token = req.cookies.access_token;
@@ -473,5 +453,29 @@ export const deleteTask = (req, res) => {
     });
   } catch (error) {
     console.error('Error deleting task:', err);
+  }
+};
+export const updateTaskDone = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    const id_user = req.params.id;
+    const id_task = req.body.id_task;
+    const q = `
+			UPDATE student_task
+			SET is_task_done = 1 
+			WHERE id_user = ? and id_task = ?
+		`;
+
+    db.query(q, [id_user, id_task], (error, result) => {
+      if (error) {
+        console.error('Error updating task:', error);
+        res.status(500).json({ error: 'Error updating task done' });
+      } else {
+        res.status(200).json({ message: 'Task updated successfully' });
+      }
+    });
+  } catch (error) {
+    console.error('Error updating table:', error);
   }
 };

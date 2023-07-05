@@ -49,7 +49,7 @@ function UserEditForm({handleEditFormHide}) {
   };
 
   const handleSave = (fieldName) => {
-		console.log("save");
+		// console.log("save");
     const fieldErrors = validateField(fieldName);
     if (Object.keys(fieldErrors).length === 0) {
       setEditingFields((prevEditingFields) => ({
@@ -58,7 +58,7 @@ function UserEditForm({handleEditFormHide}) {
         [fieldName]: false,
       }));
 		
-			console.log(editingFields);
+			// console.log(editingFields);
       setErrors({});
 			setIsCurrentInputValid(true)
       // Update user data with the changes

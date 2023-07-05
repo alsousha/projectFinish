@@ -61,6 +61,7 @@ const Tasks = () => {
 			console.error('Error add item', error);
 		});
 	}
+	// console.log(filteredData);
 	return (
 		<div className='d-flex '>
 			<div className="container ">

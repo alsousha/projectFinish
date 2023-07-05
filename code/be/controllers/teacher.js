@@ -599,7 +599,7 @@ export const getTasksByFolder = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
   const { id_folder } = req.body;
-  const q = `SELECT tf.id_tskFolder, tf.id_task, t.task_name 
+  const q = `SELECT tf.id_tskFolder, tf.id_task, t.* 
            FROM task_tasksfolder tf
            JOIN task t ON tf.id_task = t.id_task
            WHERE tf.id_tskFolder = ?`;

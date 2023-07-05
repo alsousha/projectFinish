@@ -28,12 +28,27 @@ export const AuthContextProvider = ({ children }) => {
     } else if (userTmp.role === 'student') {
       //get class level
       try {
-        const res = await axios.get(`/student/${userTmp.id_user}/class-level`);
-        const totalUserData = { ...userTmp, lvl: res.data.classLevel };
+        const res = await axios.get(`/student/${userTmp.id_user}/data`);
+        // const data = JSON.parse(res.data);
+        const data = res.data.stringify;
+        console.log(res.data);
+        const totalUserData = {
+          ...userTmp,
+          lvl: res.data.class_level,
+          points: res.data.total_points,
+        };
         setCurrentUser(totalUserData);
       } catch (err) {
         console.log(err);
       }
+      //get points
+      // try {
+      //   const res = await axios.get(`/student/${userTmp.id_user}/points`);
+      //   const totalUserData = { ...userTmp, points: res.data.classLevel };
+      //   setCurrentUser(totalUserData);
+      // } catch (err) {
+      //   console.log(err);
+      // }
     }
 
     // console.log(res.data);

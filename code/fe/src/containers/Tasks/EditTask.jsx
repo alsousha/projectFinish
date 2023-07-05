@@ -222,7 +222,6 @@ function EditTask() {
   };
 
   //#endregion
-
 	const taskName = task.task_name
 	const imageUrl = `${API_URL}/${task.task_img}`;
 // console.log(selectedData);

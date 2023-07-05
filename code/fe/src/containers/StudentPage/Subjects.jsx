@@ -10,9 +10,6 @@ import Task_card from '../Tasks/Task_card.jsx';
 import { ReactComponent as DoneIcon } from '../../assets/img/done.svg';
 import { ReactComponent as NotDoneIcon } from '../../assets/img/notdone.svg';
 
-
-
-
 function Subjects() {
 	const [subjects, setSubjects] = useState([]);
 	const [folders, setFolders] = useState([]);
@@ -50,7 +47,7 @@ function Subjects() {
 	const fetchTasks = async (id_tskFolder) => {
 		// console.log(id_subject);
 		try {
-			const res = await axios.get(`/student/tasksbyfolder/${id_tskFolder}`);
+			const res = await axios.post(`/student/tasksbyfolder/${id_tskFolder}`, {id_user: currentUser.id_user});
 			// console.log(res.data);
 			if(res.data){
 				setTasks(res.data)
@@ -68,6 +65,7 @@ function Subjects() {
 		setTasks([])
     fetchTasks(id_tskFolder);
   };
+	console.log(tasks);
   return (
 	<div className='mt4 section_student_subjects'>
 		<div className="container">
@@ -95,8 +93,11 @@ function Subjects() {
 				<div className="d-flex g1 mt3">
 				{tasks&&tasks.map((item) => (
 					<div className="arr_item d-flex f-column jcc task_status" key={"task_student"+item.id_task}>
-						{item.is_done===1 ? <DoneIcon/> : <NotDoneIcon/>}
-						<Task_card item={item.task_name}/>
+						{item.is_task_done===1 ? <DoneIcon/> : <NotDoneIcon/>}
+						<div className={`${item.is_task_done===1 ? 'no-active' : 'active'}`}>
+							<Task_card item={item}/>
+						</div>
+					
 						{/* <button className=""  onClick={() => handleFolderClick(item.id_task)}>
 							{item.task_name}
 						</button> */}

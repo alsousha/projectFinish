@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { API_URL } from '../../constans.js';
+import { AuthContext } from '../../context/authContext.js';
 
 function Task_card(props) {
+	// console.log(props.item);
+	const { currentUser } = useContext(AuthContext);
 	const imageUrl = `${API_URL}/${props.item.task_img}`; // Replace with your server's base URL
-// console.log(props.item.task_name);
+
+	// console.log(props.item.task_name);
 // task/sequence/
 function capitalizeFirstLetter(str) {
-	return str.charAt(0).toUpperCase() + str.slice(1);
+	return str&&str.charAt(0).toUpperCase() + str.slice(1);
 }
 	return (
 		<div className="card__inner hover-shadow">
 			<Link
 				className=""
-				to={`/teacher/task/${props.item.id_task}`}
+				to={`/${currentUser.role}/task/${props.item.id_task}`}
 				state={{ task: props.item }}
 			>	
 				<h4 className='card__title'>{capitalizeFirstLetter(props.item.task_name)}</h4>	

@@ -13,8 +13,6 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 	const [templates, setTemplates] = useState([]);
 	const [levels, setLevels] = useState([]);
 	const [weights, setWeights] = useState([]);
-	
-
 
 	const [dataArray, setDataArray] = useState([]);
   const [selectedSubjects, setSelectedSubjects] = useState(['all']);
@@ -26,7 +24,7 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 
 	useEffect(() => {
     // Fetch initial list of tasks
-    fetchData().then(data => {
+    fetchData(20).then(data => {
 			console.log(data);
 			setDataArray(data)
 			// setFilteredData(data)
@@ -56,9 +54,9 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 
   }, []);
 
-	const fetchData = async () => {
+	const fetchData = async (countTask) => {
 		try {
-			const response = await axios.get(`/tasks/all/${currentUser.id_user}`);
+			const response = await axios.get(`/tasks/all/${currentUser.id_user}?count=${countTask}`);
 			return response.data;
 		} catch (error) {
 			console.error('Error fetching tasks', error);
@@ -93,7 +91,7 @@ function SidebarFilterTeacher({ updateFilteredData}) {
     }
   };
 	
-	const handleSubjectsChange = (subject) => {
+	const handleSubjectsChange = async (subject) => {
 		if (subject === 'all') {
       setSelectedSubjects(['all']);
     } else {
@@ -108,10 +106,12 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 			// console.log(selectedSubjects.includes(2));
 			// console.log(updatedSubjects);
 		}
+		const filteredData = await fetchData();
+ 		updateFilteredData(filteredData);
     
   };
 
-	const handleCategoryChange = (category) => {
+	const handleCategoryChange = async (category) => {
 		if (category === 'all') {
       setSelectedCategories(['all']);
     } else {
@@ -124,6 +124,9 @@ function SidebarFilterTeacher({ updateFilteredData}) {
 			setSelectedCategories(updatedCategories)
 			
 		}
+		// const filteredData = await fetchData();
+		// console.log(filterData);
+  	// updateFilteredData(filteredData);
     
   };
 	

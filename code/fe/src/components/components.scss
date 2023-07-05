@@ -75,3 +75,15 @@ footer{
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 }
+.info__wrap{
+	position: relative;
+	.info__inner{
+		position: absolute;
+    background-color: #fdde8d;
+    padding: 2rem;
+    width: 50rem;
+    border-radius: 2rem;
+    border: 2px solid;
+    z-index: 9;
+	}
+}

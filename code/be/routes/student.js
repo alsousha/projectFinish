@@ -1,20 +1,22 @@
 import express from 'express';
 import {
-  getStudentClassLevel,
+  getStudentData,
   getStudentSbjs,
   getTasksFoldersBySubject,
   getTasksByFolder,
   getAllTasks,
   getHWByStudent,
+  updatePoints,
 } from '../controllers/student.js';
 
 const router = express.Router();
-router.get('/:id/class-level', getStudentClassLevel);
+router.get('/:id/data', getStudentData);
 router.get('/sbjs/:id', getStudentSbjs);
 router.get('/taskfolders/:id', getTasksFoldersBySubject);
-router.get('/tasksbyfolder/:id', getTasksByFolder);
+router.post('/tasksbyfolder/:id', getTasksByFolder);
 router.get('/tasksall', getAllTasks);
 router.get('/hwtasks/:id', getHWByStudent);
+router.put('/updatepoints/:id', updatePoints);
 
 // router.get('/:id', getTeacherSbjs);
 // router.put('/:id', updateTeacherSubject);
