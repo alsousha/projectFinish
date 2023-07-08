@@ -14,7 +14,7 @@ function Students() {
 	
 	const { currentUser} = useContext(AuthContext)
 	
-	const [accounts, setAccounts] = useState([]);
+	const [accounts, setAccounts] = useState([]); //original list of classes
 	const [accountsActiveOrder, setAccountsActiveOrder] = useState([]);
 	const [classes, setClasses] = useState();
 	const [selectedClass, setSelectedClass] = useState('all');
@@ -35,7 +35,7 @@ function Students() {
 			console.log(err);
 		}
 	};
-	console.log(accountsActiveOrder);
+	// console.log(accountsActiveOrder);
 	const fetchClasses = async () => {
 		// console.log(id_class);
 		try {
@@ -62,10 +62,15 @@ function Students() {
 		setZaActive(false)
 		if(az){
 			//deactive az filter
-			setAccountsActiveOrder(accounts)
+			const filtered = filteredAccounts(accounts, selectedClass);
+			setAccountsActiveOrder(filtered);
 		}else{
-			const sortedAccounts = [...accounts].sort((a, b) => a.lastname.localeCompare(b.lastname));
-
+			let sortedAccounts
+			if(selectedClass!=='all'){
+				sortedAccounts = [...accountsActiveOrder].sort((a, b) => a.lastname.localeCompare(b.lastname));
+			}else{
+				sortedAccounts = [...accounts].sort((a, b) => a.lastname.localeCompare(b.lastname));
+			}
 			setAccountsActiveOrder(sortedAccounts)
 		}
 	};
@@ -75,24 +80,39 @@ function Students() {
 		setAzActive(false)
 		if(za){
 			//deactive za filter
-			setAccountsActiveOrder(accounts)
+			// setAccountsActiveOrder(accounts)
+			const filtered = filteredAccounts(accounts, selectedClass);
+			setAccountsActiveOrder(filtered);
 		}else{
-			const sortedAccounts = [...accounts].sort((a, b) => b.lastname.localeCompare(a.lastname));
+			let sortedAccounts
+			if(selectedClass!=='all'){
+				sortedAccounts = [...accountsActiveOrder].sort((a, b) => b.lastname.localeCompare(a.lastname));
+			}else{
+				sortedAccounts = [...accounts].sort((a, b) => b.lastname.localeCompare(a.lastname));
+			}
 			setAccountsActiveOrder(sortedAccounts)
+
+
+			// const sortedAccounts = [...accounts].sort((a, b) => b.lastname.localeCompare(a.lastname));
+			// setAccountsActiveOrder(sortedAccounts)
+		}
+	};
+	const filteredAccounts = (accounts, classToShow) => {
+		if (classToShow === 'all') {
+			return accounts;
+		} else {
+			return accounts.filter(item => item.class_name && item.class_name.toString() === classToShow);
 		}
 	};
 	const handleClassChange = (e) => {
-		setSelectedClass(e.target.value)
-		if (selectedClass === 'all') {
+		const classToShow = e.target.value
+		setSelectedClass(classToShow)
+		if (classToShow === 'all') {
 			setAccountsActiveOrder(accounts);
 		} else {
-			console.log("ddd");
-			const filteredAccounts = accounts.filter(item => item.id_class && item.id_class.toString() === selectedClass);
-			console.log(filteredAccounts);
-			setAccountsActiveOrder(filteredAccounts);
+			const filtered = filteredAccounts(accounts, classToShow);
+			setAccountsActiveOrder(filtered);
 		}
-	
-		// setSelectedClass(selectedClass);
 	};
 	
 	if (isLoading) {
