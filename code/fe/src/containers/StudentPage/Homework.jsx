@@ -33,7 +33,7 @@ function Homework() {
   return (
 		<div className='mt4 section_student_subjects'>
 		<div className="container">
-			<h2>Homework</h2>
+			<h1>Homework</h1>
 			<div className="main_content mt2">
 			<div className="d-flex g1 mt3 f-wrap">
 				{hwTasks&&hwTasks.map((item) => (

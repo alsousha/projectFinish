@@ -213,7 +213,7 @@ function Classes() {
   return (
 	<div className='mt4 section_classes'>
 		<div className="container">
-		<h2 className='center'>My Classes</h2>
+		<h1 className=''>My Classes</h1>
 		<div className="classes__wrap table_data mt4">
 			<div className="mt5 msg_block">
 				{message && <span className={message.msgClass}>{message.message}</span>}

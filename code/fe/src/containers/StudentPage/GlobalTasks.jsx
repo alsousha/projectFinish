@@ -7,7 +7,6 @@ import Task_card from '../Tasks/Task_card';
 function GlobalTasks() {
 	const [globalTasks, setGlobalTasks] = useState([]);
 
-
 	useEffect(() => {
     fetchData();
   }, []);
@@ -27,12 +26,12 @@ function GlobalTasks() {
   return (
 		<div className='mt4 section_student_subjects'>
 			<div className="container">
-				<h2>Global Tasks</h2>
+				<h1>Global Tasks</h1>
 				<div className="main_content mt2">
 				<div className="d-flex g1 mt3 f-wrap">
 					{globalTasks&&globalTasks.map((item) => (
 						<div className="arr_item d-flex f-column jcc" key={"task_student"+item.id_task}>
-							<Task_card item={item.task_name}/>
+							<Task_card item={item}/>
 						</div>
 					))}
 					</div>

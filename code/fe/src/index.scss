@@ -2,7 +2,9 @@
 @import "assets/styles/responsive";
 @import "assets/styles/setup";
 
-
+a{
+	color: inherit;
+}
 .msg_block{
 	height: 3rem;
 }

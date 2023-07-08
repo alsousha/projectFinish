@@ -46,21 +46,26 @@ function Reset() {
 				<Link className="d-flex aic g1" to="/"><BackIcon/><span>Go Back</span></Link>
 			</div>
 			<div className="reset_password">
-				{isFormVisiable && (<form className='formColumn'>
-					<input 
-						type="email" 
-						name="email"
-						placeholder='Email:' 
-						onChange={handleChange}
-						required
-					/>
-					
-					<button onClick={handleSubmit} className='btn_main'>Send request</button>
-					{err && <p className='error'>{err}</p>}
-				</form>)}
+				<h1 className='mb2'>Password recovery</h1>
+				{isFormVisiable && (
+					<>
+						<div className="">Please enter your email address. mail, to which your account is registered.</div>
+						<form className='formColumn mt2'>
+							<input 
+								type="email" 
+								name="email"
+								placeholder='Email:' 
+								onChange={handleChange}
+								required
+							/>
+							
+							<button onClick={handleSubmit} className='btn_main'>Send request</button>
+							{err && <p className='error'>{err}</p>}
+						</form>
+					</>)
+				}
 				{!isFormVisiable && (
 					<div>
-						<h2>Password recovery</h2>
 						<div>An email has been sent to <b>{input}</b> with a link to change the password.</div>
 						<div>If you have not received such an email, please check your spam folder.</div>
 					</div>

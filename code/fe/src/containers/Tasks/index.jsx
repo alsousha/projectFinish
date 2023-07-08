@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../context/authContext.js';
 
 import axios from 'axios';
 import { Link} from 'react-router-dom';
@@ -65,7 +64,7 @@ const Tasks = () => {
 	return (
 		<div className='d-flex '>
 			<div className="container ">
-				<h2 className='center mt4'>Tasks</h2>
+				<h1 className='mt4'>Tasks</h1>
 				<div className="back mt2 btn_main">
 					<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
 				</div>

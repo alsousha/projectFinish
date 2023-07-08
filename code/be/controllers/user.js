@@ -302,3 +302,12 @@ const isTokenExpired = (decodedToken) => {
   const currentTime = Date.now() / 1000; // Get current time in seconds
   return decodedToken.exp < currentTime;
 };
+export const getArticles = (req, res) => {
+  const q = 'SELECT * FROM blog';
+
+  db.query(q, (err, data) => {
+    if (err) return res.status(500).send(err);
+
+    return res.status(200).json(data);
+  });
+};

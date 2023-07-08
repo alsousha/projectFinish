@@ -69,7 +69,7 @@ function Subjects() {
   return (
 	<div className='mt4 section_student_subjects'>
 		<div className="container">
-			<h2>Subjects</h2>
+			<h1>Subjects</h1>
 			<span className="main_content mt2">
 				<div className="d-flex g1 mt3">
 				{subjects&&subjects.map((item) => (

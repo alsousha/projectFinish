@@ -121,7 +121,7 @@ function Students() {
   return (
 	<div className='mt4 section_accounts'>
 		<div className="container">
-			<h2>All students:</h2>
+			<h1>All students:</h1>
 			<div className="back mt2 btn_main">
 				<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
 			</div>

@@ -290,7 +290,7 @@ function Categories() {
   return (
 	<div className='mt4 section_categories'>
 		<div className="container">
-		<h2 className='center'>My Categories</h2>
+		<h1 className=''>My Categories</h1>
 		<div className="cats__wrap table_data mt4">
 			<div className="mt2 msg_block">
 				{errors.item_name && <span className='input_error mp2'>{errors.item_name}</span>}

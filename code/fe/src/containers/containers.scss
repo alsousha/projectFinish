@@ -155,3 +155,24 @@
 	}
 }
 
+.help_teacher__item{
+	padding: 3rem;
+	border-radius: 2rem;
+	&.left-item{
+		h3{
+			color: $accent;
+			margin-bottom: 1rem;
+		}
+		background-color: $main;
+		color: $white;
+
+	}
+	&.right-item{
+		background-color: $main-light;
+		li>svg{
+			width: 35px;
+			height: 35px;
+			border: 1px solid red;
+		}
+	}
+}

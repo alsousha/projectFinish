@@ -17,6 +17,7 @@ import '../containers.scss'
 import SingleClassFolder from './SingleClassFolder';
 import TaskSequence from '../Tasks/TaskSequence';
 import EditTask from '../Tasks/EditTask';
+import Blog from '../../pages/Blog';
 
 function TeacherPage() {
 
@@ -49,7 +50,7 @@ function TeacherPage() {
 					<Route path='/newtask' element={<NewTask />} />
 					<Route path='/students' element={<Students />} />
 					<Route path='/profile' element={<Profile />} />
-					<Route path='/' element={<span>logout</span>} />
+					<Route path='/' element={<Blog/>} />
 				</Routes>
 			</div>
 	  </div>

@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/authContext.js';
 function Task_card(props) {
 	// console.log(props.item);
 	const { currentUser } = useContext(AuthContext);
-	const imageUrl = `${API_URL}/${props.item.task_img}`; // Replace with your server's base URL
+	const imageUrl = `${API_URL}/${props.item.task_img}`; 
 
 	// console.log(props.item.task_name);
 // task/sequence/

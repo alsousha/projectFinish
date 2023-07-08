@@ -4,6 +4,12 @@
 .f-column{
 	flex-direction: column;
 }
+.f-rreverce{
+	flex-direction: row-reverse;
+}
+.f-creverce{
+	flex-direction: column-reverse;
+}
 .jcsb{
 	justify-content: space-between;
 }

@@ -6,6 +6,7 @@ import {
   resetPassword,
   updateUserPasswordReset,
   checkToken,
+  getArticles,
 } from '../controllers/user.js';
 
 const router = express.Router();
@@ -17,6 +18,7 @@ router.post('/check-password', checkPassword);
 router.post('/reset', resetPassword);
 router.post('/update-password', updateUserPasswordReset);
 router.post('/check_token', checkToken);
+router.get('/articles', getArticles);
 
 // router.get('/reset-password', resetPassword2);
 
