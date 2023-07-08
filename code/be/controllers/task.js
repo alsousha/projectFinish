@@ -14,6 +14,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 export const createTask = (req, res) => {
+  console.log('ff');
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
 

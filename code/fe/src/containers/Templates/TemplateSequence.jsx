@@ -59,8 +59,7 @@ function TemplateSequence({generalTaskData, handleMessage, setSelectedData, spec
 				addNewItem(generalTaskData, dataObject)
 			}
 			// console.log(dataObject);
-		
-			// 
+		 
 			setTimeout(() => {
 				// setMessage('');
 				navigate("/teacher/tasks")
@@ -164,15 +163,15 @@ function TemplateSequence({generalTaskData, handleMessage, setSelectedData, spec
 		formData.append('id_teacher', id_teacher);
 		formData.append('selectedFile', dataToSend.selectedFile); 
 // console.log(formData.get('selectedFile'));
-		
+
 		axios
-		.post(`/tasks/createtask`, formData, {
+		.post(`/tasks/createtask/1`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data', // Set the content type to multipart/form-data
       },
     })
 		.then((res) => {
-			
+			console.log("tyyy");
 			const msg={
 				msgClass: res.status===200 ? "success" : "error",
 				text: res.status===200 ? "Create the task successfully!" : 'Error add task'
@@ -189,9 +188,10 @@ function TemplateSequence({generalTaskData, handleMessage, setSelectedData, spec
 	}
   return (
     <div>
+			<div className="mb1 mt2">Enter elements in right sequance:</div>
       <div className="input-elements-container">{inputElements}</div>
       {/* <button onClick={handleAddInput}>Add Input</button> */}
-			<button className="link d-flex jcsb aic g1" onClick={handleAddInput}><AddIcon/></button>
+			<button className="link d-flex jcsb aic g1" onClick={handleAddInput}><AddIcon/> <span className='ml1'>Add new Element</span></button>
 			<button
 				className='btn_blue active mt2 mb2'
 				onClick={handleSaveData}>

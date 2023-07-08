@@ -26,7 +26,7 @@ router.delete('/taskfromfolder/:id', deleteTaskFromFolder);
 router.delete('/task/:id', deleteTask);
 router.get('/folderstatus/:id', getFolderStatus);
 router.post('/publishfolder/:id', publishFolder);
-router.post('/createtask/', createTask);
+router.post('/createtask/:id', createTask);
 router.post('/edittask/:id', editTask);
 router.put('/updatetaskdone/:id', updateTaskDone);
 export default router;

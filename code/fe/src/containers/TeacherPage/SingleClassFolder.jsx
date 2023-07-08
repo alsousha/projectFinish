@@ -294,7 +294,7 @@ const publishFolder = async()=>{
 	});
 }
 const isPublishText = 'You can not modify this folder bacause it was published'
-const isNotPublishText = 'Please Add/Remove Tasks and click the "Publish Tasks" button. Please note that once a folder is published, you will not be able to edit or delete the folder'
+const isNotPublishText = 'Add/Remove Tasks and click the "Publish Tasks" button. Please note that once a folder is published, you will NOT be able to edit or delete the folder'
 return (
 		<div className='mt3'>
 			<div className="container">
