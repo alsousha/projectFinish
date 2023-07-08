@@ -18,6 +18,7 @@ import SingleClassFolder from './SingleClassFolder';
 import TaskSequence from '../Tasks/TaskSequence';
 import EditTask from '../Tasks/EditTask';
 import Blog from '../../pages/Blog';
+import Article from '../../pages/Article';
 
 function TeacherPage() {
 
@@ -45,6 +46,7 @@ function TeacherPage() {
 					{/* <Route path='/write' element={<WriteTask />} /> */}
 					<Route path='/tasks' element={<Tasks />} />
 					<Route path='/task/:id' element={<Task />} />
+					<Route path='/blog/:id' element={<Article />} />
 					<Route path='/taskedit/:id' element={<EditTask />} />
 					<Route path='/task/sequence/:id' element={<TaskSequence />} />
 					<Route path='/newtask' element={<NewTask />} />

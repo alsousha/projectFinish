@@ -176,3 +176,24 @@
 		}
 	}
 }
+.article__wrap{
+	img{
+		height: 30rem;
+		display: block;
+		margin: 0 auto;
+	}
+	.article__text{
+		text-align: justify;
+	}
+
+}
+.arts__wrap{
+	.art__item{
+		padding: 2rem;
+		&:hover{
+			transform: translateY(-15px);
+			transition: all 0.5s;
+			border: 1px solid $main-light;
+		}
+	}
+}

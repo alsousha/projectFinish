@@ -8,6 +8,7 @@ import { AuthContext } from '../context/authContext';
 import NotFound from '../pages/404';
 import Reset from './Intro/Reset';
 import PasswordResetForm from './Intro/PasswordResetForm';
+import Article from '../pages/Article';
 
 function MainPage({setIsLoggedIn, setUserName, isLoggedIn}) {
 	// const [currentLink, setCurrentLink] = useState()

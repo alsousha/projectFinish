@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { API_URL } from '../constans';
+import { Link } from 'react-router-dom';
 
 function Blog() {
 	const [dataArray, setDataArray] = useState([]);
@@ -25,9 +26,14 @@ function Blog() {
 		<div className='mt5'>
 			<div className="container">
 				<h1 className='center'>Blog</h1>
-				<div className="sbjs__wrap mt6" >
+				<div className="arts__wrap mt6" >
 				{dataArray && dataArray.map((elem, i) => (
-					<div className={`sbj__item d-flex mb4 g2 ${i%2===0 && 'f-rreverce'}`} key={"art-"+i}>
+					<Link 
+						to={`blog/${elem.id_article}`}
+						state={{ article: elem }}
+						className={`art__item d-flex mb4 g2 ${i%2===0 && 'f-rreverce'}`} 
+						key={"art-"+i}
+						>
 						<img src={`${API_URL}/uploads/${elem.art_img}`} alt="art_icon" className="art__icon" />
 						<div className="text">
 							<h2 className='mb2'>{capitalizeFirstLetter(elem.art_title)}</h2>
@@ -41,7 +47,7 @@ function Blog() {
 							</div>
 						</div>
 						
-					</div>
+					</Link>
 				))}
 				</div>
 			</div>

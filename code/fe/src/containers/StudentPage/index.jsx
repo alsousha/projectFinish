@@ -11,6 +11,7 @@ import Profile from '../../pages/Profile';
 import NotFound from '../../pages/404';
 import Task from '../Tasks/Task';
 import Blog from '../../pages/Blog';
+import Article from '../../pages/Article';
 
 function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
 	// console.log(isLoggedIn);
@@ -41,6 +42,7 @@ function StudentPage({isLoggedIn, setIsLoggedIn, userData}) {
 					<Route path='/globalTasks' element={<GlobalTasks />} />
 					<Route path='/profile' element={<Profile />} />
 					<Route path='/task/:id' element={<Task />} />
+					<Route path='/blog/:id' element={<Article />} />
 					<Route path='/' element={<Blog/>} />
 				</Routes>
 			</div>
