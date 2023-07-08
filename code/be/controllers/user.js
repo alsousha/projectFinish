@@ -1,6 +1,7 @@
 import { db } from '../db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
 
 import { getSbjsIdBySbjsName } from './sbj.js';
 
@@ -166,6 +167,38 @@ export const updateUserPassword = (req, res) => {
     });
   });
 };
+export const checkToken = (req, res) => {
+  const { token } = req.body;
+  const secret = 'jwtkey';
+  const decodedToken = verifyToken(token, secret);
+
+  if (!decodedToken || isTokenExpired(decodedToken)) {
+    // Token is invalid or expired
+    return res.status(400).json({ error: 'Invalid or expired token' });
+  } else return res.status(200).json('Token is valid');
+};
+export const updateUserPasswordReset = (req, res) => {
+  const { token, newPassword, email } = req.body;
+  // console.log(token);
+
+  // const secret = 'jwtkey';
+  // const decodedToken = verifyToken(token, secret);
+
+  // if (!decodedToken || isTokenExpired(decodedToken)) {
+  //   // Token is invalid or expired
+  //   res.status(400).json({ error: 'Invalid or expired token' });
+  //   return;
+  // }
+  // // Passwords match, current password is valid
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(newPassword, salt);
+  const q = 'UPDATE user SET password = ? WHERE email = ?';
+
+  db.query(q, [hash, email], (err, data) => {
+    if (err) return res.status(402).json('Something wrong, try later');
+    return res.status(200).json('Password has been updated');
+  });
+};
 export const checkPassword = (req, res) => {
   const { currentPassword, id_user } = req.body;
   //fetch password from bd
@@ -201,4 +234,71 @@ export const checkPassword = (req, res) => {
 
     // console.log('User password:', password);
   });
+};
+export const resetPassword = (req, res) => {
+  console.log('reset');
+  const { email } = req.body; // Assuming the email is provided in the request body
+  const q = 'SELECT id_user FROM user WHERE email = ?';
+  db.query(q, [email], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the user exists
+    if (data.length === 0) {
+      return res.status(204).json({ message: 'User not found.' });
+    }
+    // Generate a secure token
+    const token = generateToken(email);
+    // console.log(token);
+
+    // Call the sendPasswordResetEmail function with the email and token
+    sendPasswordResetEmail(email, token);
+    return res.status(200).json({ message: 'Password reset email has been sent.' });
+  });
+};
+export const resetPassword2 = (req, res) => {
+  console.log('reset2');
+};
+
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, 'jwtkey', { expiresIn: '1h' });
+};
+const sendPasswordResetEmail = (email, token) => {
+  // Your nodemailer configuration and email options remain the same
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'adb.kzn@gmail.com',
+      pass: 'trjhxbvletsqpelc',
+    },
+  });
+
+  const mailOptions = {
+    from: 'adb.kzn.com',
+    to: email,
+    subject: 'Password Reset',
+    html: `<p>Please click the following link to reset your password:</p>
+		<a href="http://localhost:3000/reset-password?token=${token}&email=${email}">Reset Password</a>`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+};
+const verifyToken = (token, secret) => {
+  try {
+    const decoded = jwt.verify(token, secret);
+    return decoded;
+  } catch (error) {
+    // Token verification failed
+    return null;
+  }
+};
+
+// Function to check token expiration
+const isTokenExpired = (decodedToken) => {
+  const currentTime = Date.now() / 1000; // Get current time in seconds
+  return decodedToken.exp < currentTime;
 };

@@ -52,7 +52,7 @@ function LoginForm() {
 			<button onClick={handleSubmit} className='btn_main'>Login</button>
 			{err && <p className='error'>{err}</p>}
 		</form>
-		<div className='italic mt2 hover-line'><Link to="/register">Forget password?</Link></div>
+		<div className='italic mt2 hover-line'><Link to="/reset">Forget password?</Link></div>
 		<div className='mt2 hover-line '>
 			<span>Don't you have an account?</span>&emsp;
 			<span className='italic'>

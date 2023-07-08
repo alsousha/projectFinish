@@ -6,6 +6,8 @@ import StudentPage from './StudentPage';
 import Register from './Register';
 import { AuthContext } from '../context/authContext';
 import NotFound from '../pages/404';
+import Reset from './Intro/Reset';
+import PasswordResetForm from './Intro/PasswordResetForm';
 
 function MainPage({setIsLoggedIn, setUserName, isLoggedIn}) {
 	// const [currentLink, setCurrentLink] = useState()
@@ -53,7 +55,8 @@ function MainPage({setIsLoggedIn, setUserName, isLoggedIn}) {
 					<Routes>
 						{renderedRoutes}
 						<Route path="/register" element={<Register />} />
-						{/* <Route path="/login" element={<Register />} /> */}
+						<Route path="/reset" element={<Reset />} />
+						<Route path="/reset-password" element={<PasswordResetForm />} />
 						<Route exact path="/" element={<Intro />} />
 						<Route exact path="/*" element={<NotFound/>} />
 					</Routes>
