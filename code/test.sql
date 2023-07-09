@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2023 at 06:59 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jul 09, 2023 at 09:55 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,7 +32,7 @@ CREATE TABLE `blog` (
   `art_title` varchar(255) NOT NULL,
   `art_text` varchar(6000) NOT NULL,
   `art_img` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `blog`
@@ -54,7 +54,7 @@ CREATE TABLE `category` (
   `category_name` varchar(15) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT current_timestamp(),
   `id_subject` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category`
@@ -87,7 +87,7 @@ CREATE TABLE `certification` (
   `flag_as_available` tinyint(4) NOT NULL,
   `description` varchar(100) NOT NULL,
   `img_url` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ CREATE TABLE `class` (
   `class_name` varchar(15) NOT NULL,
   `class_level` int(2) UNSIGNED NOT NULL,
   `id_teacher` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `class`
@@ -109,12 +109,12 @@ CREATE TABLE `class` (
 INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
 (19, 'a1', 0, 120),
 (20, 'a2', 0, 120),
-(22, 'a2w', 0, 121),
+(22, 'a3', 0, 121),
 (23, 'a4', 0, 121),
 (24, 'a5', 0, 122),
 (25, 'a6', 0, 122),
-(26, '1a', 0, 146),
-(27, 'a1', 0, 121);
+(26, 'b1', 0, 146),
+(27, 'b2', 0, 121);
 
 -- --------------------------------------------------------
 
@@ -126,7 +126,7 @@ CREATE TABLE `student` (
   `id_user` int(3) NOT NULL,
   `class_level` int(2) UNSIGNED NOT NULL,
   `total_points` int(5) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `student`
@@ -155,7 +155,8 @@ INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 (142, 0, 0),
 (143, 0, 0),
 (144, 2, 0),
-(145, 5, 53);
+(145, 5, 53),
+(149, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -167,7 +168,7 @@ CREATE TABLE `student_certification` (
   `id_user` int(3) NOT NULL,
   `id_certif` int(3) NOT NULL,
   `data_get` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -178,7 +179,7 @@ CREATE TABLE `student_certification` (
 CREATE TABLE `student_class` (
   `id_user` int(3) NOT NULL,
   `id_class` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `student_class`
@@ -208,7 +209,8 @@ INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
 (143, 19),
 (144, 20),
 (145, 22),
-(145, 26);
+(145, 26),
+(149, 22);
 
 -- --------------------------------------------------------
 
@@ -222,41 +224,49 @@ CREATE TABLE `student_task` (
   `id_tskFolder` int(11) NOT NULL,
   `is_task_done` tinyint(1) NOT NULL,
   `date` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `student_task`
 --
 
 INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`, `date`) VALUES
-(127, 32, 59, 0, '2023-07-04 06:44:31'),
-(127, 34, 66, 0, '2023-07-08 16:49:43'),
-(127, 35, 64, 0, '2023-07-04 21:26:36'),
-(127, 35, 66, 0, '2023-07-08 16:49:43'),
-(127, 40, 66, 0, '2023-07-08 16:49:43'),
-(127, 41, 65, 0, '2023-07-04 22:08:32'),
-(127, 52, 64, 0, '2023-07-04 21:26:36'),
-(128, 32, 59, 0, '2023-07-04 06:44:31'),
-(128, 34, 66, 0, '2023-07-08 16:49:43'),
-(128, 35, 64, 0, '2023-07-04 21:26:36'),
-(128, 35, 66, 0, '2023-07-08 16:49:43'),
-(128, 40, 66, 0, '2023-07-08 16:49:43'),
-(128, 41, 65, 0, '2023-07-04 22:08:32'),
-(128, 52, 64, 0, '2023-07-04 21:26:36'),
-(131, 32, 59, 0, '2023-07-04 06:44:31'),
-(131, 34, 66, 0, '2023-07-08 16:49:43'),
-(131, 35, 64, 0, '2023-07-04 21:26:36'),
-(131, 35, 66, 0, '2023-07-08 16:49:43'),
-(131, 40, 66, 0, '2023-07-08 16:49:43'),
-(131, 41, 65, 0, '2023-07-04 22:08:32'),
-(131, 52, 64, 0, '2023-07-04 21:26:36'),
-(145, 32, 59, 1, '2023-07-04 06:44:31'),
-(145, 34, 66, 0, '2023-07-08 16:49:43'),
-(145, 35, 64, 1, '2023-07-04 21:26:36'),
-(145, 35, 66, 0, '2023-07-08 16:49:43'),
-(145, 40, 66, 1, '2023-07-08 16:49:43'),
-(145, 41, 65, 1, '2023-07-04 22:08:32'),
-(145, 52, 64, 1, '2023-07-04 21:26:36');
+(127, 61, 70, 0, '2023-07-09 18:40:37'),
+(127, 62, 70, 0, '2023-07-09 18:40:37'),
+(127, 63, 71, 0, '2023-07-09 19:27:31'),
+(127, 64, 70, 0, '2023-07-09 18:40:37'),
+(127, 65, 70, 0, '2023-07-09 18:40:37'),
+(127, 66, 71, 0, '2023-07-09 19:27:31'),
+(128, 61, 70, 0, '2023-07-09 18:40:37'),
+(128, 62, 70, 0, '2023-07-09 18:40:37'),
+(128, 63, 71, 0, '2023-07-09 19:27:31'),
+(128, 64, 70, 0, '2023-07-09 18:40:37'),
+(128, 65, 70, 0, '2023-07-09 18:40:37'),
+(128, 66, 71, 0, '2023-07-09 19:27:31'),
+(131, 61, 70, 0, '2023-07-09 18:40:37'),
+(131, 62, 70, 0, '2023-07-09 18:40:37'),
+(131, 63, 71, 0, '2023-07-09 19:27:31'),
+(131, 64, 70, 0, '2023-07-09 18:40:37'),
+(131, 65, 70, 0, '2023-07-09 18:40:37'),
+(131, 66, 71, 0, '2023-07-09 19:27:31'),
+(132, 62, 68, 0, '2023-07-09 19:35:39'),
+(132, 63, 68, 0, '2023-07-09 19:35:39'),
+(132, 67, 67, 0, '2023-07-09 19:35:14'),
+(132, 68, 67, 0, '2023-07-09 19:35:14'),
+(133, 62, 68, 0, '2023-07-09 19:35:39'),
+(133, 63, 68, 0, '2023-07-09 19:35:39'),
+(133, 67, 67, 0, '2023-07-09 19:35:14'),
+(133, 68, 67, 0, '2023-07-09 19:35:14'),
+(134, 62, 68, 0, '2023-07-09 19:35:39'),
+(134, 63, 68, 0, '2023-07-09 19:35:39'),
+(134, 67, 67, 0, '2023-07-09 19:35:14'),
+(134, 68, 67, 0, '2023-07-09 19:35:14'),
+(145, 61, 70, 0, '2023-07-09 18:40:37'),
+(145, 62, 70, 0, '2023-07-09 18:40:37'),
+(145, 63, 71, 0, '2023-07-09 19:27:31'),
+(145, 64, 70, 0, '2023-07-09 18:40:37'),
+(145, 65, 70, 0, '2023-07-09 18:40:37'),
+(145, 66, 71, 0, '2023-07-09 19:27:31');
 
 -- --------------------------------------------------------
 
@@ -268,7 +278,7 @@ CREATE TABLE `subject` (
   `id_subject` int(3) NOT NULL,
   `subject_name` varchar(20) NOT NULL,
   `subject_icon` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `subject`
@@ -306,31 +316,22 @@ CREATE TABLE `task` (
   `id_category` int(3) NOT NULL,
   `id_template` int(11) NOT NULL,
   `specific_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`specific_data`))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `task`
 --
 
 INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `task_weight`, `task_level`, `task_img`, `id_teacher`, `id_category`, `id_template`, `specific_data`) VALUES
-(32, 'MyTask1', '<p><em>Inadf </em>dfgr<strong>eq</strong></p><p><u>werd</u></p>', '2023-07-02 23:12:27', 1, 1, 'uploads/resized_dog.png', 121, 110, 1, '{\"input-0\":\"sdf1\",\"input-1\":\"sdwe2\",\"input-2\":\"zxc3\"}'),
-(33, 'sdf', '<p>rty</p>', '2023-07-08 01:28:59', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
-(34, 'task1', '', '2023-06-30 19:50:46', 5, 6, 'uploads\\match.jpg', 121, 114, 1, '{\"input-0\":\"ert\",\"input-1\":\"hgj\"}'),
-(35, 'task3', '', '2023-06-30 19:52:59', 1, 1, 'uploads\\logo.png', 121, 110, 1, '{\"input-0\":\"we\"}'),
-(36, 'Task kuku', '<p>werxcv</p>', '2023-07-02 23:15:53', 1, 1, 'uploads/resized_img_false.png', 121, 110, 1, '{\"input-0\":\"wer1\",\"input-1\":\"rty2\"}'),
-(37, 'kuu2', '', '2023-06-30 23:09:14', 1, 1, 'uploads\\sequence.jpg', 121, 110, 1, '{\"input-0\":\"dg\"}'),
-(40, 'Task seq', '<p>Instruction of task sequance</p>', '2023-07-02 23:16:10', 1, 1, 'uploads/resized_cat.png', 121, 114, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
-(41, 'Task seq3', 'Instruction of task sequance3', '2023-07-01 14:13:14', 3, 8, 'uploads\\edit.png', 121, 112, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"asd2\",\"input-2\":\"zxc3\"}'),
-(45, 'dfg', 'dfgrt', '2023-07-01 14:47:57', 3, 4, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"dfg\"}'),
-(49, 'rw', '<p>fdgertgd</p>', '2023-07-01 15:32:31', 1, 1, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"et\"}'),
-(52, 't', '<p>ert</p>', '2023-07-01 15:36:29', 1, 1, 'uploads/resized_levelone_two.png', 121, 110, 1, '{\"input-0\":\"er\"}'),
-(53, 'sdf', '<p>wer</p>', '2023-07-01 15:39:33', 1, 1, 'uploads/resized_israel.png', 121, 112, 1, '{\"input-0\":\"rtyu\"}'),
-(54, 'Example Sequence', '<h2>Lorem, ipsum dolor </h2><p>Sit amet consectetur adipisicing elit. Beatae, fugit repellendus, non perferendis illum iusto ipsam, incidunt ut sunt sint nostrum molestiae officia eveniet <a href=\"www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\">ullam </a>molestias illo maiores velit atque.</p><p><u>Incidunt </u>ut sunt sint nostrum molestiae officia eveniet ullam molestias illo <strong>maiores </strong>velit atque.</p><ol><li>molestiae </li><li>nostrum </li><li>illum </li></ol>', '2023-07-01 15:49:21', 3, 5, 'uploads/resized_tt.jpg', 121, 110, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
-(56, 'sdf', '<p>rty</p>', '2023-07-08 01:29:33', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
-(57, 'sdf', '<p>rty</p>', '2023-07-08 01:30:20', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
-(58, 'sdf', '<p>hk</p>', '2023-07-08 01:30:39', 1, 1, 'uploads/resized_levelone_eight.png', 121, 110, 1, '{\"input-0\":\"hjk\",\"input-1\":\"hjk\"}'),
-(59, 'my Task2', '<p>Text my Task2, <strong>instruction</strong></p>', '2023-07-08 01:32:30', 1, 1, 'uploads/resized_tiger.png', 121, 110, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"qwe2\",\"input-2\":\"qwe3\"}'),
-(60, 'Task Sec', '<p>Instr sdf <strong>ytdutu</strong></p><ul><li>gyhu</li><li>rtset</li><li>fcty</li></ul>', '2023-07-08 13:54:15', 4, 8, 'uploads/resized_cat.png', 121, 110, 1, '{\"input-0\":\"sdf1\",\"input-1\":\"dfg2\",\"input-2\":\"dfg3\"}');
+(61, 'Present simple 1', '<p>We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</p>', '2023-07-09 15:26:42', 1, 1, 'uploads/resized_present simple.jpeg', 121, 110, 1, '{\"input-0\":\"The\",\"input-1\":\"cat\",\"input-2\":\"sleeps\"}'),
+(62, 'Present simple 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:27:00', 1, 1, 'uploads/resized_present simple.jpeg', 121, 110, 1, '{\"input-0\":\"I love\",\"input-1\":\"ice cream\",\"input-2\":\"to eat\"}'),
+(63, 'Present simple 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:27:16', 1, 1, 'uploads/resized_present simple.jpeg', 121, 110, 1, '{\"input-0\":\"Mom cooks\",\"input-1\":\"delicious pasta\",\"input-2\":\"for dinner\"}'),
+(64, 'Future 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:23:03', 3, 3, 'uploads/resized_future.jpeg', 121, 114, 1, '{\"input-0\":\"While sleeping\",\"input-1\":\"the cat\",\"input-2\":\"dreams of\",\"input-3\":\"catching birds\"}'),
+(65, 'Future 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:24:35', 3, 3, 'uploads/resized_future.jpeg', 121, 114, 1, '{\"input-0\":\"Today, the radiant sun\",\"input-1\":\"casts its brilliance\",\"input-2\":\"upon the world\"}'),
+(66, 'Future 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:34:40', 3, 3, 'uploads/resized_future.jpeg', 121, 114, 1, '{\"input-0\":\"She proudly\",\"input-1\":\"holds a\",\"input-2\":\"magnificent\",\"input-3\":\"red balloon\"}'),
+(67, 'Past simple 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:31:40', 1, 1, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"The\",\"input-1\":\"cat\",\"input-2\":\"slept\"}'),
+(68, 'Past simple 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:32:41', 2, 2, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"My\",\"input-1\":\"dog\",\"input-2\":\"liked to\",\"input-3\":\"chase squirrels\"}'),
+(69, 'Past simple 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:34:08', 3, 3, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"They\",\"input-1\":\"built\",\"input-2\":\"sandcastles\",\"input-3\":\"on the\",\"input-4\":\"beach\"}');
 
 -- --------------------------------------------------------
 
@@ -344,7 +345,7 @@ CREATE TABLE `taskfolder` (
   `is_publish` tinyint(1) NOT NULL DEFAULT 0,
   `id_class` int(3) NOT NULL,
   `id_subject` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `taskfolder`
@@ -355,10 +356,12 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_cl
 (19, 'historyclass1', 0, 20, 3),
 (57, 'java 5.07', 1, 26, 4),
 (58, 'java 23.6', 1, 26, 4),
-(59, 'tasks for 30.06', 1, 22, 2),
-(64, 'tasks for 4.07', 1, 22, 2),
-(65, 'tasks for 7.07', 1, 22, 2),
-(66, 'tasks for 12.07', 1, 22, 2);
+(67, 'tasks for 30.12', 1, 23, 2),
+(68, 'tasks for 15.12', 1, 23, 2),
+(69, 'tasks for 20.12', 0, 23, 2),
+(70, 'Tasks for 10.12', 1, 22, 2),
+(71, 'Tasks for 15.12', 1, 22, 2),
+(72, 'Tasks for 20.12', 0, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -369,20 +372,23 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_cl
 CREATE TABLE `task_tasksfolder` (
   `id_task` int(3) NOT NULL,
   `id_tskFolder` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `task_tasksfolder`
 --
 
 INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
-(32, 59),
-(34, 66),
-(35, 64),
-(35, 66),
-(40, 66),
-(41, 65),
-(52, 64);
+(61, 70),
+(62, 68),
+(62, 70),
+(63, 68),
+(63, 71),
+(64, 70),
+(65, 70),
+(66, 71),
+(67, 67),
+(68, 67);
 
 -- --------------------------------------------------------
 
@@ -394,7 +400,7 @@ CREATE TABLE `task_template` (
   `id_template` int(3) NOT NULL,
   `template_name` varchar(10) NOT NULL,
   `template_inner` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `task_template`
@@ -413,7 +419,7 @@ INSERT INTO `task_template` (`id_template`, `template_name`, `template_inner`) V
 CREATE TABLE `teacher` (
   `id_user` int(30) NOT NULL,
   `count_of_tasks` int(3) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `teacher`
@@ -435,7 +441,7 @@ INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
 CREATE TABLE `teacher_sbjs` (
   `id_user` int(3) NOT NULL,
   `id_subject` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `teacher_sbjs`
@@ -461,7 +467,7 @@ CREATE TABLE `template` (
   `id_template` int(11) NOT NULL,
   `template_name` varchar(255) NOT NULL,
   `template_img` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `template`
@@ -485,7 +491,7 @@ CREATE TABLE `user` (
   `name` varchar(15) NOT NULL,
   `lastname` varchar(15) NOT NULL,
   `img_url` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -519,7 +525,8 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 (144, 'student', 'keren@gmail.com', '$2b$10$wHz0CYWRRG33V2mC9nMgz.BTRWC7WAkp7Dy2Tz9TgjKmu9w6vx8vK', 'Keren', 'Kerenov', 'avatar-2.svg'),
 (145, 'student', 'ivan@gmail.com', '$2b$10$qgEGALMrH.DhnUfC72A4ceSYsR4JMpRoGdTg4O76UvS7ShVqGqt1S', 'Ivan', 'Ivanov', 'avatar-2.svg'),
 (146, 'teacher', 'kate@gmail.com', '$2b$10$.6lVybCmI4gtJLhG74/5SOBmH5gCxJGmy6SXBOa5.lhFbsDA0bcsu', 'Kate', 'Branch', 'avatar-2.svg'),
-(148, 'teacher', 'alsousha21@gmail.com', '$2b$10$9hu.UnZlipxc256jJxfV3ODuV4ktOfIC4cSeh132gCW2deKxoiVbK', 'Alsu2', 'Bogdanova', 'avatar-2.svg');
+(148, 'teacher', 'alsousha21@gmail.com', '$2b$10$9hu.UnZlipxc256jJxfV3ODuV4ktOfIC4cSeh132gCW2deKxoiVbK', 'Alsu2', 'Bogdanova', 'avatar-2.svg'),
+(149, 'student', 'fannyapptest@gmail.com', '$2b$10$JJNzILv7bJ/Uc7PKkXE2R.WHnNhn8IjhuN5Q11EHJ3GTnZ1HfSweq', 'Fanny', 'App', 'avatar-2.svg');
 
 --
 -- Indexes for dumped tables
@@ -679,13 +686,13 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `task_template`
@@ -703,7 +710,7 @@ ALTER TABLE `template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- Constraints for dumped tables
