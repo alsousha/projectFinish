@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2023 at 09:55 PM
+-- Generation Time: Jul 10, 2023 at 09:09 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -231,6 +231,14 @@ CREATE TABLE `student_task` (
 --
 
 INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`, `date`) VALUES
+(123, 82, 82, 0, '2023-07-10 19:06:09'),
+(123, 83, 82, 0, '2023-07-10 19:06:09'),
+(123, 85, 83, 0, '2023-07-10 19:06:33'),
+(123, 86, 83, 0, '2023-07-10 19:06:33'),
+(124, 82, 82, 0, '2023-07-10 19:06:09'),
+(124, 83, 82, 0, '2023-07-10 19:06:09'),
+(124, 85, 83, 0, '2023-07-10 19:06:33'),
+(124, 86, 83, 0, '2023-07-10 19:06:33'),
 (127, 61, 70, 0, '2023-07-09 18:40:37'),
 (127, 62, 70, 0, '2023-07-09 18:40:37'),
 (127, 63, 71, 0, '2023-07-09 19:27:31'),
@@ -243,6 +251,10 @@ INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`
 (128, 64, 70, 0, '2023-07-09 18:40:37'),
 (128, 65, 70, 0, '2023-07-09 18:40:37'),
 (128, 66, 71, 0, '2023-07-09 19:27:31'),
+(129, 82, 82, 0, '2023-07-10 19:06:09'),
+(129, 83, 82, 0, '2023-07-10 19:06:09'),
+(129, 85, 83, 0, '2023-07-10 19:06:33'),
+(129, 86, 83, 0, '2023-07-10 19:06:33'),
 (131, 61, 70, 0, '2023-07-09 18:40:37'),
 (131, 62, 70, 0, '2023-07-09 18:40:37'),
 (131, 63, 71, 0, '2023-07-09 19:27:31'),
@@ -261,12 +273,46 @@ INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`
 (134, 63, 68, 0, '2023-07-09 19:35:39'),
 (134, 67, 67, 0, '2023-07-09 19:35:14'),
 (134, 68, 67, 0, '2023-07-09 19:35:14'),
+(135, 71, 73, 0, '2023-07-10 18:38:19'),
+(135, 72, 73, 0, '2023-07-10 18:38:19'),
+(135, 73, 74, 0, '2023-07-10 18:38:44'),
+(135, 74, 75, 0, '2023-07-10 18:39:17'),
+(135, 75, 75, 0, '2023-07-10 18:39:17'),
+(135, 76, 76, 0, '2023-07-10 18:39:40'),
+(136, 71, 73, 0, '2023-07-10 18:38:19'),
+(136, 72, 73, 0, '2023-07-10 18:38:19'),
+(136, 73, 74, 0, '2023-07-10 18:38:44'),
+(136, 74, 75, 0, '2023-07-10 18:39:17'),
+(136, 75, 75, 0, '2023-07-10 18:39:17'),
+(136, 76, 76, 0, '2023-07-10 18:39:40'),
+(137, 71, 73, 0, '2023-07-10 18:38:19'),
+(137, 72, 73, 0, '2023-07-10 18:38:19'),
+(137, 73, 74, 0, '2023-07-10 18:38:44'),
+(137, 74, 75, 0, '2023-07-10 18:39:17'),
+(137, 75, 75, 0, '2023-07-10 18:39:17'),
+(137, 76, 76, 0, '2023-07-10 18:39:40'),
+(142, 82, 82, 0, '2023-07-10 19:06:09'),
+(142, 83, 82, 0, '2023-07-10 19:06:09'),
+(142, 85, 83, 0, '2023-07-10 19:06:33'),
+(142, 86, 83, 0, '2023-07-10 19:06:33'),
+(143, 82, 82, 0, '2023-07-10 19:06:09'),
+(143, 83, 82, 0, '2023-07-10 19:06:09'),
+(143, 85, 83, 0, '2023-07-10 19:06:33'),
+(143, 86, 83, 0, '2023-07-10 19:06:33'),
 (145, 61, 70, 0, '2023-07-09 18:40:37'),
 (145, 62, 70, 0, '2023-07-09 18:40:37'),
 (145, 63, 71, 0, '2023-07-09 19:27:31'),
 (145, 64, 70, 0, '2023-07-09 18:40:37'),
 (145, 65, 70, 0, '2023-07-09 18:40:37'),
-(145, 66, 71, 0, '2023-07-09 19:27:31');
+(145, 66, 71, 0, '2023-07-09 19:27:31'),
+(145, 71, 78, 0, '2023-07-10 18:55:52'),
+(145, 72, 79, 0, '2023-07-10 18:56:20'),
+(145, 73, 79, 0, '2023-07-10 18:56:20'),
+(145, 76, 80, 0, '2023-07-10 18:56:56'),
+(145, 77, 78, 0, '2023-07-10 18:55:52'),
+(145, 79, 79, 0, '2023-07-10 18:56:20'),
+(145, 80, 80, 0, '2023-07-10 18:56:56'),
+(145, 81, 80, 0, '2023-07-10 18:56:56');
 
 -- --------------------------------------------------------
 
@@ -331,7 +377,23 @@ INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `ta
 (66, 'Future 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:34:40', 3, 3, 'uploads/resized_future.jpeg', 121, 114, 1, '{\"input-0\":\"She proudly\",\"input-1\":\"holds a\",\"input-2\":\"magnificent\",\"input-3\":\"red balloon\"}'),
 (67, 'Past simple 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:31:40', 1, 1, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"The\",\"input-1\":\"cat\",\"input-2\":\"slept\"}'),
 (68, 'Past simple 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:32:41', 2, 2, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"My\",\"input-1\":\"dog\",\"input-2\":\"liked to\",\"input-3\":\"chase squirrels\"}'),
-(69, 'Past simple 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:34:08', 3, 3, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"They\",\"input-1\":\"built\",\"input-2\":\"sandcastles\",\"input-3\":\"on the\",\"input-4\":\"beach\"}');
+(69, 'Past simple 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:34:08', 3, 3, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"They\",\"input-1\":\"built\",\"input-2\":\"sandcastles\",\"input-3\":\"on the\",\"input-4\":\"beach\"}'),
+(71, 'Programming 1', '<p>This is programming task about nodes.</p>', '2023-07-10 15:30:48', 2, 2, 'uploads/resized_programming.png', 122, 117, 1, '{\"input-0\":\"word1\",\"input-1\":\"word2\",\"input-2\":\"word3\",\"input-3\":\"word4\"}'),
+(72, 'Programming 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is programming task about queue.</span></p>', '2023-07-10 15:32:00', 5, 5, 'uploads/resized_programming.png', 122, 118, 1, '{\"input-0\":\"another word1\",\"input-1\":\"another word2\",\"input-2\":\"another word3\",\"input-3\":\"another word4\"}'),
+(73, 'Programming 3', '<p>This is programming task about nodes.</p>', '2023-07-10 15:33:05', 6, 6, 'uploads/resized_programming.png', 122, 118, 1, '{\"input-0\":\"program 1\",\"input-1\":\"program 2\",\"input-2\":\"program 3\",\"input-3\":\"program 4\",\"input-4\":\"program 5\"}'),
+(74, 'Biology 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is biology task about functions.</span></p>', '2023-07-10 15:34:49', 1, 2, 'uploads/resized_biology.jpeg', 122, 91, 1, '{\"input-0\":\"word1\",\"input-1\":\"word2\",\"input-2\":\"word3\",\"input-3\":\"word4\",\"input-4\":\"word5\"}'),
+(75, 'Biology 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is biology task about functions.</span></p>', '2023-07-10 15:35:42', 5, 6, 'uploads/resized_biology.jpeg', 122, 91, 1, '{\"input-0\":\"This is biology 1\",\"input-1\":\"This is biology 2\",\"input-2\":\"This is biology 3\"}'),
+(76, 'Biology 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is biology task about variables.</span></p>', '2023-07-10 15:36:39', 7, 7, 'uploads/resized_biology.jpeg', 122, 94, 1, '{\"input-0\":\"functions1\",\"input-1\":\"functions2\",\"input-2\":\"functions3\",\"input-3\":\"functions4\"}'),
+(77, 'Nodes 1', '<p>This is Node task.</p>', '2023-07-10 15:50:41', 10, 10, 'uploads/resized_programming.png', 146, 117, 1, '{\"input-0\":\"word1\",\"input-1\":\"word2\",\"input-2\":\"word3\",\"input-3\":\"word4\"}'),
+(78, 'Node 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is Node task.</span></p>', '2023-07-10 15:52:06', 5, 6, 'uploads/resized_programming.png', 146, 117, 1, '{\"input-0\":\"node1\",\"input-1\":\"node2\",\"input-2\":\"node3\"}'),
+(79, 'Queue 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is queue task.</span></p>', '2023-07-10 15:53:06', 3, 3, 'uploads/resized_programming.png', 146, 118, 1, '{\"input-0\":\"Queue1\",\"input-1\":\"Queue2\",\"input-2\":\"Queue3\",\"input-3\":\"Queue4\"}'),
+(80, 'Var 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is var task.</span></p>', '2023-07-10 15:53:56', 3, 3, 'uploads/resized_biology.jpeg', 146, 94, 1, '{\"input-0\":\"var1\",\"input-1\":\"var2\",\"input-2\":\"var3\",\"input-3\":\"var4\"}'),
+(81, 'var 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is var task.</span></p>', '2023-07-10 15:54:37', 7, 7, 'uploads/resized_biology.jpeg', 146, 94, 1, '{\"input-0\":\"task1\",\"input-1\":\"task2\",\"input-2\":\"task3\"}'),
+(82, 'Math 1', '<p>This is math task.</p>', '2023-07-10 16:00:03', 1, 1, 'uploads/resized_math.jpeg', 120, 105, 1, '{\"input-0\":\"2\",\"input-1\":\"+\",\"input-2\":\"3\",\"input-3\":\"=\",\"input-4\":\"5\"}'),
+(83, 'Math 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is math task.</span></p>', '2023-07-10 16:01:50', 5, 5, 'uploads/resized_math.jpeg', 120, 105, 1, '{\"input-0\":\"12\",\"input-1\":\"x\",\"input-2\":\"4\",\"input-3\":\"=\",\"input-4\":\"48\"}'),
+(84, 'Math 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is math task.</span></p>', '2023-07-10 16:02:41', 7, 8, 'uploads/resized_math.jpeg', 120, 106, 1, '{\"input-0\":\"35\",\"input-1\":\"/\",\"input-2\":\"5\",\"input-3\":\"=\",\"input-4\":\"7\"}'),
+(85, 'History 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is history task.</span></p>', '2023-07-10 16:04:23', 3, 3, 'uploads/resized_history.jpeg', 120, 115, 1, '{\"input-0\":\"his1\",\"input-1\":\"his2\",\"input-2\":\"his3\",\"input-3\":\"his4\"}'),
+(86, 'History 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is history task.</span></p>', '2023-07-10 16:05:12', 7, 7, 'uploads/resized_history.jpeg', 120, 115, 1, '{\"input-0\":\"task1\",\"input-1\":\"task2\",\"input-2\":\"task3\"}');
 
 -- --------------------------------------------------------
 
@@ -352,16 +414,24 @@ CREATE TABLE `taskfolder` (
 --
 
 INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_class`, `id_subject`) VALUES
-(18, 'mathclass1', 0, 19, 1),
-(19, 'historyclass1', 0, 20, 3),
-(57, 'java 5.07', 1, 26, 4),
-(58, 'java 23.6', 1, 26, 4),
 (67, 'tasks for 30.12', 1, 23, 2),
 (68, 'tasks for 15.12', 1, 23, 2),
 (69, 'tasks for 20.12', 0, 23, 2),
 (70, 'Tasks for 10.12', 1, 22, 2),
 (71, 'Tasks for 15.12', 1, 22, 2),
-(72, 'Tasks for 20.12', 0, 22, 2);
+(72, 'Tasks for 20.12', 0, 22, 2),
+(73, 'tasks for 15.12', 1, 24, 4),
+(74, 'tasks for 20.12', 1, 24, 4),
+(75, 'Tasks for 20.12', 1, 24, 5),
+(76, 'tasks for 30.12', 1, 24, 5),
+(77, 'tasks for 30.12', 0, 24, 4),
+(78, 'Tasks for 11.11', 1, 26, 4),
+(79, 'Tasks for 17.11', 1, 26, 4),
+(80, 'tasks for 07.12', 1, 26, 5),
+(81, 'Tasks for 20.12', 0, 26, 4),
+(82, 'Tasks for 10.10', 1, 19, 1),
+(83, 'tasks for 07.12', 1, 19, 3),
+(84, 'Tasks for 20.10', 0, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -388,7 +458,25 @@ INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
 (65, 70),
 (66, 71),
 (67, 67),
-(68, 67);
+(68, 67),
+(71, 73),
+(71, 78),
+(72, 73),
+(72, 79),
+(73, 74),
+(73, 79),
+(74, 75),
+(75, 75),
+(76, 76),
+(76, 80),
+(77, 78),
+(79, 79),
+(80, 80),
+(81, 80),
+(82, 82),
+(83, 82),
+(85, 83),
+(86, 83);
 
 -- --------------------------------------------------------
 
@@ -498,7 +586,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, `img_url`) VALUES
-(120, 'teacher', 'alexagronov@gmail.com', '$2b$10$MskEw0m3eErbaEkLnXHW1umFevqVn9qLXxuwU7Lm7IRyOPBtUA/LO', 'Alex', 'Agronov', 'avatar-2.svg'),
+(120, 'teacher', 'alexagronov@gmail.com', '$2b$10$nimA84U.RHzcmsTUM7i7f.koo4TxBCF7AcaSsIv23jHqZEdxd1cd2', 'Alex', 'Agronov', 'avatar-2.svg'),
 (121, 'teacher', 'alsu@gmail.com', '$2b$10$KotdRWbF0cpl2idkVeNwQOWVElVw7v6pw9lAarY8bJ7Lje6N9pEJ2', 'Alsu', 'Bogdanova', 'avatar-2.svg'),
 (122, 'teacher', 'anton@gmail.com', '$2b$10$owpGhUMeYj1S0CnTPo3p7eD1ZB0zrGbE8o3MW/1L8hN1CAcefJeSq', 'Anton', 'Antonov', 'avatar-2.svg'),
 (123, 'student', 'avi@gmail.com', '$2b$10$gtxQLRLPEhmnIrozt5BjqOua8cn0Lw/KLRmbCSPQdA.fVS4UiILcC', 'Avi', 'Avinov', 'avatar-2.svg'),
@@ -686,13 +774,13 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `task_template`
