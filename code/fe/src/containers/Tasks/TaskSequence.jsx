@@ -41,6 +41,8 @@ function TaskSequence({task, textResult, handleGoBack}) {
 	const [taskResultText, setTaskResultText] = useState('');
 	const [resultClass, setResultClass] = useState('');
 	const [popupVisiable, setPopupVisiable] = useState(false);
+	const [correctAnswer, setCorrectAnswer] = useState(false);
+
 
 	
   function handleOnDragEnd(result) {
@@ -66,6 +68,7 @@ function TaskSequence({task, textResult, handleGoBack}) {
 		};
 		
 		if(isSameArray(seqItems, arr)){
+			setCorrectAnswer(true)
 			setResultClass('success')
 			setTaskResultText(textResult.success)
 			if(currentUser.role==='student'){
@@ -74,15 +77,19 @@ function TaskSequence({task, textResult, handleGoBack}) {
 			}
 
 		}else{
+			setCorrectAnswer(false)
 			setResultClass('fail')
 			setTaskResultText(textResult.fail)
 		}
 	}
 	const handleOkBtn = () =>{
 		setPopupVisiable(false)
-		setTimeout(() => {
-			handleGoBack()
-		}, 500);
+		if(correctAnswer){
+			setTimeout(() => {
+				handleGoBack()
+			}, 500);
+		}
+		
 
 	}
 	

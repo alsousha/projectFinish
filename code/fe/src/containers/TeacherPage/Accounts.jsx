@@ -10,6 +10,7 @@ import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/img/delete.svg';
 import { ReactComponent as AddIcon } from '../../assets/img/add2.svg';
 import Loading from '../../components/Loading.jsx';
+import ExcelUploadComponent from '../Tasks/ExcelUploadComponent.jsx';
 
 function Accounts() {
 	const { id_class } = useParams();
@@ -21,59 +22,18 @@ function Accounts() {
 	
 	const [class_name, setClassName] = useState('');
 	const [accounts, setAccounts] = useState([]);
-	// const [catsFormat, setCatsFormat] = useState()
-	// const [editing, setEditing] = useState(false);
-	// const [errors, setErrors] = useState({}); //Validations errors
-	// const [editingItemId, setEditingItemId] = useState(null);
-	// const [editedText, setEditedText] = useState('');
 	const [message, setMessage] = useState({}); //msg from DB
 	const [errors, setErrors] = useState({}); //Validations errors
-	//add new class
+	//add new student
 	const [newItemName, setNewItemName] = useState('')
-	// const [newSbj, setNewSbj] = useState({})
+	const [studentsArray, setStudentsArray] = useState([]) //array students accounts from upload file
 	const[isAddItemVisiable, setIsAddItemVisiable] = useState(false)
-
-	// console.log(cats);
-	const handleEdit = (itemId, initialText) => {
-		// setErrors({})
-    // setEditingItemId(itemId);
-		// setEditedText(initialText);
-  };
 
 	const handleDelete = (itemId) => {
 		if (window.confirm('Are you sure delete this class?')) {
 			deleteItem(itemId)
     }
 	}
-		
-	const handleSave = (itemId) => {
-		// const fieldErrors = validateField(['cat_name']);
-		// if (Object.keys(fieldErrors).length === 0) {
-		// 	// console.log(cats);
-		// 	// setCats((prevItems) => {
-		// 	// 	const updatedCats = { ...prevItems };
-		// 	// 	const item = updatedCats[itemId];
-		// 	// 	if (item) {
-		// 	// 		item.forEach((catItem) => {
-		// 	// 			catItem.category_name = editedText;
-		// 	// 		});
-		// 	// 	}
-		// 	// 	return updatedCats;
-		// 	// });
-		// 	setAccounts((prevItems) =>
-		// 		prevItems.map((item) =>
-		// 			item.id_category === itemId ? { ...item, category_name: editedText } : item
-		// 		)
-		// 	);
-		// 	setEditingItemId(null);
-		// 	// console.log(currentData);
-		// 	// setErrors({});
-		// 	update({id_cat: itemId, cat_name: editedText}) //send current cat data for response to serever
-		// }else{
-		// 	setErrors(fieldErrors);
-		// }
-    
-  };
 
 	const handleAddNewItem = () => {
 		const fieldErrors = validateField(['email']);
@@ -91,13 +51,37 @@ function Accounts() {
     
   };
 
-	const handleInputChange = (e) => {
-    // setEditedText(e.target.value);
-  };
 	const handleInputAddItemChange = (e) => {
     setNewItemName(e.target.value);
   };
+	const handleStudentsArray = (arr) => {
+		console.log("ww");
+		// console.log(arr); //parsed array of students from file
+		const errorEmails = [];
+		const validEmails = [];
+		arr.map((email)=>{
+			if(!isValidEmail(email)){
+				const msg={
+					msgClass: "error",
+					message: `Email ${email} is not correct. First change file of students and try again`
+				}
+				setMessage(msg);		
+				errorEmails.push(email)
+			}else {
+				setNewItemName(email)
+				addNewItem()
+				validEmails.push(email)
 
+			}
+		})
+
+		console.log(errorEmails);
+		console.log(validEmails);
+
+		
+    
+  };
+	
 	const validateField = (fieldNames) => {
     const errors = {};
 		fieldNames.forEach(fieldName => {
@@ -118,26 +102,10 @@ function Accounts() {
     return errors;
   };
 
-	const handleSelectChange = async e=>{
-		console.log(e.target.value + " select");
-		// setNewSbj(e.target.value)
-		// setNewCat(sbj: e.target.value)
-		// console.log(e.target.options[2].name);
-		// if(e.target.name==="role"){
-		// 	if(e.target.value==="teacher"){
-		// 		setVisiableLevelInput(false)
-		// 		setVisiableSbjInput(true)
-		// 	}else{
-		// 		setVisiableLevelInput(true)
-		// 		setVisiableSbjInput(false)
-		// 	}
-		// }
-		// setInputs(prev=>({...prev, [e.target.name]: e.target.value}))
-		
-	}
 
 	//axios for DB
 	const addNewItem = async ()=>{
+		console.log(newItemName);
 		axios
 		.post(`/teacher/students/${currentUser.id_user}`, {student_email: newItemName, id_class:id_class})
 		.then((res) => {
@@ -173,28 +141,6 @@ function Accounts() {
 			}, 2000);
     });
 	}
-	const update = async (currentData) => {
-		// const dataToSend = {"cat_name":currentData.cat_name} 
-		// console.log("currentData.class_name");
-		// axios
-    // .put(`/teacher/cat/${currentData.id_cat}`, dataToSend)
-    // .then((res) => {
-		// 	const msg={
-		// 		msgClass: res.status===200 ? "success" : "error",
-		// 		message: res.data
-		// 	}
-    //   setMessage(msg);
-		// 	// setCurrentClass({})
-		// 	// updateUser(userData)//update localstorage and context
-		// 	 // Clear the message after 2 seconds 
-		// 	setTimeout(() => {
-		// 		setMessage('');
-		// 	}, 2000);
-    // })
-    // .catch((error) => {
-    //   console.error('Error updating class name', error);
-    // });
-  };
 	const deleteItem = async (itemId) => {
 	
 		axios
@@ -218,18 +164,6 @@ function Accounts() {
 		fetchData()
   };
 
-	//separate categories by id_subject
-	function separateArrayBySubject(data) {
-		// return data.reduce((result, item) => {
-		// 	const idSubject = item.id_subject;
-		// 	if (!result[idSubject]) {
-		// 		result[idSubject] = [];
-		// 	}
-		// 	result[idSubject].push(item);
-		// 	return result;
-		// }, {});
-	}
-	
 	//fetch students of teacher
 	const fetchData = async () => {
 		// console.log(id_class);
@@ -293,6 +227,36 @@ function Accounts() {
 			<div className="mt5">
 				{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
 			</div>
+			<div className="add_newItem mt4 mb3"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddItemVisiable(true)}><AddIcon/>add new student</button></div>
+
+			{isAddItemVisiable && (
+				<>
+				<div className='d-flex jcsb'>
+					<div className="cat_item d-flex jcsb aic mb2">
+						<p>Enter student's email:</p>
+						<div className="d-flex g1">
+							
+							<input
+								type="text"
+								name="email"
+								value={newItemName}
+								ref={inputRef}
+								onChange={handleInputAddItemChange}
+							/>
+							
+							{errors.email && <span className='input_error'>{errors.email}</span>}
+
+						</div>
+
+						<button onClick={() => handleAddNewItem()} className=''>
+							<AddUserIcon/>
+						</button>
+					</div>
+						<ExcelUploadComponent handleStudentsArray={handleStudentsArray} />
+					</div>
+				</>
+				
+			)}
 			<div className="table_item title d-flex jcsb aic mb2">
 				<span className='table_elem small'>N.</span>
 				<span className='table_elem'>Name</span>
@@ -315,34 +279,9 @@ function Accounts() {
 				<div className="no-items">Student's list is empty</div>
 			)}
 
-			{isAddItemVisiable && (
-				<>
-				<div>Enter student's email:</div>
-				<div className="cat_item d-flex jcsb aic mb2">
-					<div className="d-flex g1">
-						
-						<input
-							type="text"
-							name="email"
-							value={newItemName}
-							ref={inputRef}
-							onChange={handleInputAddItemChange}
-						/>
-						
-						{errors.email && <span className='input_error'>{errors.email}</span>}
-
-					</div>
-
-					<button onClick={() => handleAddNewItem()} className=''>
-						<AddUserIcon/>
-					</button>
-				</div>
-				</>
-				
-			)}
+			
 			
 		</div>
-		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={() => setIsAddItemVisiable(true)}><AddIcon/>add new student</button></div>
 
 		</div>
 	  

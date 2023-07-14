@@ -66,6 +66,7 @@ function Classfolders() {
 					message: !data ? "Delete successful" :"You can not delete this folder. There are completed tasks in it"
 				}	
 				setMessage(msg);
+				console.log(msg);
 				setTimeout(() => {
 					setMessage('');
 				}, 2000);
@@ -241,8 +242,10 @@ function Classfolders() {
 				.get(`/teacher/isexiststasksdone/${id_tskfolder}`)
 				.then((res) => {
 					if (res.status === 200) {
+						console.log("yyy");
 						resolve(true); // Done tasks exist
 					} else {
+						console.log("nnn");
 						resolve(false); // Done tasks do not exist
 					}
 				})

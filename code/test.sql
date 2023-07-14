@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2023 at 09:09 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.2
+-- Generation Time: Jul 14, 2023 at 11:04 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,16 +32,16 @@ CREATE TABLE `blog` (
   `art_title` varchar(255) NOT NULL,
   `art_text` varchar(6000) NOT NULL,
   `art_img` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `blog`
 --
 
 INSERT INTO `blog` (`id_article`, `art_title`, `art_text`, `art_img`) VALUES
-(1, 'Article #1', '				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque, ducimus laborum amet est in repellendus vero iusto at alias explicabo, quod nisi saepe error, sapiente aliquid inventore excepturi. Incidunt beatae laborum dicta quaerat impedit, blanditiis nesciunt, sequi dignissimos delectus voluptas ab corporis illo repudiandae autem? Odio earum porro sequi similique dolore? \r\nAt tempore, nisi libero eaque molestias pariatur assumenda explicabo, itaque repellat, quia iure aspernatur laudantium veritatis harum labore! Sequi nulla dolor optio, molestiae officia aut at in, quasi magni harum quo! Earum possimus distinctio enim dignissimos magni! Nesciunt molestias perspiciatis libero! Eos magnam distinctio adipisci provident dicta eum veniam error? Fuga perferendis totam, repellat saepe sed temporibus ut ipsum, consequuntur magnam aspernatur nostrum ullam dolor voluptatum sapiente vel. Laborum blanditiis vitae ipsa tempora quos, rem velit facere fugit porro assumenda natus eum modi eligendi optio? Delectus quo exercitationem pariatur, qui ab, possimus unde ea quibusdam dolore, ducimus labore. Dolorum atque expedita quis omnis adipisci doloribus molestiae similique quisquam incidunt facilis, impedit sed modi, eligendi architecto. Iste porro magnam, deleniti odit earum eveniet itaque in nulla voluptas non reiciendis voluptatibus ipsum nisi reprehenderit? \r\nMollitia impedit, id minima praesentium ipsam officiis similique at, quos labore vel esse sed laudantium soluta accusamus recusandae nobis blanditiis ducimus commodi earum nostrum, aperiam enim quam! Quia perferendis illum eius qui dolor dolore quidem, doloribus velit sapiente optio dicta ducimus harum laudantium totam explicabo necessitatibus iusto minus debitis deserunt labore rem! Laborum, neque eligendi? Iure tempora quod error alias libero, incidunt vel voluptate quibusdam dolorem consectetur odio sapiente repellendus! Eius, similique amet. Facere accusamus voluptas, eveniet sed optio quas alias maxime. Harum porro error velit minima dolor aliquid unde aspernatur eos voluptatibus amet, maxime quidem molestiae eius vel iusto reiciendis id qui officia veritatis culpa quas ipsam similique assumenda magnam? Ab dolor laboriosam sequi quis dicta.\r\n', 'art1.svg'),
-(2, 'Article #2', '				Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, enim qui vel harum autem, dignissimos vitae ullam delectus non quaerat ea animi officiis soluta voluptates aliquid vero distinctio fugit veniam impedit numquam labore. In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi? Impedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? Autem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis. Voluptates saepe magnam ex sed esse tenetur, deserunt consequatur ea optio aspernatur suscipit itaque ad obcaecati earum, omnis laudantium? Blanditiis maxime eius dolor facere nulla laborum modi, error ullam quasi dignissimos iure autem et nostrum dicta adipisci, maiores quas beatae iste! Illo delectus velit ducimus porro impedit molestiae! Corporis esse sequi vel tempora cupiditate aliquid temporibus delectus illum in tenetur? Nisi fugiat aspernatur modi at facilis id quasi! Molestiae odit, deserunt, consectetur repudiandae, doloremque itaque ad numquam dignissimos ex nobis minima non reprehenderit debitis exercitationem id sed repellendus impedit culpa corporis sit atque! Cum, deserunt porro nostrum ea debitis est pariatur adipisci enim mollitia id eius vitae cupiditate perspiciatis reiciendis quo ipsa explicabo molestiae magni voluptatibus modi fugit repellat dicta iure placeat. Id maxime debitis ut, odio fuga quis harum animi fugiat accusantium quae hic repellat, recusandae inventore amet minima? Reprehenderit, quibusdam iste eum numquam recusandae necessitatibus ipsum id fugiat hic modi. Ducimus, nobis vitae rem quae ea repudiandae neque expedita animi modi corporis nihil aliquam dolores eos voluptates quis. Excepturi sunt adipisci iure aliquid vitae quos odio qui saepe explicabo ratione aliquam dolor, aspernatur quis. Mollitia iusto, inventore voluptatibus necessitatibus laboriosam nesciunt excepturi maxime sit delectus et, alias, consequatur labore repellat odit nulla dolor error? Distinctio, harum expedita, temporibus, ullam facere est neque tenetur optio architecto quae odio eius minima! Eum facere dolorum consequatur deleniti numquam, ut quia delectus, quidem accusantium aperiam debitis dolor omnis optio. Aliquam esse nostrum, itaque, nisi doloribus quaerat nobis ab at unde, quos sapiente ad sed. Nisi ipsum error iste autem expedita atque aspernatur ducimus, distinctio eveniet porro aliquam quaerat alias voluptas totam numquam aliquid a inventore voluptatem minus est explicabo. Quibusdam, tempora totam iure officia soluta dolores perspiciatis. Doloribus repudiandae, quos doloremque reprehenderit ea unde in similique. Alias porro esse delectus vitae, ipsam consectetur mollitia odit recusandae incidunt repellendus accusantium maiores explicabo nulla, quia, minima nesciunt. Architecto quos aut non earum optio similique. Dignissi', 'art2.svg'),
-(3, 'Article #3', '				In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi? Impedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? Autem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis. Voluptates saepe magnam ex sed esse tenetur, deserunt consequatur ea optio aspernatur suscipit itaque ad obcaecati earum, omnis laudantium? Blanditiis maxime eius dolor facere nulla laborum modi, error ullam quasi dignissimos iure autem et nostrum dicta adipisci, maiores quas beatae iste! Illo delectus velit ducimus porro impedit molestiae! Corporis esse sequi vel tempora cupiditate aliquid temporibus delectus illum in tenetur? Nisi fugiat aspernatur modi at facilis id quasi! Molestiae odit, deserunt, consectetur repudiandae, doloremque itaque ad numquam dignissimos ex nobis minima non reprehenderit debitis exercitationem id sed repellendus impedit culpa corporis sit atque! Cum, deserunt porro nostrum ea debitis est pariatur adipisci enim mollitia id eius vitae cupiditate perspiciatis reiciendis quo ipsa explicabo molestiae magni voluptatibus modi fugit repellat dicta iure placeat. Id maxime debitis ut, odio fuga quis harum animi fugiat accusantium quae hic repellat, recusandae inventore amet minima? Reprehenderit, quibusdam iste eum numquam recusandae necessitatibus ipsum id fugiat hic modi. Ducimus, nobis vitae rem quae ea repudiandae neque expedita animi modi corporis nihil aliquam dolores eos voluptates quis. Excepturi sunt adipisci iure aliquid vitae quos odio qui saepe explicabo ratione aliquam dolor, aspernatur quis. Mollitia iusto, inventore voluptatibus necessitatibus laboriosam nesciunt excepturi maxime sit delectus et, alias, consequatur labore repellat odit nulla dolor error? Distinctio, harum expedita, temporibus, ullam facere est neque tenetur optio architecto quae odio eius minima! Eum facere dolorum consequatur deleniti numquam, ut quia delectus, quidem accusantium aperiam debitis dolor omnis optio. Aliquam esse nostrum, itaque, nisi doloribus quaerat nobis ab at unde, quos sapiente ad sed. Nisi ipsum error iste autem expedita atque aspernatur ducimus, distinctio eveniet porro aliquam quaerat alias voluptas totam numquam aliquid a inventore voluptatem minus est explicabo. Quibusdam, tempora totam iure officia soluta dolores perspiciatis. Doloribus repudiandae, quos doloremque reprehenderit ea unde in similique. Alias porro esse delectus vitae, ipsam consectetur mollitia odit recusandae incidunt repellendus accusantium maiores explicabo nulla, quia, minima nesciunt. Architecto quos aut non earum optio similique. Dignissimos at unde aliquid, obcaecati quo itaque similique, vero quis quia aliquam eligendi possimus perspiciatis rerum. Exercitationem perspiciatis non explicabo tempore dicta enim quisquam hic. Id aliquid odio maiores quod rem adipisci', 'art3.svg');
+(1, 'Article #1', '				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque, ducimus laborum amet est in repellendus vero iusto at alias explicabo, quod nisi saepe error, sapiente aliquid inventore excepturi. Incidunt beatae laborum dicta quaerat impedit, blanditiis nesciunt, sequi dignissimos delectus voluptas ab corporis illo repudiandae autem? Odio earum porro sequi similique dolore? \r\nAt tempore, nisi libero eaque molestias pariatur assumenda explicabo, itaque repellat, quia iure aspernatur laudantium veritatis harum labore! Sequi nulla dolor optio, molestiae officia aut at in, quasi magni harum quo! Earum possimus distinctio enim dignissimos magni! Nesciunt molestias perspiciatis libero! Eos magnam distinctio adipisci provident dicta eum veniam error? Fuga perferendis totam, repellat saepe sed temporibus ut ipsum, consequuntur magnam aspernatur nostrum ullam dolor voluptatum sapiente vel. Laborum blanditiis vitae ipsa tempora quos, rem velit facere fugit porro assumenda natus eum modi eligendi optio? Delectus quo exercitationem pariatur, qui ab, possimus unde ea quibusdam dolore, ducimus labore. \r\n\r\nDolorum atque expedita quis omnis adipisci doloribus molestiae similique quisquam incidunt facilis, impedit sed modi, eligendi architecto. Iste porro magnam, deleniti odit earum eveniet itaque in nulla voluptas non reiciendis voluptatibus ipsum nisi reprehenderit? \r\nMollitia impedit, id minima praesentium ipsam officiis similique at, quos labore vel esse sed laudantium soluta accusamus recusandae nobis blanditiis ducimus commodi earum nostrum, aperiam enim quam! Quia perferendis illum eius qui dolor dolore quidem, doloribus velit sapiente optio dicta ducimus harum laudantium totam explicabo necessitatibus iusto minus debitis deserunt labore rem! \r\n\r\nLaborum, neque eligendi? Iure tempora quod error alias libero, incidunt vel voluptate quibusdam dolorem consectetur odio sapiente repellendus! Eius, similique amet. Facere accusamus voluptas, eveniet sed optio quas alias maxime. Harum porro error velit minima dolor aliquid unde aspernatur eos voluptatibus amet, maxime quidem molestiae eius vel iusto reiciendis id qui officia veritatis culpa quas ipsam similique assumenda magnam? Ab dolor laboriosam sequi quis dicta.\r\n', 'art1.svg'),
+(2, 'Article #2', '				Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, enim qui vel harum autem, dignissimos vitae ullam delectus non quaerat ea animi officiis soluta voluptates aliquid vero distinctio fugit veniam impedit numquam labore. In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi?\r\n\r\nImpedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? \r\n\r\n\r\nAutem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis. Voluptates saepe magnam ex sed esse tenetur, deserunt consequatur ea optio aspernatur suscipit itaque ad obcaecati earum, omnis laudantium? Blanditiis maxime eius dolor facere nulla laborum modi, error ullam quasi dignissimos iure autem et nostrum dicta adipisci, maiores quas beatae iste! Illo delectus velit ducimus porro impedit molestiae! \r\n\r\n', 'art2.svg'),
+(3, 'Article #3', 'In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi? Impedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? Autem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis.', 'art3.svg');
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,7 @@ CREATE TABLE `category` (
   `category_name` varchar(15) NOT NULL,
   `date_create` timestamp NOT NULL DEFAULT current_timestamp(),
   `id_subject` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `category`
@@ -87,7 +87,7 @@ CREATE TABLE `certification` (
   `flag_as_available` tinyint(4) NOT NULL,
   `description` varchar(100) NOT NULL,
   `img_url` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ CREATE TABLE `class` (
   `class_name` varchar(15) NOT NULL,
   `class_level` int(2) UNSIGNED NOT NULL,
   `id_teacher` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `class`
@@ -109,12 +109,12 @@ CREATE TABLE `class` (
 INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
 (19, 'a1', 0, 120),
 (20, 'a2', 0, 120),
-(22, 'a3', 0, 121),
+(22, 'a2', 0, 121),
 (23, 'a4', 0, 121),
 (24, 'a5', 0, 122),
 (25, 'a6', 0, 122),
-(26, 'b1', 0, 146),
-(27, 'b2', 0, 121);
+(26, '1a', 0, 146),
+(27, 'a1', 0, 121);
 
 -- --------------------------------------------------------
 
@@ -126,7 +126,7 @@ CREATE TABLE `student` (
   `id_user` int(3) NOT NULL,
   `class_level` int(2) UNSIGNED NOT NULL,
   `total_points` int(5) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `student`
@@ -155,8 +155,8 @@ INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 (142, 0, 0),
 (143, 0, 0),
 (144, 2, 0),
-(145, 5, 53),
-(149, 0, 0);
+(145, 5, 73),
+(149, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -168,7 +168,7 @@ CREATE TABLE `student_certification` (
   `id_user` int(3) NOT NULL,
   `id_certif` int(3) NOT NULL,
   `data_get` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -179,7 +179,7 @@ CREATE TABLE `student_certification` (
 CREATE TABLE `student_class` (
   `id_user` int(3) NOT NULL,
   `id_class` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `student_class`
@@ -209,8 +209,7 @@ INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
 (143, 19),
 (144, 20),
 (145, 22),
-(145, 26),
-(149, 22);
+(145, 26);
 
 -- --------------------------------------------------------
 
@@ -224,95 +223,39 @@ CREATE TABLE `student_task` (
   `id_tskFolder` int(11) NOT NULL,
   `is_task_done` tinyint(1) NOT NULL,
   `date` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `student_task`
 --
 
 INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`, `date`) VALUES
-(123, 82, 82, 0, '2023-07-10 19:06:09'),
-(123, 83, 82, 0, '2023-07-10 19:06:09'),
-(123, 85, 83, 0, '2023-07-10 19:06:33'),
-(123, 86, 83, 0, '2023-07-10 19:06:33'),
-(124, 82, 82, 0, '2023-07-10 19:06:09'),
-(124, 83, 82, 0, '2023-07-10 19:06:09'),
-(124, 85, 83, 0, '2023-07-10 19:06:33'),
-(124, 86, 83, 0, '2023-07-10 19:06:33'),
-(127, 61, 70, 0, '2023-07-09 18:40:37'),
-(127, 62, 70, 0, '2023-07-09 18:40:37'),
-(127, 63, 71, 0, '2023-07-09 19:27:31'),
-(127, 64, 70, 0, '2023-07-09 18:40:37'),
-(127, 65, 70, 0, '2023-07-09 18:40:37'),
-(127, 66, 71, 0, '2023-07-09 19:27:31'),
-(128, 61, 70, 0, '2023-07-09 18:40:37'),
-(128, 62, 70, 0, '2023-07-09 18:40:37'),
-(128, 63, 71, 0, '2023-07-09 19:27:31'),
-(128, 64, 70, 0, '2023-07-09 18:40:37'),
-(128, 65, 70, 0, '2023-07-09 18:40:37'),
-(128, 66, 71, 0, '2023-07-09 19:27:31'),
-(129, 82, 82, 0, '2023-07-10 19:06:09'),
-(129, 83, 82, 0, '2023-07-10 19:06:09'),
-(129, 85, 83, 0, '2023-07-10 19:06:33'),
-(129, 86, 83, 0, '2023-07-10 19:06:33'),
-(131, 61, 70, 0, '2023-07-09 18:40:37'),
-(131, 62, 70, 0, '2023-07-09 18:40:37'),
-(131, 63, 71, 0, '2023-07-09 19:27:31'),
-(131, 64, 70, 0, '2023-07-09 18:40:37'),
-(131, 65, 70, 0, '2023-07-09 18:40:37'),
-(131, 66, 71, 0, '2023-07-09 19:27:31'),
-(132, 62, 68, 0, '2023-07-09 19:35:39'),
-(132, 63, 68, 0, '2023-07-09 19:35:39'),
-(132, 67, 67, 0, '2023-07-09 19:35:14'),
-(132, 68, 67, 0, '2023-07-09 19:35:14'),
-(133, 62, 68, 0, '2023-07-09 19:35:39'),
-(133, 63, 68, 0, '2023-07-09 19:35:39'),
-(133, 67, 67, 0, '2023-07-09 19:35:14'),
-(133, 68, 67, 0, '2023-07-09 19:35:14'),
-(134, 62, 68, 0, '2023-07-09 19:35:39'),
-(134, 63, 68, 0, '2023-07-09 19:35:39'),
-(134, 67, 67, 0, '2023-07-09 19:35:14'),
-(134, 68, 67, 0, '2023-07-09 19:35:14'),
-(135, 71, 73, 0, '2023-07-10 18:38:19'),
-(135, 72, 73, 0, '2023-07-10 18:38:19'),
-(135, 73, 74, 0, '2023-07-10 18:38:44'),
-(135, 74, 75, 0, '2023-07-10 18:39:17'),
-(135, 75, 75, 0, '2023-07-10 18:39:17'),
-(135, 76, 76, 0, '2023-07-10 18:39:40'),
-(136, 71, 73, 0, '2023-07-10 18:38:19'),
-(136, 72, 73, 0, '2023-07-10 18:38:19'),
-(136, 73, 74, 0, '2023-07-10 18:38:44'),
-(136, 74, 75, 0, '2023-07-10 18:39:17'),
-(136, 75, 75, 0, '2023-07-10 18:39:17'),
-(136, 76, 76, 0, '2023-07-10 18:39:40'),
-(137, 71, 73, 0, '2023-07-10 18:38:19'),
-(137, 72, 73, 0, '2023-07-10 18:38:19'),
-(137, 73, 74, 0, '2023-07-10 18:38:44'),
-(137, 74, 75, 0, '2023-07-10 18:39:17'),
-(137, 75, 75, 0, '2023-07-10 18:39:17'),
-(137, 76, 76, 0, '2023-07-10 18:39:40'),
-(142, 82, 82, 0, '2023-07-10 19:06:09'),
-(142, 83, 82, 0, '2023-07-10 19:06:09'),
-(142, 85, 83, 0, '2023-07-10 19:06:33'),
-(142, 86, 83, 0, '2023-07-10 19:06:33'),
-(143, 82, 82, 0, '2023-07-10 19:06:09'),
-(143, 83, 82, 0, '2023-07-10 19:06:09'),
-(143, 85, 83, 0, '2023-07-10 19:06:33'),
-(143, 86, 83, 0, '2023-07-10 19:06:33'),
-(145, 61, 70, 0, '2023-07-09 18:40:37'),
-(145, 62, 70, 0, '2023-07-09 18:40:37'),
-(145, 63, 71, 0, '2023-07-09 19:27:31'),
-(145, 64, 70, 0, '2023-07-09 18:40:37'),
-(145, 65, 70, 0, '2023-07-09 18:40:37'),
-(145, 66, 71, 0, '2023-07-09 19:27:31'),
-(145, 71, 78, 0, '2023-07-10 18:55:52'),
-(145, 72, 79, 0, '2023-07-10 18:56:20'),
-(145, 73, 79, 0, '2023-07-10 18:56:20'),
-(145, 76, 80, 0, '2023-07-10 18:56:56'),
-(145, 77, 78, 0, '2023-07-10 18:55:52'),
-(145, 79, 79, 0, '2023-07-10 18:56:20'),
-(145, 80, 80, 0, '2023-07-10 18:56:56'),
-(145, 81, 80, 0, '2023-07-10 18:56:56');
+(127, 32, 59, 0, '2023-07-04 06:44:31'),
+(127, 34, 66, 0, '2023-07-08 16:49:43'),
+(127, 40, 66, 0, '2023-07-08 16:49:43'),
+(127, 41, 65, 0, '2023-07-04 22:08:32'),
+(127, 52, 64, 0, '2023-07-04 21:26:36'),
+(127, 54, 68, 0, '2023-07-12 13:47:08'),
+(128, 32, 59, 0, '2023-07-04 06:44:31'),
+(128, 34, 66, 0, '2023-07-08 16:49:43'),
+(128, 40, 66, 0, '2023-07-08 16:49:43'),
+(128, 41, 65, 0, '2023-07-04 22:08:32'),
+(128, 52, 64, 0, '2023-07-04 21:26:36'),
+(128, 54, 68, 0, '2023-07-12 13:47:08'),
+(131, 32, 59, 0, '2023-07-04 06:44:31'),
+(131, 34, 66, 0, '2023-07-08 16:49:43'),
+(131, 40, 66, 0, '2023-07-08 16:49:43'),
+(131, 41, 65, 0, '2023-07-04 22:08:32'),
+(131, 52, 64, 0, '2023-07-04 21:26:36'),
+(131, 54, 68, 0, '2023-07-12 13:47:08'),
+(145, 32, 59, 1, '2023-07-04 06:44:31'),
+(145, 34, 66, 1, '2023-07-08 16:49:43'),
+(145, 40, 66, 1, '2023-07-08 16:49:43'),
+(145, 41, 65, 1, '2023-07-04 22:08:32'),
+(145, 52, 64, 1, '2023-07-04 21:26:36'),
+(145, 54, 68, 1, '2023-07-12 13:47:08'),
+(145, 61, 57, 0, '2023-07-12 13:25:44'),
+(145, 62, 58, 0, '2023-07-12 13:25:58');
 
 -- --------------------------------------------------------
 
@@ -324,7 +267,7 @@ CREATE TABLE `subject` (
   `id_subject` int(3) NOT NULL,
   `subject_name` varchar(20) NOT NULL,
   `subject_icon` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `subject`
@@ -362,38 +305,32 @@ CREATE TABLE `task` (
   `id_category` int(3) NOT NULL,
   `id_template` int(11) NOT NULL,
   `specific_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`specific_data`))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `task`
 --
 
 INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `task_weight`, `task_level`, `task_img`, `id_teacher`, `id_category`, `id_template`, `specific_data`) VALUES
-(61, 'Present simple 1', '<p>We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</p>', '2023-07-09 15:26:42', 1, 1, 'uploads/resized_present simple.jpeg', 121, 110, 1, '{\"input-0\":\"The\",\"input-1\":\"cat\",\"input-2\":\"sleeps\"}'),
-(62, 'Present simple 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:27:00', 1, 1, 'uploads/resized_present simple.jpeg', 121, 110, 1, '{\"input-0\":\"I love\",\"input-1\":\"ice cream\",\"input-2\":\"to eat\"}'),
-(63, 'Present simple 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:27:16', 1, 1, 'uploads/resized_present simple.jpeg', 121, 110, 1, '{\"input-0\":\"Mom cooks\",\"input-1\":\"delicious pasta\",\"input-2\":\"for dinner\"}'),
-(64, 'Future 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:23:03', 3, 3, 'uploads/resized_future.jpeg', 121, 114, 1, '{\"input-0\":\"While sleeping\",\"input-1\":\"the cat\",\"input-2\":\"dreams of\",\"input-3\":\"catching birds\"}'),
-(65, 'Future 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:24:35', 3, 3, 'uploads/resized_future.jpeg', 121, 114, 1, '{\"input-0\":\"Today, the radiant sun\",\"input-1\":\"casts its brilliance\",\"input-2\":\"upon the world\"}'),
-(66, 'Future 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 15:34:40', 3, 3, 'uploads/resized_future.jpeg', 121, 114, 1, '{\"input-0\":\"She proudly\",\"input-1\":\"holds a\",\"input-2\":\"magnificent\",\"input-3\":\"red balloon\"}'),
-(67, 'Past simple 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:31:40', 1, 1, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"The\",\"input-1\":\"cat\",\"input-2\":\"slept\"}'),
-(68, 'Past simple 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:32:41', 2, 2, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"My\",\"input-1\":\"dog\",\"input-2\":\"liked to\",\"input-3\":\"chase squirrels\"}'),
-(69, 'Past simple 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">We have a sentence in English, sort the words so that the sentence makes sense and is syntactically correct.</span></p>', '2023-07-09 16:34:08', 3, 3, 'uploads/resized_past simple.jpeg', 121, 112, 1, '{\"input-0\":\"They\",\"input-1\":\"built\",\"input-2\":\"sandcastles\",\"input-3\":\"on the\",\"input-4\":\"beach\"}'),
-(71, 'Programming 1', '<p>This is programming task about nodes.</p>', '2023-07-10 15:30:48', 2, 2, 'uploads/resized_programming.png', 122, 117, 1, '{\"input-0\":\"word1\",\"input-1\":\"word2\",\"input-2\":\"word3\",\"input-3\":\"word4\"}'),
-(72, 'Programming 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is programming task about queue.</span></p>', '2023-07-10 15:32:00', 5, 5, 'uploads/resized_programming.png', 122, 118, 1, '{\"input-0\":\"another word1\",\"input-1\":\"another word2\",\"input-2\":\"another word3\",\"input-3\":\"another word4\"}'),
-(73, 'Programming 3', '<p>This is programming task about nodes.</p>', '2023-07-10 15:33:05', 6, 6, 'uploads/resized_programming.png', 122, 118, 1, '{\"input-0\":\"program 1\",\"input-1\":\"program 2\",\"input-2\":\"program 3\",\"input-3\":\"program 4\",\"input-4\":\"program 5\"}'),
-(74, 'Biology 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is biology task about functions.</span></p>', '2023-07-10 15:34:49', 1, 2, 'uploads/resized_biology.jpeg', 122, 91, 1, '{\"input-0\":\"word1\",\"input-1\":\"word2\",\"input-2\":\"word3\",\"input-3\":\"word4\",\"input-4\":\"word5\"}'),
-(75, 'Biology 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is biology task about functions.</span></p>', '2023-07-10 15:35:42', 5, 6, 'uploads/resized_biology.jpeg', 122, 91, 1, '{\"input-0\":\"This is biology 1\",\"input-1\":\"This is biology 2\",\"input-2\":\"This is biology 3\"}'),
-(76, 'Biology 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is biology task about variables.</span></p>', '2023-07-10 15:36:39', 7, 7, 'uploads/resized_biology.jpeg', 122, 94, 1, '{\"input-0\":\"functions1\",\"input-1\":\"functions2\",\"input-2\":\"functions3\",\"input-3\":\"functions4\"}'),
-(77, 'Nodes 1', '<p>This is Node task.</p>', '2023-07-10 15:50:41', 10, 10, 'uploads/resized_programming.png', 146, 117, 1, '{\"input-0\":\"word1\",\"input-1\":\"word2\",\"input-2\":\"word3\",\"input-3\":\"word4\"}'),
-(78, 'Node 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is Node task.</span></p>', '2023-07-10 15:52:06', 5, 6, 'uploads/resized_programming.png', 146, 117, 1, '{\"input-0\":\"node1\",\"input-1\":\"node2\",\"input-2\":\"node3\"}'),
-(79, 'Queue 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is queue task.</span></p>', '2023-07-10 15:53:06', 3, 3, 'uploads/resized_programming.png', 146, 118, 1, '{\"input-0\":\"Queue1\",\"input-1\":\"Queue2\",\"input-2\":\"Queue3\",\"input-3\":\"Queue4\"}'),
-(80, 'Var 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is var task.</span></p>', '2023-07-10 15:53:56', 3, 3, 'uploads/resized_biology.jpeg', 146, 94, 1, '{\"input-0\":\"var1\",\"input-1\":\"var2\",\"input-2\":\"var3\",\"input-3\":\"var4\"}'),
-(81, 'var 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is var task.</span></p>', '2023-07-10 15:54:37', 7, 7, 'uploads/resized_biology.jpeg', 146, 94, 1, '{\"input-0\":\"task1\",\"input-1\":\"task2\",\"input-2\":\"task3\"}'),
-(82, 'Math 1', '<p>This is math task.</p>', '2023-07-10 16:00:03', 1, 1, 'uploads/resized_math.jpeg', 120, 105, 1, '{\"input-0\":\"2\",\"input-1\":\"+\",\"input-2\":\"3\",\"input-3\":\"=\",\"input-4\":\"5\"}'),
-(83, 'Math 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is math task.</span></p>', '2023-07-10 16:01:50', 5, 5, 'uploads/resized_math.jpeg', 120, 105, 1, '{\"input-0\":\"12\",\"input-1\":\"x\",\"input-2\":\"4\",\"input-3\":\"=\",\"input-4\":\"48\"}'),
-(84, 'Math 3', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is math task.</span></p>', '2023-07-10 16:02:41', 7, 8, 'uploads/resized_math.jpeg', 120, 106, 1, '{\"input-0\":\"35\",\"input-1\":\"/\",\"input-2\":\"5\",\"input-3\":\"=\",\"input-4\":\"7\"}'),
-(85, 'History 1', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is history task.</span></p>', '2023-07-10 16:04:23', 3, 3, 'uploads/resized_history.jpeg', 120, 115, 1, '{\"input-0\":\"his1\",\"input-1\":\"his2\",\"input-2\":\"his3\",\"input-3\":\"his4\"}'),
-(86, 'History 2', '<p><span style=\"background-color: rgb(253, 222, 141);\">This is history task.</span></p>', '2023-07-10 16:05:12', 7, 7, 'uploads/resized_history.jpeg', 120, 115, 1, '{\"input-0\":\"task1\",\"input-1\":\"task2\",\"input-2\":\"task3\"}');
+(32, 'MyTask1', '<p><em>Inadf </em>dfgr<strong>eq</strong></p><p><u>werd</u></p>', '2023-07-02 23:12:27', 1, 1, 'uploads/resized_dog.png', 121, 110, 1, '{\"input-0\":\"sdf1\",\"input-1\":\"sdwe2\",\"input-2\":\"zxc3\"}'),
+(33, 'sdf', '<p>rty</p>', '2023-07-08 01:28:59', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
+(34, 'task1', '', '2023-06-30 19:50:46', 5, 6, 'uploads\\match.jpg', 121, 114, 1, '{\"input-0\":\"ert\",\"input-1\":\"hgj\"}'),
+(36, 'Task kuku', '<p>werxcv</p>', '2023-07-02 23:15:53', 1, 1, 'uploads/resized_img_false.png', 121, 110, 1, '{\"input-0\":\"wer1\",\"input-1\":\"rty2\"}'),
+(37, 'kuu2', '', '2023-06-30 23:09:14', 1, 1, 'uploads\\sequence.jpg', 121, 110, 1, '{\"input-0\":\"dg\"}'),
+(40, 'Task seq', '<p>Instruction of task sequance</p>', '2023-07-02 23:16:10', 1, 1, 'uploads/resized_cat.png', 121, 114, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
+(41, 'Task seq3', 'Instruction of task sequance3', '2023-07-01 14:13:14', 3, 8, 'uploads\\edit.png', 121, 112, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"asd2\",\"input-2\":\"zxc3\"}'),
+(45, 'dfg', 'dfgrt', '2023-07-01 14:47:57', 3, 4, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"dfg\"}'),
+(49, 'rw', '<p>fdgertgd</p>', '2023-07-01 15:32:31', 1, 1, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"et\"}'),
+(52, 't', '<p>ert</p>', '2023-07-01 15:36:29', 1, 1, 'uploads/resized_levelone_two.png', 121, 110, 1, '{\"input-0\":\"er\"}'),
+(53, 'sdf', '<p>wer</p>', '2023-07-01 15:39:33', 1, 1, 'uploads/resized_israel.png', 121, 112, 1, '{\"input-0\":\"rtyu\"}'),
+(54, 'Example Sequence', '<h2>Lorem, ipsum dolor </h2><p>Sit amet consectetur adipisicing elit. Beatae, fugit repellendus, non perferendis illum iusto ipsam, incidunt ut sunt sint nostrum molestiae officia eveniet <a href=\"www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\">ullam </a>molestias illo maiores velit atque.</p><p><u>Incidunt </u>ut sunt sint nostrum molestiae officia eveniet ullam molestias illo <strong>maiores </strong>velit atque.</p><ol><li>molestiae </li><li>nostrum </li><li>illum </li></ol>', '2023-07-01 15:49:21', 3, 5, 'uploads/resized_tt.jpg', 121, 110, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
+(56, 'sdf', '<p>rty</p>', '2023-07-08 01:29:33', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
+(57, 'sdf', '<p>rty</p>', '2023-07-08 01:30:20', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
+(58, 'sdf', '<p>hk</p>', '2023-07-08 01:30:39', 1, 1, 'uploads/resized_levelone_eight.png', 121, 110, 1, '{\"input-0\":\"hjk\",\"input-1\":\"hjk\"}'),
+(59, 'my Task2', '<p>Text my Task2, <strong>instruction</strong></p>', '2023-07-08 01:32:30', 1, 1, 'uploads/resized_tiger.png', 121, 110, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"qwe2\",\"input-2\":\"qwe3\"}'),
+(60, 'Task Sec', '<p>Instr sdf <strong>ytdutu</strong></p><ul><li>gyhu</li><li>rtset</li><li>fcty</li></ul>', '2023-07-08 13:54:15', 4, 8, 'uploads/resized_cat.png', 121, 110, 1, '{\"input-0\":\"sdf1\",\"input-1\":\"dfg2\",\"input-2\":\"dfg3\"}'),
+(61, 'Node1', '<p>discription of task Node</p>', '2023-07-12 10:24:41', 2, 1, 'uploads/resized_levelone_eight.png', 146, 117, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"asd2\",\"input-2\":\"zxc3\"}'),
+(62, 'Node2', '<p>Discrtption Node2</p>', '2023-07-12 10:25:28', 1, 1, 'uploads/resized_levelone_three.png', 146, 117, 1, '{\"input-0\":\"ert1\",\"input-1\":\"dfg2\",\"input-2\":\"cvb3\",\"input-3\":\"wer4\"}');
 
 -- --------------------------------------------------------
 
@@ -407,31 +344,22 @@ CREATE TABLE `taskfolder` (
   `is_publish` tinyint(1) NOT NULL DEFAULT 0,
   `id_class` int(3) NOT NULL,
   `id_subject` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `taskfolder`
 --
 
 INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_class`, `id_subject`) VALUES
-(67, 'tasks for 30.12', 1, 23, 2),
-(68, 'tasks for 15.12', 1, 23, 2),
-(69, 'tasks for 20.12', 0, 23, 2),
-(70, 'Tasks for 10.12', 1, 22, 2),
-(71, 'Tasks for 15.12', 1, 22, 2),
-(72, 'Tasks for 20.12', 0, 22, 2),
-(73, 'tasks for 15.12', 1, 24, 4),
-(74, 'tasks for 20.12', 1, 24, 4),
-(75, 'Tasks for 20.12', 1, 24, 5),
-(76, 'tasks for 30.12', 1, 24, 5),
-(77, 'tasks for 30.12', 0, 24, 4),
-(78, 'Tasks for 11.11', 1, 26, 4),
-(79, 'Tasks for 17.11', 1, 26, 4),
-(80, 'tasks for 07.12', 1, 26, 5),
-(81, 'Tasks for 20.12', 0, 26, 4),
-(82, 'Tasks for 10.10', 1, 19, 1),
-(83, 'tasks for 07.12', 1, 19, 3),
-(84, 'Tasks for 20.10', 0, 19, 1);
+(18, 'mathclass1', 0, 19, 1),
+(19, 'historyclass1', 0, 20, 3),
+(57, 'java 5.07', 1, 26, 4),
+(58, 'java 23.6', 1, 26, 4),
+(59, 'tasks for 30.06', 1, 22, 2),
+(64, 'tasks for 4.07', 1, 22, 2),
+(65, 'tasks for 7.07', 1, 22, 2),
+(66, 'tasks for 12.07', 1, 22, 2),
+(68, 'tasks for 13.07', 1, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -442,41 +370,21 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_cl
 CREATE TABLE `task_tasksfolder` (
   `id_task` int(3) NOT NULL,
   `id_tskFolder` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `task_tasksfolder`
 --
 
 INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
-(61, 70),
-(62, 68),
-(62, 70),
-(63, 68),
-(63, 71),
-(64, 70),
-(65, 70),
-(66, 71),
-(67, 67),
-(68, 67),
-(71, 73),
-(71, 78),
-(72, 73),
-(72, 79),
-(73, 74),
-(73, 79),
-(74, 75),
-(75, 75),
-(76, 76),
-(76, 80),
-(77, 78),
-(79, 79),
-(80, 80),
-(81, 80),
-(82, 82),
-(83, 82),
-(85, 83),
-(86, 83);
+(32, 59),
+(34, 66),
+(40, 66),
+(41, 65),
+(52, 64),
+(54, 68),
+(61, 57),
+(62, 58);
 
 -- --------------------------------------------------------
 
@@ -488,7 +396,7 @@ CREATE TABLE `task_template` (
   `id_template` int(3) NOT NULL,
   `template_name` varchar(10) NOT NULL,
   `template_inner` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `task_template`
@@ -507,7 +415,7 @@ INSERT INTO `task_template` (`id_template`, `template_name`, `template_inner`) V
 CREATE TABLE `teacher` (
   `id_user` int(30) NOT NULL,
   `count_of_tasks` int(3) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `teacher`
@@ -529,7 +437,7 @@ INSERT INTO `teacher` (`id_user`, `count_of_tasks`) VALUES
 CREATE TABLE `teacher_sbjs` (
   `id_user` int(3) NOT NULL,
   `id_subject` int(3) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `teacher_sbjs`
@@ -555,7 +463,7 @@ CREATE TABLE `template` (
   `id_template` int(11) NOT NULL,
   `template_name` varchar(255) NOT NULL,
   `template_img` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `template`
@@ -579,14 +487,14 @@ CREATE TABLE `user` (
   `name` varchar(15) NOT NULL,
   `lastname` varchar(15) NOT NULL,
   `img_url` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, `img_url`) VALUES
-(120, 'teacher', 'alexagronov@gmail.com', '$2b$10$nimA84U.RHzcmsTUM7i7f.koo4TxBCF7AcaSsIv23jHqZEdxd1cd2', 'Alex', 'Agronov', 'avatar-2.svg'),
+(120, 'teacher', 'alexagronov@gmail.com', '$2b$10$MskEw0m3eErbaEkLnXHW1umFevqVn9qLXxuwU7Lm7IRyOPBtUA/LO', 'Alex', 'Agronov', 'avatar-2.svg'),
 (121, 'teacher', 'alsu@gmail.com', '$2b$10$KotdRWbF0cpl2idkVeNwQOWVElVw7v6pw9lAarY8bJ7Lje6N9pEJ2', 'Alsu', 'Bogdanova', 'avatar-2.svg'),
 (122, 'teacher', 'anton@gmail.com', '$2b$10$owpGhUMeYj1S0CnTPo3p7eD1ZB0zrGbE8o3MW/1L8hN1CAcefJeSq', 'Anton', 'Antonov', 'avatar-2.svg'),
 (123, 'student', 'avi@gmail.com', '$2b$10$gtxQLRLPEhmnIrozt5BjqOua8cn0Lw/KLRmbCSPQdA.fVS4UiILcC', 'Avi', 'Avinov', 'avatar-2.svg'),
@@ -613,8 +521,8 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 (144, 'student', 'keren@gmail.com', '$2b$10$wHz0CYWRRG33V2mC9nMgz.BTRWC7WAkp7Dy2Tz9TgjKmu9w6vx8vK', 'Keren', 'Kerenov', 'avatar-2.svg'),
 (145, 'student', 'ivan@gmail.com', '$2b$10$qgEGALMrH.DhnUfC72A4ceSYsR4JMpRoGdTg4O76UvS7ShVqGqt1S', 'Ivan', 'Ivanov', 'avatar-2.svg'),
 (146, 'teacher', 'kate@gmail.com', '$2b$10$.6lVybCmI4gtJLhG74/5SOBmH5gCxJGmy6SXBOa5.lhFbsDA0bcsu', 'Kate', 'Branch', 'avatar-2.svg'),
-(148, 'teacher', 'alsousha21@gmail.com', '$2b$10$9hu.UnZlipxc256jJxfV3ODuV4ktOfIC4cSeh132gCW2deKxoiVbK', 'Alsu2', 'Bogdanova', 'avatar-2.svg'),
-(149, 'student', 'fannyapptest@gmail.com', '$2b$10$JJNzILv7bJ/Uc7PKkXE2R.WHnNhn8IjhuN5Q11EHJ3GTnZ1HfSweq', 'Fanny', 'App', 'avatar-2.svg');
+(148, 'teacher', 'alsousha21@gmail.com', '$2b$10$hngIwI1LyGSuLtrQ7nbZje5ELxKGxg0ZSRiBnp3Kpjmq0DPzkM6xe', 'Alsu2', 'Bogdanova', 'avatar-2.svg'),
+(149, 'student', 'alsousha211@gmail.com', '$2b$10$55Ju7BWgFk6aAY5V1jzOROOCrs2XtrzqneOvbgvD91KychxUDxpku', 'Anna', 'Fust', 'avatar-2.svg');
 
 --
 -- Indexes for dumped tables
@@ -744,7 +652,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `blog`
 --
 ALTER TABLE `blog`
-  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -774,13 +682,13 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `task_template`

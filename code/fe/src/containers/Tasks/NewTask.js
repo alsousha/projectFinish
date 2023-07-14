@@ -220,6 +220,7 @@ function NewTask() {
         <div className='msg_block'>
           {message ? <span className={message.msgClass}>{message.text}</span> : <span></span>}
         </div>
+
         <div className='task_data'>
           <div className='task_data-item'>
             {/* taskname */}

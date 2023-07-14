@@ -3,6 +3,7 @@ import { AuthContext } from '../../context/authContext.js';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
+
 import ReactQuill from 'react-quill';
 
 import axios from 'axios'
@@ -16,6 +17,7 @@ import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
 
 import TaskSequence from './TaskSequence.jsx';
 import Loading from '../../components/Loading.jsx';
+import ExcelUploadComponent from './ExcelUploadComponent.jsx';
 
 
 const Task = () => {
@@ -80,6 +82,7 @@ const Task = () => {
 				<div className="back mt2 btn_main">
 					<button onClick={handleGoBack} className="d-flex aic g1"><BackIcon/><span>Go Back</span></button>
 				</div>
+
 				<div className="task_inner">
 					<h1 className='center'>{capitalizeFirstLetter(task.task_name)}</h1>
 					<div className="task_inner-top">
