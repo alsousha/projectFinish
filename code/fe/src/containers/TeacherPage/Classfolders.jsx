@@ -239,7 +239,7 @@ function Classfolders() {
 	const isExistsTaskDone = (id_tskfolder) => {
 		return new Promise((resolve, reject) => {
 			axios
-				.get(`/teacher/isexiststasksdone/${id_tskfolder}`)
+				.get(`/teacher/${id_tskfolder}`)
 				.then((res) => {
 					if (res.status === 200) {
 						console.log("yyy");
@@ -306,7 +306,6 @@ function Classfolders() {
 		const separateArrays = separateArrayBySubject(dataArray);
 		// console.log(separateArrays);
 		separateArrays&&setDataArrayFormat(Object.values(separateArrays));
-		
   }, [dataArray]);
 
 	//add focus for active input

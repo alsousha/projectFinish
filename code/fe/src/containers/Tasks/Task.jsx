@@ -16,11 +16,15 @@ import { ReactComponent as EditIcon } from '../../assets/img/edit3.svg';
 import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
 
 import TaskSequence from './TaskSequence.jsx';
+import GroupAssigment from './GroupAssigment.jsx'
 import Loading from '../../components/Loading.jsx';
 import ExcelUploadComponent from './ExcelUploadComponent.jsx';
+import DndComponent from './DndComponent.jsx';
 
 
 const Task = () => {
+	//#region consts
+	
 	const { id } = useParams(); //id task
 	const navigate = useNavigate();
 
@@ -34,7 +38,11 @@ const Task = () => {
 	//get task's data from Link
 	const location = useLocation();
 	const task = location.state?.task;
-	// console.log(task);
+	const textResult = {
+		'success': `Well done! You answered correctly. Congrats you got ${task.task_weight} points`,
+		'fail': 'Your answer is not entirely correct. Try again!'
+	}
+	//#endregion consts
 	useEffect(() => {
     const checkOwnership = async () => {
       try {
@@ -49,8 +57,6 @@ const Task = () => {
     };
     checkOwnership();
   }, [id, currentUser.id_user]);
-	
-	
 	const handleToggleShowInfo = () => {
 		setShowMoreInfo(prev => !prev);  
 		setShowTaskText(false);  
@@ -71,10 +77,7 @@ const Task = () => {
 	if (!hasAccess) {
     return <div>Error: You do not have access to this task.</div>;
   }
-	const textResult = {
-		'success': `Well done! You answered correctly. Congrats you got ${task.task_weight} points`,
-		'fail': 'Your answer is not entirely correct. Try again!'
-	}
+	
 	// console.log(task);
 	return (
 		<div className="task_wrap mt3">
@@ -140,6 +143,12 @@ const Task = () => {
 					<div className="task_todo mt3">
 						{task&&(task.template_name==="Sequance"||task.id_template==1)&&(
 							<TaskSequence task={task} textResult={textResult} handleGoBack={handleGoBack}/>
+							// <GroupAssigment task={task} textResult={textResult} handleGoBack={handleGoBack}/>
+
+)}
+						///
+						{task&&(task.template_name==="Group Assigment"||task.id_template==3)&&(
+							<GroupAssigment task={task} textResult={textResult} handleGoBack={handleGoBack}/>
 						)}
 					</div>
 				</div>

@@ -12,13 +12,53 @@ console.log(props);
 	return (
 			<div className="arr_item-inner hover-shadow">
 				{/* <Link className='' to={`/teacher/task/sequence/${props.item.id_task}`}> */}
-<Link
-	className=""
-	to={`/teacher/task/sequence/${props.item.id_task}`}
-	state={{ task: props.item }}
->					{props.item.task_name}
-	<img src={imageUrl} alt="Task Image" />
-</Link>
+				<div className="boxes-container">
+          <div className="box" id="box-1">
+            <h3>All Answers</h3>
+            {/* First box with draggable items */}
+           
+          </div>
+          <div className="box" id="box-2">
+            <h3>Second Box</h3>
+            {/* Second box to drop data */}
+            <Droppable droppableId="box-2">
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="items-container"
+                >
+                  {box2Data.map((item, index) => (
+                    <div key={index} className="item">
+                      {item}
+                    </div>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+          <div className="box" id="box-3">
+            <h3>Third Box</h3>
+            {/* Third box to drop data */}
+            <Droppable droppableId="box-3">
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="items-container"
+                >
+                  {box3Data.map((item, index) => (
+                    <div key={index} className="item">
+                      {item}
+                    </div>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+        </div>
 				
 			</div>	
 	)

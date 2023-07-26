@@ -1,14 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../context/authContext.js';
-import { useLocation, useParams } from 'react-router-dom';
 
 import axios from 'axios'
 
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import './Task.scss';
-
-
-import { ReactComponent as InfoIcon } from '../../assets/img/info.svg';
 
 function TaskSequence({task, textResult, handleGoBack}) {
 	// console.log(task);
@@ -44,51 +40,53 @@ function TaskSequence({task, textResult, handleGoBack}) {
 	const [correctAnswer, setCorrectAnswer] = useState(false);
 
 
+
 	
   function handleOnDragEnd(result) {
-    if (!result.destination) return;
-    const items = Array.from(seqItems);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setSeqItems(items);
+		// console.log(result);
+    // if (!result.destination) return;
+    // const items = Array.from(seqItems);
+    // const [reorderedItem] = items.splice(result.source.index, 1);
+    // items.splice(result.destination.index, 0, reorderedItem);
+    // setSeqItems(items);
   }
 	const handleOnCheck = () =>{
-		setPopupVisiable(true)
-		//chtck if arrays is equals
-		const isSameArray = (arr1, arr2) => {
-			if (arr1.length !== arr2.length) {
-				return false;
-			}
-			for (let i = 0; i < arr1.length; i++) {
-				if (arr1[i].input !== arr2[i].input || arr1[i].id !== arr2[i].id) {
-					return false;
-				}
-			}
-			return true;
-		};
+		// setPopupVisiable(true)
+		// //chtck if arrays is equals
+		// const isSameArray = (arr1, arr2) => {
+		// 	if (arr1.length !== arr2.length) {
+		// 		return false;
+		// 	}
+		// 	for (let i = 0; i < arr1.length; i++) {
+		// 		if (arr1[i].input !== arr2[i].input || arr1[i].id !== arr2[i].id) {
+		// 			return false;
+		// 		}
+		// 	}
+		// 	return true;
+		// };
 		
-		if(isSameArray(seqItems, arr)){
-			setCorrectAnswer(true)
-			setResultClass('success')
-			setTaskResultText(textResult.success)
-			if(currentUser.role==='student'){
-				updatePoints(task.task_weight)
-				updateTaskDone()
-			}
+		// if(isSameArray(seqItems, arr)){
+		// 	setCorrectAnswer(true)
+		// 	setResultClass('success')
+		// 	setTaskResultText(textResult.success)
+		// 	if(currentUser.role==='student'){
+		// 		updatePoints(task.task_weight)
+		// 		updateTaskDone()
+		// 	}
 
-		}else{
-			setCorrectAnswer(false)
-			setResultClass('fail')
-			setTaskResultText(textResult.fail)
-		}
+		// }else{
+		// 	setCorrectAnswer(false)
+		// 	setResultClass('fail')
+		// 	setTaskResultText(textResult.fail)
+		// }
 	}
 	const handleOkBtn = () =>{
-		setPopupVisiable(false)
-		if(correctAnswer){
-			setTimeout(() => {
-				handleGoBack()
-			}, 500);
-		}
+		// setPopupVisiable(false)
+		// if(correctAnswer){
+		// 	setTimeout(() => {
+		// 		handleGoBack()
+		// 	}, 500);
+		// }
 		
 
 	}
@@ -129,14 +127,19 @@ function TaskSequence({task, textResult, handleGoBack}) {
 			console.error('Error add item', error);
 		});
 	}
+	// console.log(resultClass);
   return (
 		<div className="task_content d-flex f-column jcsb">
 				
 			<div className={`task_content-inner ${resultClass}`}>
 				<DragDropContext onDragEnd={handleOnDragEnd}>
+					
 					<Droppable droppableId="characters">
 						{(provided) => (
-							<ul className="seq__wrap" {...provided.droppableProps} ref={provided.innerRef}>
+							<ul 
+								className="seq__wrap" {...provided.droppableProps} 
+								ref={provided.innerRef}
+							>
 								{seqItems.map(({input, id}, index) => {
 									return (
 										<Draggable key={id} draggableId={id} index={index}>

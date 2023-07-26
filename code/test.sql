@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2023 at 11:04 AM
+-- Generation Time: Jul 26, 2023 at 09:34 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -109,7 +109,7 @@ CREATE TABLE `class` (
 INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
 (19, 'a1', 0, 120),
 (20, 'a2', 0, 120),
-(22, 'a2', 0, 121),
+(22, 'a21', 0, 121),
 (23, 'a4', 0, 121),
 (24, 'a5', 0, 122),
 (25, 'a6', 0, 122),
@@ -230,30 +230,22 @@ CREATE TABLE `student_task` (
 --
 
 INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`, `date`) VALUES
-(127, 32, 59, 0, '2023-07-04 06:44:31'),
 (127, 34, 66, 0, '2023-07-08 16:49:43'),
 (127, 40, 66, 0, '2023-07-08 16:49:43'),
-(127, 41, 65, 0, '2023-07-04 22:08:32'),
 (127, 52, 64, 0, '2023-07-04 21:26:36'),
 (127, 54, 68, 0, '2023-07-12 13:47:08'),
-(128, 32, 59, 0, '2023-07-04 06:44:31'),
 (128, 34, 66, 0, '2023-07-08 16:49:43'),
 (128, 40, 66, 0, '2023-07-08 16:49:43'),
-(128, 41, 65, 0, '2023-07-04 22:08:32'),
 (128, 52, 64, 0, '2023-07-04 21:26:36'),
 (128, 54, 68, 0, '2023-07-12 13:47:08'),
-(131, 32, 59, 0, '2023-07-04 06:44:31'),
 (131, 34, 66, 0, '2023-07-08 16:49:43'),
 (131, 40, 66, 0, '2023-07-08 16:49:43'),
-(131, 41, 65, 0, '2023-07-04 22:08:32'),
 (131, 52, 64, 0, '2023-07-04 21:26:36'),
 (131, 54, 68, 0, '2023-07-12 13:47:08'),
-(145, 32, 59, 1, '2023-07-04 06:44:31'),
-(145, 34, 66, 1, '2023-07-08 16:49:43'),
-(145, 40, 66, 1, '2023-07-08 16:49:43'),
-(145, 41, 65, 1, '2023-07-04 22:08:32'),
-(145, 52, 64, 1, '2023-07-04 21:26:36'),
-(145, 54, 68, 1, '2023-07-12 13:47:08'),
+(145, 34, 66, 0, '2023-07-08 16:49:43'),
+(145, 40, 66, 0, '2023-07-08 16:49:43'),
+(145, 52, 64, 0, '2023-07-04 21:26:36'),
+(145, 54, 68, 0, '2023-07-12 13:47:08'),
 (145, 61, 57, 0, '2023-07-12 13:25:44'),
 (145, 62, 58, 0, '2023-07-12 13:25:58');
 
@@ -312,14 +304,11 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `task_weight`, `task_level`, `task_img`, `id_teacher`, `id_category`, `id_template`, `specific_data`) VALUES
-(32, 'MyTask1', '<p><em>Inadf </em>dfgr<strong>eq</strong></p><p><u>werd</u></p>', '2023-07-02 23:12:27', 1, 1, 'uploads/resized_dog.png', 121, 110, 1, '{\"input-0\":\"sdf1\",\"input-1\":\"sdwe2\",\"input-2\":\"zxc3\"}'),
 (33, 'sdf', '<p>rty</p>', '2023-07-08 01:28:59', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
 (34, 'task1', '', '2023-06-30 19:50:46', 5, 6, 'uploads\\match.jpg', 121, 114, 1, '{\"input-0\":\"ert\",\"input-1\":\"hgj\"}'),
 (36, 'Task kuku', '<p>werxcv</p>', '2023-07-02 23:15:53', 1, 1, 'uploads/resized_img_false.png', 121, 110, 1, '{\"input-0\":\"wer1\",\"input-1\":\"rty2\"}'),
 (37, 'kuu2', '', '2023-06-30 23:09:14', 1, 1, 'uploads\\sequence.jpg', 121, 110, 1, '{\"input-0\":\"dg\"}'),
 (40, 'Task seq', '<p>Instruction of task sequance</p>', '2023-07-02 23:16:10', 1, 1, 'uploads/resized_cat.png', 121, 114, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
-(41, 'Task seq3', 'Instruction of task sequance3', '2023-07-01 14:13:14', 3, 8, 'uploads\\edit.png', 121, 112, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"asd2\",\"input-2\":\"zxc3\"}'),
-(45, 'dfg', 'dfgrt', '2023-07-01 14:47:57', 3, 4, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"dfg\"}'),
 (49, 'rw', '<p>fdgertgd</p>', '2023-07-01 15:32:31', 1, 1, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"et\"}'),
 (52, 't', '<p>ert</p>', '2023-07-01 15:36:29', 1, 1, 'uploads/resized_levelone_two.png', 121, 110, 1, '{\"input-0\":\"er\"}'),
 (53, 'sdf', '<p>wer</p>', '2023-07-01 15:39:33', 1, 1, 'uploads/resized_israel.png', 121, 112, 1, '{\"input-0\":\"rtyu\"}'),
@@ -356,10 +345,11 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_cl
 (57, 'java 5.07', 1, 26, 4),
 (58, 'java 23.6', 1, 26, 4),
 (59, 'tasks for 30.06', 1, 22, 2),
-(64, 'tasks for 4.07', 1, 22, 2),
+(64, 'tasks for 4.07', 0, 22, 2),
 (65, 'tasks for 7.07', 1, 22, 2),
 (66, 'tasks for 12.07', 1, 22, 2),
-(68, 'tasks for 13.07', 1, 22, 2);
+(68, 'tasks for 13.07', 0, 22, 2),
+(69, 'test', 0, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -377,11 +367,8 @@ CREATE TABLE `task_tasksfolder` (
 --
 
 INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
-(32, 59),
 (34, 66),
 (40, 66),
-(41, 65),
-(52, 64),
 (54, 68),
 (61, 57),
 (62, 58);
@@ -447,6 +434,7 @@ INSERT INTO `teacher_sbjs` (`id_user`, `id_subject`) VALUES
 (120, 1),
 (120, 3),
 (121, 2),
+(121, 3),
 (122, 4),
 (122, 5),
 (146, 4),
@@ -471,7 +459,8 @@ CREATE TABLE `template` (
 
 INSERT INTO `template` (`id_template`, `template_name`, `template_img`) VALUES
 (1, 'Sequance', 'sequence.jpg'),
-(2, 'Matching Pairs', 'match.jpg');
+(2, 'Matching Pairs', 'match.jpg'),
+(3, 'Group Assigment', 'groupAssigment.jpg');
 
 -- --------------------------------------------------------
 
@@ -688,7 +677,7 @@ ALTER TABLE `task`
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `task_template`
@@ -700,7 +689,7 @@ ALTER TABLE `task_template`
 -- AUTO_INCREMENT for table `template`
 --
 ALTER TABLE `template`
-  MODIFY `id_template` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_template` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`

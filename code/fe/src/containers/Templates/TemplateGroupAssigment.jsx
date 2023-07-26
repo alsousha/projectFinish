@@ -9,7 +9,7 @@ import { ReactComponent as AddIcon } from '../../assets/img/add.svg';
 import { ReactComponent as DelIcon } from '../../assets/img/remove.svg';
 import MsgBlock from '../../components/MsgBlock.jsx';
 
-function TemplateSequence({generalTaskData, handleMessage, message, setSelectedData, specificData, idTask}) {
+function TemplateGroupAssigment({generalTaskData, handleMessage, message, setSelectedData, specificData, idTask}) {
 	//specificData - indicate: if exists -> "edit task" else -> new task
 	const navigate = useNavigate();
 
@@ -17,24 +17,46 @@ function TemplateSequence({generalTaskData, handleMessage, message, setSelectedD
 
 	const { currentUser} = useContext(AuthContext)
 	let inputArr = specificData ? Object.values(JSON.parse(specificData)) : ['']; //if edit mode -> get specificData
-	const [inputValues, setInputValues] = useState(inputArr);
+	const [inputLeftValues, setInputLeftValues] = useState(inputArr);
+	const [inputRightValues, setInputRightValues] = useState(inputArr);
 
-	const handleInputChange = (index, event) => {
+	const handleLeftInputChange = (index, event) => {
 		const { value } = event.target;
-		setInputValues((prevInputValues) => {
+		setInputLeftValues((prevInputValues) => {
 			const updatedValues = [...prevInputValues];
 			updatedValues[index] = value;
 			return updatedValues;
 		});
 	};
-	const handleAddInput = () => {
-		setInputValues((prevInputValues) => {
+	const handleRightInputChange = (index, event) => {
+		const { value } = event.target;
+		setInputRightValues((prevInputValues) => {
+			const updatedValues = [...prevInputValues];
+			updatedValues[index] = value;
+			return updatedValues;
+		});
+	};
+	const handleAddLeftInput = () => {
+		setInputLeftValues((prevInputValues) => {
 			const updatedValues = [...prevInputValues, ''];
 			return updatedValues;
 		});
 	};
-	const handleDelInput = (index) => {
-    setInputValues((prevInputValues) => {
+	const handleAddRightInput = () => {
+		setInputRightValues((prevInputValues) => {
+			const updatedValues = [...prevInputValues, ''];
+			return updatedValues;
+		});
+	};
+	const handleDelLeftInput = (index) => {
+    setInputLeftValues((prevInputValues) => {
+      const updatedValues = [...prevInputValues];
+      updatedValues.splice(index, 1);
+      return updatedValues;
+    });
+  };
+	const handleDelRightInput = (index) => {
+    setInputRightValues((prevInputValues) => {
       const updatedValues = [...prevInputValues];
       updatedValues.splice(index, 1);
       return updatedValues;
@@ -42,30 +64,31 @@ function TemplateSequence({generalTaskData, handleMessage, message, setSelectedD
   };
   const handleSaveData = () => {
 		const dataObject = {}; //data from elems inputs 
-    inputValues.forEach((value, index) => {
+    inputLeftValues.forEach((value, index) => {
       dataObject[`input-${index}`] = value.trim();
     });
+		console.log(dataObject);
 		const msgValidation = validateField(dataObject) //check inputs and task's name
-		if(msgValidation.msgClass==='error'){
-			handleMessage(msgValidation)
-			setTimeout(() => {
-				handleMessage('');
-			}, 2000);
-		}else{
-			if(specificData){
-				//edit task
-				editTask(generalTaskData, dataObject)
+		// if(msgValidation.msgClass==='error'){
+		// 	handleMessage(msgValidation)
+		// 	setTimeout(() => {
+		// 		handleMessage('');
+		// 	}, 2000);
+		// }else{
+		// 	if(specificData){
+		// 		//edit task
+		// 		editTask(generalTaskData, dataObject)
 
-			}else{
-				addNewItem(generalTaskData, dataObject)
-			}
-			// console.log(dataObject);
+		// 	}else{
+		// 		addNewItem(generalTaskData, dataObject)
+		// 	}
+		// 	// console.log(dataObject);
 		 
-			setTimeout(() => {
-				// setMessage('');
-				navigate("/teacher/tasks")
-			}, 2000);
-		}
+		// 	setTimeout(() => {
+		// 		// setMessage('');
+		// 		navigate("/teacher/tasks")
+		// 	}, 2000);
+		// }
 		
   };
 	// console.log(generalTaskData);
@@ -103,7 +126,7 @@ function TemplateSequence({generalTaskData, handleMessage, message, setSelectedD
 		}
 		return msg;
 	}
-  const inputElements = inputValues.map((value, index) => (
+  const inputElementsLeft = inputLeftValues.map((value, index) => (
 		<div className="elem mb1" key={`seqelem-${index}`}>
 			<span className='mr1'>{`Element #${index+1}:`}</span>
 			<input
@@ -112,12 +135,28 @@ function TemplateSequence({generalTaskData, handleMessage, message, setSelectedD
         // ref={(ref) => {
         //   inputRefs.current[index] = ref;
         // }}
-        onChange={(event) => handleInputChange(index, event)}
+        onChange={(event) => handleLeftInputChange(index, event)}
       />
-			<button className='ml1' onClick={() => handleDelInput(index)}><DelIcon/></button>
+			<button className='ml1' onClick={() => handleDelLeftInput(index)}><DelIcon/></button>
 		</div>
     
   ));
+	const inputElementsRight = inputRightValues.map((value, index) => (
+		<div className="elem mb1" key={`seqelem-${index}`}>
+			<span className='mr1'>{`Element #${index+1}:`}</span>
+			<input
+        type="text"
+        value={value}
+        // ref={(ref) => {
+        //   inputRefs.current[index] = ref;
+        // }}
+        onChange={(event) => handleRightInputChange(index, event)}
+      />
+			<button className='ml1' onClick={() => handleDelRightInput(index)}><DelIcon/></button>
+		</div>
+    
+  ));
+
 
 	//axios for DB
 	const editTask = async (dataToSend, specificTaskData)=>{
@@ -188,11 +227,22 @@ function TemplateSequence({generalTaskData, handleMessage, message, setSelectedD
 		});
 	}
   return (
-    <div>
-			<div className="mb1 mt2">Enter elements in right sequance:</div>
-      <div className="input-elements-container">{inputElements}</div>
-      {/* <button onClick={handleAddInput}>Add Input</button> */}
-			<button className="link d-flex jcsb aic g1" onClick={handleAddInput}><AddIcon/> <span className='ml1'>Add new Element</span></button>
+    <div className=''>
+			<div className="d-flex jcsb mb4 mt2 g3">
+				<div className="">
+					<div className="mb1">Fill items for <span className='accent'>left</span> box:</div>
+					<div className="input-elements-container">{inputElementsLeft}</div>
+					<button className="link d-flex jcsb aic g1" onClick={handleAddLeftInput}><AddIcon/> <span className='ml1'>Add new Element</span></button>
+				</div>
+				<div className="">
+					<div className="mb1">Fill items for <span className='accent'>right</span> box:</div>
+					<div className="input-elements-container">{inputElementsRight}</div>
+					<button className="link d-flex jcsb aic g1" onClick={handleAddRightInput}><AddIcon/> <span className='ml1'>Add new Element</span></button>
+				</div>
+			</div>
+			
+
+       {/* <button onClick={handleAddInput}>Add Input</button> */}
 			<button
 				className='btn_blue active mt2 mb2'
 				onClick={handleSaveData}>
@@ -206,4 +256,4 @@ function TemplateSequence({generalTaskData, handleMessage, message, setSelectedD
 // function SaveButton({ handleSaveData }) {
 //   return <button onClick={handleSaveData}>Save Data</button>;
 // }
-export default TemplateSequence;
+export default TemplateGroupAssigment;

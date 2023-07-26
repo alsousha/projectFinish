@@ -12,6 +12,10 @@ import { API_URL } from '../../constans.js';
 import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
 import TemplateSequence from '../Templates/TemplateSequence';
 import TemplateMatch from '../Templates/TemplateMatch';
+import GroupAssigment from './GroupAssigment.jsx';
+import DndComponent from './DndComponent.jsx';
+import TemplateGroupAssigment from '../Templates/TemplateGroupAssigment.jsx';
+import MsgBlock from '../../components/MsgBlock.jsx';
 
 function NewTask() {
   //#region
@@ -205,6 +209,7 @@ function NewTask() {
   };
 
   //#endregion
+
   return (
     <div className='d-flex '>
       <div className='container '>
@@ -216,9 +221,6 @@ function NewTask() {
               <span>Go Back</span>
             </Link>
           </div>
-        </div>
-        <div className='msg_block'>
-          {message ? <span className={message.msgClass}>{message.text}</span> : <span></span>}
         </div>
 
         <div className='task_data'>
@@ -325,26 +327,44 @@ function NewTask() {
             <div className=''>
               <div className='task_data-item'>
                 <span className='label'>Templates:</span>
-                {templates.map((temp) => (
-                  <label key={'temp' + temp.id_template} className='label_img'>
-                    <div className='top'>
-                      <input
-                        type='radio'
-                        value={temp.id_template}
-                        checked={selectedData.selectedTemplate == temp.id_template}
-                        onChange={handleTemplateChange}
-                      />
-                      {temp.template_name}
-                    </div>
-                    <img
-                      src={require(`../../assets/img/${temp.template_img}`)}
-                      alt='template_img'
-                      className={
-                        selectedData.selectedTemplate == temp.id_template ? 'active' : 'no-active'
-                      }
-                    />
-                  </label>
-                ))}
+
+                {templates.map((temp) => {
+                  let imgSrc;
+                  try {
+                    console.log(`${API_URL}/uploads/${temp.template_img}`);
+                    // Attempt to require the image dynamically
+                    imgSrc = require(`../../assets/img/${temp.template_img}`);
+                  } catch (error) {
+                    // If the image does not exist, you can provide a fallback image or handle it as needed
+                    imgSrc = require('../../assets/img/defaultTemplate.jpg'); // Replace 'defaultImage.png' with your fallback image path
+                  }
+                  // console.log(imgSrc);
+                  return (
+                    <label key={'temp' + temp.id_template} className='label_img'>
+                      <div className='top'>
+                        <input
+                          type='radio'
+                          value={temp.id_template}
+                          checked={selectedData.selectedTemplate == temp.id_template}
+                          onChange={handleTemplateChange}
+                        />
+                        {temp.template_name}
+                      </div>
+                      {temp.template_img && (
+                        <img
+                          src={imgSrc}
+                          alt='template_img'
+                          className={
+                            selectedData.selectedTemplate == temp.id_template
+                              ? 'active'
+                              : 'no-active'
+                          }
+                        />
+                      )}
+                    </label>
+                  );
+                })}
+
                 {/* <span>See example</span> */}
               </div>
               <div className='task-inner mt3'>
@@ -353,9 +373,18 @@ function NewTask() {
                     generalTaskData={selectedData}
                     handleMessage={setMessage}
                     setSelectedData={setSelectedData}
+                    message={message}
                   />
                 )}
-                {selectedData.selectedTemplate - 1 === 1 && <TemplateMatch />}
+                {/* {selectedData.selectedTemplate - 1 === 1 && <TemplateMatch />} */}
+                {selectedData.selectedTemplate - 1 === 2 && (
+                  <TemplateGroupAssigment
+                    generalTaskData={selectedData}
+                    handleMessage={setMessage}
+                    setSelectedData={setSelectedData}
+                    message={message}
+                  />
+                )}
               </div>
             </div>
           )}
