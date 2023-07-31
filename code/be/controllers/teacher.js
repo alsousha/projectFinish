@@ -476,21 +476,32 @@ export const deleteTskFolder = (req, res) => {
   }
 };
 export const isExistsTasksDone = (req, res) => {
+  console.log('eeee');
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
   try {
     const id_tskfolder = req.params.id;
     console.log(id_tskfolder);
+    //   const q = `
+    // 	SELECT EXISTS (
+    // 		SELECT 1
+    // 		FROM task t
+    // 		JOIN task_tasksfolder tt ON t.id_task = tt.id_task
+    // 		WHERE tt.id_tskFolder = ? AND t.is_done = true
+    // 	) AS is_exists;
+    // `;
+
     const q = `
 		SELECT EXISTS (
 			SELECT 1
-			FROM task t
-			JOIN task_tasksfolder tt ON t.id_task = tt.id_task
-			WHERE tt.id_tskFolder = ? AND t.is_done = true
+			FROM student_task st
+			JOIN task_tasksfolder t ON st.id_task = t.id_task
+			WHERE t.id_tskFolder = ? AND st.is_task_done = true
 		) AS is_exists;
 	`;
     // const q = 'UPDATE taskfolder SET tskFolder_name = ? WHERE id_tskFolder = ?';
     db.query(q, id_tskfolder, (error, data) => {
+      console.log('data[0]');
       if (error) {
         console.error('Failed to fetch data', error);
         res.status(500).json({ error: 'Error to fetch data' });

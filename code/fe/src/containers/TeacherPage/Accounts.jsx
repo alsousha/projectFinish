@@ -55,7 +55,6 @@ function Accounts() {
     setNewItemName(e.target.value);
   };
 	const handleStudentsArray = (arr) => {
-		console.log("ww");
 		// console.log(arr); //parsed array of students from file
 		const errorEmails = [];
 		const validEmails = [];
@@ -78,8 +77,6 @@ function Accounts() {
 		console.log(errorEmails);
 		console.log(validEmails);
 
-		
-    
   };
 	
 	const validateField = (fieldNames) => {

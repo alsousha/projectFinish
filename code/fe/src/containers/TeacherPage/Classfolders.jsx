@@ -239,7 +239,7 @@ function Classfolders() {
 	const isExistsTaskDone = (id_tskfolder) => {
 		return new Promise((resolve, reject) => {
 			axios
-				.get(`/teacher/${id_tskfolder}`)
+				.get(`/teacher/isexiststasksdone/${id_tskfolder}`)
 				.then((res) => {
 					if (res.status === 200) {
 						console.log("yyy");

@@ -146,7 +146,6 @@ const Task = () => {
 							// <GroupAssigment task={task} textResult={textResult} handleGoBack={handleGoBack}/>
 
 )}
-						///
 						{task&&(task.template_name==="Group Assigment"||task.id_template==3)&&(
 							<GroupAssigment task={task} textResult={textResult} handleGoBack={handleGoBack}/>
 						)}

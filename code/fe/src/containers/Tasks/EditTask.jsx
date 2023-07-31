@@ -12,6 +12,8 @@ import { API_URL } from '../../constans.js';
 import { ReactComponent as BackIcon } from '../../assets/img/back.svg';
 import TemplateSequence from '../Templates/TemplateSequence';
 import TemplateMatch from '../Templates/TemplateMatch';
+import GroupAssigment from './GroupAssigment.jsx';
+import TemplateGroupAssigment from '../Templates/TemplateGroupAssigment.jsx';
 
 
 function EditTask() {
@@ -363,6 +365,15 @@ function EditTask() {
 								/>
 							)}
 							{selectedData.selectedTemplate - 1 === 1 && <TemplateMatch />}
+							{selectedData.selectedTemplate - 1 === 2 && 
+								<TemplateGroupAssigment
+									generalTaskData={selectedData}
+									handleMessage={setMessage}
+									setSelectedData={setSelectedData}
+									specificData={task.specific_data}
+									idTask={task.id_task}
+								/>
+							}
 						</div>
 					</div>
         </div>
