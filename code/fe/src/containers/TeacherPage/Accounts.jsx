@@ -26,6 +26,8 @@ function Accounts() {
 	const [errors, setErrors] = useState({}); //Validations errors
 	//add new student
 	const [newItemName, setNewItemName] = useState('')
+	const [errorEmails, setErrorEmails] = useState([])
+	const [notFoundEmails, setNotFoundEmails] = useState([])
 	const [studentsArray, setStudentsArray] = useState([]) //array students accounts from upload file
 	const[isAddItemVisiable, setIsAddItemVisiable] = useState(false)
 
@@ -40,7 +42,7 @@ function Accounts() {
 		// console.log(fieldErrors);
 
 		if (Object.keys(fieldErrors).length === 0) {
-			addNewItem()
+			addNewItem(newItemName, true)
 			
 			// setErrors({});
 			// setNewCatname("")
@@ -54,31 +56,88 @@ function Accounts() {
 	const handleInputAddItemChange = (e) => {
     setNewItemName(e.target.value);
   };
-	const handleStudentsArray = (arr) => {
-		// console.log(arr); //parsed array of students from file
-		const errorEmails = [];
-		const validEmails = [];
-		arr.map((email)=>{
-			if(!isValidEmail(email)){
-				const msg={
-					msgClass: "error",
-					message: `Email ${email} is not correct. First change file of students and try again`
-				}
-				setMessage(msg);		
-				errorEmails.push(email)
-			}else {
-				setNewItemName(email)
-				addNewItem()
-				validEmails.push(email)
+	//add students from file
+	// const handleStudentsArray = (arr) => {
+	// 	arr.map((email)=>{
+	// 		if(!isValidEmail(email)){
+	// 			//add invalid email to arr
+	// 			setErrorEmails((prevErrorEmails) => [...prevErrorEmails, ...email]);
 
-			}
-		})
+	// 			const msg={
+	// 				msgClass: "error",
+	// 				message: `Next emails are not correct. First change file of students and try again: ${errorEmails.join(', ')}`
+	// 			}
+	// 			setMessage(msg);		
+	// 			console.log(errorEmails);
+	// 			// errorEmails.push(email)
 
-		console.log(errorEmails);
-		console.log(validEmails);
-
-  };
+				
+				
+	// 		}else {
+	// 			// setNewItemName(email)
+	// 			addNewItem(email)
+	// 			// validEmails.push(email)
+	// 		}
+	// 	})
+  // };
 	
+	// const handleStudentsArray = (arr) => {
+	// 	const invalidEmails = [];
+	// 	const notFoundEmail = [];
+	
+	// 	arr.forEach((email) => {
+	// 		if (email.length!=0 && !isValidEmail(email)) {
+	// 			invalidEmails.push(email);
+	// 		} else {
+	// 			addNewItem(email);
+	// 		}
+	// 	});
+	
+	// 	if (invalidEmails.length > 0) {
+	// 		const msg = {
+	// 			msgClass: "error",
+	// 			message: `Next emails are not correct. First change the file of students and try again: ${invalidEmails.join(", ")}`,
+	// 		};
+	// 		setMessage(msg);
+	// 	}
+	// };
+	const handleStudentsArray = async (arr) => {
+		const invalidEmails = [];
+		const notFoundEmails = [];
+	
+		for (const email of arr) {
+			if (email.length !== 0 && !isValidEmail(email)) {
+				invalidEmails.push(email);
+			} else {
+				try {
+					// Await the promise from addNewItem
+					await addNewItem(email);
+				} catch (error) {
+					if (error.notFoundEmail) {
+						// If user not found, add the email to notFoundEmails array
+						notFoundEmails.push(error.notFoundEmail);
+					} 
+				}
+			}
+		}
+	
+		if (invalidEmails.length > 0) {
+			const msg = {
+				msgClass: "error",
+				message: `Next emails are not correct. First change the file of students and try again: ${invalidEmails.join(", ")}`,
+			};
+			setMessage(msg);
+		}
+	
+		if (notFoundEmails.length > 0) {
+			const msg = {
+				msgClass: "error",
+				message: `Next users not found: ${notFoundEmails.join(", ")}`,
+			};
+			setMessage(msg);
+		}
+	};
+
 	const validateField = (fieldNames) => {
     const errors = {};
 		fieldNames.forEach(fieldName => {
@@ -101,43 +160,129 @@ function Accounts() {
 
 
 	//axios for DB
-	const addNewItem = async ()=>{
-		console.log(newItemName);
+	// const addNewItem = async (email)=>{
+	// 	axios
+	// 	.post(`/teacher/students/${currentUser.id_user}`, {student_email: email, id_class:id_class})
+	// 	.then((res) => {
+	// 		if(res.status===209){
+	// 			//add not found emails to arr
+	// 			const notFound = [...notFoundEmails];
+	// 			setNotFoundEmails((prevEmails) => [...prevEmails, ...email]);
+	// 			const msg={
+	// 				msgClass: "error",
+	// 				message: `Next users not found: ${notFound.join(", ")}` 
+	// 			}
+	// 			setMessage(msg);
+	// 		}else{
+	// 			// const tmpCat = res.data
+	// 			setAccounts((prevCats) =>
+	// 			[...prevCats, res.data]
+	// 			);	
+
+	// 			// console.log(res.status===200);
+	// 			// const msg={
+	// 			// msgClass: res.status===200 ? "success" : "error",
+	// 			// message: res.status===200 ? "New student added successfully!" : 'Error add student'
+	// 			// }
+	// 			// setMessage(msg);
+	// 			fetchData()
+	// 			setNewItemName('')
+	// 			setIsAddItemVisiable(false)
+	// 			// Clear the message after 2 seconds 
+	// 		}
+			
+			
+  //   })
+  //   .catch((error) => {
+	// 		// console.log(email);
+	// 		// setErrorEmails((prevErrorEmails) => [...prevErrorEmails, ...email]);
+	// 		// errorEmails.push(email)
+  //     console.error('Error add student', error);
+	// 		const msg={
+	// 			msgClass:  "error",
+	// 			message: 'Error add student'
+	// 		}
+  //     // setMessage(msg);
+  //   })
+	// 	.finally(() => {
+  //     // setTimeout(() => {
+	// 		// 	setMessage('');
+	// 		// }, 2000);
+  //   });
+	// }
+	const addNewItem = async (email, isSingleEmail) => {
+		if(isSingleEmail){
 		axios
-		.post(`/teacher/students/${currentUser.id_user}`, {student_email: newItemName, id_class:id_class})
-		.then((res) => {
-			// console.log(res.data);
-			// const tmpCat = res.data
-			setAccounts((prevCats) =>
-				[...prevCats, res.data]
-			);	
-			
-			console.log(res.status===200);
-			const msg={
-				msgClass: res.status===200 ? "success" : "error",
-				message: res.status===200 ? "New student added successfully!" : 'Error add student'
-			}
-      setMessage(msg);
-			fetchData()
-			setNewItemName('')
-			setIsAddItemVisiable(false)
-			 // Clear the message after 2 seconds 
-			
-    })
-    .catch((error) => {
-      console.error('Error updating class name', error);
-			const msg={
-				msgClass:  "error",
-				message: 'Error add student'
-			}
-      setMessage(msg);
-    })
-		.finally(() => {
-      setTimeout(() => {
-				setMessage('');
-			}, 2000);
-    });
-	}
+			.post(`/teacher/students/${currentUser.id_user}`, {student_email: email, id_class:id_class})
+			.then((res) => {
+				if(res.status===209){
+					
+					const msg={
+						msgClass: "error",
+						message: `User ${email} not found` 
+					}
+					setMessage(msg);
+				}else{
+					// const tmpCat = res.data
+					setAccounts((prevCats) =>
+					[...prevCats, res.data]
+					);	
+
+					// console.log(res.status===200);
+					const msg={
+					msgClass: res.status===200 ? "success" : "error",
+					message: res.status===200 ? "New student added successfully!" : 'Error add student'
+					}
+					setMessage(msg);
+					fetchData()
+					setNewItemName('')
+					setIsAddItemVisiable(false)
+					// Clear the message after 2 seconds 
+				}
+				
+				
+			})
+			.catch((error) => {
+				// console.log(email);
+				// setErrorEmails((prevErrorEmails) => [...prevErrorEmails, ...email]);
+				// errorEmails.push(email)
+				console.error('Error add student', error);
+				const msg={
+					msgClass:  "error",
+					message: 'Error add student'
+				}
+				// setMessage(msg);
+			})
+			.finally(() => {
+				// setTimeout(() => {
+				// 	setMessage('');
+				// }, 2000);
+			});
+		}else{
+			return new Promise((resolve, reject) => {
+				axios
+					.post(`/teacher/students/${currentUser.id_user}`, { student_email: email, id_class: id_class })
+					.then((res) => {
+						if (res.status === 209) {
+							// If user not found, reject the promise with not found email
+							reject({ notFoundEmail: email });
+							fetchData()
+							setNewItemName('')
+							setIsAddItemVisiable(false)
+						} else {
+							// If user is found, resolve the promise with the data
+							resolve(res.data);
+						}
+					})
+					.catch((error) => {
+						console.error('Error add student', error);
+						reject(error);
+					});
+			});
+		};
+		
+	};
+
 	const deleteItem = async (itemId) => {
 	
 		axios
@@ -213,6 +358,8 @@ function Accounts() {
 	if (!hasAccess) {
     return <div>Error: You do not have access to this class.</div>;
   }
+	// console.log(errorEmails);
+	// console.log(notFoundEmails);
   return (
 	<div className='mt4 section_accounts'>
 		<div className="container">
@@ -261,7 +408,7 @@ function Accounts() {
 				<span className='table_elem'>Email</span>
 			</div>
 			{accounts.length!==0 ? accounts.map((item, i) => (
-				<div key={"account-"+item.id_user + i} className="table_item d-flex jcsb aic mb2">
+				<div key={"account-"+item.id_user + i} className="table_item d-flex jcsb aic">
 					<div className="d-flex jcsb aic table">
 							<span className='table_elem small'>{i+1}.</span>
 							<span className='table_elem'>{item.name}&nbsp;</span>

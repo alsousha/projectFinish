@@ -278,7 +278,32 @@ export const getTaskByUser = (req, res) => {
     res.status(200).json(data);
   });
 };
+export const getTasksGlobal = (req, res) => {
+  const { selectedSubjects, selectedTemplates, selectedLevels, selectedWeights } = req.body;
+  // console.log(selectedLevels);
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  //  const { role, task_id } = req.body;
+  const subjectIds = selectedSubjects.map((subject) => subject.id_subject);
+  const templateIds = selectedTemplates.map((template) => template.id_template);
 
+  const q = `SELECT *
+  	FROM task t
+		JOIN category c ON t.id_category = c.id_category 
+  	WHERE id_subject IN (?) and 
+					id_template IN (?) and 
+					task_level IN (?) and 
+					task_weight IN (?)`;
+
+  db.query(q, [subjectIds, templateIds, selectedLevels, selectedWeights], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the tasks exists
+    if (data.length === 0) {
+      return res.status(204).json('Tasks not found');
+    }
+    res.status(200).json(data);
+  });
+};
 export const getTasksByCategory = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');

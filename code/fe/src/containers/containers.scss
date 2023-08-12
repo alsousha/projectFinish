@@ -181,19 +181,48 @@
 		height: 30rem;
 		display: block;
 		margin: 0 auto;
+		max-height: 36rem;
+    width: auto;
+    display: block;
 	}
 	.article__text{
 		text-align: justify;
 	}
 
 }
+.editorContainer.art{
+	width: 100%;
+}
 .arts__wrap{
 	.art__item{
 		padding: 2rem;
+		display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 		&:hover{
 			transform: translateY(-15px);
 			transition: all 0.5s;
 			border: 1px solid $main-light;
+		}
+	}
+}
+.popup_content{
+	.mid{
+		.user__item{
+			border-bottom: 1px solid;
+		}
+		.label{
+			display: block;
+			font-style: italic;
+			width: 40%;
+			line-height: 1.5;
+
+		}
+		.userData{
+			display: block;
+			width: 60%;
+			font-weight: 600;
 		}
 	}
 }

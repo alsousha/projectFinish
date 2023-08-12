@@ -44,18 +44,18 @@ const Task = () => {
 	}
 	//#endregion consts
 	useEffect(() => {
-    const checkOwnership = async () => {
-      try {
-        // Make an API request to check if the task ID exists for the user
-        const res = await axios.post(`/tasks/${currentUser.id_user}`, {role: currentUser.role, task_id: id});
-				setHasAccess(res.data.length>0)
-        // setHasAccess(res.data.some((item) => item.id_task === Number(id)));
-      } catch (error) {
-      }finally {
-        setIsLoading(false);
-      }
-    };
-    checkOwnership();
+    // const checkOwnership = async () => {
+    //   try {
+    //     // Make an API request to check if the task ID exists for the user
+    //     const res = await axios.post(`/tasks/${currentUser.id_user}`, {role: currentUser.role, task_id: id});
+		// 		setHasAccess(res.data.length>0)
+    //     // setHasAccess(res.data.some((item) => item.id_task === Number(id)));
+    //   } catch (error) {
+    //   }finally {
+    //     setIsLoading(false);
+    //   }
+    // };
+    // checkOwnership();
   }, [id, currentUser.id_user]);
 	const handleToggleShowInfo = () => {
 		setShowMoreInfo(prev => !prev);  

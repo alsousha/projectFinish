@@ -172,7 +172,6 @@ function TemplateSequence({generalTaskData, handleMessage, message, setSelectedD
       },
     })
 		.then((res) => {
-			console.log("tyyy");
 			const msg={
 				msgClass: res.status===200 ? "success" : "error",
 				text: res.status===200 ? "Create the task successfully!" : 'Error add task'

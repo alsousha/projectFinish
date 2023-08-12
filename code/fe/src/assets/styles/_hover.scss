@@ -79,3 +79,14 @@
 	  transition: all .5s;
 	}
   }
+	.cursor_pointer{
+		cursor: pointer;
+	}
+	.hover_bg{
+		display: block;
+		&:hover{
+			color: $white;
+			background-color: $main;
+			transition: all .5s;
+		}
+	}

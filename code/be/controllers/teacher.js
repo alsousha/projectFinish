@@ -371,7 +371,8 @@ export const addStudentsToClass = (req, res) => {
         }
       });
     } else {
-      return res.status(409).json({ error: 'User is not exists!' });
+      // return res.status(409).json({ error: 'User is not exists!' });
+      return res.status(209).json({ error: 'User is not exists!' });
     }
   });
 

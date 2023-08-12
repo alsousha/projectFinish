@@ -231,6 +231,7 @@ function Profile() {
 				msgClass: res.status===200 ? "success" : "error",
 				message: res.data.message
 			}
+			console.log("EEEER");
       setMessage(msg);
 			updateUser(userData)//update localstorage and context
 			 // Clear the message after 2 seconds 

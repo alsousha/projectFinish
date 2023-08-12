@@ -1,7 +1,7 @@
 @import "../../assets/styles/vars";
-.seq__wrap{
-	background-color: bisque;
-}
+// .seq__wrap{
+// 	background-color: $accent;
+// }
 .task_inner-top{
 	position: relative;
 	.task__text{
@@ -167,17 +167,56 @@
   height: auto;
 } */
 .seq__wrap.group{
+	position: relative;
+	height: 12rem;
 	
 	.item{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 2rem;
 		width: 40%;
-		border: 1px solid green;
+		border: 1px solid $main;
+		border-radius: 1rem;
+		background-color: $white;
+		text-align: center;
+		font-weight: 600;
+		font-size: 2.2rem;
+		cursor: pointer;
+
+		&:hover{
+			box-shadow:  0 0 10px rgba(0,0,0,0.5);
+			transition: 1s;
+	
+		}
+		&.no-active{
+			opacity: 0;
+		}
 	}
 }
 .box{
-	height: 100px;
-	background-color: aquamarine;
+	height: 300px;
+	background-color: $accent;
+	padding: 1rem;
+	border: 1px solid;
+	border-radius: 1rem;
+	margin-bottom: 2rem;
+	h3{
+		text-transform: capitalize;
+		text-align: center;
+		margin-bottom: 1rem;
+	}
 }
 .items-container{
 	height: 100%;
 	width: 100%;
+	.item{
+		background-color: $white;
+		border: 1px solid $main;
+		border-radius: 1rem;
+		padding: 0.5rem;
+		margin-bottom: 5px;
+
+	}
 }

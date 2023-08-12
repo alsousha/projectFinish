@@ -41,14 +41,15 @@ export const AuthContextProvider = ({ children }) => {
       } catch (err) {
         console.log(err);
       }
-      //get points
-      // try {
-      //   const res = await axios.get(`/student/${userTmp.id_user}/points`);
-      //   const totalUserData = { ...userTmp, points: res.data.classLevel };
-      //   setCurrentUser(totalUserData);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+    } else if (userTmp.role === 'admin') {
+      try {
+        const totalUserData = {
+          ...userTmp,
+        };
+        setCurrentUser(totalUserData);
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     // console.log(res.data);
@@ -57,8 +58,9 @@ export const AuthContextProvider = ({ children }) => {
   };
   const updateUser = async (data) => {
     // const res = await axios.post('/auth/updateUser', inputs);
+    console.log('ewa');
     setCurrentUser(data);
-    // console.log('res' + JSON.stringify(res).data);
+    console.log('data');
   };
   const logout = async () => {
     if (window.confirm('Are you sure want to exit?')) {

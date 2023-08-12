@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 26, 2023 at 09:34 PM
+-- Generation Time: Aug 12, 2023 at 10:39 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -31,17 +31,18 @@ CREATE TABLE `blog` (
   `id_article` int(11) NOT NULL,
   `art_title` varchar(255) NOT NULL,
   `art_text` varchar(6000) NOT NULL,
-  `art_img` varchar(50) NOT NULL
+  `art_img` varchar(50) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `blog`
 --
 
-INSERT INTO `blog` (`id_article`, `art_title`, `art_text`, `art_img`) VALUES
-(1, 'Article #1', '				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque, ducimus laborum amet est in repellendus vero iusto at alias explicabo, quod nisi saepe error, sapiente aliquid inventore excepturi. Incidunt beatae laborum dicta quaerat impedit, blanditiis nesciunt, sequi dignissimos delectus voluptas ab corporis illo repudiandae autem? Odio earum porro sequi similique dolore? \r\nAt tempore, nisi libero eaque molestias pariatur assumenda explicabo, itaque repellat, quia iure aspernatur laudantium veritatis harum labore! Sequi nulla dolor optio, molestiae officia aut at in, quasi magni harum quo! Earum possimus distinctio enim dignissimos magni! Nesciunt molestias perspiciatis libero! Eos magnam distinctio adipisci provident dicta eum veniam error? Fuga perferendis totam, repellat saepe sed temporibus ut ipsum, consequuntur magnam aspernatur nostrum ullam dolor voluptatum sapiente vel. Laborum blanditiis vitae ipsa tempora quos, rem velit facere fugit porro assumenda natus eum modi eligendi optio? Delectus quo exercitationem pariatur, qui ab, possimus unde ea quibusdam dolore, ducimus labore. \r\n\r\nDolorum atque expedita quis omnis adipisci doloribus molestiae similique quisquam incidunt facilis, impedit sed modi, eligendi architecto. Iste porro magnam, deleniti odit earum eveniet itaque in nulla voluptas non reiciendis voluptatibus ipsum nisi reprehenderit? \r\nMollitia impedit, id minima praesentium ipsam officiis similique at, quos labore vel esse sed laudantium soluta accusamus recusandae nobis blanditiis ducimus commodi earum nostrum, aperiam enim quam! Quia perferendis illum eius qui dolor dolore quidem, doloribus velit sapiente optio dicta ducimus harum laudantium totam explicabo necessitatibus iusto minus debitis deserunt labore rem! \r\n\r\nLaborum, neque eligendi? Iure tempora quod error alias libero, incidunt vel voluptate quibusdam dolorem consectetur odio sapiente repellendus! Eius, similique amet. Facere accusamus voluptas, eveniet sed optio quas alias maxime. Harum porro error velit minima dolor aliquid unde aspernatur eos voluptatibus amet, maxime quidem molestiae eius vel iusto reiciendis id qui officia veritatis culpa quas ipsam similique assumenda magnam? Ab dolor laboriosam sequi quis dicta.\r\n', 'art1.svg'),
-(2, 'Article #2', '				Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, enim qui vel harum autem, dignissimos vitae ullam delectus non quaerat ea animi officiis soluta voluptates aliquid vero distinctio fugit veniam impedit numquam labore. In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi?\r\n\r\nImpedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? \r\n\r\n\r\nAutem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis. Voluptates saepe magnam ex sed esse tenetur, deserunt consequatur ea optio aspernatur suscipit itaque ad obcaecati earum, omnis laudantium? Blanditiis maxime eius dolor facere nulla laborum modi, error ullam quasi dignissimos iure autem et nostrum dicta adipisci, maiores quas beatae iste! Illo delectus velit ducimus porro impedit molestiae! \r\n\r\n', 'art2.svg'),
-(3, 'Article #3', 'In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi? Impedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? Autem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis.', 'art3.svg');
+INSERT INTO `blog` (`id_article`, `art_title`, `art_text`, `art_img`, `create_date`) VALUES
+(1, 'Article #12', '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong> Lorem ipsum dolor</strong> sit amet consectetur adipisicing elit. Alias voluptatum animi commodi <u>libero facilis</u> consectetur nulla magni ducimus unde, ea dicta modi sit, delectus est fuga sapiente quaerat nisi. Ea nobis repellendus quisquam enim deserunt quae saepe maiores quo at.</p><p>Quod blanditiis debitis laboriosam! Repudiandae sunt nam vero voluptatum. Possimus ab numquam cum quibusdam. Quas aperiam, delectus soluta totam quis quidem veritatis velit! Aperiam, dignissimos dolor. Quaerat illum exercitationem ratione! Perspiciatis, recusandae consequatur temporibus illo sequi adipisci iusto repellendus quis reiciendis! Mollitia corporis dolores explicabo labore quaerat commodi provident amet exercitationem cum nesciunt aliquid recusandae sed in sunt aspernatur eius quae delectus, pariatur modi natus voluptates, iste unde quasi dolorem! Facilis deserunt error atque culpa reiciendis ipsa pariatur aperiam provident recusandae modi quae magnam qui impedit commodi totam eius dolor accusamus explicabo et quo, nam ab nesciunt repellendus iusto. Repellat consequatur laudantium fugit doloremque sunt dolorum ullam fugiat adipisci praesentium fuga! Autem suscipit quia dolore, natus ratione recusandae vero eum ipsum laborum, nam consequatur, accusantium tenetur voluptas aperiam.</p><p>Minima architecto perferendis harum labore nisi! Quisquam fugit laboriosam, molestias ab delectus qui consectetur atque ducimus nemo laborum necessitatibus totam mollitia vitae maxime voluptatum molestiae? Possimus facilis quaerat eos tenetur ipsam. Voluptatibus.</p>', 'uploads/resized_art1.jpg', '2023-08-07 15:00:42'),
+(2, 'Article #2', '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, enim qui vel harum autem, dignissimos vitae ullam delectus non quaerat ea animi officiis soluta voluptates aliquid vero distinctio fugit veniam impedit numquam labore. In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi? Impedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? Autem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis. Voluptates saepe magnam ex sed esse tenetur, deserunt consequatur ea optio aspernatur suscipit itaque ad obcaecati earum, omnis laudantium? Blanditiis maxime eius dolor facere nulla laborum modi, error ullam quasi dignissimos iure autem et nostrum dicta adipisci, maiores quas beatae iste! Illo delectus velit ducimus porro impedit molestiae!</p>', 'uploads/resized_art2.png', '2023-08-07 15:00:42'),
+(3, 'Article #3', '<p>In accusantium, quis vero ut rem itaque. Nihil maxime sed aperiam eveniet similique impedit repudiandae nesciunt dolore doloremque aspernatur. Animi repellendus aperiam hic esse ratione eos quasi est. Consequuntur sed laboriosam culpa tenetur error consectetur minus dolores perferendis quaerat repellat aut at repellendus magni maxime, debitis laudantium beatae quibusdam dolor voluptas iusto. Optio sequi exercitationem facilis, consectetur dolor sint, dolorum harum magni repellendus, vitae perferendis quidem. Eos, voluptas voluptates. Praesentium atque labore consectetur assumenda recusandae provident, officiis temporibus doloremque perspiciatis fuga est tempore alias eaque! Illo ab culpa quibusdam dolore sapiente mollitia aspernatur quaerat ducimus aliquid, eos quisquam non sunt nesciunt facere? Voluptate optio possimus architecto saepe ab rerum consequuntur est. Labore, dignissimos, quos magni facere accusantium id molestiae nostrum voluptatem nihil iure, et eveniet illo provident repellendus consequatur libero quidem explicabo vitae quo error mollitia perspiciatis fugit deserunt dolores! Id molestias ut, temporibus commodi accusantium dignissimos quasi tenetur repellat quos beatae ad consequatur deserunt eveniet laudantium maxime debitis magnam quisquam nam placeat rem nulla ex quibusdam nihil error? Hic nam doloribus ullam sunt ipsam distinctio eveniet molestias laudantium vero deleniti sapiente harum doloremque ad dolor, ex mollitia minima ducimus non facilis esse impedit! Quo placeat dignissimos facilis harum nesciunt! Ea provident tempore quo animi earum iure sapiente dolore, nemo similique tempora, assumenda eius ipsum, sint mollitia repellendus cupiditate? Neque, mollitia! Laudantium iure delectus corrupti autem, perferendis cumque rem doloribus architecto exercitationem. Iste porro aut quae laborum inventore et eligendi optio exercitationem quo atque eos mollitia at commodi corrupti voluptatem odio praesentium, eveniet reprehenderit. Nobis laudantium, maxime esse modi ad aut mollitia. Soluta maiores culpa quisquam, error sequi molestias! Ex explicabo perspiciatis ducimus, eos, sint quia libero ratione voluptate qui, deleniti recusandae labore officiis. Numquam unde porro dignissimos, aperiam suscipit asperiores. Ipsum nam impedit, mollitia ipsam officia maiores minima, et exercitationem ducimus nobis nemo illo dolorum aspernatur molestias doloribus debitis laborum, quo voluptatibus sapiente placeat minus? Numquam molestiae perferendis dolore necessitatibus itaque dolores dolorem officiis doloribus optio ipsam voluptatem cum fuga corporis quo beatae iste earum enim veniam, quisquam nisi? Impedit quidem quibusdam minus ea incidunt soluta, cupiditate voluptas. Temporibus molestias quam culpa, ipsa esse provident cupiditate, nihil commodi animi a neque quod ad consequatur, corrupti sunt assumenda magnam? Autem doloribus culpa accusantium dignissimos non cumque ipsam repellendus deleniti iure. Perferendis libero amet provident quod, vero harum hic maiores iusto officiis, assumenda expedita placeat praesentium laborum, voluptatem earum tenetur molestiae magnam quisquam quasi in eos pariatur vel aliquid! Voluptas excepturi optio error corporis dolorum fugiat quaerat aspernatur mollitia, nostrum porro corrupti amet asperiores itaque iste odit ut exercitationem dolores in consequuntur dolor officiis. Iste laboriosam eos nobis.</p>', 'uploads/resized_art3.png', '2023-08-07 15:00:42');
 
 -- --------------------------------------------------------
 
@@ -109,12 +110,13 @@ CREATE TABLE `class` (
 INSERT INTO `class` (`id_class`, `class_name`, `class_level`, `id_teacher`) VALUES
 (19, 'a1', 0, 120),
 (20, 'a2', 0, 120),
-(22, 'a21', 0, 121),
+(22, 'a2', 0, 121),
 (23, 'a4', 0, 121),
 (24, 'a5', 0, 122),
 (25, 'a6', 0, 122),
 (26, '1a', 0, 146),
-(27, 'a1', 0, 121);
+(27, 'a1', 0, 121),
+(28, 'b3', 0, 121);
 
 -- --------------------------------------------------------
 
@@ -155,7 +157,7 @@ INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 (142, 0, 0),
 (143, 0, 0),
 (144, 2, 0),
-(145, 5, 73),
+(145, 5, 83),
 (149, 2, 0);
 
 -- --------------------------------------------------------
@@ -207,7 +209,9 @@ INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
 (141, 25),
 (142, 19),
 (143, 19),
+(143, 22),
 (144, 20),
+(144, 22),
 (145, 22),
 (145, 26);
 
@@ -234,20 +238,24 @@ INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`
 (127, 40, 66, 0, '2023-07-08 16:49:43'),
 (127, 52, 64, 0, '2023-07-04 21:26:36'),
 (127, 54, 68, 0, '2023-07-12 13:47:08'),
+(127, 66, 71, 0, '2023-07-31 08:19:46'),
 (128, 34, 66, 0, '2023-07-08 16:49:43'),
 (128, 40, 66, 0, '2023-07-08 16:49:43'),
 (128, 52, 64, 0, '2023-07-04 21:26:36'),
 (128, 54, 68, 0, '2023-07-12 13:47:08'),
+(128, 66, 71, 0, '2023-07-31 08:19:46'),
 (131, 34, 66, 0, '2023-07-08 16:49:43'),
 (131, 40, 66, 0, '2023-07-08 16:49:43'),
 (131, 52, 64, 0, '2023-07-04 21:26:36'),
 (131, 54, 68, 0, '2023-07-12 13:47:08'),
+(131, 66, 71, 0, '2023-07-31 08:19:46'),
 (145, 34, 66, 0, '2023-07-08 16:49:43'),
 (145, 40, 66, 0, '2023-07-08 16:49:43'),
 (145, 52, 64, 0, '2023-07-04 21:26:36'),
-(145, 54, 68, 0, '2023-07-12 13:47:08'),
+(145, 54, 68, 1, '2023-07-12 13:47:08'),
 (145, 61, 57, 0, '2023-07-12 13:25:44'),
-(145, 62, 58, 0, '2023-07-12 13:25:58');
+(145, 62, 58, 0, '2023-07-12 13:25:58'),
+(145, 66, 71, 0, '2023-07-31 08:19:46');
 
 -- --------------------------------------------------------
 
@@ -305,7 +313,7 @@ CREATE TABLE `task` (
 
 INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `task_weight`, `task_level`, `task_img`, `id_teacher`, `id_category`, `id_template`, `specific_data`) VALUES
 (33, 'sdf', '<p>rty</p>', '2023-07-08 01:28:59', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
-(34, 'task1', '', '2023-06-30 19:50:46', 5, 6, 'uploads\\match.jpg', 121, 114, 1, '{\"input-0\":\"ert\",\"input-1\":\"hgj\"}'),
+(34, 'task1', '<p>Task1 instructions</p>', '2023-08-12 05:28:09', 1, 1, 'uploads/resized_dog.png', 121, 114, 1, '{\"input-0\":\"ert\",\"input-1\":\"hgj\"}'),
 (36, 'Task kuku', '<p>werxcv</p>', '2023-07-02 23:15:53', 1, 1, 'uploads/resized_img_false.png', 121, 110, 1, '{\"input-0\":\"wer1\",\"input-1\":\"rty2\"}'),
 (37, 'kuu2', '', '2023-06-30 23:09:14', 1, 1, 'uploads\\sequence.jpg', 121, 110, 1, '{\"input-0\":\"dg\"}'),
 (40, 'Task seq', '<p>Instruction of task sequance</p>', '2023-07-02 23:16:10', 1, 1, 'uploads/resized_cat.png', 121, 114, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
@@ -319,7 +327,12 @@ INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `ta
 (59, 'my Task2', '<p>Text my Task2, <strong>instruction</strong></p>', '2023-07-08 01:32:30', 1, 1, 'uploads/resized_tiger.png', 121, 110, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"qwe2\",\"input-2\":\"qwe3\"}'),
 (60, 'Task Sec', '<p>Instr sdf <strong>ytdutu</strong></p><ul><li>gyhu</li><li>rtset</li><li>fcty</li></ul>', '2023-07-08 13:54:15', 4, 8, 'uploads/resized_cat.png', 121, 110, 1, '{\"input-0\":\"sdf1\",\"input-1\":\"dfg2\",\"input-2\":\"dfg3\"}'),
 (61, 'Node1', '<p>discription of task Node</p>', '2023-07-12 10:24:41', 2, 1, 'uploads/resized_levelone_eight.png', 146, 117, 1, '{\"input-0\":\"qwe1\",\"input-1\":\"asd2\",\"input-2\":\"zxc3\"}'),
-(62, 'Node2', '<p>Discrtption Node2</p>', '2023-07-12 10:25:28', 1, 1, 'uploads/resized_levelone_three.png', 146, 117, 1, '{\"input-0\":\"ert1\",\"input-1\":\"dfg2\",\"input-2\":\"cvb3\",\"input-3\":\"wer4\"}');
+(62, 'Node2', '<p>Discrtption Node2</p>', '2023-07-12 10:25:28', 1, 1, 'uploads/resized_levelone_three.png', 146, 117, 1, '{\"input-0\":\"ert1\",\"input-1\":\"dfg2\",\"input-2\":\"cvb3\",\"input-3\":\"wer4\"}'),
+(63, 'asd', '<p>asd</p>', '2023-07-29 13:08:25', 1, 10, 'uploads/resized_8.jpg', 121, 115, 3, '{\"leftBoxTitle\":\"asd\",\"rightBoxITitle\":\"dfg\",\"leftBoxItems\":{\"0\":\"tyu\",\"1\":\"bnm\"},\"rightBoxItems\":{\"0\":\"tgh\",\"1\":\"uio\"}}'),
+(66, 'groupTask', '<p>Group instruction</p>', '2023-07-30 05:31:12', 1, 1, 'uploads/resized_restlogo.png', 121, 112, 3, '{\"leftBoxTitle\":\"Left title2\",\"rightBoxITitle\":\"Right title\",\"leftBoxItems\":{\"0\":\"left1\",\"1\":\"left3\",\"2\":\"left4\",\"3\":\"left5\"},\"rightBoxItems\":{\"0\":\"right1\",\"1\":\"right2\",\"2\":\"right3\",\"3\":\"right4\"}}'),
+(67, 'esfd', '<p>Descr task</p>', '2023-07-31 12:39:47', 1, 1, 'uploads/resized_home.png', 121, 114, 3, '{\"leftBoxTitle\":\"Animal\",\"rightBoxITitle\":\"Plant\",\"leftBoxItems\":{\"0\":\"dog\",\"1\":\"cat\"},\"rightBoxItems\":{\"0\":\"tree\",\"1\":\"cactus\"}}'),
+(68, 'Taskname', '<p>sgsg</p>', '2023-07-31 12:49:34', 1, 1, 'uploads/resized_cat.png', 121, 112, 3, '{\"leftBoxTitle\":\"eee\",\"rightBoxITitle\":\"ddd\",\"leftBoxItems\":{\"0\":\"rw\",\"1\":\"wet4\"},\"rightBoxItems\":{\"0\":\"dfh\"}}'),
+(69, 'History task', '<p>History task description </p>', '2023-08-12 04:24:51', 1, 6, 'uploads/resized_spain.png', 121, 116, 1, '{\"input-0\":\"h1\",\"input-1\":\"h2\",\"input-2\":\"h3\"}');
 
 -- --------------------------------------------------------
 
@@ -349,7 +362,7 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_cl
 (65, 'tasks for 7.07', 1, 22, 2),
 (66, 'tasks for 12.07', 1, 22, 2),
 (68, 'tasks for 13.07', 0, 22, 2),
-(69, 'test', 0, 22, 2);
+(71, 'test', 1, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -371,7 +384,8 @@ INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
 (40, 66),
 (54, 68),
 (61, 57),
-(62, 58);
+(62, 58),
+(66, 71);
 
 -- --------------------------------------------------------
 
@@ -511,7 +525,8 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 (145, 'student', 'ivan@gmail.com', '$2b$10$qgEGALMrH.DhnUfC72A4ceSYsR4JMpRoGdTg4O76UvS7ShVqGqt1S', 'Ivan', 'Ivanov', 'avatar-2.svg'),
 (146, 'teacher', 'kate@gmail.com', '$2b$10$.6lVybCmI4gtJLhG74/5SOBmH5gCxJGmy6SXBOa5.lhFbsDA0bcsu', 'Kate', 'Branch', 'avatar-2.svg'),
 (148, 'teacher', 'alsousha21@gmail.com', '$2b$10$hngIwI1LyGSuLtrQ7nbZje5ELxKGxg0ZSRiBnp3Kpjmq0DPzkM6xe', 'Alsu2', 'Bogdanova', 'avatar-2.svg'),
-(149, 'student', 'alsousha211@gmail.com', '$2b$10$55Ju7BWgFk6aAY5V1jzOROOCrs2XtrzqneOvbgvD91KychxUDxpku', 'Anna', 'Fust', 'avatar-2.svg');
+(149, 'student', 'alsousha211@gmail.com', '$2b$10$55Ju7BWgFk6aAY5V1jzOROOCrs2XtrzqneOvbgvD91KychxUDxpku', 'Anna', 'Fust', 'avatar-2.svg'),
+(151, 'admin', 'adb.kzn@gmail.com', '$2b$10$2wxcZJjRvYPNePgsYx2PM.sISXPzESZpoxKq1vt7spvK89mQvWvvO', 'Oleg', 'Sunny', '');
 
 --
 -- Indexes for dumped tables
@@ -641,7 +656,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `blog`
 --
 ALTER TABLE `blog`
-  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_article` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -659,7 +674,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -671,13 +686,13 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `task_template`
@@ -695,7 +710,7 @@ ALTER TABLE `template`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
+  MODIFY `id_user` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152;
 
 --
 -- Constraints for dumped tables

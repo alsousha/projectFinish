@@ -3,6 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { Intro } from '../components'
 import TeacherPage from './TeacherPage';
 import StudentPage from './StudentPage';
+import AdminPage from './AdminPage';
 import Register from './Register';
 import { AuthContext } from '../context/authContext';
 import NotFound from '../pages/404';
@@ -43,6 +44,16 @@ function MainPage({setIsLoggedIn, setUserName, isLoggedIn}) {
 						path='/student/*'
 						element={
 						<StudentPage
+							isLoggedIn={isLoggedIn}
+							setIsLoggedIn={setIsLoggedIn}
+						/>
+						}
+					/>
+					{currentUser['role']==='admin'}&&<Route
+						exsct
+						path='/admin/*'
+						element={
+						<AdminPage
 							isLoggedIn={isLoggedIn}
 							setIsLoggedIn={setIsLoggedIn}
 						/>

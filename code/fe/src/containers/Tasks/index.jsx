@@ -74,21 +74,19 @@ const Tasks = () => {
 
 				<div className="add_newItem mt2">
 					<Link className="d-flex aic g1" to="/teacher/newtask">
-					<AddIcon/><span>add new task</span>
+						<AddIcon/><span>add new task</span>
 					</Link>
-
-					
 				</div>
+				
 				<div className="arr_wrap tasks_wrap d-flex flex-4 jcsb">
 					
-						{filteredData && filteredData.map((elem, i) => (
-							<div className="arr_item d-flex f-column jcc" key={"task-"+i}>
-								<Task_card item={elem} className=""/>
-								{<button onClick={() => handleDeleteItem(elem)} className={elem.is_done&&'no-active_info'}><DeleteIcon/></button>}
+					{filteredData && filteredData.map((elem, i) => (
+						<div className="arr_item d-flex f-column jcc" key={"task-"+i}>
+							<Task_card item={elem} className=""/>
+							{<button onClick={() => handleDeleteItem(elem)} className={elem.is_done&&'no-active_info'}><DeleteIcon/></button>}
 
-							</div>
-						))}
-					
+						</div>
+					))}
 					
 				</div>
 			</div>

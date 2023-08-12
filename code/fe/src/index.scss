@@ -38,10 +38,15 @@ a{
 .table{
 	flex-grow: 1;
 }
+.class_item{
+	border-bottom: 1px solid;
+	padding: 1rem;
+}
+
 .table_elem {
   flex: 1;
   padding: 5px;
-  border-bottom: 1px solid;
+  
 }
 .small{
 	flex: 0.1;
@@ -129,4 +134,12 @@ a{
 span.accent{
 	font-weight: 600;
 	color: $blue;
+}
+.ql-editor{
+	p{
+		font-weight: 300;
+	}
+	strong{
+		font-weight: 600;
+	}
 }

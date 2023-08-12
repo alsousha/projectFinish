@@ -14,7 +14,7 @@ function Sidebar({items, handleLink}) {
 	const { currentUser, logout } = useContext(AuthContext)
 
 
-	// console.log(currentUser);
+	console.log(currentUser.role);
   return (
 	<div className='sidebar'>
 		<div className='userSection mb5'>
@@ -51,6 +51,7 @@ function Sidebar({items, handleLink}) {
 					<NavLink to={item.link}>{item.linkName}</NavLink>
 			</li>
 		))}
+		
 		</nav>		
 	</div>
   )

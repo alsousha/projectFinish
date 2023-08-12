@@ -23,6 +23,8 @@ export const updateUser = (req, res) => {
       // res.status(200).json({ message: 'User updated successfully' });
     } else if (role === 'student') {
       updateStudentLvl(id, lvl, req, res);
+    } else if (role === 'admin') {
+      return res.json('Admin data was been updated.');
     }
   });
 };

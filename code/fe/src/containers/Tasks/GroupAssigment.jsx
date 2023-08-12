@@ -21,16 +21,12 @@ function GroupAssigment({task, textResult, handleGoBack}) {
 	const [correctAnswer, setCorrectAnswer] = useState(false);
 	const [userData, setUserData] = useState(currentUser);
 
-
-
-	
-
 	// Combine both objects into an array and shuffle it
 	const allItems = [
 		...Object.values(leftItems).map((value) => ({ value, source: 0 })),
 		...Object.values(rightItems).map((value) => ({ value, source: 1 })),
 	];
-	console.log(allItems); 
+	// console.log(allItems); 
 
 	// const [data, setData] = useState(["Item 1", "Item 2", "Item 3"]); // Sample data for the first box
 	const [data, setData] = useState(allItems); // Sample data for the first box
@@ -174,7 +170,7 @@ function GroupAssigment({task, textResult, handleGoBack}) {
 												ref={provided.innerRef}
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
-												className="item"
+												className={`item ${index === 0 ? "accent" : "no-active"}`}
 											>
 												{item.value}
 											</div>
@@ -187,7 +183,7 @@ function GroupAssigment({task, textResult, handleGoBack}) {
 					</Droppable>
 					<div className="answer_boxes d-flex jcsb g1">
 						<div className="box w50" id="box-2">
-							<h3>Second Box</h3>
+							<h3>{jsonTask.leftBoxTitle}</h3>
 							{/* Second box to drop data */}
 							<Droppable droppableId="box-2">
 								{(provided) => (
@@ -212,7 +208,7 @@ function GroupAssigment({task, textResult, handleGoBack}) {
 							</Droppable>
 						</div>
 						<div className="box w50" id="box-3">
-							<h3>Third Box</h3>
+							<h3>{jsonTask.rightBoxITitle}</h3>
 							{/* Third box to drop data */}
 							<Droppable droppableId="box-3">
 								{(provided) => (

@@ -13,7 +13,7 @@ function TemplateGroupAssigment({generalTaskData, handleMessage, message, setSel
 	//specificData - indicate: if exists -> "edit task" else -> new task
 	const navigate = useNavigate();
 
-	console.log(Object.values(JSON.parse(specificData)));
+	// console.log(Object.values(JSON.parse(specificData)));
 
 	const { currentUser} = useContext(AuthContext)
 	let inputArr = specificData ? Object.values(JSON.parse(specificData)) : ['']; //if edit mode -> get specificData
