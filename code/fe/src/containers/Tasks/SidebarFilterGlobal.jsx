@@ -4,7 +4,7 @@ import { AuthContext } from '../../context/authContext.js';
 import axios from 'axios';
 import '../containers.scss'
 
-function SidebarFilterGlobal({ updateFilteredData}) {
+function SidebarFilterGlobal({ updateFilteredData, subjects, templates, levels, weights, page}) {
 	const { currentUser} = useContext(AuthContext)
 
 	//object with selected filter checkboxes
@@ -14,23 +14,6 @@ function SidebarFilterGlobal({ updateFilteredData}) {
 		selectedLevels: ['all'],
 		selectedWeights: ['all']
 	});
-	//for save data about all filter elems
-	const [subjects, setSubjects] = useState([]);  
-	const [templates, setTemplates] = useState([]);
-	const [levels, setLevels] = useState([]);
-	const [weights, setWeights] = useState([]);
-	//#region tmp
-	
-	const [categories, setCategories] = useState([]);
-	
-
-  // const [selectedSubjects, setSelectedSubjects] = useState(['all']);
-  const [selectedCategories, setSelectedCategories] = useState(['all']);
-  const [selectedTemplates, setSelectedTemplates] = useState(['all']);
-  const [selectedLevels, setSelectedLevels] = useState(['all']);
-  const [selectedWeights, setSelectedWeights] = useState(['all']);
-  // const [filteredData, setFilteredData] = useState([]);
-//#endregion
 	
 	useEffect(() => {
     // Fetch initial list of tasks   
@@ -39,51 +22,17 @@ function SidebarFilterGlobal({ updateFilteredData}) {
 				...prevData,
 				selectedSubjects: ['all']
 			}))
-			setSubjects(data)
 		});
 		fetchTemplates().then(data => {
 			setDataObject(prevData => ({
 				...prevData,
 				selectedTemplates: ['all']
 			}))
-			setTemplates(data)
 		});
 
-		const maxLevel = 12;
-		const levelOptions = [];
-		for (let i = 1; i <= maxLevel; i++) {
-			levelOptions.push(i);
-		}
-		setLevels(levelOptions);
-
-		const maxWeight = 10;
-		const weightOptions = [];
-		for (let i = 1; i <= maxWeight; i++) {
-			weightOptions.push(i);
-		}
-		setWeights(weightOptions);
   }, []);
 
-	//fetch tasks by filter
-	const fetchData = async (countTask) => {
-		//in first render does not have time to receive data of sbjs
-		if(subjects.length!==0 && templates.length !== 0){
-			try {
-				const res = await axios.post(`/tasks/global/all`, {
-					selectedSubjects: dataObject.selectedSubjects.includes('all') ? subjects : dataObject.selectedSubjects,
-					selectedTemplates: dataObject.selectedTemplates.includes('all') ? templates : dataObject.selectedTemplates,
-					selectedLevels: dataObject.selectedLevels.includes('all') ? levels : dataObject.selectedLevels,
-					selectedWeights: dataObject.selectedWeights.includes('all') ? weights : dataObject.selectedWeights,
-				});
-				updateFilteredData(res.data) //update parent component
-				// return res.data;
-			} catch (error) {
-				console.error('Error fetching tasks', error);
-				throw error;
-			}
-		}
-		
-	};
+
 	const fetchSubjects = async () => {
     try {
       const response = await axios.get(`/sbjs/`);
@@ -190,109 +139,108 @@ function SidebarFilterGlobal({ updateFilteredData}) {
 	};
 
   useEffect(() => {
-		fetchData();
-  }, [dataObject.selectedSubjects, dataObject.selectedTemplates, dataObject.selectedLevels, dataObject.selectedWeights]);
+		updateFilteredData(dataObject);
+  }, [dataObject.selectedSubjects, dataObject.selectedTemplates, dataObject.selectedLevels, dataObject.selectedWeights, page]);
 
 	return (
 		<div className='d-flex'>
 			<div className="main">
-			{subjects && subjects.length > 1 && (
+				{subjects && subjects.length > 1 && (
+					<div className='filter_item'>
+						<h3>Subjects</h3>
+						<label>
+							<input
+								type="checkbox"
+								checked={dataObject.selectedSubjects.includes('all')}
+								onChange={() => handleSubjectsChange('all')}
+							/>
+							All
+						</label>
+						<div className="filter_item-inner">
+							{subjects.map((subject, i) => (
+								<label key={i+"sbj" + subject.id_subject}>
+									<input
+										type="checkbox"
+										checked={dataObject.selectedSubjects.includes(subject)}
+										onChange={() => handleSubjectsChange(subject)}
+									/>
+									{subject.subject_name}
+								</label>
+							))}
+						</div>
+					</div>
+				)}
+				{templates && templates.length>1 && (
+					<div className='filter_item'>
+						<h3>Templates</h3>
+						<label>
+							<input
+								type="checkbox"
+								checked={dataObject.selectedTemplates.includes('all')}
+								onChange={() => handleTemplateChange('all')}
+							/>
+							All
+						</label>
+						<div className="filter_item-inner">
+							{templates.map((template, i) => (
+								<label key={i+"temp"+template.id_template}>
+									<input
+										type="checkbox"
+										checked={dataObject.selectedTemplates.includes(template)}
+										onChange={() => handleTemplateChange(template)}
+									/>
+									{template.template_name}
+								</label>
+							))}
+						</div>
+					</div>
+				)}
 				<div className='filter_item'>
-					<h3>Subjects</h3>
+					<h3>Levels</h3>
 					<label>
 						<input
 							type="checkbox"
-							checked={dataObject.selectedSubjects.includes('all')}
-							onChange={() => handleSubjectsChange('all')}
+							checked={dataObject.selectedLevels.includes('all')}
+							onChange={() => handleLevelChange('all')}
 						/>
 						All
 					</label>
 					<div className="filter_item-inner">
-						{subjects.map((subject, i) => (
-							<label key={i+"sbj" + subject.id_subject}>
+						{levels.map((level, i) => (
+							<label key={i+"lvl"+level}>
 								<input
 									type="checkbox"
-									checked={dataObject.selectedSubjects.includes(subject)}
-									onChange={() => handleSubjectsChange(subject)}
+									checked={dataObject.selectedLevels.includes(level)}
+									onChange={() => handleLevelChange(level)}
 								/>
-								{subject.subject_name}
+								{level}
 							</label>
 						))}
 					</div>
 				</div>
-			)}
-			{templates && templates.length>1 && (
 				<div className='filter_item'>
-					<h3>Templates</h3>
+					<h3>Weight</h3>
 					<label>
 						<input
 							type="checkbox"
-							checked={dataObject.selectedTemplates.includes('all')}
-							onChange={() => handleTemplateChange('all')}
+							checked={dataObject.selectedWeights.includes('all')}
+							onChange={() => handleWeightChange('all')}
 						/>
 						All
 					</label>
 					<div className="filter_item-inner">
-						{templates.map((template, i) => (
-							<label key={i+"temp"+template.id_template}>
+						{weights.map((weight, i) => (
+							<label key={i+"weight"+weight}>
 								<input
 									type="checkbox"
-									checked={dataObject.selectedTemplates.includes(template)}
-									onChange={() => handleTemplateChange(template)}
+									checked={dataObject.selectedWeights.includes(weight)}
+									onChange={() => handleWeightChange(weight)}
 								/>
-								{template.template_name}
+								{weight}
 							</label>
 						))}
 					</div>
 				</div>
-			)}
-			<div className='filter_item'>
-        <h3>Levels</h3>
-				<label>
-          <input
-            type="checkbox"
-            checked={dataObject.selectedLevels.includes('all')}
-            onChange={() => handleLevelChange('all')}
-          />
-          All
-        </label>
-				<div className="filter_item-inner">
-					{levels.map((level, i) => (
-						<label key={i+"lvl"+level}>
-							<input
-								type="checkbox"
-								checked={dataObject.selectedLevels.includes(level)}
-								onChange={() => handleLevelChange(level)}
-							/>
-							{level}
-						</label>
-					))}
-				</div>
-      </div>
-			<div className='filter_item'>
-        <h3>Weight</h3>
-				<label>
-          <input
-            type="checkbox"
-            checked={dataObject.selectedWeights.includes('all')}
-            onChange={() => handleWeightChange('all')}
-          />
-          All
-        </label>
-				<div className="filter_item-inner">
-					{weights.map((weight, i) => (
-						<label key={i+"weight"+weight}>
-							<input
-								type="checkbox"
-								checked={dataObject.selectedWeights.includes(weight)}
-								onChange={() => handleWeightChange(weight)}
-							/>
-							{weight}
-						</label>
-					))}
-				</div>
-      </div>
-
 			</div>
 		</div>
 	)

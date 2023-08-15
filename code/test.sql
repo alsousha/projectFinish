@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 12, 2023 at 10:39 AM
+-- Generation Time: Aug 15, 2023 at 12:32 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -140,13 +140,13 @@ INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 (125, 2, 0),
 (126, 2, 0),
 (127, 3, 0),
-(128, 3, 0),
+(128, 3, 2),
 (129, 0, 0),
 (130, 2, 0),
-(131, 3, 0),
+(131, 3, 1),
 (132, 4, 0),
 (133, 4, 0),
-(134, 4, 0),
+(134, 4, 1),
 (135, 5, 0),
 (136, 5, 0),
 (137, 5, 0),
@@ -157,7 +157,7 @@ INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 (142, 0, 0),
 (143, 0, 0),
 (144, 2, 0),
-(145, 5, 83),
+(145, 5, 87),
 (149, 2, 0);
 
 -- --------------------------------------------------------
@@ -199,7 +199,7 @@ INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
 (131, 22),
 (132, 23),
 (133, 23),
-(134, 23),
+(134, 28),
 (135, 24),
 (136, 24),
 (137, 24),
@@ -210,6 +210,7 @@ INSERT INTO `student_class` (`id_user`, `id_class`) VALUES
 (142, 19),
 (143, 19),
 (143, 22),
+(143, 27),
 (144, 20),
 (144, 22),
 (145, 22),
@@ -235,27 +236,49 @@ CREATE TABLE `student_task` (
 
 INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`, `date`) VALUES
 (127, 34, 66, 0, '2023-07-08 16:49:43'),
+(127, 36, 80, 0, '2023-08-15 09:59:40'),
 (127, 40, 66, 0, '2023-07-08 16:49:43'),
-(127, 52, 64, 0, '2023-07-04 21:26:36'),
+(127, 53, 75, 0, '2023-08-15 04:30:21'),
 (127, 54, 68, 0, '2023-07-12 13:47:08'),
 (127, 66, 71, 0, '2023-07-31 08:19:46'),
+(127, 67, 73, 0, '2023-08-14 19:57:41'),
 (128, 34, 66, 0, '2023-07-08 16:49:43'),
-(128, 40, 66, 0, '2023-07-08 16:49:43'),
-(128, 52, 64, 0, '2023-07-04 21:26:36'),
+(128, 36, 80, 0, '2023-08-15 09:59:40'),
+(128, 40, 66, 1, '2023-07-08 16:49:43'),
+(128, 53, 75, 1, '2023-08-15 04:30:21'),
 (128, 54, 68, 0, '2023-07-12 13:47:08'),
 (128, 66, 71, 0, '2023-07-31 08:19:46'),
+(128, 67, 73, 0, '2023-08-14 19:57:41'),
 (131, 34, 66, 0, '2023-07-08 16:49:43'),
+(131, 36, 80, 1, '2023-08-15 09:59:40'),
 (131, 40, 66, 0, '2023-07-08 16:49:43'),
-(131, 52, 64, 0, '2023-07-04 21:26:36'),
+(131, 53, 75, 0, '2023-08-15 04:30:21'),
 (131, 54, 68, 0, '2023-07-12 13:47:08'),
 (131, 66, 71, 0, '2023-07-31 08:19:46'),
+(131, 67, 73, 0, '2023-08-14 19:57:41'),
+(132, 52, 72, 0, '2023-08-14 20:55:22'),
+(132, 53, 76, 0, '2023-08-15 04:35:46'),
+(132, 69, 83, 0, '2023-08-15 10:26:24'),
+(133, 52, 72, 0, '2023-08-14 20:55:22'),
+(133, 53, 76, 0, '2023-08-15 04:35:46'),
+(133, 69, 83, 0, '2023-08-15 10:26:24'),
+(134, 52, 72, 0, '2023-08-14 20:55:22'),
+(134, 53, 76, 1, '2023-08-15 04:35:46'),
+(143, 36, 80, 0, '2023-08-15 09:59:40'),
+(143, 53, 75, 0, '2023-08-15 04:30:21'),
+(143, 67, 73, 0, '2023-08-14 19:57:41'),
+(144, 36, 80, 0, '2023-08-15 09:59:40'),
+(144, 53, 75, 0, '2023-08-15 04:30:21'),
+(144, 67, 73, 0, '2023-08-14 19:57:41'),
 (145, 34, 66, 0, '2023-07-08 16:49:43'),
-(145, 40, 66, 0, '2023-07-08 16:49:43'),
-(145, 52, 64, 0, '2023-07-04 21:26:36'),
+(145, 36, 80, 0, '2023-08-15 09:59:40'),
+(145, 40, 66, 1, '2023-07-08 16:49:43'),
+(145, 53, 75, 1, '2023-08-15 04:30:21'),
 (145, 54, 68, 1, '2023-07-12 13:47:08'),
 (145, 61, 57, 0, '2023-07-12 13:25:44'),
 (145, 62, 58, 0, '2023-07-12 13:25:58'),
-(145, 66, 71, 0, '2023-07-31 08:19:46');
+(145, 66, 71, 0, '2023-07-31 08:19:46'),
+(145, 67, 73, 0, '2023-08-14 19:57:41');
 
 -- --------------------------------------------------------
 
@@ -319,7 +342,7 @@ INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `ta
 (40, 'Task seq', '<p>Instruction of task sequance</p>', '2023-07-02 23:16:10', 1, 1, 'uploads/resized_cat.png', 121, 114, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
 (49, 'rw', '<p>fdgertgd</p>', '2023-07-01 15:32:31', 1, 1, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"et\"}'),
 (52, 't', '<p>ert</p>', '2023-07-01 15:36:29', 1, 1, 'uploads/resized_levelone_two.png', 121, 110, 1, '{\"input-0\":\"er\"}'),
-(53, 'sdf', '<p>wer</p>', '2023-07-01 15:39:33', 1, 1, 'uploads/resized_israel.png', 121, 112, 1, '{\"input-0\":\"rtyu\"}'),
+(53, 'Tasks for all', '<p>wer</p>', '2023-07-01 15:39:33', 1, 1, 'uploads/resized_israel.png', 121, 112, 1, '{\"input-0\":\"rtyu\"}'),
 (54, 'Example Sequence', '<h2>Lorem, ipsum dolor </h2><p>Sit amet consectetur adipisicing elit. Beatae, fugit repellendus, non perferendis illum iusto ipsam, incidunt ut sunt sint nostrum molestiae officia eveniet <a href=\"www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\">ullam </a>molestias illo maiores velit atque.</p><p><u>Incidunt </u>ut sunt sint nostrum molestiae officia eveniet ullam molestias illo <strong>maiores </strong>velit atque.</p><ol><li>molestiae </li><li>nostrum </li><li>illum </li></ol>', '2023-07-01 15:49:21', 3, 5, 'uploads/resized_tt.jpg', 121, 110, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
 (56, 'sdf', '<p>rty</p>', '2023-07-08 01:29:33', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
 (57, 'sdf', '<p>rty</p>', '2023-07-08 01:30:20', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
@@ -332,7 +355,8 @@ INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `ta
 (66, 'groupTask', '<p>Group instruction</p>', '2023-07-30 05:31:12', 1, 1, 'uploads/resized_restlogo.png', 121, 112, 3, '{\"leftBoxTitle\":\"Left title2\",\"rightBoxITitle\":\"Right title\",\"leftBoxItems\":{\"0\":\"left1\",\"1\":\"left3\",\"2\":\"left4\",\"3\":\"left5\"},\"rightBoxItems\":{\"0\":\"right1\",\"1\":\"right2\",\"2\":\"right3\",\"3\":\"right4\"}}'),
 (67, 'esfd', '<p>Descr task</p>', '2023-07-31 12:39:47', 1, 1, 'uploads/resized_home.png', 121, 114, 3, '{\"leftBoxTitle\":\"Animal\",\"rightBoxITitle\":\"Plant\",\"leftBoxItems\":{\"0\":\"dog\",\"1\":\"cat\"},\"rightBoxItems\":{\"0\":\"tree\",\"1\":\"cactus\"}}'),
 (68, 'Taskname', '<p>sgsg</p>', '2023-07-31 12:49:34', 1, 1, 'uploads/resized_cat.png', 121, 112, 3, '{\"leftBoxTitle\":\"eee\",\"rightBoxITitle\":\"ddd\",\"leftBoxItems\":{\"0\":\"rw\",\"1\":\"wet4\"},\"rightBoxItems\":{\"0\":\"dfh\"}}'),
-(69, 'History task', '<p>History task description </p>', '2023-08-12 04:24:51', 1, 6, 'uploads/resized_spain.png', 121, 116, 1, '{\"input-0\":\"h1\",\"input-1\":\"h2\",\"input-2\":\"h3\"}');
+(69, 'History task', '<p>History task description </p>', '2023-08-12 04:24:51', 1, 6, 'uploads/resized_spain.png', 121, 116, 1, '{\"input-0\":\"h1\",\"input-1\":\"h2\",\"input-2\":\"h3\"}'),
+(70, 'Task10', '<p>desc Task10</p>', '2023-08-15 06:54:15', 6, 6, 'uploads/resized_spain.png', 121, 119, 1, '{\"input-0\":\"aaa1\",\"input-1\":\"aaa2\",\"input-2\":\"aaa3\"}');
 
 -- --------------------------------------------------------
 
@@ -357,12 +381,17 @@ INSERT INTO `taskfolder` (`id_tskFolder`, `tskFolder_name`, `is_publish`, `id_cl
 (19, 'historyclass1', 0, 20, 3),
 (57, 'java 5.07', 1, 26, 4),
 (58, 'java 23.6', 1, 26, 4),
-(59, 'tasks for 30.06', 1, 22, 2),
-(64, 'tasks for 4.07', 0, 22, 2),
-(65, 'tasks for 7.07', 1, 22, 2),
 (66, 'tasks for 12.07', 1, 22, 2),
-(68, 'tasks for 13.07', 0, 22, 2),
-(71, 'test', 1, 22, 2);
+(68, 'tasks for 13.07', 1, 22, 2),
+(71, 'test', 1, 22, 2),
+(72, 'fA4_1', 1, 23, 2),
+(73, 'tasks for 14.08', 1, 22, 2),
+(75, 'tasks for 15,08', 1, 22, 2),
+(76, 'a4f15.08', 1, 23, 2),
+(77, 'a1f15.08', 1, 27, 2),
+(78, 'b3f15.08', 1, 28, 2),
+(80, 'tasks for 17.08', 1, 22, 2),
+(83, 'his1', 1, 23, 3);
 
 -- --------------------------------------------------------
 
@@ -381,11 +410,19 @@ CREATE TABLE `task_tasksfolder` (
 
 INSERT INTO `task_tasksfolder` (`id_task`, `id_tskFolder`) VALUES
 (34, 66),
+(36, 80),
 (40, 66),
+(52, 72),
+(53, 75),
+(53, 76),
+(53, 77),
+(53, 78),
 (54, 68),
 (61, 57),
 (62, 58),
-(66, 71);
+(66, 71),
+(67, 73),
+(69, 83);
 
 -- --------------------------------------------------------
 
@@ -526,7 +563,7 @@ INSERT INTO `user` (`id_user`, `role`, `email`, `password`, `name`, `lastname`, 
 (146, 'teacher', 'kate@gmail.com', '$2b$10$.6lVybCmI4gtJLhG74/5SOBmH5gCxJGmy6SXBOa5.lhFbsDA0bcsu', 'Kate', 'Branch', 'avatar-2.svg'),
 (148, 'teacher', 'alsousha21@gmail.com', '$2b$10$hngIwI1LyGSuLtrQ7nbZje5ELxKGxg0ZSRiBnp3Kpjmq0DPzkM6xe', 'Alsu2', 'Bogdanova', 'avatar-2.svg'),
 (149, 'student', 'alsousha211@gmail.com', '$2b$10$55Ju7BWgFk6aAY5V1jzOROOCrs2XtrzqneOvbgvD91KychxUDxpku', 'Anna', 'Fust', 'avatar-2.svg'),
-(151, 'admin', 'adb.kzn@gmail.com', '$2b$10$2wxcZJjRvYPNePgsYx2PM.sISXPzESZpoxKq1vt7spvK89mQvWvvO', 'Oleg', 'Sunny', '');
+(151, 'admin', 'adb.kzn@gmail.com', '$2b$10$aka6qP2fcsaYhS24z8w.kuXeNck8RkBeV2Kp42AtYqsL8KX3xxTeu', 'Oleg', 'Sunny', '');
 
 --
 -- Indexes for dumped tables
@@ -674,7 +711,7 @@ ALTER TABLE `certification`
 -- AUTO_INCREMENT for table `class`
 --
 ALTER TABLE `class`
-  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_class` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `subject`
@@ -686,13 +723,13 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id_task` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `taskfolder`
 --
 ALTER TABLE `taskfolder`
-  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id_tskFolder` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `task_template`

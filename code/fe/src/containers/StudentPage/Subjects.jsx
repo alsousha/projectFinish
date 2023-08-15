@@ -12,12 +12,14 @@ import { ReactComponent as NotDoneIcon } from '../../assets/img/notdone.svg';
 
 function Subjects() {
 	const [subjects, setSubjects] = useState([]);
+	const [studentClass, setStudentClass] = useState([]);
 	const [folders, setFolders] = useState([]);
 	const [tasks, setTasks] = useState([]);
 
 	const { currentUser} = useContext(AuthContext)
 	useEffect(() => {
     fetchData();
+		fetchClass();
   }, []);
 	const fetchData = async () => {
 		// console.log(currentUser.id_user);
@@ -31,12 +33,27 @@ function Subjects() {
 			console.log(err);
 		}
 	};
-
-	const fetchFolders = async (id_subject) => {
+	const fetchClass = async (id_subject) => {
 		// console.log(id_subject);
 		try {
-			const res = await axios.get(`/student/taskfolders/${id_subject}`);
+			const res = await axios.post(`/student/classbysbj/${currentUser.id_user}`, {sbjId:id_subject});
 			// console.log(res.data);
+			const id_class = res.data[0].id_class
+			console.log(id_class);
+			if(id_class){
+				setStudentClass(res.data)
+				fetchFolders(id_subject, id_class);
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+	const fetchFolders = async (id_subject, id_class) => {
+		console.log(currentUser.id_user);
+		try {
+			
+			const res = await axios.post(`/student/tasksfolderbysbjandclass/${id_subject}`, {studentClass: id_class});
+			console.log(res.data);
 			if(res.data){
 				setFolders(res.data)
 			}
@@ -59,18 +76,18 @@ function Subjects() {
 
 	const handleSubjectClick = (id_subject) => {
 		setTasks([])
-    fetchFolders(id_subject);
+		fetchClass(id_subject)
   };
 	const handleFolderClick = (id_tskFolder) => {
 		setTasks([])
     fetchTasks(id_tskFolder);
   };
-	console.log(tasks);
+	// console.log(tasks);
   return (
 	<div className='mt4 section_student_subjects'>
 		<div className="container">
 			<h1>Subjects</h1>
-			<span className="main_content mt2">
+			<div className="main_content mt2">
 				<div className="d-flex g1 mt3">
 				{subjects&&subjects.map((item) => (
 					<div className="btn_maincolor" key={"subject_student"+item.id_subject}>
@@ -105,7 +122,7 @@ function Subjects() {
 				))}
 				</div>
 				
-			</span>
+			</div>
 		</div>
 	  
 	</div>

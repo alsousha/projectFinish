@@ -23,6 +23,9 @@ import {
   getCategoriesBySubject,
   isExistsTasksDone,
   getCategoriesBySpecSubject,
+  getTasksByStudent,
+  getTaskCompletionByClass,
+  getTaskdataperstudent,
 } from '../controllers/teacher.js';
 
 const router = express.Router();
@@ -50,11 +53,15 @@ router.post('/tskfolder', addNewTskFolder);
 router.post('/folder', getFolderByTeacher);
 router.get('/isexiststasksdone/:id', isExistsTasksDone);
 router.post('/tasksbyfolder', getTasksByFolder);
+router.post('/tasksbystudent', getTasksByStudent);
+router.post('/taskcompletion', getTaskCompletionByClass);
+router.post('/taskdataperstudent', getTaskdataperstudent);
 
 // router.get('classes/:id')
 // router.put('/:id', updateTeacherSubject);
 
 router.get('/templates', getAllTemplates);
 router.get('/sbjs/:id', getSubjectsByTeacher);
+// router.get('/statistics/class/:id', getStatisticsByClass);
 
 export default router;

@@ -287,13 +287,16 @@ export const getTasksGlobal = (req, res) => {
   const subjectIds = selectedSubjects.map((subject) => subject.id_subject);
   const templateIds = selectedTemplates.map((template) => template.id_template);
 
-  const q = `SELECT *
-  	FROM task t
+  const q = `
+		SELECT t.*, s.subject_name, c.category_name
+		FROM task t
 		JOIN category c ON t.id_category = c.id_category 
-  	WHERE id_subject IN (?) and 
-					id_template IN (?) and 
-					task_level IN (?) and 
-					task_weight IN (?)`;
+		JOIN subject s ON c.id_subject = s.id_subject
+		WHERE c.id_subject IN (?)
+		AND t.id_template IN (?)
+		AND t.task_level IN (?)
+		AND t.task_weight IN (?)
+	`;
 
   db.query(q, [subjectIds, templateIds, selectedLevels, selectedWeights], (err, data) => {
     if (err) return res.status(500).json(err);

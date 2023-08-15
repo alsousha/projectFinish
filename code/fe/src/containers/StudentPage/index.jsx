@@ -6,7 +6,7 @@ import Subjects from './Subjects'
 import Homework from './Homework'
 import Statistic from './Statistic'
 import Certifications from './Certifications'
-import GlobalTasks from './GlobalTasks'
+import GlobalTasks from '../Tasks/GlobalTasks'
 import Profile from '../../pages/Profile';
 import NotFound from '../../pages/404';
 import Task from '../Tasks/Task';

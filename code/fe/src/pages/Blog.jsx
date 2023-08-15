@@ -77,12 +77,12 @@ function Blog() {
 						</div>
 					)}
 				{dataArray && dataArray.map((elem, i) => (
-					<>
+					<div key={"art-"+i}>
 						<Link 
 							to={isBlogAdminRoute ? `/admin/blog/${elem.id_article}` : `blog/${elem.id_article}`}
 							state={{ article: elem }}
 							className={`art__item d-flex mt4 g2 ${i%2===0 && 'f-rreverce'}`} 
-							key={"art-"+i}
+							
 							>
 							<img src={`${API_URL}/${elem.art_img}`} alt="art_icon" className="art__icon" />
 							{/* <img src={`${API_URL}/uploads/art3.svg`} alt="art_icon" className="art__icon" /> */}
@@ -104,7 +104,7 @@ function Blog() {
 							
 						</Link>
 						<button onClick={() => handleDeleteItem(elem)}><DeleteIcon/></button>
-					</>
+					</div>
 					
 				))}
 				</div>

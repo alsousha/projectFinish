@@ -35,6 +35,61 @@ export const getStudentSbjs = (req, res) => {
     res.status(200).json(data);
   });
 };
+export const getStudentClassBySbj = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  const { id } = req.params;
+  const { sbjId } = req.body;
+  // console.log(id);
+  const q = `
+		SELECT
+			c.id_class,
+			c.class_name
+		FROM
+			student_class sc
+		JOIN
+			class c ON sc.id_class = c.id_class
+		JOIN
+			teacher_sbjs ts ON c.id_teacher = ts.id_user
+		WHERE
+			sc.id_user = ?
+			AND ts.id_subject = ?
+		LIMIT 1;
+		
+	`;
+  db.query(q, [id, sbjId], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0) {
+      return res.status(204).json('Subjects not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+
+export const getTasksFoldersBySbjAndClass = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { id } = req.params;
+  const { studentClass } = req.body;
+  // console.log(studentClass);
+  // console.log(id);
+  const q = `
+		SELECT id_tskFolder, tskFolder_name
+		FROM taskfolder 
+		WHERE is_publish=1 and id_subject = ? and id_class = ?
+	`;
+  db.query(q, [id, studentClass], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0) {
+      return res.status(204).json('Folders not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+
 export const getTasksFoldersBySubject = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');

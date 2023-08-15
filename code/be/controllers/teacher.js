@@ -607,6 +607,7 @@ export const getFolderByTeacher = (req, res) => {
     res.status(200).json(data);
   });
 };
+
 export const getTasksByFolder = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
@@ -620,6 +621,114 @@ export const getTasksByFolder = (req, res) => {
     // Check if the data exists
     if (data.length === 0) {
       return res.status(201).json('tasks not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+
+export const getTasksByStudent = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { students, tasks } = req.body;
+  const q = `
+		SELECT id_user, id_task, is_task_done
+		FROM student_task
+		WHERE id_user IN (?) AND id_task IN (?)
+`;
+  db.query(q, [students, tasks], (err, data) => {
+    if (err) return res.status(500).json(err);
+    // Check if the data exists
+    if (data.length === 0) {
+      return res.status(404).json('data not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+
+// export const getStatisticsByClass = (req, res) => {
+//   const token = req.cookies.access_token;
+//   if (!token) return res.status(401).json('Not authenticated!');
+//   const { id_folder } = req.body;
+//   const q = `SELECT tf.id_tskFolder, tf.id_task, t.*
+//            FROM task_tasksfolder tf
+//            JOIN task t ON tf.id_task = t.id_task
+//            WHERE tf.id_tskFolder = ?`;
+//   db.query(q, [id_folder], (err, data) => {
+//     if (err) return res.status(500).json(err);
+//     // Check if the data exists
+//     if (data.length === 0) {
+//       return res.status(201).json('tasks not found');
+//     }
+//     // console.log(data);
+//     res.status(200).json(data);
+//   });
+// };
+
+export const getTaskCompletionByClass = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { selectedTask, classId } = req.body;
+  // console.log(selectedTask);
+  // console.log(classId);
+  const q = `
+	SELECT
+		c.id_class,
+		c.class_name,
+		COUNT(s.id_user) AS total_students,
+		SUM(st.is_task_done) AS completed_students,
+		(SUM(st.is_task_done) / COUNT(s.id_user)) * 100 AS completion_percentage
+	FROM
+		class c
+	JOIN
+		student_class s ON c.id_class = s.id_class
+	LEFT JOIN
+		student_task st ON s.id_user = st.id_user AND st.id_task = ?
+	WHERE
+		c.id_class = ?
+	GROUP BY
+		c.id_class, c.class_name;
+  `;
+
+  db.query(q, [selectedTask, classId], (err, data) => {
+    if (err) return res.status(500).json(err);
+
+    if (data.length === 0) {
+      return res.status(204).json('Data not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+export const getTaskdataperstudent = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { students, taskId } = req.body;
+  // console.log(selectedTask);
+  // console.log(classId);
+  const q = `
+  SELECT
+    st.id_user,
+    u.name,
+		u.lastname,
+    st.id_task,
+    st.is_task_done
+  FROM
+    student_task st
+  JOIN user u ON st.id_user = u.id_user
+  WHERE
+    st.id_user IN (?) AND st.id_task = ?
+`;
+
+  db.query(q, [students, taskId], (err, data) => {
+    if (err) return res.status(500).json(err);
+
+    if (data.length === 0) {
+      return res.status(204).json('Data not found');
     }
     // console.log(data);
     res.status(200).json(data);

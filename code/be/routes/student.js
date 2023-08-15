@@ -3,17 +3,21 @@ import {
   getStudentData,
   getStudentSbjs,
   getTasksFoldersBySubject,
+  getTasksFoldersBySbjAndClass,
   getTasksByFolder,
   getAllTasks,
   getHWByStudent,
   updatePoints,
+  getStudentClassBySbj,
 } from '../controllers/student.js';
 
 const router = express.Router();
 router.get('/:id/data', getStudentData);
 router.get('/sbjs/:id', getStudentSbjs);
+router.post('/classbysbj/:id', getStudentClassBySbj);
 router.get('/taskfolders/:id', getTasksFoldersBySubject);
 router.post('/tasksbyfolder/:id', getTasksByFolder);
+router.post('/tasksfolderbysbjandclass/:id', getTasksFoldersBySbjAndClass);
 router.get('/tasksall', getAllTasks);
 router.get('/hwtasks/:id', getHWByStudent);
 router.put('/updatepoints/:id', updatePoints);

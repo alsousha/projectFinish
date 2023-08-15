@@ -19,6 +19,7 @@ import TaskSequence from '../Tasks/TaskSequence';
 import EditTask from '../Tasks/EditTask';
 import Blog from '../../pages/Blog';
 import Article from '../../pages/Article';
+import Statistic from './Statistic';
 
 function TeacherPage() {
 
@@ -26,7 +27,8 @@ function TeacherPage() {
 		{"id": 0, "link": "classes", "linkName": "My classes"},
 		{"id": 1, "link": "categories", "linkName": "My categories"},
 		{"id": 2, "link": "tasks", "linkName": "My tasks"},
-		{"id": 3, "link": "students", "linkName": "My students"}
+		{"id": 3, "link": "students", "linkName": "My students"},
+		{"id": 4, "link": "statistic", "linkName": "My statistic"}
 	] 
 
   return (
@@ -51,6 +53,7 @@ function TeacherPage() {
 					<Route path='/task/sequence/:id' element={<TaskSequence />} />
 					<Route path='/newtask' element={<NewTask />} />
 					<Route path='/students' element={<Students />} />
+					<Route path='/statistic' element={<Statistic />} />
 					<Route path='/profile' element={<Profile />} />
 					<Route path='/' element={<Blog/>} />
 				</Routes>

@@ -27,36 +27,24 @@ const Task = () => {
 	
 	const { id } = useParams(); //id task
 	const navigate = useNavigate();
-
+		//get task's data from Link
+		const location = useLocation();
+	const task = location.state?.task;
+	// console.log(task!==undefined);
 	const { currentUser} = useContext(AuthContext)
-	const [isLoading, setIsLoading] = useState(true);
-	const [hasAccess, setHasAccess] = useState(false);
 	
 	const [showMoreInfo, setShowMoreInfo] = useState(false);
 	const [showTaskText, setShowTaskText] = useState(true); //instruction of task
 
-	//get task's data from Link
-	const location = useLocation();
-	const task = location.state?.task;
+	if (!task) {
+    return <div>Error: You do not have access to this task.</div>;
+  }
 	const textResult = {
 		'success': `Well done! You answered correctly. Congrats you got ${task.task_weight} points`,
 		'fail': 'Your answer is not entirely correct. Try again!'
 	}
 	//#endregion consts
-	useEffect(() => {
-    // const checkOwnership = async () => {
-    //   try {
-    //     // Make an API request to check if the task ID exists for the user
-    //     const res = await axios.post(`/tasks/${currentUser.id_user}`, {role: currentUser.role, task_id: id});
-		// 		setHasAccess(res.data.length>0)
-    //     // setHasAccess(res.data.some((item) => item.id_task === Number(id)));
-    //   } catch (error) {
-    //   }finally {
-    //     setIsLoading(false);
-    //   }
-    // };
-    // checkOwnership();
-  }, [id, currentUser.id_user]);
+
 	const handleToggleShowInfo = () => {
 		setShowMoreInfo(prev => !prev);  
 		setShowTaskText(false);  
@@ -71,14 +59,8 @@ const Task = () => {
 	function capitalizeFirstLetter(str) {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
-	if (isLoading) {
-    return <Loading/>;
-  }
-	if (!hasAccess) {
-    return <div>Error: You do not have access to this task.</div>;
-  }
-	
 	// console.log(task);
+	
 	return (
 		<div className="task_wrap mt3">
 			<div className="container">
