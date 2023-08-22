@@ -21,7 +21,7 @@ function AdminPage({isLoggedIn, setIsLoggedIn, userData}) {
 		{"id": 0, "link": "teachers", "linkName": "Teachers"},
 		{"id": 1, "link": "students", "linkName": "Students"},
 		{"id": 2, "link": "tasks", "linkName": "Tasks"},
-		{"id": 3, "link": "templates", "linkName": "Templates"},
+		// {"id": 3, "link": "templates", "linkName": "Templates"},
 		{"id": 4, "link": "certifications", "linkName": "Certifications"},
 		{"id": 5, "link": "blog", "linkName": "Blog"}
 	]

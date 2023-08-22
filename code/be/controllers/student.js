@@ -203,3 +203,39 @@ export const updatePoints = (req, res) => {
     console.error('Error updating table:', error);
   }
 };
+export const getStatisticData = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  const { id_subject, id_user } = req.body;
+  // console.log(id);
+  const q = `
+	SELECT
+		tf.id_tskFolder,
+		tf.tskFolder_name,
+		t.id_task,
+		t.task_name,
+		st.id_user,
+    st.is_task_done
+	FROM
+		taskfolder tf
+	JOIN
+		task_tasksfolder tt ON tf.id_tskFolder = tt.id_tskFolder and id_subject= ?
+	JOIN
+		task t ON tt.id_task = t.id_task
+	JOIN
+		student_task st ON t.id_task = st.id_task
+	WHERE
+		st.id_user = ?
+	GROUP BY
+		t.id_task, st.id_user;
+	`;
+  db.query(q, [id_subject, id_user], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0) {
+      return res.status(204).json('Data not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};

@@ -272,3 +272,30 @@
 		display: block;
 	}
 }
+.flex-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.left-column {
+  flex: 1;
+}
+
+.right-column {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
+.pagination {
+	button:disabled{
+		cursor: default;
+	}
+	.pagination-numbers{
+		display: flex;
+		gap: 1rem;
+		button.active{
+			font-size: 2rem;
+			text-decoration: underline;
+		}
+	}
+}

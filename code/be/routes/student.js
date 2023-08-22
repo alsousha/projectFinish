@@ -9,6 +9,7 @@ import {
   getHWByStudent,
   updatePoints,
   getStudentClassBySbj,
+  getStatisticData,
 } from '../controllers/student.js';
 
 const router = express.Router();
@@ -21,6 +22,7 @@ router.post('/tasksfolderbysbjandclass/:id', getTasksFoldersBySbjAndClass);
 router.get('/tasksall', getAllTasks);
 router.get('/hwtasks/:id', getHWByStudent);
 router.put('/updatepoints/:id', updatePoints);
+router.post('/statisticdata', getStatisticData);
 
 // router.get('/:id', getTeacherSbjs);
 // router.put('/:id', updateTeacherSubject);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2023 at 12:32 PM
+-- Generation Time: Aug 22, 2023 at 12:59 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -145,7 +145,7 @@ INSERT INTO `student` (`id_user`, `class_level`, `total_points`) VALUES
 (130, 2, 0),
 (131, 3, 1),
 (132, 4, 0),
-(133, 4, 0),
+(133, 4, 2),
 (134, 4, 1),
 (135, 5, 0),
 (136, 5, 0),
@@ -259,9 +259,9 @@ INSERT INTO `student_task` (`id_user`, `id_task`, `id_tskFolder`, `is_task_done`
 (132, 52, 72, 0, '2023-08-14 20:55:22'),
 (132, 53, 76, 0, '2023-08-15 04:35:46'),
 (132, 69, 83, 0, '2023-08-15 10:26:24'),
-(133, 52, 72, 0, '2023-08-14 20:55:22'),
+(133, 52, 72, 1, '2023-08-14 20:55:22'),
 (133, 53, 76, 0, '2023-08-15 04:35:46'),
-(133, 69, 83, 0, '2023-08-15 10:26:24'),
+(133, 69, 83, 1, '2023-08-15 10:26:24'),
 (134, 52, 72, 0, '2023-08-14 20:55:22'),
 (134, 53, 76, 1, '2023-08-15 04:35:46'),
 (143, 36, 80, 0, '2023-08-15 09:59:40'),
@@ -341,7 +341,7 @@ INSERT INTO `task` (`id_task`, `task_name`, `task_text`, `task_create_date`, `ta
 (37, 'kuu2', '', '2023-06-30 23:09:14', 1, 1, 'uploads\\sequence.jpg', 121, 110, 1, '{\"input-0\":\"dg\"}'),
 (40, 'Task seq', '<p>Instruction of task sequance</p>', '2023-07-02 23:16:10', 1, 1, 'uploads/resized_cat.png', 121, 114, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
 (49, 'rw', '<p>fdgertgd</p>', '2023-07-01 15:32:31', 1, 1, 'uploads/resized_wp2062648.jpg', 121, 110, 1, '{\"input-0\":\"et\"}'),
-(52, 't', '<p>ert</p>', '2023-07-01 15:36:29', 1, 1, 'uploads/resized_levelone_two.png', 121, 110, 1, '{\"input-0\":\"er\"}'),
+(52, 'task11', '<p>ert</p>', '2023-07-01 15:36:29', 1, 1, 'uploads/resized_levelone_two.png', 121, 110, 1, '{\"input-0\":\"er1\",\"input-1\":\"we2\"}'),
 (53, 'Tasks for all', '<p>wer</p>', '2023-07-01 15:39:33', 1, 1, 'uploads/resized_israel.png', 121, 112, 1, '{\"input-0\":\"rtyu\"}'),
 (54, 'Example Sequence', '<h2>Lorem, ipsum dolor </h2><p>Sit amet consectetur adipisicing elit. Beatae, fugit repellendus, non perferendis illum iusto ipsam, incidunt ut sunt sint nostrum molestiae officia eveniet <a href=\"www.google.com\" rel=\"noopener noreferrer\" target=\"_blank\">ullam </a>molestias illo maiores velit atque.</p><p><u>Incidunt </u>ut sunt sint nostrum molestiae officia eveniet ullam molestias illo <strong>maiores </strong>velit atque.</p><ol><li>molestiae </li><li>nostrum </li><li>illum </li></ol>', '2023-07-01 15:49:21', 3, 5, 'uploads/resized_tt.jpg', 121, 110, 1, '{\"input-0\":\"seq1\",\"input-1\":\"seq2\",\"input-2\":\"seq3\",\"input-3\":\"seq4\"}'),
 (56, 'sdf', '<p>rty</p>', '2023-07-08 01:29:33', 1, 1, 'uploads/resized_boy.png', 121, 110, 1, '{\"input-0\":\"rty1\",\"input-1\":\"fgh2\"}'),
