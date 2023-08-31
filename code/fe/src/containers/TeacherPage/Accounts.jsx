@@ -358,16 +358,18 @@ function Accounts() {
 	if (!hasAccess) {
     return <div>Error: You do not have access to this class.</div>;
   }
+	function capitalizeFirstLetter(str) {
+		return str&&str.charAt(0).toUpperCase() + str.slice(1);
+	}
 	// console.log(errorEmails);
 	// console.log(notFoundEmails);
   return (
 	<div className='mt4 section_accounts'>
 		<div className="container">
-		<h2>Accounts of Class: {class_name}</h2>
+		<h2 className='center'>Accounts of Class: {class_name}</h2>
 			<div className="back mt2 btn_main">
 				<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
 			</div>
-		<div className="cats__wrap table_data mt4">
 			<div className="mt5">
 				{message ? <span className={message.msgClass}>{message.message}</span> : <span></span>}
 			</div>
@@ -375,32 +377,36 @@ function Accounts() {
 
 			{isAddItemVisiable && (
 				<>
-				<div className='d-flex jcsb'>
-					<div className="cat_item d-flex jcsb aic mb2">
-						<p>Enter student's email:</p>
-						<div className="d-flex g1">
-							
-							<input
-								type="text"
-								name="email"
-								value={newItemName}
-								ref={inputRef}
-								onChange={handleInputAddItemChange}
-							/>
-							
-							{errors.email && <span className='input_error'>{errors.email}</span>}
+					<div className=''>
+						<div className="cat_item d-flex g2 aic mb2">
+							<p>Enter student's email:</p>
+							<div className="d-flex g1">
+								<input
+									type="text"
+									name="email"
+									value={newItemName}
+									ref={inputRef}
+									onChange={handleInputAddItemChange}
+								/>
+								
+								{errors.email && <span className='input_error'>{errors.email}</span>}
 
+							</div>
+
+							<button onClick={() => handleAddNewItem()} className=''>
+								<AddUserIcon/>
+							</button>
 						</div>
-
-						<button onClick={() => handleAddNewItem()} className=''>
-							<AddUserIcon/>
-						</button>
-					</div>
-						<ExcelUploadComponent handleStudentsArray={handleStudentsArray} />
+						<div className="cat_item d-flex g2 aic">
+							<p>Load file with student's email:</p>
+							<ExcelUploadComponent handleStudentsArray={handleStudentsArray} />
+						</div>
 					</div>
 				</>
 				
 			)}
+		<div className="cats__wrap table_data mt4 tab-content">
+			
 			<div className="table_item title d-flex jcsb aic mb2">
 				<span className='table_elem small'>N.</span>
 				<span className='table_elem'>Name</span>
@@ -411,8 +417,8 @@ function Accounts() {
 				<div key={"account-"+item.id_user + i} className="table_item d-flex jcsb aic">
 					<div className="d-flex jcsb aic table">
 							<span className='table_elem small'>{i+1}.</span>
-							<span className='table_elem'>{item.name}&nbsp;</span>
-							<span className='table_elem'>{item.lastname}&nbsp;</span>
+							<span className='table_elem'>{capitalizeFirstLetter(item.name)}&nbsp;</span>
+							<span className='table_elem'>{capitalizeFirstLetter(item.lastname)}&nbsp;</span>
 							<span className='table_elem'>{item.email}</span>
 					</div>
 					<div className="class_delete table_icon">

@@ -1,4 +1,8 @@
-import { db } from '../db.js';
+// import { db } from '../db.js';
+import { dbSingleton } from '../dbSingleton.js';
+
+// import DatabaseSingleton from '../dbSingleton.js'; // Import the class
+
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
@@ -13,7 +17,7 @@ export const updateUser = (req, res) => {
 
   // console.log(sbjs);
   const q = 'UPDATE user SET name = ?, email = ?, lastname = ? WHERE id_user = ?';
-
+  const db = dbSingleton.getInstance();
   db.query(q, [name, email, lastname, id], (error) => {
     if (error) {
       console.error('Error updating user:', error);
@@ -33,6 +37,7 @@ const updateStudentLvl = async (id_user, lvl, req, res) => {
   if (!token) return res.status(401).json('Not authenticated!');
   try {
     const q = 'UPDATE student SET class_level = ? WHERE id_user = ?';
+    const db = dbSingleton.getInstance();
     db.query(q, [lvl, id_user], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.json('Class level was been updated.');
@@ -81,6 +86,7 @@ const deleteSbjsFromTeacher_sbjs = async (id_user, token) => {
 
     return new Promise((resolve, reject) => {
       const q = 'DELETE FROM teacher_sbjs WHERE id_user = ?';
+      const db = dbSingleton.getInstance();
       db.query(q, id_user, (error, results) => {
         if (error) {
           console.error('Error deleteEntriesForUser user', error);
@@ -101,7 +107,8 @@ const insertCheckedSbjsInTeacher_sbjs = async (id_user, subjects_ids, req, res, 
     const q = 'INSERT INTO  teacher_sbjs (`id_user`, `id_subject`) VALUES ?';
     const values = subjects_ids.map((id_subject) => [id_user, id_subject]);
 
-    console.log('values' + values);
+    // console.log('values' + values);
+    const db = dbSingleton.getInstance();
     db.query(q, [values], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.json('Subjects was been added.');
@@ -112,6 +119,7 @@ const insertCheckedSbjsInTeacher_sbjs = async (id_user, subjects_ids, req, res, 
 // Function to get the user's password
 function getUserPassword(userId, callback) {
   const q = 'SELECT password FROM user WHERE id_user = ?';
+  const db = dbSingleton.getInstance();
   db.query(q, [userId], (err, res) => {
     if (err) {
       console.error('Error retrieving user password:', err);
@@ -157,7 +165,7 @@ export const updateUserPassword = (req, res) => {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(newPassword, salt);
         const q = 'UPDATE user SET password = ? WHERE id_user = ?';
-
+        const db = dbSingleton.getInstance();
         db.query(q, [hash, id], (err, data) => {
           if (err) return res.status(402).json('Something wrong, try later');
           return res.status(200).json('Password has been updated');
@@ -195,7 +203,7 @@ export const updateUserPasswordReset = (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(newPassword, salt);
   const q = 'UPDATE user SET password = ? WHERE email = ?';
-
+  const db = dbSingleton.getInstance();
   db.query(q, [hash, email], (err, data) => {
     if (err) return res.status(402).json('Something wrong, try later');
     return res.status(200).json('Password has been updated');
@@ -241,6 +249,7 @@ export const resetPassword = (req, res) => {
   console.log('reset');
   const { email } = req.body; // Assuming the email is provided in the request body
   const q = 'SELECT id_user FROM user WHERE email = ?';
+  const db = dbSingleton.getInstance();
   db.query(q, [email], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -307,6 +316,8 @@ const isTokenExpired = (decodedToken) => {
 export const getArticles = (req, res) => {
   const q = 'SELECT * FROM blog';
 
+  // const db = new DatabaseSingleton(); // Create an instance
+  const db = dbSingleton.getInstance();
   db.query(q, (err, data) => {
     if (err) return res.status(500).send(err);
 

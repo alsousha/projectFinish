@@ -18,7 +18,7 @@ function Homework() {
 	const fetchData = async () => {
 		try {
 			const res = await axios.get(`/student/hwtasks/${currentUser.id_user}`);
-			console.log(res.data);
+			// console.log(res.data);
 			if(res.data){
 				setHWTasks(res.data)
 			}

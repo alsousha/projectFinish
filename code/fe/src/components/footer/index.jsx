@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 const Footer = () => {
 		return (
 				<footer className=''>
@@ -6,7 +7,12 @@ const Footer = () => {
 						<a href="/" className="logo d-flex aic g1">
 							<span className="slogan">Funny App</span>
 						</a>
-						<span>Alsu Bogdanov and Alex Agronov</span>
+						{/* <span>Alsu Bogdanov</span> */}
+						<div className="menu d-flex g1">
+							<Link>About</Link>
+							<Link>Contacts</Link>
+						</div>
+						
 					</div>
 				</footer>
 		)

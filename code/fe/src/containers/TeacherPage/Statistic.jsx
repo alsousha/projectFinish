@@ -10,7 +10,7 @@ function Statistic() {
 
 
 	const [activeTab, setActiveTab] = useState('class'); // 'class' or 'task'
-
+	// const [activeTab, setActiveTab] = useState(0);
 	useEffect(() => {
 		if(currentUser.role==='teacher') setHasAccess(true)
     
@@ -22,10 +22,10 @@ function Statistic() {
 		<div className='mt5'>
 			<div className="container">
 				<h1 className='center'>Statistic</h1>
-				<div className='d-flex g2'>
-					<button className='' onClick={() => setActiveTab('class')}>Statistic by Class</button>
-					<button onClick={() => setActiveTab('task')}>Statistic by Task</button>
-				</div>
+				<ul className='tab-list d-flex'>
+					<button className={activeTab === 'class' ? 'tab-item active' : 'tab-item'} onClick={() => setActiveTab('class')}>Statistic by Class</button>
+					<button className={activeTab === 'task' ? 'tab-item active' : 'tab-item'} onClick={() => setActiveTab('task')}>Statistic by Task</button>
+				</ul>
 
 				{activeTab === 'class' && <StatisticByClassComponent />}
 				{activeTab === 'task' && <StatisticByTaskComponent />}

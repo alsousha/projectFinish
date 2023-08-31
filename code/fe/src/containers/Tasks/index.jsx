@@ -74,7 +74,7 @@ const Tasks = () => {
 
 				<div className="add_newItem mt2">
 					<Link className="d-flex aic g1" to="/teacher/newtask">
-						<AddIcon/><span>add new task</span>
+						<AddIcon/><span>create task</span>
 					</Link>
 				</div>
 				

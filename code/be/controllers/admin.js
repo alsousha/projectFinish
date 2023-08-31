@@ -1,4 +1,6 @@
-import { db } from '../db.js';
+// import { db } from '../db.js';
+import { dbSingleton } from '../dbSingleton.js';
+// import DatabaseSingleton from '../dbSingleton.js'; // Import the class
 import multer from 'multer';
 import sharp from 'sharp'; // Import the sharp library(compress img)
 import fs from 'fs';
@@ -12,6 +14,7 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
 export const getAllTeachers = (req, res) => {
   const { id } = req.params;
   const q = `SELECT DISTINCT u.id_user, u.email, u.name, u.lastname, u.img_url, t.id_subject, s.subject_name 
@@ -19,6 +22,7 @@ export const getAllTeachers = (req, res) => {
 	JOIN teacher_sbjs t ON u.id_user = t.id_user
 	JOIN subject s ON t.id_subject = s.id_subject
 	WHERE u.role = 'teacher';`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -35,6 +39,7 @@ export const getAllStudents = (req, res) => {
 	FROM user u
 	JOIN student s ON u.id_user = s.id_user
 	WHERE u.role = 'student';`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -52,6 +57,7 @@ export const getTeacherClassCounts = (req, res) => {
 		FROM class
 		WHERE id_teacher = ?;
 		`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -69,6 +75,7 @@ export const getTeacherTasksCounts = (req, res) => {
 		FROM task
 		WHERE id_teacher = ?;
 		`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -87,6 +94,7 @@ export const getStudentAddData = (req, res) => {
 		FROM student
 		WHERE id_user = ?;
 		`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -263,6 +271,7 @@ export const deleteArticle = (req, res) => {
     const { id } = req.params;
     const q = 'DELETE FROM blog WHERE id_article = ?';
     // console.log(id);
+    const db = dbSingleton.getInstance();
     db.query(q, id, (err) => {
       if (err) {
         console.error('Error deleting article:', err);

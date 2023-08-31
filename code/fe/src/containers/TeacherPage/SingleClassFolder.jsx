@@ -298,15 +298,22 @@ const isNotPublishText = 'Add/Remove Tasks and click the "Publish Tasks" button.
 return (
 		<div className='mt3'>
 			<div className="container">
-				<h2>Folder: {folder_name}</h2>
-
-				<h3 className='mt2 mb1'>Subject: {subject_name}</h3>
-				
-				<div className="mt2 mb1">
-					<h3 className='mb1'>Status: {isFolderPublish? 'publish' : 'not publish'}</h3>	
-					{!isFolderPublish && <button className={`btn_accent ${publishBtnClass}`} onClick={handlePublishTasks}>Publish tasks</button>}
+				<h2 className='center'>Folder: {folder_name}</h2>
+				<div className="folder_status d-flex aic g3 mt2">
+					<div className=""><h3 className=''>Subject: {subject_name}</h3></div>
+					
+					
+					<div className="d-flex g3 aic">
+						<h3 className=''>Status: {isFolderPublish? 'publish' : 'not publish'}</h3>	
+						{!isFolderPublish && <button className={`btn_accent ${publishBtnClass}`} onClick={handlePublishTasks}>Publish tasks</button>}
+						
+					</div>
+					<MoreInfo text={isFolderPublish ? isPublishText : isNotPublishText}/>
+					
 				</div>
-				<MoreInfo text={isFolderPublish ? isPublishText : isNotPublishText}/>
+
+
+				
 				<div className="back mt2 btn_main">
 					<button onClick={handleGoBack} className="d-flex aic g1"><BackIcon/><span>Go Back</span></button>
 				</div>

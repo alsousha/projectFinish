@@ -4,14 +4,14 @@
 	position: fixed;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(calc(-50% + 120px), calc(-50% + 120px));
     z-index: 100;
-
-    background-color: $white;
+    background-color: $white !important;
     width: 60rem;
-    padding: 5rem;
+    padding: 5rem !important;
 		height: 45rem;
     border-radius: 1rem;
+		box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	.popup_input{
 		flex-grow: 1;
 		

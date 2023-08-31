@@ -165,8 +165,8 @@ function StatisticByTaskComponent() {
 	console.log(taskDataPerClass);
 	// console.log(tasks);
 	return (
-		<div className='mt3'>
-			<h2>Statistic by Task</h2>
+		<div className='mt1'>
+			{/* <h2>Statistic by Task</h2> */}
 			<div className="selects d-flex g2">
 				<select className="mt3" value={selectedSubject} onChange={(e) => handleSbjChange(e.target.value)}>
 					<option value="">Select a Subject</option>
@@ -194,16 +194,16 @@ function StatisticByTaskComponent() {
 				</select>
 			</div>
 			<div className="statistic mt3">
-				<div className="d-flex f-column g2">
+				<div className="d-flex f-column tab-content">
 					<div className="d-flex g2">
 						<h3 className="w20">Class</h3>
 						<h3 className="w20">Done</h3>
 
 					</div>
 					{taskDataPerClass&&taskDataPerClass.map(item=>(
-						<div className="d-flex g2" key={item.classId+"classItem"}>
+						<div className="d-flex g2 " key={item.classId+"classItem"}>
 							<div className="w20">{item.className} </div>
-							<div className="w20" onClick={() => handlePopupOpen(item.classId)}>
+							<div className="w20 cursor_pointer hover-scale" onClick={() => handlePopupOpen(item.classId)}>
 								{item.percentageDone}
 							</div>
 							

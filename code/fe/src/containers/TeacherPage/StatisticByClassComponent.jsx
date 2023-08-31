@@ -144,22 +144,26 @@ function StatisticByClassComponent() {
 	};
 	// console.log(classData);
   return (
-    <div className='mt3'>
-      <h2>Statistic by Class</h2>
-      <select className="mt3" value={selectedClass} onChange={(e) => handleClassChange(e.target.value)}>
-        <option value="">Select a Class</option>
-        {classes.map((item) => (
-          <option key={item.id_class+"-classOpt"} value={item.id_class}>
-            {item.class_name}
-          </option>
-        ))}
-      </select>
+    <div className='mt1'>
+      {/* <h2>Statistic by Class</h2> */}
+			<div className="d-flex g1 mt3 aic">
+				<h3>Class: </h3>
+				<select className="" value={selectedClass} onChange={(e) => handleClassChange(e.target.value)}>
+					<option value="">Select a Class</option>
+					{classes.map((item) => (
+						<option key={item.id_class+"-classOpt"} value={item.id_class}>
+							{item.class_name}
+						</option>
+					))}
+				</select>
+			</div>
+			
 			{isVisiable && <div className="statistic mt3">
-				<div className='d-flex g2'>
-					<button onClick={() => handleNumFoldersToShow(2)}>Show 2 last folders</button>
-					<button onClick={() => handleNumFoldersToShow(3)}>Show 3 last folders</button>
-					<button onClick={() => handleNumFoldersToShow(10)}>Show 10 last folders</button>
-					<button onClick={() => handleNumFoldersToShow(tsksFolders.length)}>Show all</button>
+				<div className='tab2 d-flex g2'>
+					<button className={numFoldersToShow === 2 ? 'active' : ''} onClick={() => handleNumFoldersToShow(2)}>Show 2 last folders</button>
+					<button className={numFoldersToShow === 3 ? 'active' : ''} onClick={() => handleNumFoldersToShow(3)}>Show 3 last folders</button>
+					<button className={numFoldersToShow === 10 ? 'active' : ''} onClick={() => handleNumFoldersToShow(10)}>Show 10 last folders</button>
+					<button className={numFoldersToShow === tsksFolders.length ? 'active' : ''} onClick={() => handleNumFoldersToShow(tsksFolders.length)}>Show all</button>
 				</div>
 				<table>
 					<thead>

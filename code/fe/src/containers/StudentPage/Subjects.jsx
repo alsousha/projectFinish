@@ -15,6 +15,7 @@ function Subjects() {
 	const [studentClass, setStudentClass] = useState([]);
 	const [folders, setFolders] = useState([]);
 	const [tasks, setTasks] = useState([]);
+	const [activeTab, setActiveTab] = useState(0);
 
 	const { currentUser} = useContext(AuthContext)
 	useEffect(() => {
@@ -74,7 +75,8 @@ function Subjects() {
 		}
   };
 
-	const handleSubjectClick = (id_subject) => {
+	const handleSubjectClick = (id_subject, i) => {
+		setActiveTab(i)
 		setTasks([])
 		fetchClass(id_subject)
   };
@@ -88,13 +90,11 @@ function Subjects() {
 		<div className="container">
 			<h1>Subjects</h1>
 			<div className="main_content mt2">
-				<div className="d-flex g1 mt3">
-				{subjects&&subjects.map((item) => (
-					<div className="btn_maincolor" key={"subject_student"+item.id_subject}>
-						<button className=""  onClick={() => handleSubjectClick(item.id_subject)}>
-							{item.subject_name}
-						</button>
-					</div>
+				<div className="d-flex mt3 tab-list">
+				{subjects&&subjects.map((item, i) => (
+					<button key={"subject_student"+item.id_subject} className={i===activeTab ? 'active tab-item' : 'tab-item'}  onClick={() => handleSubjectClick(item.id_subject, i)}>
+						{item.subject_name}
+					</button>
 				))}
 				</div>
 				<div className="d-flex g1 mt3">

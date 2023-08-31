@@ -347,10 +347,10 @@ function Classfolders() {
   return (
 	<div className='mt4 section_accounts'>
 		<div className="container">
-			<h2>Class folder of Class: {class_name}</h2>
-			<h3 className='mt2'>Create folders of class</h3>
+			<h2 className='center'>Class folder of Class: {class_name}</h2>
+			{/* <h3 className='mt2'>Create folders of class</h3> */}
 			<div className="back mt2 btn_main">
-				<Link className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></Link>
+				<button className="d-flex aic g1" to="/teacher/classes"><BackIcon/><span>Go Back</span></button>
 			</div>
 			<div className="mt2">
 				{errors.item_name && <span className='input_error mp2'>{errors.item_name}</span>}
@@ -371,8 +371,8 @@ function Classfolders() {
 					))}
 				</ul>
 				{isAddVisiable && (
-					<div className="cat_item d-flex jcsb aic mb2">
-						<div className="d-flex g1">
+					<div className="d-flex aic mt2 g1">
+						<div className="item_title d-flex g1">
 							<input
 								type="text"
 								name="add_item"
@@ -398,13 +398,20 @@ function Classfolders() {
 
 						</div>
 
-						<button onClick={() => handleAddNewItem()} className=''>
-							<CheckIcon/>
+						<button onClick={() => handleAddNewItem()} className='w4'>
+							<SaveIcon/>
 						</button>
+						<button onClick={() => handleAddSection()} className='btn_blue'>
+							Cancel
+					</button>
 					</div>
 				)}
-				<div className="add_newItem mt2">
-					<button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new folder</button></div>
+				{!isAddVisiable && (
+					<div className="add_newItem mt2">
+					<button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new folder</button>
+				</div>
+				)}
+				
 										
 				<div className="table__wrap flex-4 mt4 d-flex jcsb">
 					{dataArrayFormat && dataArrayFormat[activeTab] && dataArrayFormat.length!==0 ? 
@@ -467,7 +474,7 @@ function Classfolders() {
 							)
 					}
 				</div>
-				
+
 			</div>
 		</div>
 	  

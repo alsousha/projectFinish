@@ -10,6 +10,9 @@ a{
 }
 .back{
 	padding-left: 7px;
+	span{
+		font-size: 1.8rem;
+	}
 }
 .counter{
 	display: inline-block;
@@ -40,8 +43,12 @@ a{
 }
 .class_item{
 	border-bottom: 1px solid;
-	padding: 1rem;
+	padding: 1rem 2rem;
+	&:nth-child(2n){
+		background-color: $gray-light;
+	}
 }
+
 
 .table_elem {
   flex: 1;
@@ -108,24 +115,44 @@ a{
 
 .tab-list{
 	display: flex;
-	gap: 2rem;
 	margin-bottom: 2rem;
 	margin-top: 2rem;
-	li{
+	border-bottom: 1px solid gray;
+	li, .tab-item{
 		color: gray;
 		cursor: pointer;
 		font-size: 2rem;
+		padding: 1rem 2rem;
+		border-right: 1px solid gray;
+		border-left: 1px solid gray;
+    border-top: 1px solid gray;
+    
 		&.active{
 			color: $accent;
 			text-decoration: underline;
 			text-shadow: 0 0 black;
+			background-color: $main;
 		}
 
 	}
 }
 .tab-content{
+	padding: 2rem;
 	.inactive{
 		opacity: 0.5;
+	}
+	&>div{
+		padding: 1rem 2rem;
+	}
+	&>div:nth-child(2n){
+		background-color: $gray-light;
+		
+	}
+	.table_item {
+		
+		span{
+			font-weight: 600;
+		}
 	}
 }
 .input_error{
@@ -141,5 +168,63 @@ span.accent{
 	}
 	strong{
 		font-weight: 600;
+	}
+}
+button.link{
+	font-family: Nunito, sans-serif;
+	font-size: 1.8rem;
+	&:hover{
+		color: $green-light;
+		transition: all 0.3s;
+	}
+}
+.w4{
+	width: 4rem;
+}
+.btn_main button{
+	color: $main;
+}
+h1,h2,h3,h4{
+	&.center{
+		text-align: center;
+	}
+}
+.menu{
+	margin-right: 3rem;
+	a{
+		font-weight: 600;
+		&:hover{
+			transition: all 0.3s;
+			color: $accent;
+		}
+	}
+}
+.tab2{
+	button{
+		color: $green-main2;
+		font-size: 1.8rem;
+		padding-bottom: 0.5rem;
+		&.active{
+			color: $success;
+			
+			border-bottom: 1px solid;
+		}
+	}
+}
+.delete_user{
+
+	button{
+		color: $error;
+		font-weight: 600;
+		padding: 2rem;
+	}
+}
+.pagination{
+	justify-content: center;
+}
+.task-status{
+	svg{
+		width: 2rem;
+		height: 2rem;
 	}
 }

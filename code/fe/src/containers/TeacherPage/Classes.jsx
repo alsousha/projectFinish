@@ -219,7 +219,7 @@ function Classes() {
 				{message && <span className={message.msgClass}>{message.message}</span>}
 			</div>
 			{classes && classes.map(item => (
-				<div key={item.id_class} className="class_item d-flex jcsb aic mb2">
+				<div key={item.id_class} className="class_item d-flex jcsb aic">
 					{editingItemId === item.id_class ? (
 						<div className="item_title">
 							<input
@@ -267,7 +267,7 @@ function Classes() {
 				</div>
 			))}
 			{isAddVisiable && (
-				<div className="class_item d-flex jcsb aic mb2">
+				<div className="d-flex aic mt2 g1">
 					<div className="item_title">
 						<input
 							type="text"
@@ -279,14 +279,20 @@ function Classes() {
 						{errors.add_class && <span className='input_error'>{errors.add_class}</span>}
 
 					</div>
-					<button onClick={() => handleAddNewClass()} className=''>
+					<button onClick={() => handleAddNewClass()} className='w4'>
 						<SaveIcon/>
+					</button>
+					<button onClick={() => handleAddSection()} className='btn_blue'>
+						Cancel
 					</button>
 				</div>
 			)}
+			{!isAddVisiable && (
+				<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new class</button></div>
+
+			)}
 			
 		</div>
-		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new class</button></div>
 
 		</div>
 	  

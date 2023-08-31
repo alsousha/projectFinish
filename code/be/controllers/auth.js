@@ -1,4 +1,7 @@
-import { db } from '../db.js';
+// import { db } from '../db.js';
+import { dbSingleton } from '../dbSingleton.js';
+// import DatabaseSingleton from '../dbSingleton.js'; // Import the class
+
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getSbjsIdBySbjsName } from './sbj.js';
@@ -7,6 +10,7 @@ import { getSbjsIdBySbjsName } from './sbj.js';
 export const register = (req, res) => {
   //check existing user
   const q = 'SELECT * FROM user WHERE email = ? ';
+  const db = dbSingleton.getInstance();
   db.query(q, [req.body.email], (err, data) => {
     if (err) return res.json(err);
     if (data.length) return res.status(409).json('User already exists!');
@@ -72,6 +76,7 @@ const insertCheckedSbjsInTeacher_sbjs = async (id_user, subjects_ids, req, res) 
   const values = subjects_ids.map((id_subject) => [id_user, id_subject]);
 
   // console.log('values' + values);
+  const db = dbSingleton.getInstance();
   db.query(q, [values], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.json('Teacher registered successfully!');
@@ -204,7 +209,11 @@ export const register2 = (req, res) => {
 export const login = (req, res) => {
   // console.log(req.body.email); //email from fe input
   const q = 'SELECT * FROM user WHERE email = ?';
+  console.log('login');
+  const db = dbSingleton.getInstance();
+  // console.log(db);
   db.query(q, [req.body.email], (err, data) => {
+    console.log('in db');
     if (err) return res.json(err);
     if (data.length === 0) return res.status(404).json('User not found!');
 
@@ -238,6 +247,7 @@ export const deleteUser = (req, res) => {
     console.log(userId);
     const q = 'DELETE FROM user WHERE `id_user` = ?';
 
+    const db = dbSingleton.getInstance();
     db.query(q, userId, (err, data) => {
       if (err) return res.status(403).json('You can delete only your account!');
 

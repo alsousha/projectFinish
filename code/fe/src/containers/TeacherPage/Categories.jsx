@@ -118,6 +118,7 @@ function Categories() {
 	const handleAddSection = () => {
 		setIsAddVisiable(!isAddVisiable)
 	}
+	
 
 	const validateField = (fieldNames, itemId, id_sbj) => {
     const errors = {};
@@ -315,10 +316,8 @@ function Categories() {
 				<div className="tab-content">
 					{dataArrayFormat && dataArrayFormat[activeTab] && dataArrayFormat.length!==0 ? 
 						dataArrayFormat[activeTab].map((item, i) => (
-							<div key={"tabContent-"+i} >
-								<div key={item.id_category} className="">
-									<div  className="table_item d-flex jcs g2 aic mb2">
-										{editingItemId === item.id_category ? (
+							<div key={"tabContent-"+i} className="table_item d-flex jcs g2 aic">
+								{editingItemId === item.id_category ? (
 											<div className="">
 												<input
 													type="text"
@@ -361,9 +360,6 @@ function Categories() {
 										<div className="class_delete table_icon">
 											<button  onClick={() => handleDelete(item.id_category)}><DeleteIcon/></button>
 										</div>
-									</div>
-								</div>
-
 							</div>
 							)):(
 								<div className="no-items">List is empty</div>
@@ -373,7 +369,7 @@ function Categories() {
 			</div>
 
 			{isAddVisiable && (
-				<div className="cat_item d-flex jcsb aic mb2">
+				<div className="cat_item d-flex aic mb2 g1 p2">
 					<div className="d-flex g1">
 						<input
 							type="text"
@@ -403,11 +399,17 @@ function Categories() {
 					<button onClick={() => handleAddNewItem()} className=''>
 						<SaveIcon/>
 					</button>
+					<button onClick={() => handleAddSection()} className='btn_blue'>
+						Cancel
+					</button>
 				</div>
 			)}
 			
 		</div>
-		<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new category</button></div>
+		{!isAddVisiable && (
+			<div className="add_newItem mt4"><button className="link d-flex jcsb aic g1" onClick={handleAddSection}><AddIcon/>add new category</button></div>
+		)}
+		
 
 		</div>
 	  

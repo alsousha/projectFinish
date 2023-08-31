@@ -224,7 +224,7 @@ function NewTask() {
         </div>
 
         <div className='task_data'>
-          <div className='task_data-item'>
+          <div className=''>
             {/* taskname */}
             <div className='task_data-item w50'>
               <span className='label'>Task's name:</span>
@@ -331,7 +331,7 @@ function NewTask() {
                 {templates.map((temp) => {
                   let imgSrc;
                   try {
-                    console.log(`${API_URL}/uploads/${temp.template_img}`);
+                    // console.log(`${API_URL}/uploads/${temp.template_img}`);
                     // Attempt to require the image dynamically
                     imgSrc = require(`../../assets/img/${temp.template_img}`);
                   } catch (error) {

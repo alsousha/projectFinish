@@ -1,4 +1,7 @@
-import { db } from '../db.js';
+// import { db } from '../db.js';
+import { dbSingleton } from '../dbSingleton.js';
+// import DatabaseSingleton from '../dbSingleton.js'; // Import the class
+
 import jwt from 'jsonwebtoken';
 
 export const getTeacherClasses = (req, res) => {
@@ -7,6 +10,7 @@ export const getTeacherClasses = (req, res) => {
 
   const { id } = req.params;
   const q = 'SELECT id_class, class_name FROM class WHERE id_teacher = ?';
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -24,6 +28,7 @@ export const getTeacherCats = (req, res) => {
 
   const { id } = req.params;
   const q = 'SELECT id_class, class_name FROM class WHERE id_teacher = ?';
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -41,6 +46,7 @@ export const updateClass = (req, res) => {
   try {
     const id_class = req.params.id;
     const q = 'UPDATE class SET class_name = ? WHERE id_class = ?';
+    const db = dbSingleton.getInstance();
     db.query(q, [req.body.class_name, id_class], (error) => {
       if (error) {
         console.error('Error updating class:', error);
@@ -62,6 +68,7 @@ export const addNewClass = (req, res) => {
     const id_teacher = req.params.id;
     const { class_name } = req.body;
     const q = 'INSERT INTO class (class_name, id_teacher) VALUES (?, ?)';
+    const db = dbSingleton.getInstance();
     db.query(q, [class_name, id_teacher], (error) => {
       if (error) {
         console.error('Failed to add the new class.', error);
@@ -83,6 +90,7 @@ export const deleteClass = (req, res) => {
     const id_class = req.params.id;
     const q = 'DELETE FROM class WHERE id_class = ?';
     // console.log(id_class);
+    const db = dbSingleton.getInstance();
     db.query(q, id_class, (err) => {
       if (err) {
         console.error('Error deleting class:', err);
@@ -114,7 +122,7 @@ export const addNewCategory = (req, res) => {
 			WHERE subject.subject_name = ?
 			LIMIT 1
 		`;
-
+    const db = dbSingleton.getInstance();
     db.query(q, [category_name, subject_name], (err, result) => {
       if (err) {
         console.error('Failed to add the new category.', err);
@@ -145,7 +153,7 @@ export const getCategoriesByTeacher = (req, res) => {
 		FROM teacher_sbjs
 		WHERE id_user = ?
 	)`;
-
+  const db = dbSingleton.getInstance();
   db.query(query, [id], (err, result) => {
     if (err) {
       return res.json(err);
@@ -175,7 +183,7 @@ export const getCategoriesBySubject = (req, res) => {
 		JOIN taskfolder tf ON c.id_subject = tf.id_subject
 		WHERE tf.id_tskFolder = ?;
 	`;
-
+  const db = dbSingleton.getInstance();
   db.query(q, [id_folder], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -197,7 +205,7 @@ export const getCategoriesBySpecSubject = (req, res) => {
 		FROM category 
 		WHERE id_subject = ?;
 	`;
-
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -228,7 +236,7 @@ export const updateCategory = (req, res) => {
 					)
 			WHERE id_category = ?
 		`;
-
+    const db = dbSingleton.getInstance();
     db.query(q, [req.body.category_name, req.body.subject_name, id_cat], (error, result) => {
       // Check if any rows were affected by the update
       // if (result.affectedRows === 0) {
@@ -253,6 +261,7 @@ export const deleteCategory = (req, res) => {
     const id_category = req.params.id;
     const q = 'DELETE FROM category WHERE id_category = ?';
     // console.log(id_class);
+    const db = dbSingleton.getInstance();
     db.query(q, id_category, (err) => {
       if (err) {
         console.error('Error deleting category:', err);
@@ -277,6 +286,7 @@ export const getStudentsByTeacher = (req, res) => {
 						 JOIN student_class ON user.id_user = student_class.id_user
 						 JOIN class ON student_class.id_class = class.id_class
   					 WHERE class.id_teacher = ? AND class.id_class = ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id, id_class], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -319,15 +329,25 @@ export const getAllStudentsByTeacher = (req, res) => {
 						 JOIN student_class ON user.id_user = student_class.id_user
 						 JOIN class ON student_class.id_class = class.id_class
   					 WHERE class.id_teacher = ?`;
+  const db = dbSingleton.getInstance();
+  console.log('Before db.query');
+
   db.query(q, [id], (err, data) => {
-    if (err) return res.status(500).json(err);
-    // Check if the user exists
+    console.log('Inside db.query callback');
+    if (err) {
+      console.error(err);
+      return res.status(500).json(err);
+    }
     if (data.length === 0) {
-      return res.status(201).json('Students not found');
+      console.log('Students not found');
+      res.status(201).json('Students not found'); // Removed return here
     } else {
+      console.log('Students found');
       res.status(200).json(data);
     }
   });
+
+  console.log('After db.query');
 };
 
 export const deleteStudentFromClass = (req, res) => {
@@ -338,6 +358,7 @@ export const deleteStudentFromClass = (req, res) => {
   try {
     const id_user = req.params.id;
     const q = 'DELETE FROM student_class WHERE id_user = ? AND id_class = ?';
+    const db = dbSingleton.getInstance();
     db.query(q, [id_user, req.query.class], (err) => {
       if (err) {
         console.error('Error deleting student:', err);
@@ -357,6 +378,7 @@ export const addStudentsToClass = (req, res) => {
 
   //check existing user
   const q = 'SELECT id_user, email, role FROM user WHERE email = ?';
+  const db = dbSingleton.getInstance();
   db.query(q, [req.body.student_email], (err, data) => {
     if (err) return res.json(err);
     if (data.length && data[0].role === 'student') {
@@ -405,7 +427,7 @@ export const getTasksFoldersByIdClass = (req, res) => {
 	JOIN subject s ON t.id_subject = s.id_subject
 	WHERE id_class = ?
 	`;
-
+  const db = dbSingleton.getInstance();
   db.query(q, [id_class], (err, data) => {
     if (err) return res.status(500).json(err);
     const dataRes = {
@@ -440,6 +462,7 @@ export const updateTskFolder = (req, res) => {
 		WHERE id_tskFolder = ?
 	`;
     // const q = 'UPDATE taskfolder SET tskFolder_name = ? WHERE id_tskFolder = ?';
+    const db = dbSingleton.getInstance();
     db.query(q, [req.body.tskFolder_name, req.body.subject_name, id_tskfolder], (error, result) => {
       // Check if any rows were affected by the update
       if (result.affectedRows === 0) {
@@ -464,6 +487,7 @@ export const deleteTskFolder = (req, res) => {
     const id_tskfolder = req.params.id;
     const q = 'DELETE FROM taskfolder WHERE id_tskFolder = ?';
     // console.log(id_class);
+    const db = dbSingleton.getInstance();
     db.query(q, id_tskfolder, (err) => {
       if (err) {
         console.error('Error deleting folder:', err);
@@ -501,6 +525,7 @@ export const isExistsTasksDone = (req, res) => {
 		) AS is_exists;
 	`;
     // const q = 'UPDATE taskfolder SET tskFolder_name = ? WHERE id_tskFolder = ?';
+    const db = dbSingleton.getInstance();
     db.query(q, id_tskfolder, (error, data) => {
       console.log('data[0]');
       if (error) {
@@ -535,7 +560,7 @@ export const addNewTskFolder = (req, res) => {
 			WHERE s.subject_name = ?
 			LIMIT 1
 		`;
-
+    const db = dbSingleton.getInstance();
     db.query(q, [tskFolder_name, id_class, subject_name], (error) => {
       if (error) {
         console.error('Failed to add the new folder.', error);
@@ -557,7 +582,7 @@ export const getAllTemplates = (req, res) => {
 	SELECT *
 	FROM template
 	`;
-
+  const db = dbSingleton.getInstance();
   db.query(q, (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -578,6 +603,7 @@ export const getSubjectsByTeacher = (req, res) => {
 						 FROM teacher_sbjs ts
 						 JOIN subject s ON ts.id_subject = s.id_subject
   					 WHERE ts.id_user = ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the data exists
@@ -597,6 +623,7 @@ export const getFolderByTeacher = (req, res) => {
 						 FROM taskfolder f
 						 JOIN class c ON f.id_class = c.id_class
   					 WHERE c.id_teacher = ? AND f.id_tskFolder = ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id_teacher, id_folder], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the data exists
@@ -616,6 +643,7 @@ export const getTasksByFolder = (req, res) => {
            FROM task_tasksfolder tf
            JOIN task t ON tf.id_task = t.id_task
            WHERE tf.id_tskFolder = ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id_folder], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the data exists
@@ -637,6 +665,7 @@ export const getTasksByStudent = (req, res) => {
 		FROM student_task
 		WHERE id_user IN (?) AND id_task IN (?)
 `;
+  const db = dbSingleton.getInstance();
   db.query(q, [students, tasks], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the data exists
@@ -692,7 +721,7 @@ export const getTaskCompletionByClass = (req, res) => {
 	GROUP BY
 		c.id_class, c.class_name;
   `;
-
+  const db = dbSingleton.getInstance();
   db.query(q, [selectedTask, classId], (err, data) => {
     if (err) return res.status(500).json(err);
 
@@ -723,7 +752,7 @@ export const getTaskdataperstudent = (req, res) => {
   WHERE
     st.id_user IN (?) AND st.id_task = ?
 `;
-
+  const db = dbSingleton.getInstance();
   db.query(q, [students, taskId], (err, data) => {
     if (err) return res.status(500).json(err);
 

@@ -1,8 +1,10 @@
-import { db } from '../db.js';
+// import { db } from '../db.js';
+import { dbSingleton } from '../dbSingleton.js';
+// import DatabaseSingleton from '../dbSingleton.js'; // Import the class
 
 export const getSbjs = (req, res) => {
   const q = 'SELECT * FROM subject';
-
+  const db = dbSingleton.getInstance();
   db.query(q, (err, data) => {
     if (err) return res.status(500).send(err);
 
@@ -15,7 +17,7 @@ export const getTeacherSbjs = (req, res) => {
 	JOIN subject t2 ON t1.id_subject = t2.id_subject
 	WHERE t1.id_user = ?`;
   // const q = 'SELECT id_subject FROM `teacher_sbjs` WHERE id_user = ?';
-
+  const db = dbSingleton.getInstance();
   db.query(q, [req.params.id], (err, data) => {
     if (err) return res.status(500).send(err);
     const teacherSbjs = data.map((row) => row.subject_name); //array that contain only subjects
@@ -28,6 +30,7 @@ export const getSbjsIdBySbjsName = (subject_names) => {
   return new Promise((resolve, reject) => {
     const q = 'SELECT id_subject FROM subject WHERE subject_name IN (?)';
     const values = [subject_names];
+    const db = dbSingleton.getInstance();
     db.query(q, values, (error, results) => {
       if (error) {
         console.error('Error retrieving data:', error);
@@ -46,6 +49,7 @@ export const updateTeacherSubject = (req, res) => {
   const q = 'UPDATE teacher SET id_subject = ? WHERE id_user = ?';
   // console.log(req.body.option_id);
   // console.log(id);
+  const db = dbSingleton.getInstance();
   db.query(q, [req.body.option_id, id], (error) => {
     if (error) {
       console.error('Error updating user:', error);

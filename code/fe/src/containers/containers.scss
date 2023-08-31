@@ -36,6 +36,7 @@
 .arr_item{
 	min-height: 4rem;
 	padding: 2rem;
+	position: relative;
 	
 	.card__inner{
 		border: 1px solid $main;
@@ -80,6 +81,18 @@
 			box-shadow: none;
 		}
 
+	}
+	button{
+		position: absolute;
+		right: 0;
+		top: 0;
+		opacity: 0;
+	}
+	&:hover{
+		button{
+			opacity: 0.7;
+			transition: all 0.3s;
+		}
 	}
 }
 
@@ -239,7 +252,7 @@
 			margin-right: 1.5rem;
 		}
 		th{
-			border-bottom: 1px solid $accent;
+			// border-bottom: 1px solid $accent;
 		}
 		.stud_list{
 			width: 16rem;
@@ -270,8 +283,17 @@
 	display: block;
 	thead, tbody{
 		display: block;
+		tr{
+			padding: 0.5rem;
+			border-bottom: 1px solid $green-light;
+			&:nth-child(2n){
+				background-color: #d7d6d6;
+			}
+		}
+		
 	}
 }
+
 .flex-container {
   display: flex;
   align-items: flex-start;

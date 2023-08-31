@@ -1,8 +1,11 @@
-import { db } from '../db.js';
+// import { db } from '../db.js';
+import { dbSingleton } from '../dbSingleton.js';
+// import DatabaseSingleton from '../dbSingleton.js'; // Import the class
 
 export const getStudentData = (req, res) => {
   const { id } = req.params;
   const q = 'SELECT class_level, total_points FROM student WHERE id_user = ?';
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -26,6 +29,7 @@ export const getStudentSbjs = (req, res) => {
 	WHERE sc.id_user = ?
 	
 	`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -57,6 +61,7 @@ export const getStudentClassBySbj = (req, res) => {
 		LIMIT 1;
 		
 	`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id, sbjId], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -80,6 +85,7 @@ export const getTasksFoldersBySbjAndClass = (req, res) => {
 		FROM taskfolder 
 		WHERE is_publish=1 and id_subject = ? and id_class = ?
 	`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id, studentClass], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -101,6 +107,7 @@ export const getTasksFoldersBySubject = (req, res) => {
 		FROM taskfolder 
 		WHERE is_publish=1 and id_subject = ?
 	`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -126,6 +133,7 @@ export const getTasksByFolder = (req, res) => {
   JOIN task_tasksfolder ON task.id_task = task_tasksfolder.id_task
   WHERE task_tasksfolder.id_tskFolder = ?
 `;
+  const db = dbSingleton.getInstance();
   db.query(q, [id_user, id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -146,6 +154,7 @@ export const getAllTasks = (req, res) => {
 		JOIN template t ON tsk.id_template = t.id_template
 		JOIN subject s ON c.id_subject = s.id_subject
 	`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -170,6 +179,7 @@ JOIN category c ON t.id_category = c.id_category
 JOIN subject s ON c.id_subject = s.id_subject
 WHERE st.is_task_done = 0 AND st.id_user = ?;
 `;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {
@@ -190,7 +200,7 @@ export const updatePoints = (req, res) => {
 			SET total_points = total_points + ? 
 			WHERE id_user = ?
 		`;
-
+    const db = dbSingleton.getInstance();
     db.query(q, [task_weight, id_user], (error, result) => {
       if (error) {
         console.error('Error updating category:', error);
@@ -230,6 +240,7 @@ export const getStatisticData = (req, res) => {
 	GROUP BY
 		t.id_task, st.id_user;
 	`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id_subject, id_user], (err, data) => {
     if (err) return res.status(500).json(err);
     if (data.length === 0) {

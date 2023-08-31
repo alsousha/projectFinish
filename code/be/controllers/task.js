@@ -1,4 +1,7 @@
-import { db } from '../db.js';
+// import { db } from '../db.js';
+import { dbSingleton } from '../dbSingleton.js';
+// import DatabaseSingleton from '../dbSingleton.js'; // Import the class
+
 import multer from 'multer';
 import sharp from 'sharp'; // Import the sharp library(compress img)
 import fs from 'fs';
@@ -240,6 +243,7 @@ export const getTasksByTeacher = (req, res) => {
   JOIN subject s ON c.id_subject = s.id_subject
   WHERE tsk.id_teacher = ?
   LIMIT ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id, countTask], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -267,7 +271,7 @@ export const getTaskByUser = (req, res) => {
 		FROM task  
 		WHERE id_teacher = ? and id_task = ?`;
   }
-
+  const db = dbSingleton.getInstance();
   db.query(q, [id, task_id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -297,7 +301,7 @@ export const getTasksGlobal = (req, res) => {
 		AND t.task_level IN (?)
 		AND t.task_weight IN (?)
 	`;
-
+  const db = dbSingleton.getInstance();
   db.query(q, [subjectIds, templateIds, selectedLevels, selectedWeights], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the tasks exists
@@ -316,6 +320,7 @@ export const getTasksByCategory = (req, res) => {
   const q = `SELECT  *
 					FROM task 
 					WHERE id_category = ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -336,6 +341,7 @@ export const getMoreInfoTask = (req, res) => {
   const q = `SELECT  name, lastname, subject_name, , id_task
 					FROM task 
 					WHERE id_category = ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -360,7 +366,7 @@ export const addTaskToFolder = (req, res) => {
     const q = `
   		INSERT INTO task_tasksfolder (id_task, id_tskFolder) values (?,?)
   	`;
-
+    const db = dbSingleton.getInstance();
     db.query(q, [id, id_tskFolder], (err, result) => {
       if (err) {
         console.error('Failed to add the task to folder.', err);
@@ -384,6 +390,7 @@ export const deleteTaskFromFolder = (req, res) => {
     console.log(req.query.folder);
     const q = 'DELETE FROM task_tasksfolder WHERE id_task = ? AND id_tskFolder = ?';
     // console.log(id_class);
+    const db = dbSingleton.getInstance();
     db.query(q, [id, req.query.folder], (err) => {
       if (err) {
         console.error('Error deleting task:', err);
@@ -405,6 +412,7 @@ export const getFolderStatus = (req, res) => {
   const q = `SELECT  is_publish
 					FROM taskfolder 
 					WHERE id_tskFolder = ?`;
+  const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
     // Check if the user exists
@@ -428,7 +436,7 @@ export const publishFolder = (req, res) => {
 			SET is_publish = TRUE
 			WHERE id_tskFolder = ?  	
 		`;
-
+    const db = dbSingleton.getInstance();
     db.query(q, [id], (err, result) => {
       if (err) {
         console.error('Failed to publish the folder.', err);
@@ -466,6 +474,7 @@ export const deleteTask = (req, res) => {
     const { id } = req.params;
     const q = 'DELETE FROM task WHERE id_task = ?';
     // console.log(id);
+    const db = dbSingleton.getInstance();
     db.query(q, id, (err) => {
       if (err) {
         console.error('Error deleting task:', err);
@@ -495,7 +504,7 @@ export const updateTaskDone = (req, res) => {
 			SET is_task_done = 1 
 			WHERE id_user = ? and id_task = ?
 		`;
-
+    const db = dbSingleton.getInstance();
     db.query(q, [id_user, id_task], (error, result) => {
       if (error) {
         console.error('Error updating task:', error);

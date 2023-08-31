@@ -43,12 +43,12 @@ function TaskStatusPopup({ classId, selectedClass, taskId, taskName, idTeacher, 
       <table className='table_block mt3'>
         <thead>
           <tr className='d-flex g2'>
-            <th className='w40 d-flex jcc'>Student</th>
+            <th className='w40 d-flex'>Student</th>
 						<th className='w20 d-flex jcc'>status</th>
             
           </tr>
         </thead>
-        <tbody>
+        <tbody className=''>
           {tasksDataPerStudent&&tasksDataPerStudent.map(student => (
             <tr key={student.id_user} className='d-flex g2'>
               <td className='w40'>{student.name} {student.lastname}</td>
