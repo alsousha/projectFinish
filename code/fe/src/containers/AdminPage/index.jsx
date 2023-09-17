@@ -14,6 +14,7 @@ import EditArticle from '../../pages/EditArticle';
 import CreateArticle from '../../pages/createArticle';
 import GlobalTasks from '../Tasks/GlobalTasks';
 import Task from '../Tasks/Task';
+import EditCertifications from './EditCertifications';
 
 
 function AdminPage({isLoggedIn, setIsLoggedIn, userData}) {
@@ -46,6 +47,7 @@ function AdminPage({isLoggedIn, setIsLoggedIn, userData}) {
 					<Route path='/blog/edit/:id' element={<EditArticle/>} />
 					<Route path='/blog/:id' element={<Article />} />
 					<Route path='/newarticle' element={<CreateArticle />} />
+					<Route path='/editcertif' element={<EditCertifications />} />
 					<Route path='/' element={<Blog/>} />
 				</Routes>
 			</div>

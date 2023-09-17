@@ -13,16 +13,20 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "file-saver": "^2.0.5",
+    "formik": "^2.4.4",
     "json-server": "^0.17.3",
     "node-sass": "^7.0.3",
     "react": "^18.0.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-dropzone-uploader": "^2.11.0",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "yup": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

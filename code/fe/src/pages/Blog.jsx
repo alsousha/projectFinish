@@ -14,7 +14,7 @@ import { ReactComponent as DeleteIcon } from '../assets/img/delete.svg';
 function Blog() {
 	const location = useLocation();
 	const { currentUser} = useContext(AuthContext)
-  const isBlogAdminRoute = location.pathname.startsWith('/admin/blog');
+ const isBlogAdminRoute = location.pathname.startsWith('/admin/blog');
 	
 	const [dataArray, setDataArray] = useState([]);
 	const [message, setMessage] = useState({}); //msg from DB
@@ -72,7 +72,7 @@ function Blog() {
 					{isAdmin && (
 						<div className="add_newItem mt2 mb3">
 							<Link className="d-flex aic g1" to="/admin/newarticle">
-								<AddIcon/><span>add new task</span>
+								<AddIcon/><span>add new article</span>
 							</Link>
 						</div>
 					)}

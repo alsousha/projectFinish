@@ -65,7 +65,6 @@ function Classes() {
 		}
     
   };
-
 	const handleAddNewClass = () => {
 		const fieldErrors = validateField(['add_class']);
 		if (Object.keys(fieldErrors).length === 0) {
@@ -81,7 +80,6 @@ function Classes() {
 		}
     
   };
-
 	const handleInputChange = (e) => {
     setEditedText(e.target.value);
   };
@@ -218,7 +216,7 @@ function Classes() {
 			<div className="mt5 msg_block">
 				{message && <span className={message.msgClass}>{message.message}</span>}
 			</div>
-			{classes && classes.map(item => (
+			{classes && classes.map((item,i) => (
 				<div key={item.id_class} className="class_item d-flex jcsb aic">
 					{editingItemId === item.id_class ? (
 						<div className="item_title">
@@ -235,8 +233,9 @@ function Classes() {
             
           ) : (
             <div className="item_title">
-							<span className='editUserInfo_field'>{item.class_name}</span>
-						</div>
+					<span className='table_elem small'>{i+1}.&nbsp;</span>
+					<span className='editUserInfo_field'>{item.class_name}</span>
+				</div>
           )}
 					<div className="class_folder table_icon">
 						<Link 
