@@ -159,7 +159,7 @@ export const editTask = (req, res) => {
           WHERE
             id_task = ?
         `;
-
+        const db = dbSingleton.getInstance();
         db.query(
           q,
           [
@@ -200,7 +200,7 @@ export const editTask = (req, res) => {
           WHERE
             id_task = ?
         `;
-
+        const db = dbSingleton.getInstance();
         db.query(
           q,
           [

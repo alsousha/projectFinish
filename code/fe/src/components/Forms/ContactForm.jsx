@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/authContext';
+import { API_URL } from '../../constans';
 
 const ContactForm = ({ handlePopupClose }) => {
   const { currentUser } = useContext(AuthContext);
@@ -69,23 +70,25 @@ const ContactForm = ({ handlePopupClose }) => {
   return (
     <div className='popup popup-small'>
       <button className='btn__close popup__btn-close' onClick={handlePopupClose}></button>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='contact'>
         <div>
           <h2>Contact us</h2>
-          <div className='d-flex g1'>
-            <img src={`${API_URL}/uploads/e1.svg`} alt='sbj_icon' className='sbj__icon' />
+          <div className='d-flex g1 aic 	mt1'>
+            <img src={`${API_URL}/uploads/cat_img1.svg`} alt='sbj_icon' className='sbj__icon' />
             <span>Team of FunnyApp</span>
           </div>
-          <p>Hi! Please write your message</p>
-          <label>Title:</label>
+          <p>Hi! Please write your message:</p>
+          <label className='mr1'>Title:</label>
           <input type='text' name='title' value={formData.title} onChange={handleChange} />
         </div>
 
-        <div>
-          <label>Text:</label>
+        <div className='mt1 d-flex ais'>
+          <label className='mr1'>Text:</label>
           <textarea name='text' value={formData.text} onChange={handleChange}></textarea>
         </div>
-        <button type='submit'>Submit</button>
+        <button type='submit' className='btn_blue mt2 w100'>
+          Submit
+        </button>
       </form>
     </div>
   );

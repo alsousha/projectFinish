@@ -11,6 +11,7 @@ function CertificationsView({ role, setActiveBgColor, id_user }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [categories, setCategories] = useState([]);
   const [studentCertif, setStudentCertif] = useState([]);
+  const [currentPoints, setCurrentPoints] = useState();
   const [isOpen, setIsOpen] = useState({});
   const [isFormVisiable, setIsFormVisiable] = useState(false);
   const [message, setMessage] = useState({}); //msg from DB
@@ -96,7 +97,7 @@ function CertificationsView({ role, setActiveBgColor, id_user }) {
         console.error('Error add item', error);
       });
   };
-
+  console.log(categories);
   return (
     <div className='container c16'>
       <div className='msg_block'>
@@ -125,13 +126,23 @@ function CertificationsView({ role, setActiveBgColor, id_user }) {
             </div>
           ))}
       </div>
+      <div className='mt2'>
+        <h3 className='bg_white'>
+          Each card is worth{' '}
+          <span className='accent2'>
+            <b>{selectedCategory && selectedCategory.certif_point}</b>
+          </span>{' '}
+          points
+        </h3>
+      </div>
+
       <div className='pb3'>
         {/* Map through the categories array to display icons */}
 
         {categories &&
           categories.map((category) => (
             <div key={`catArr-${category.id_certif}`} className='mt2'>
-              {/* Show additional data when the category is selected */}
+              {/* additional data when the category is selected */}
               {selectedCategory && selectedCategory.id_certif === category.id_certif && (
                 <div className='certifIview d-flex g3'>
                   <div className='certif_big_img w30'>

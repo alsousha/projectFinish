@@ -15,16 +15,14 @@ import TemplateMatch from '../Templates/TemplateMatch';
 import GroupAssigment from './GroupAssigment.jsx';
 import TemplateGroupAssigment from '../Templates/TemplateGroupAssigment.jsx';
 
-
 function EditTask() {
-	const { id } = useParams(); //id task
-	const location = useLocation();
-	const task = location.state?.task;
-	// console.log(task);
-	//#region
+  const { id } = useParams(); //id task
+  const location = useLocation();
+  const task = location.state?.task;
+  // console.log(task);
+  //#region
   const { currentUser } = useContext(AuthContext);
-	const [hasAccess, setHasAccess] = useState(false);
-
+  const [hasAccess, setHasAccess] = useState(false);
 
   const inputRef = useRef(null);
   const navigate = useNavigate();
@@ -35,25 +33,25 @@ function EditTask() {
   const [levels, setLevels] = useState('');
   const [weights, setWeight] = useState('');
   const [templates, setTemplates] = useState([]); // Array of global templates
-	const [imagePreview, setImagePreview] = useState(`${API_URL}/${task.task_img}`);
+  const [imagePreview, setImagePreview] = useState(`${API_URL}/${task.task_img}`);
 
   const [selectedData, setSelectedData] = useState({
     newItemName: task.task_name,
-			selectedSubject: task.id_subject,
-			selectedCategory: task.id_category,
-			selectedTemplate: task.id_template,
-			selectedFile: task.task_img,
-			selectedLevel: task.task_level,
-			selectedWeight: task.task_weight,
-			instruction: task.task_text,
+    selectedSubject: task.id_subject,
+    selectedCategory: task.id_category,
+    selectedTemplate: task.id_template,
+    selectedFile: task.task_img,
+    selectedLevel: task.task_level,
+    selectedWeight: task.task_weight,
+    instruction: task.task_text,
   });
 
   //errors
   const [message, setMessage] = useState({}); //msg from DB
   const [errors, setErrors] = useState({}); //Validations
   //#endregion
-	 //#region fetch
-	 const fetchSubjects = async () => {
+  //#region fetch
+  const fetchSubjects = async () => {
     try {
       const response = await axios.get(`/teacher/sbjs/${currentUser.id_user}`);
       // console.log(response.data);
@@ -82,10 +80,10 @@ function EditTask() {
     }
   };
   //#endregion
-  
-	//#region useEffect
-	useEffect(() => {
-		setHasAccess(task)
+
+  //#region useEffect
+  useEffect(() => {
+    setHasAccess(task);
   }, [id, currentUser.id_user]);
   useEffect(() => {
     fetchSubjects().then((data) => setSubjects(data));
@@ -110,9 +108,6 @@ function EditTask() {
       ...prevData,
       selectedLevel: levelOptions[0],
     }));
-
-		
-
   }, []);
 
   useEffect(() => {
@@ -135,15 +130,15 @@ function EditTask() {
       setTemplates([]);
     }
   }, [selectedData.selectedCategory]);
-	//#endregion
-	if (!hasAccess) {
+  //#endregion
+  if (!hasAccess) {
     return <div>Error: You do not have access to this task.</div>;
   }
   if (currentUser.role !== 'teacher') {
     return <NotFound />;
   }
- 
-	//#region handles
+
+  //#region handles
   const handleSubjectChange = (event) => {
     setSelectedData((prevData) => ({
       ...prevData,
@@ -158,7 +153,7 @@ function EditTask() {
     }));
   };
   const handleFileChange = (event) => {
-		const file = event.target.files[0];
+    const file = event.target.files[0];
     const msg = {
       msgClass: '',
       text: '',
@@ -173,12 +168,11 @@ function EditTask() {
       return;
     }
 
-
     setSelectedData((prevData) => ({
       ...prevData,
       selectedFile: event.target.files[0],
     }));
-		// Create a file reader for thumb
+    // Create a file reader for thumb
     const reader = new FileReader();
     // Set up the file reader onload event
     reader.onload = () => {
@@ -224,9 +218,8 @@ function EditTask() {
   };
 
   //#endregion
-	const taskName = task.task_name
-	const imageUrl = `${API_URL}/${task.task_img}`;
-// console.log(selectedData);
+  const taskName = task.task_name;
+  const imageUrl = `${API_URL}/${task.task_img}`;
   return (
     <div className='d-flex '>
       <div className='container '>
@@ -271,115 +264,114 @@ function EditTask() {
               </select>
             </div>
             {/* categories */}
-						<div className='task_data-item w50'>
-							<span className='label'>Category:</span>
-							<select value={selectedData.selectedCategory} onChange={handleCategoryChange}>
-								<option value=''>Select Category</option>
-								{categories.map((cat) => (
-									<option key={cat.id_category} value={cat.id_category}>
-										{cat.category_name}
-									</option>
-								))}
-							</select>
-						</div>
+            <div className='task_data-item w50'>
+              <span className='label'>Category:</span>
+              <select value={selectedData.selectedCategory} onChange={handleCategoryChange}>
+                <option value=''>Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat.id_category} value={cat.id_category}>
+                    {cat.category_name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           {/* instruction */}
-					<div className='task_data-item'>
-						<span className='label'>Instruction:</span>
-						<div className='editorContainer'>
-							<ReactQuill
-								theme='snow'
-								value={selectedData.instruction}
-								onChange={(e) => handleInstructionChange(e)}
-							/>
-						</div>
-					</div>
+          <div className='task_data-item'>
+            <span className='label'>Instruction:</span>
+            <div className='editorContainer'>
+              <ReactQuill
+                theme='snow'
+                value={selectedData.instruction}
+                onChange={(e) => handleInstructionChange(e)}
+              />
+            </div>
+          </div>
           <div className='task_data-group d-flex '>
-						<div className='task_data-item'>
-							<span className='label'>Task's image:</span>
-							<input type='file' onChange={handleFileChange} />
-							<div className="task__thumb w20">
-								{/* <img src={imageUrl} alt="Task Image" /> */}
-								{<img src={imagePreview} alt='Image Preview' />}
-
-							</div>
-						</div>
+            <div className='task_data-item'>
+              <span className='label'>Task's image:</span>
+              <input type='file' onChange={handleFileChange} />
+              <div className='task__thumb w20'>
+                {/* <img src={imageUrl} alt="Task Image" /> */}
+                {<img src={imagePreview} alt='Image Preview' />}
+              </div>
+            </div>
           </div>
           <div className='task_data-group d-flex '>
             {/* weight */}
-						<div className='task_data-item w50'>
-							<span className='label'>Weight of task:</span>
-							<select value={selectedData.selectedWeight} onChange={handleWeightChange}>
-								{weights.map((weight) => (
-									<option key={'weight' + weight} value={weight}>
-										{weight}
-									</option>
-								))}
-							</select>
-						</div>
+            <div className='task_data-item w50'>
+              <span className='label'>Weight of task:</span>
+              <select value={selectedData.selectedWeight} onChange={handleWeightChange}>
+                {weights.map((weight) => (
+                  <option key={'weight' + weight} value={weight}>
+                    {weight}
+                  </option>
+                ))}
+              </select>
+            </div>
             {/* level */}
-						<div className='task_data-item w50'>
-							<span className='label'>Level of task:</span>
-							<select value={selectedData.selectedLevel} onChange={handleLevelChange}>
-								{levels.map((level) => (
-									<option key={'weight' + level} value={level}>
-										{level}
-									</option>
-								))}
-							</select>
-						</div>
+            <div className='task_data-item w50'>
+              <span className='label'>Level of task:</span>
+              <select value={selectedData.selectedLevel} onChange={handleLevelChange}>
+                {levels.map((level) => (
+                  <option key={'weight' + level} value={level}>
+                    {level}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           {/* templates */}
-					<div className=''>
-						<div className='task_data-item'>
-							<span className='label'>Templates:</span>
-							{templates.map((temp) => (
-								<label key={'temp' + temp.id_template} className='label_img'>
-									<div className='top'>
-										<input
-											type='radio'
-											value={temp.id_template}
-											checked={selectedData.selectedTemplate == temp.id_template}
-											onChange={handleTemplateChange}
-										/>
-										{temp.template_name}
-									</div>
-									<img
-										src={require(`../../assets/img/${temp.template_img}`)}
-										alt='template_img'
-										className={
-											selectedData.selectedTemplate == temp.id_template ? 'active' : 'no-active'
-										}
-									/>
-								</label>
-							))}
-						</div>
-						<div className='task-inner mt3'>
-							{selectedData.selectedTemplate - 1 === 0 && (
-								<TemplateSequence
-									generalTaskData={selectedData}
-									handleMessage={setMessage}
-									setSelectedData={setSelectedData}
-									specificData={task.specific_data}
-									idTask={task.id_task}
-								/>
-							)}
-							{selectedData.selectedTemplate - 1 === 1 && <TemplateMatch />}
-							{selectedData.selectedTemplate - 1 === 2 && 
-								<TemplateGroupAssigment
-									generalTaskData={selectedData}
-									handleMessage={setMessage}
-									setSelectedData={setSelectedData}
-									specificData={task.specific_data}
-									idTask={task.id_task}
-								/>
-							}
-						</div>
-					</div>
+          <div className=''>
+            <div className='task_data-item'>
+              <span className='label'>Templates:</span>
+              {templates.map((temp) => (
+                <label key={'temp' + temp.id_template} className='label_img'>
+                  <div className='top'>
+                    <input
+                      type='radio'
+                      value={temp.id_template}
+                      checked={selectedData.selectedTemplate == temp.id_template}
+                      onChange={handleTemplateChange}
+                    />
+                    {temp.template_name}
+                  </div>
+                  <img
+                    src={require(`../../assets/img/${temp.template_img}`)}
+                    alt='template_img'
+                    className={
+                      selectedData.selectedTemplate == temp.id_template ? 'active' : 'no-active'
+                    }
+                  />
+                </label>
+              ))}
+            </div>
+            <div className='task-inner mt3'>
+              {selectedData.selectedTemplate - 1 === 0 && (
+                <TemplateSequence
+                  generalTaskData={selectedData}
+                  handleMessage={setMessage}
+                  setSelectedData={setSelectedData}
+                  specificData={task.specific_data}
+                  idTask={task.id_task}
+                />
+              )}
+              {selectedData.selectedTemplate - 1 === 1 && <TemplateMatch />}
+              {selectedData.selectedTemplate - 1 === 2 && (
+                <TemplateGroupAssigment
+                  generalTaskData={selectedData}
+                  handleMessage={setMessage}
+                  setSelectedData={setSelectedData}
+                  specificData={task.specific_data}
+                  idTask={task.id_task}
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default EditTask
+export default EditTask;
