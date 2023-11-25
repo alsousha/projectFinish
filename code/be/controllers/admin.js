@@ -5,14 +5,17 @@ import multer from 'multer';
 import sharp from 'sharp'; // Import the sharp library(compress img)
 import fs from 'fs';
 import { log } from 'console';
+import { v4 as uuidv4 } from 'uuid';
 
+//It is works but not for certif
 const storage = multer.diskStorage({
   destination: 'uploads/',
   filename: (req, file, cb) => {
-    // Customize the filename if needed
     cb(null, file.originalname);
   },
 });
+// const storage = multer.memoryStorage();
+
 const upload = multer({ storage: storage });
 
 export const getAllTeachers = (req, res) => {
@@ -153,7 +156,7 @@ export const editArticle = (req, res) => {
           WHERE
             id_article = ?
         `;
-
+        const db = dbSingleton.getInstance();
         db.query(
           q,
           [dataToSend.selectedTitle, dataToSend.selectedText, resizedImagePath, id],
@@ -180,7 +183,7 @@ export const editArticle = (req, res) => {
 						id_article = ?
 						
 				`;
-
+        const db = dbSingleton.getInstance();
         db.query(
           q,
           [dataToSend.selectedTitle, dataToSend.selectedText, dataToSend.selectedImage, id],
@@ -238,6 +241,7 @@ export const createArticle = (req, res) => {
 				    	(?,?,?,?)
 				    `;
         // Save file path in the database
+        const db = dbSingleton.getInstance();
         db.query(
           q,
           [dataToSend.selectedTitle, dataToSend.selectedText, resizedImagePath, date_create],
@@ -282,5 +286,175 @@ export const deleteArticle = (req, res) => {
     });
   } catch (error) {
     console.error('Error deleting article:', err);
+  }
+};
+export const editCertif = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  const { id } = req.params;
+  // console.log(id);
+  try {
+    upload.any()(req, res, async (err) => {
+      if (err) {
+        console.error('Error parsing form data', err);
+        return res.status(500).json({ error: 'Error parsing form data' });
+      }
+
+      // const dataToSend = JSON.parse(req.body.dataToSend); //data without files
+      // console.log('dataToSend');
+      // console.log(dataToSend);
+      const catImgSmFile = req.files.find((file) => file.fieldname === 'catImgSm');
+      const catImgSm = req.body.catImgSm ? req.body.catImgSm : catImgSmFile.filename;
+
+      const catImgLgFile = req.files.find((file) => file.fieldname === 'catImgLg');
+      const catImgLg = req.body.catImgLg ? req.body.catImgLg : catImgLgFile.filename;
+
+      // console.log('catImgsString');
+      // console.log(req.body.catImgsString);
+      // // console.log(typeof dataToSend.catImgs); //object
+      // console.log('catImgSm');
+      // console.log(catImgSm);
+      // console.log('catImgLg');
+      // console.log(catImgLg);
+      // console.log('catName');
+      // console.log(req.body.catName);
+      const updatedCatImgsString = JSON.parse(req.body.catImgsString).map((item) => {
+        // Check if the path starts with "blob"
+        if (item.path.startsWith('blob')) {
+          // Replace "blob" with "uploads" and append the filename
+          item.path = `uploads\\${item.filename}`;
+        }
+        return item;
+      });
+      // console.log(updatedCatImgsString);
+      const q = `
+			  UPDATE certification
+			  SET
+				certif_name = ?,
+				certif_img_sm = ?,
+				certif_img_lg = ?,
+				certif_imgs_group = ?,
+				certif_point = ?,
+				certif_bg_color = ?
+			  WHERE
+				 id_certif = ?
+			`;
+      const db = dbSingleton.getInstance();
+      db.query(
+        q,
+        [
+          req.body.catName,
+          catImgSm,
+          catImgLg,
+          JSON.stringify(updatedCatImgsString),
+          req.body.itemPoints,
+          req.body.catColor,
+          req.body.id_certif,
+        ],
+        (err, result) => {
+          if (err) {
+            console.error('Failed to edit the certif.', err);
+            res.status(500).json({ error: 'Error editing the certif' });
+          } else {
+            res.status(200).json({ message: 'certif edited successfully!' });
+          }
+        },
+      );
+      console.log('endddddddddddddd');
+    });
+  } catch (error) {
+    console.error('Failed to create the certif', error);
+    res.status(500).json({ error: 'Error creating the certif' });
+  }
+};
+export const createCertif = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+
+  try {
+    upload.any()(req, res, async (err) => {
+      if (err) {
+        console.error('Error parsing form data', err);
+        return res.status(500).json({ error: 'Error parsing form data' });
+      }
+
+      const dataToSend = req.body; //data without files
+      console.log(dataToSend.catImgs);
+
+      const catImgSm = req.files.find((file) => file.fieldname === 'catImgSm');
+      const catImgLg = req.files.find((file) => file.fieldname === 'catImgLg');
+      // const catImgs = req.files.filter((file) => file.fieldname.startsWith('catImgs'));
+      const catImgs = req.files
+        .filter((file) => file.fieldname.startsWith('catImgs'))
+        .map((file) => ({
+          img_id: uuidv4(), // Add a unique img_id to each file
+          originalname: file.originalname,
+          encoding: file.encoding,
+          mimetype: file.mimetype,
+          destination: file.destination,
+          filename: file.filename,
+          path: file.path,
+          size: file.size,
+        }));
+      // console.log(catImgSm);
+      // console.log('sdddddddd');
+      // console.log(catImgs);
+      console.log('ssssssssssssssss');
+      console.log(req.files);
+
+      const q = `
+        INSERT INTO certification
+          (certif_name, certif_img_sm, certif_img_lg, certif_imgs_group, certif_point, certif_bg_color)
+        VALUES
+          (?, ?, ?, ?, ?, ?)
+      `;
+
+      const db = dbSingleton.getInstance();
+      db.query(
+        q,
+        [
+          dataToSend.catName,
+          catImgSm.filename,
+          catImgLg.filename,
+          JSON.stringify(catImgs),
+          //  JSON.stringify(dataToSend.catImgs),
+          dataToSend.itemPoints,
+          dataToSend.catColor,
+        ],
+        (err) => {
+          if (err) {
+            console.error('Failed to create the certification.', err);
+            res.status(500).json({ error: 'Error create the certification' });
+          } else {
+            res.status(200).json({ message: 'Create the certification successfully!' });
+          }
+        },
+      );
+    });
+  } catch (error) {
+    console.error('Failed to create the article', error);
+    res.status(500).json({ error: 'Error creating the article' });
+  }
+};
+export const deleteCertif = (req, res) => {
+  // console.log('ddd');
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  // Delete the article
+  try {
+    const { id } = req.params;
+    const q = 'DELETE FROM certification WHERE id_certif = ?';
+    // console.log(id);
+    const db = dbSingleton.getInstance();
+    db.query(q, id, (err) => {
+      if (err) {
+        console.error('Error deleting certification:', err);
+        return res.status(500).json('Failed to delete the certification.');
+      } else {
+        return res.status(200).json('certification deleted successfully!');
+      }
+    });
+  } catch (error) {
+    console.error('Error deleting certification:', err);
   }
 };

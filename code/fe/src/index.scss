@@ -228,3 +228,174 @@ h1,h2,h3,h4{
 		height: 2rem;
 	}
 }
+.form-big{
+	input[type="text"]{
+		background-color: white !important;
+		padding-left: 1rem !important;
+	}
+	input[type="number"]{
+		color: #64639c;
+    font-size: 1.8rem;
+    line-height: 1.8;
+    background-size: 1.8rem;
+    background-position: calc(100% - 11px) center;
+    background-repeat: no-repeat;
+    padding: 0;
+    padding-left: 1rem;
+    border: none;
+    border-radius: 1rem;
+    font-family: 'Nunito', sans-serif;
+	}
+	label{
+		margin-right: 2rem;
+		margin-bottom: 1rem;
+	}
+	.items__wrap{
+		height: 20rem;
+		border: 1px solid;
+		border-radius: 2rem;
+		padding: 2rem;
+		margin: 0 -2rem;
+		overflow-y: auto;
+	}
+	
+}
+.basic{
+	color: $main;
+	font-size: 1.8rem;
+	font-family: 'Nunito', sans-serif;
+	font-weight: 600;
+}
+.nowrap{
+	white-space: nowrap;
+}
+.plus{
+	font-size: 2rem;
+	color: #64639c;
+	line-height: 1.4;
+	font-family: 'Nunito', sans-serif;
+}
+.certif-item{
+	border-bottom: 1px solid;
+	padding-bottom: 1rem;
+	margin-bottom: 3rem;
+	&:first-child{
+		border-top: 1px solid;
+		padding-top: 1rem;
+	}
+	.img-prev{
+		height: 10rem;
+
+	}
+}
+.b-right{
+	border-right: 1px solid ;
+	padding-right: 2rem;
+}
+.h100vh{
+	height: calc(100vh - 200px);
+}
+.mainPage {
+	height: 100%;
+}
+.sticky{
+	position: sticky;
+	padding-top: 2rem;
+	top: 0;
+}
+.hwhite{
+	color: white;
+    font-size: 3rem;
+    font-weight: 600;
+}
+.img-prev{
+	background-color: white;
+	border-radius: 1rem;
+	margin-bottom: 1rem;
+	cursor: pointer;
+	button{
+		display: block;
+		height: 100%;
+	}
+	img{
+		border-radius: 1rem;
+		height: 100%;
+	}
+}
+
+.certif_big_img img{
+	width: 70%;
+}
+.tabs .active{
+	transform: scale(1.3);
+}
+.certif-img {
+	transition: filter 0.3s ease-out; /* Add your desired transition properties */
+ }
+ 
+ .certif-img.open {
+	opacity: 0; /* Make the image transparent when the open class is applied */
+	// transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* Add a 0.5s transition for the opacity property */
+	animation: spin-and-open 1s ease-in forwards;
+}
+@keyframes spin-and-open {
+	0% {
+	  transform: rotateY(0);
+	  filter: hue-rotate(0);
+	}
+	80% {
+	  transform: rotateY(360deg);
+	  filter: hue-rotate(180deg);
+	  opacity: 1;
+	}
+	100% {
+	  opacity: 1;
+	  display: none;
+	}
+ }
+ .popup.popup-small{
+	height: 30rem;
+	padding-top: 10rem !important;
+	.popup_img{
+		position: absolute;
+		top: -6rem;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	p{
+		font-size: 2.6rem;
+	}
+ }
+ .about{
+	p{
+		font-size: 2.2rem;
+	}
+	.what__iner{
+		background-color: $accent;
+		border-top-left-radius: 7rem;
+		margin-top: 2rem;
+		img{
+			border-top-left-radius: 7rem;
+		}
+	}
+	.accent{
+		color: $accent;
+		font-weight: 600;
+	}
+	.why_inner{
+		background-color: #ecf8fc;
+		border-radius: 3rem;
+		padding: 2rem;
+	}
+	.bin-items_wrap{
+		border: 3px solid $accent;
+		border-radius: 3rem;
+		padding: 2rem;
+		width: 60rem;
+	}
+	.bin_items{
+		background-position: bottom center;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
+ }

@@ -8,6 +8,9 @@ import {
   editArticle,
   createArticle,
   deleteArticle,
+  editCertif,
+  createCertif,
+  deleteCertif,
 } from '../controllers/admin.js';
 
 const router = express.Router();
@@ -20,5 +23,8 @@ router.get('/studentdata/:id', getStudentAddData);
 router.post('/editarticle/:id', editArticle);
 router.post('/createarticle', createArticle);
 router.delete('/deletearticle/:id', deleteArticle);
+router.post('/editcertif/:id', editCertif);
+router.post('/createcertif', createCertif);
+router.delete('/deletecertif/:id', deleteCertif);
 
 export default router;

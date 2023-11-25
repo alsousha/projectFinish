@@ -90,3 +90,9 @@
 			transition: all .5s;
 		}
 	}
+	.hover_up{
+		&:hover{
+			transform: translateY(-2px);
+			transition: all 0.3s;
+		}
+	}

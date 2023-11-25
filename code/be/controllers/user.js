@@ -273,7 +273,6 @@ const generateToken = (userId) => {
   return jwt.sign({ userId }, 'jwtkey', { expiresIn: '1h' });
 };
 const sendPasswordResetEmail = (email, token) => {
-  // Your nodemailer configuration and email options remain the same
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -288,6 +287,34 @@ const sendPasswordResetEmail = (email, token) => {
     subject: 'Password Reset',
     html: `<p>Please click the following link to reset your password:</p>
 		<a href="http://localhost:3000/reset-password?token=${token}&email=${email}">Reset Password</a>`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+};
+export const sendContactForm = async (req, res, next) => {
+  const { title, text, email } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'adb.kzn@gmail.com',
+      pass: 'trjhxbvletsqpelc',
+    },
+  });
+  console.log(email);
+  const mailOptions = {
+    from: email,
+    to: 'adb.kzn@gmail.com',
+    subject: `Contact form: ${title}`,
+    text: `${text}. User email: ${email}`,
+    //  html: `<p>Please click the following link to reset your password:</p>
+    // 	 <a href="http://localhost:3000/reset-password?token=${token}&email=${email}">Reset Password</a>`,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -317,6 +344,16 @@ export const getArticles = (req, res) => {
   const q = 'SELECT * FROM blog';
 
   // const db = new DatabaseSingleton(); // Create an instance
+  const db = dbSingleton.getInstance();
+  db.query(q, (err, data) => {
+    if (err) return res.status(500).send(err);
+
+    return res.status(200).json(data);
+  });
+};
+export const getAllCertif = (req, res) => {
+  const q = 'SELECT * FROM certification';
+
   const db = dbSingleton.getInstance();
   db.query(q, (err, data) => {
     if (err) return res.status(500).send(err);

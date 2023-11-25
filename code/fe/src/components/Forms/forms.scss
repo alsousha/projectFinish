@@ -4,7 +4,7 @@
 	position: fixed;
     left: 50%;
     top: 50%;
-    transform: translate(calc(-50% + 120px), calc(-50% + 120px));
+    transform: translate(calc(-50%), calc(-50%));
     z-index: 100;
     background-color: $white !important;
     width: 60rem;
@@ -19,6 +19,10 @@
 	input[type="text"], input[type="email"],input[type="password"], textarea, select {
 		// border: 1px solid $main;
 		padding: 0;
+	}
+	&.popup-big{
+		width: 90rem;
+		min-height: 65rem;
 	}
 
 }

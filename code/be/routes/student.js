@@ -10,6 +10,9 @@ import {
   updatePoints,
   getStudentClassBySbj,
   getStatisticData,
+  getStudentCertif,
+  incpoints,
+  putcertifcard,
 } from '../controllers/student.js';
 
 const router = express.Router();
@@ -22,7 +25,10 @@ router.post('/tasksfolderbysbjandclass/:id', getTasksFoldersBySbjAndClass);
 router.get('/tasksall', getAllTasks);
 router.get('/hwtasks/:id', getHWByStudent);
 router.put('/updatepoints/:id', updatePoints);
+router.put('/incpoints/:id', incpoints);
 router.post('/statisticdata', getStatisticData);
+router.get('/certificates/:id', getStudentCertif);
+router.put('/putcertifcard/:id', putcertifcard);
 
 // router.get('/:id', getTeacherSbjs);
 // router.put('/:id', updateTeacherSubject);

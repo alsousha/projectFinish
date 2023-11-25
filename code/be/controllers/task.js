@@ -66,6 +66,7 @@ export const createTask = (req, res) => {
 				    	(?,?,?,?,?,?,?,?,?,?)
 				    `;
         // Save file path in the database
+        const db = dbSingleton.getInstance();
         db.query(
           q,
           [

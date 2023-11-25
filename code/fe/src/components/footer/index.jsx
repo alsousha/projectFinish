@@ -1,21 +1,29 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import ContactForm from '../Forms/ContactForm';
 const Footer = () => {
-		return (
-				<footer className=''>
-					<div className="container d-flex jcsb aic mt2 mb2">
-						<a href="/" className="logo d-flex aic g1">
-							<span className="slogan">Funny App</span>
-						</a>
-						{/* <span>Alsu Bogdanov</span> */}
-						<div className="menu d-flex g1">
-							<Link>About</Link>
-							<Link>Contacts</Link>
-						</div>
-						
-					</div>
-				</footer>
-		)
-}
+  const [isFormVisiable, setIsFormVisiable] = useState(false);
 
-export default Footer
+  const handlePopupClose = () => {
+    setIsFormVisiable(false);
+  };
+  return (
+    <footer className=''>
+      <div className='container d-flex jcsb aic mt2 mb2'>
+        <a href='/' className='logo d-flex aic g1'>
+          <span className='slogan'>Funny App</span>
+        </a>
+        {/* <span>Alsu Bogdanov</span> */}
+        <div className='menu d-flex g1'>
+          <NavLink to='about'>About</NavLink>
+          <button className='basic' onClick={() => setIsFormVisiable(true)}>
+            Contacts
+          </button>
+        </div>
+      </div>
+      {isFormVisiable && <ContactForm handlePopupClose={handlePopupClose} />}
+    </footer>
+  );
+};
+
+export default Footer;

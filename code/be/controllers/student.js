@@ -16,6 +16,7 @@ export const getStudentData = (req, res) => {
     res.status(200).json(data[0]);
   });
 };
+
 export const getStudentSbjs = (req, res) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json('Not authenticated!');
@@ -173,12 +174,12 @@ export const getHWByStudent = (req, res) => {
   console.log(id);
   const q = `
   SELECT t.*, c.category_name, s.subject_name
-FROM student_task st
-JOIN task t ON st.id_task = t.id_task
-JOIN category c ON t.id_category = c.id_category
-JOIN subject s ON c.id_subject = s.id_subject
-WHERE st.is_task_done = 0 AND st.id_user = ?;
-`;
+	FROM student_task st
+	JOIN task t ON st.id_task = t.id_task
+	JOIN category c ON t.id_category = c.id_category
+	JOIN subject s ON c.id_subject = s.id_subject
+	WHERE st.is_task_done = 0 AND st.id_user = ?;
+	`;
   const db = dbSingleton.getInstance();
   db.query(q, [id], (err, data) => {
     if (err) return res.status(500).json(err);
@@ -204,6 +205,31 @@ export const updatePoints = (req, res) => {
     db.query(q, [task_weight, id_user], (error, result) => {
       if (error) {
         console.error('Error updating category:', error);
+        res.status(500).json({ error: 'Error updating points' });
+      } else {
+        res.status(200).json({ message: 'Points updated successfully' });
+      }
+    });
+  } catch (error) {
+    console.error('Error updating table:', error);
+  }
+};
+export const incpoints = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    const id_user = req.params.id;
+    const certif_point = req.body.certif_point;
+    console.log(certif_point);
+    const q = `
+			 UPDATE student
+			 SET total_points = total_points - ? 
+			 WHERE id_user = ?
+		 `;
+    const db = dbSingleton.getInstance();
+    db.query(q, [certif_point, id_user], (error, result) => {
+      if (error) {
+        console.error('Error updating points:', error);
         res.status(500).json({ error: 'Error updating points' });
       } else {
         res.status(200).json({ message: 'Points updated successfully' });
@@ -249,4 +275,48 @@ export const getStatisticData = (req, res) => {
     // console.log(data);
     res.status(200).json(data);
   });
+};
+export const getStudentCertif = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  const { id } = req.params;
+  console.log(id);
+  const q = `
+   SELECT id_certif_item 
+   FROM student_certification 
+   WHERE id_user = ?
+   `;
+  const db = dbSingleton.getInstance();
+  db.query(q, [id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0) {
+      return res.status(204).json('Certifications not found');
+    }
+    // console.log(data);
+    res.status(200).json(data);
+  });
+};
+export const putcertifcard = (req, res) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json('Not authenticated!');
+  try {
+    const id_user = req.params.id;
+    const img_id = req.body.img_id;
+    const q = `
+	 	INSERT INTO student_certification (id_user, id_certif_item )
+		values 
+		(?,?)
+	`;
+    const db = dbSingleton.getInstance();
+    db.query(q, [id_user, img_id], (error, result) => {
+      if (error) {
+        console.error('Error updating student certificate:', error);
+        res.status(500).json({ error: 'Error updating student certificate' });
+      } else {
+        res.status(200).json({ message: 'student certificate updated successfully' });
+      }
+    });
+  } catch (error) {
+    console.error('Error updating student certificate:', error);
+  }
 };

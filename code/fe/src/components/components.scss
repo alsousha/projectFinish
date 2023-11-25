@@ -2,7 +2,9 @@
 .sidebar{
 	background-color: $main-dark;
 	width: 30rem;
-	min-height: 100vh;
+	padding-top: 3rem;
+    min-height: calc(100vh - 200px);
+	// min-height: 100vh;
 	padding-top: 3rem;
 	.sidebarLink a{
 		color: $white;
